@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        .cedula-field {
+            display: inline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><h4>Informacion Personal</h4></div>
+                    <div class="card-body">
+                        <h5>Nombre</h5>
+                        {{ form.primer_nombre }}
+                        <hr/>
+                        {{ form.segundo_nombre }}
+                        <hr/>
+                        {{ form.primer_apellido }}
+                        <hr/>
+                        {{ form.segundo_apellido }}
+                        <hr/>
+                        <hr/>
+                        <h5>Cedula</h5>
+                         <div class="form-group row">
+  <div class="col-xs-2">
+    <label for="ex1">col-xs-2</label>
+    <input class="form-control" id="ex1" type="text">
+  </div>
+  <div class="col-xs-3">
+    <label for="ex2">col-xs-3</label>
+    <input class="form-control" id="ex2" type="text">
+  </div>
+  <div class="col-xs-4">
+    <label for="ex3">col-xs-4</label>
+    <input class="form-control" id="ex3" type="text">
+  </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Informacion Profesional</div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+{% endblock %}

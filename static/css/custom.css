@@ -1,0 +1,19 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-image: url("/static/img/textured_paper.png");
+    background-repeat: repeat;
+    background-color: #cccccc;
+    padding-top: 4.5rem;
+}
+
+.nav-link {
+    color: rgb(43, 142, 229);
+}
+
+.top-buffer {
+    margin-top: 20px;
+}

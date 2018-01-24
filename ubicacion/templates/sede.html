@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"
+            integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Facultades
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ sede.unidades.count }}</h3></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Escuelas
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ sede.secciones.escuelas.count }}</h3></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Departamentos
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ sede.secciones.departamentos.count }}</h3></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Carreras
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ sede.carrerainstancia_set.count }}</h3></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Profesores por facultad
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">Cantidad de profesores: {{ sede.get_profesores_count }}</p>
+                        <p class="card-text">
+                        <h3 class="text-right">
+                            <canvas id="profesorChart"></canvas>
+                        </h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Estudiantes por Facultad
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">Cantidad de Estudiantes: {{ sede.get_estudiantes_count }}</p>
+                        <p class="card-text">
+                        <h3 class="text-right">
+                            <canvas id="estudianteChart"></canvas>
+                        </h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function randomRGB() {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            return 'rgba(' + r + ',' + g + ',' + b + ',' + 0.2 + ')'; //Recordar el 0.2 para el alpha.
+            //return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; //Recordar el 0.2 para el alpha.
+        }
+
+        var estudiantesFacultad = {{ sede.get_estudiante_facultad_count|safe }};
+        var profesoresFacultad = {"test": 1};
+
+        console.log(profesoresFacultad);
+
+        //TODO: Datasets son SEPARADOS
+        chartData = {
+            "estudiantes": {
+                "etiquetas": [],
+                "datos": [],
+                "colores": [],
+                "borde": []
+            },
+            "profesores": {
+                "etiquetas": [],
+                "datos": [],
+                "colores": [],
+                "borde": []
+            }
+        };
+        for (var facultad in estudiantesFacultad) {
+            rgb = randomRGB();
+            chartData["estudiantes"]["etiquetas"].push(facultad);
+            chartData["estudiantes"]["datos"].push(estudiantesFacultad[facultad]);
+            chartData["estudiantes"]["colores"].push(rgb);
+            chartData["estudiantes"]["borde"].push(rgb);
+            console.log(rgb);
+        }
+
+        for (var facultad in profesoresFacultad) {
+            rgb = randomRGB();
+            chartData["profesores"]["etiquetas"].push(facultad);
+            chartData["profesores"]["datos"].push(profesoresFacultad[facultad]);
+            chartData["profesores"]["colores"].push(rgb);
+            chartData["profesores"]["borde"].push(rgb);
+        }
+        var ctx = document.getElementById("myChart");
+        var estudiantectx = document.getElementById("estudianteChart");
+        var profesorctx = document.getElementById('profesorChart');
+        /*
+        * TODO:
+        * Generar datos de la grafica iterando encima del valor pasado por el metodo
+        * que envia los estudiantes segmentados por facultad
+        * */
+        var estudianteChart = new Chart(estudiantectx, {
+            type: 'bar',
+            data: {
+                labels: chartData["estudiantes"]["etiquetas"],
+                datasets: [{
+                    label: "Estudiantes",
+                    data: chartData["estudiantes"]["datos"],
+                    backgroundColor: chartData["estudiantes"]["colores"],
+                    borderColor: chartData["estudiantes"]["borde"],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var profesorChart = new Chart(profesorctx, {
+            type: 'bar',
+            data: {
+                labels: chartData["profesores"]["etiquetas"],
+                datasets: [{
+                    label: "Profesores",
+                    data: chartData["profesores"]["datos"],
+                    backgroundColor: chartData["profesores"]["colores"],
+                    borderColor: chartData["profesores"]["borde"],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

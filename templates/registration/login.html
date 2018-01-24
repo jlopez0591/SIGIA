@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Iniciar Sesion{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Iniciar Sesion</h4>
+                        <div>{% render_field form.username class="form-control" placeholder="Nombre de Usuario" %}</div>
+                        <hr/>
+                        <div>{% render_field form.password class="form-control" placeholder="Password" %}</div>
+                        <hr/>
+                        <button class="btn btn-outline-dark btn-block" type="submit">Iniciar Sesion</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+{% endblock %}

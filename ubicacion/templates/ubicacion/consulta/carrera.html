@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Consultar - Estudiante{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Busqueda de Carreras {{ request.GET.cod_sede }} {% if estudiante %}Hay
+                        consulta{% endif %}</h4>
+                    <div class="container">
+                        <form>
+                            <div class="form-row">
+                                <div class="col">{% render_field filter.form.cod_sede class="form-control" placeholder="Codigo de Sede" %}</div>
+                                <div class="col">{% render_field filter.form.cod_unidad class="form-control" placeholder="Codigo de Facultad" %}</div>
+                                <div class="col">{% render_field filter.form.cod_seccion class="form-control" placeholder="Codigo de Escuela" %}</div>
+                                <div class="col">{% render_field filter.form.cod_carrera class="form-control" placeholder="Codigo de Carrera" %}</div>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"
+                                                                                 aria-hidden="true"></i> Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Carreras</h4>
+
+
+                    {#                    Accordion de ubicaciones                #}
+                    <div id="accordion" role="tablist">
+                        {% for carrera in carrers %}
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse"
+                                           href="#collapse{{ forloop.counter }}" aria-expanded="false"
+                                           aria-controls="collapse{{ forloop.counter }}">
+                                            {{ carrera.sede.nombre|title }} - {{ carrera.unidad.nombre|title }}
+                                            - {{ carrera.seccion.nombre|title }} - {{ carrera.carrera.nombre|title }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse{{ forloop.counter }}" class="collapse" role="tabpanel"
+                                     aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>Codigo de Sede</th>
+                                                <td>{{ carrera.cod_sede }}</td>
+                                                <th>Codigo de Facultad</th>
+                                                <td>{{ carrera.cod_unidad }}</td>
+                                                <th>Codigo de Escuela</th>
+                                                <td>{{ carrera.cod_seccion }}</td>
+                                                <th>Codigo de Carrera</th>
+                                                <td>{{ carrera.cod_carrera }}</td>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                        <hr/>
+                                        <div class="text-right">
+                                            <a href="{{ carrera.get_absolute_url }}">Ver Dashboard</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+
+                    <hr/>
+                    <!-- Paginacion -->
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            {% if carrers.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?page={{ carrers.previous_page_number }}{% if request.GET %}&cod_sede={{ request.GET.cod_sede }}&cod_unidad={{ request.GET.cod_unidad }}&cod_seccion={{ request.GET.cod_seccion }}&cod_carrera={{ request.GET.cod_carrera }}{% endif %}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#"
+                                                                  tabindex="-1">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item active"><a class="page-link" href="#">
+                                Page {{ carrers.number }} of {{ carrers.paginator.num_pages }} </a></li>
+                            {% if carrers.has_next %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="?page={{ carrers.next_page_number }}{% if request.GET %}&cod_sede={{ request.GET.cod_sede }}&cod_unidad={{ request.GET.cod_unidad }}&cod_seccion={{ request.GET.cod_seccion }}&cod_carrera={{ request.GET.cod_carrera }}{% endif %}">next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled"><a class="page-link"
+                                                                  href="#">next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

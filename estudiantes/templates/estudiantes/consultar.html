@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Consultar - Estudiante{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Busqueda de Estudiante </h4>
+                    <div class="container">
+                        <form>
+                            <div class="form-row">
+                                <div class="col">{% render_field filter.form.provincia class="form-control" placeholder="Provincia" %}</div>
+                                <div class="col">{% render_field filter.form.clase class="form-control" placeholder="Clase" %}</div>
+                                <div class="col">{% render_field filter.form.tomo class="form-control" placeholder="Tomo" %}</div>
+                                <div class="col">{% render_field filter.form.folio class="form-control" placeholder="Folio" %}</div>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"
+                                                                                 aria-hidden="true"></i> Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Estudiantes</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Clase</th>
+                            <th scope="col">Tomo</th>
+                            <th scope="col">Folio</th>
+                            <th scope="col">Nombre del Estudiante</th>
+                            <th scope="col">Facultad</th>
+                            <th scope="col">Carrera</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for estudiante in filter.qs %}
+                            <tr>
+                                <td>{{ estudiante.provincia }}</td>
+                                <td>{{ estudiante.clase }}</td>
+                                <td>{{ estudiante.tomo }}</td>
+                                <td>{{ estudiante.folio }}</td>
+                                <td>{{ estudiante.primer_apellido|title }}, {{ estudiante.primer_nombre|title }}</td>
+                                <td>{{ estudiante.carrera.unidad.nombre|title }}</td>
+                                <td>{{ estudiante.carrera.carrera.nombre|title }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    SIGIA - {{ unidad.unidad.nombre.capitalize }}
+{% endblock %}
+
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"
+            integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Recursos Fisicos
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ unidad.equipos.all.count }}</h3></p>
+                    </div>
+                </div>
+                '
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Escuelas
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ unidad.secciones.escuelas.count }}</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Departamentos
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ unidad.secciones.departamentos.count }}</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 top-buffer">
+                <div class="card">
+                    <div class="card-header">
+                        Cantidad de Carreras
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">{{ unidad.carreras.count }}</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de Profesores</h5>
+                            <p class="card-text">
+                            <div class="text-right"><h3>{{ unidad.personal.profesores.count }}</h3></div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de Estudiantes</h5>
+                            <p class="card-text">
+                            <div class="text-right"><h3>{{ unidad.estudiantes.count }}</h3></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Recursos por tipo / Graficos-->
+        <div class="row top-buffer">
+            <div class="col-md-12">
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Recursos por Tipo</h5>
+                            <p class="card-text">
+                            <div class="text-right"><h3>{{ unidad.personal.profesores.count }}</h3></div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Recursos por Marca</h5>
+                            <p class="card-text">
+                            <div class="text-right"><h3>{{ unidad.estudiantes.count }}</h3></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function randomRGB() {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            return ['rgba(' + r + ',' + g + ',' + b + ',' + 0.2 + ')', 'rgba(' + r + ',' + g + ',' + b + ',' + 1.0 + ')']; //Recordar el 0.2 para el alpha.
+        }
+
+        var recursosTipo = {{ unidad.get_recursos_tipo_count|safe }};
+        var recursosModelo = {{ unidad.get_recursos_modelo_count|safe }};
+
+        recursosModeloSet = [];
+        recursosTipoSet = [];
+
+        pieOptions = {};
+
+        dataset = {
+            label: "",
+            data: "",
+            backgroundColor: "",
+            borderColor: "",
+            borderWidth: ""
+        };
+
+        for (var tipo in recursosTipo) {
+            [bgb, bgc] = [randomRGB()];
+            dataset = {
+                label: tipo,
+                data: recursosTipo[tipo],
+                backgroundColor: bgb,
+                borderColor: bgc,
+                borderWidth: 1
+            };
+            recursosTipoSet.push(dataset);
+        }
+
+        var modeloChart = new Chart(modeloctx, {
+            type: 'pie',
+            data: recursosModeloSet,
+            options: pieOptions
+        });
+        
+        var tipoChart = new Chart(tipoctx, {
+            type: 'pie',
+            data: recursosTipoSet,
+            options: pieOptions
+        });
+
+
+    </script>
+{% endblock %}

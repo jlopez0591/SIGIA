@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ carrera.nombre_completo|title }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Codigo: {{ carrera }}</h6>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Prueba #1</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">
+                                    <canvas id="myChart" width="350" height="350"></canvas>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div id="first">
+                            <button id="oneButton">Prueba Ajax</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{#    <script>#}
+{#        var ctx = document.getElementById("myChart").getContext('2d');#}
+{#        var myChart = new Chart(ctx, {#}
+{#            type: 'bar',#}
+{#            data: {#}
+{#                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],#}
+{#                datasets: [{#}
+{#                    label: '# of Votes',#}
+{#                    data: [12, 19, 3, 5, 2, 3],#}
+{#                    backgroundColor: [#}
+{#                        'rgba(255, 99, 132, 0.2)',#}
+{#                        'rgba(54, 162, 235, 0.2)',#}
+{#                        'rgba(255, 206, 86, 0.2)',#}
+{#                        'rgba(75, 192, 192, 0.2)',#}
+{#                        'rgba(153, 102, 255, 0.2)',#}
+{#                        'rgba(255, 159, 64, 0.2)'#}
+{#                    ],#}
+{#                    borderColor: [#}
+{#                        'rgba(255,99,132,1)',#}
+{#                        'rgba(54, 162, 235, 1)',#}
+{#                        'rgba(255, 206, 86, 1)',#}
+{#                        'rgba(75, 192, 192, 1)',#}
+{#                        'rgba(153, 102, 255, 1)',#}
+{#                        'rgba(255, 159, 64, 1)'#}
+{#                    ],#}
+{#                    borderWidth: 1#}
+{#                }]#}
+{#            },#}
+{#            options: {#}
+{#                responsive: true,#}
+{#                scales: {#}
+{#                    yAxes: [{#}
+{#                        ticks: {#}
+{#                            beginAtZero: true#}
+{#                        }#}
+{#                    }]#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#    </script>#}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        var x = "Hello World";
+        console.log(x);
+        $("document").ready(function () {
+            // Action for button #oneButton, getInfoFromServer
+            $("#oneButton").on("click", getInfoFromServer);
+        });
+
+        function getInfoFromServer() {
+            $.ajax({
+                type: "GET",
+                url: "/json",
+                success: postToPage
+            });
+        }
+
+        function postToPage(data, status) {
+            console.log(data['foo']);
+            for(var i = 0; i < data.length; i++){
+                var obj = data
+                console.log(obj['foo']);
+            }
+        }
+    </script>
+{% endblock %}

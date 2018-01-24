@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Consultar - Facultades{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Busqueda de Facultad</h4>
+                    <div class="container">
+                        <form>
+                            <div class="form-row">
+                                <div class="col">{% render_field filter.form.cod_sede class="form-control" placeholder="Codigo de Sede" %}</div>
+                                <div class="col">{% render_field filter.form.cod_unidad class="form-control" placeholder="Codigo de Facultad" %}</div>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"
+                                                                                 aria-hidden="true"></i> Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Facultades</h4>
+
+                    <div id="accordion" role="tablist">
+                        {% for unidad in unidades %}
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse"
+                                           href="#collapse{{ forloop.counter }}" aria-expanded="false"
+                                           aria-controls="collapse{{ forloop.counter }}">
+                                            {{ unidad.sede.nombre|title }} - {{ unidad.unidad.nombre|title }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse{{ forloop.counter }}" class="collapse" role="tabpanel"
+                                     aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>Codigo de Sede</th>
+                                                <td>{{ unidad.cod_sede }}</td>
+                                                <th>Codigo de Facultad</th>
+                                                <td>{{ unidad.cod_unidad }}</td>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                        <hr/>
+                                        <div class="text-right">
+                                            <a href="{{ unidad.get_absolute_url }}">Ver Dashboard</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <hr />
+
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            {% if unidades.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ unidades.previous_page_number }}{% if request.GET %}&cod_sede={{ request.GET.cod_sede }}&cod_unidad={{ request.GET.cod_unidad }}{% endif %}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#"
+                                                                  tabindex="-1">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item active"><a class="page-link" href="#">
+                                Page {{ unidades.number }} of {{ unidades.paginator.num_pages }} </a></li>
+                            {% if unidades.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ unidades.next_page_number }}{% if request.GET %}&cod_sede={{ request.GET.cod_sede }}&cod_unidad={{ request.GET.cod_unidad }}{% endif %}">next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled"><a class="page-link"
+                                                                  href="#">next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
