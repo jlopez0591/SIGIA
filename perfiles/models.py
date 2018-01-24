@@ -86,6 +86,7 @@ class Perfil(models.Model):
     imagen = models.ImageField(upload_to='perfil/')
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
     pais = CountryField(blank=True)
+    cod_profesor = models.CharField(max_length=120, blank=True, null=True)
 
     # Info Ubicacion
     cod_sede = models.CharField(max_length=2, blank=True, default='XX')

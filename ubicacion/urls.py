@@ -29,5 +29,11 @@ urlpatterns = [
     url(r'^sedes/json/$', views.get_sedes, name='sedes-json'),
     url(r'^facultades/json/$', views.get_facultades, name='facultades-json'),
     url(r'^escuelas/json/$', views.get_escuelas, name='escuelas-json'),
+    url(r'^departamentos/json/$', views.get_departamentos, name='escuelas-json'),
     url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
+    # Instancias JSON
+    # url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
+    # url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
+    # url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
+    # url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
 ]

@@ -31,7 +31,7 @@ def consulta_profesor(request):
 class PerfilDetailView(DetailView):
     model = Perfil
     context_object_name = 'perfil'
-    template_name = 'perfiles/privado.html'
+    template_name = 'perfiles/privado_redux.html'
 
     def get_object(self, queryset=None):
         return Perfil.objects.get_or_create(usuario=self.request.user)[0]

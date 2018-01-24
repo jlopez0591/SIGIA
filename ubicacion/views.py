@@ -195,6 +195,11 @@ def get_escuelas(request):
     lista = list(escuelas)
     return JsonResponse(lista, safe=False)
 
+def get_departamentos(request):
+    escuelas = Seccion.objects.filter(tipo='DE').values()
+    lista = list(escuelas)
+    return JsonResponse(lista, safe=False)
+
 
 def get_carreras(request):
     carreras = Carrera.objects.all().values()
