@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Modelos{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Modelos</h4>
+                    <p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-modelo' %}"><i
+                            class="fa fa-edit"></i> Registrar</a></p>
+                    <table class="table">
+                        {% if modelos %}
+                            <tbody>
+                            {% for modelo in modelos %}
+                                <tr>
+                                    <td>{{ modelo }}</td>
+                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
+                                        {% if modelo.url %}
+                                            <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
+                                                Modelo </a>
+                                        {% else %}
+                                            <a href="#" class="btn disabled"><i class="fas fa-link"></i> Modelo</a>
+                                        {% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% else %}
+                            <div class="alert alert-info text-center">No hay modelos registradas</div>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

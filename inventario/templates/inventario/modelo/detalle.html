@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Modelo{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <ul class="list-group">
+                            <li class="list-group-item">Nombre: {{ modelo.nombre }}</li>
+                            <li class="list-group-item">Marca: {{ modelo.fabricante.nombre }}</li>
+                            <li class="list-group-item">Tipo: {{ modelo.categoria.nombre }}</li>
+                            <li class="list-group-item">URL Soporte: {{ modelo.url }}</li>
+                        </ul>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

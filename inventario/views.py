@@ -13,13 +13,11 @@ from inventario.resources import CategoriaResource, FabricanteResource, EquipoRe
 from perfiles.models import Perfil
 
 
-# Create your views here.
-
 # Fabricante
 class FabricanteListView(ListView):
     context_object_name = 'fabricantes'
     model = Fabricante
-    template_name = 'inventario/fabricantes.html'
+    template_name = 'inventario/fabricante/lista.html'
 
 
 class FabricanteDetailView(DetailView):
@@ -32,7 +30,7 @@ class FabricanteCreateView(CreateView):
     context_object_name = 'form'
     form_class = FabricanteForm
     model = Fabricante
-    template_name = 'form.html'
+    template_name = 'inventario/fabricante/crear.html'
 
 
 # Categorias
@@ -60,20 +58,21 @@ class CategoriaCreateView(CreateView):
 class ModeloListView(ListView):
     context_object_name = 'modelos'
     model = Modelo
-    template_name = 'inventario/modelos.html'
+    template_name = 'inventario/modelo/lista.html'
+    queryset = Modelo.objects.all().order_by('categoria__nombre')
 
 
 class ModeloDetailView(DetailView):
     context_object_name = 'modelo'
     model = Modelo
-    template_name = 'inventario/modelo.html'
+    template_name = 'inventario/modelo/detalle.html'
 
 
 class ModeloCreateView(CreateView):
     context_object_name = 'form'
     form_class = ModeloForm
     model = Modelo
-    template_name = 'form.html'
+    template_name = 'inventario/modelo/crear.html'
 
 
 # Equipos
@@ -108,25 +107,6 @@ class EquipoCreateView(CreateView):
             return super(EquipoCreateView, self).form_valid(form)
         except:
             return self.form_invalid(form)
-
-
-# Generico
-class InfoListView(ListView):
-    template_name = 'inventario/lista.html'
-    nombre = ''
-
-    def get_context_data(self, **kwargs):
-        context = super(InfoListView, self).get_context_data()
-        context['nombre'] = self.nombre
-        return context
-
-
-class InfoCreateView(CreateView):
-    template_name = 'form.html'
-
-
-class InfoDetailView(DetailView):
-    template_name = 'form.html'
 
 
 def carga_fabricantes(request):

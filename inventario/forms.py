@@ -10,57 +10,38 @@ from inventario.models import Fabricante, Categoria, Modelo, Equipo
 class FabricanteForm(forms.ModelForm):
     class Meta:
         model = Fabricante
-        fields = ('nombre',)
+        fields = ('nombre', 'url')
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del Fabricante', })
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del Fabricante', }),
+            'url': forms.TextInput(attrs={'placeholder': 'Direccion Web del Fabricante', })
+        }
+        labels = {
+            'nombre': 'Nombre del Fabricante',
+            'url': 'Direccion Web del Fabricante*'
         }
 
 
 class CategoriaForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(CategoriaForm, self).__init__(*args, **kwargs)
-        self.fields['nombre'].label = 'Nombre de la categoria'
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Fieldset(
-                'Categoria',
-                'nombre',
-            ),
-            ButtonHolder(
-                Submit('Registrar', 'Registrar', css_class='btn btn-block btn-primary btn-lg')
-            )
-        )
-
     class Meta:
         model = Categoria
         fields = ('nombre',)
+        labels = {
+            'nombre': 'Nombre de la Categoria'
+        }
 
 
 class ModeloForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ModeloForm, self).__init__(*args, **kwargs)
-        self.fields['nombre'].label = 'Nombre del Modelo'
-        self.fields['fabricante'].label = 'Nombre del Fabricante'
-        self.fields['categoria'].label = 'Categoria del Modelo'
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Fieldset(
-                'Modelo',
-                'nombre',
-                'fabricante',
-                'categoria'
-            ),
-            ButtonHolder(
-                Submit('Registrar', 'Registrar', css_class='btn btn-block btn-primary btn-lg')
-            )
-        )
-
     class Meta:
         model = Modelo
-        fields = ('nombre', 'fabricante', 'categoria',)
+        fields = ('nombre', 'fabricante', 'categoria', 'url')
         widgets = {
             'fabricante': autocomplete.ModelSelect2(url='inventario:fabricante-autocomplete'),
             'categoria': autocomplete.ModelSelect2(url='inventario:categoria-autocomplete')
+        }
+        labels = {
+            'fabricante': 'Nombre del Fabricante',
+            'categoria': 'Categoria',
+            'nombre': 'Nombre del Modelo'
         }
 
 
@@ -74,6 +55,10 @@ class EquipoForm(forms.ModelForm):
             'etiqueta': forms.TextInput(attrs={
                 'placeholder': 'Etiqueta del Equipo'
             })
+        }
+        labels = {
+            'modelo': 'Modelo del Equipo',
+            'etiqueta': 'Etiqueta del Equipo'
         }
 
 

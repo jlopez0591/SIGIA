@@ -74,7 +74,7 @@ urlpatterns = [
         ActivityCreateView.as_view(model=Idioma, form_class=IdiomaForm, template_name='idioma/crear.html'),
         name='crear-idioma'),
     url(r'^idioma/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Idioma, form_class=IdiomaForm),
-        name='crear-idioma'),
+        name='editar-idioma'),
 
     # Titulo
     url(r'^titulo/crear/$',

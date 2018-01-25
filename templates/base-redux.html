@@ -72,7 +72,7 @@
                             Registrar <i class="fas fa-pen-square"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {# Actividades de los profesores TODO: Agregar los permisos para la creacion de#}
+                            {# Actividades de los profesores TODO: arar los permisos para la creacion de#}
                             <a class="dropdown-item" href="#"><b>Actividad</b></a>
                             <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia Postdoctorla</a>
                             <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
@@ -144,10 +144,9 @@
                             <a class="dropdown-item" href="#">Pendientes</a>  <!--TODO: Crear vista -->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#"><b>Inventario</b></a>
-                            <a class="dropdown-item" href="{% url 'inventario:crear-fabricante' %}">Agregar
-                                Fabricante</a>
-                            <a class="dropdown-item" href="{% url 'inventario:crear-categoria' %}">Agregar Categoria</a>
-                            <a class="dropdown-item" href="{% url 'inventario:crear-modelo' %}">Agregar Modelo</a>
+                            <a class="dropdown-item" href="{% url 'inventario:fabricante-lista' %}">Fabricantes</a>
+                            <a class="dropdown-item" href="{% url 'inventario:categoria-lista' %}">Categorias</a>
+                            <a class="dropdown-item" href="{% url 'inventario:modelo-lista' %}">Modelos</a>
                         </div>
                     </li>
                 {% endif %}
@@ -181,8 +180,6 @@
 
             </ul>
             {#  Fin del Navbar #}
-
-
         </div>
     </nav>
     <!-- /Navbar -->
@@ -203,10 +200,11 @@
                 </div>
             </div>
         {% endif %}
+
+
         {% block content %}
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="container jumbo-test">
                         <div class="jumbotron">
                             <h1 class="display-3">{% block jumbotron-title %}Bienvenido al Sistema
@@ -221,10 +219,13 @@
                             </p>
                         </div>
                     </div>
-
                 </div>
             </div>
         {% endblock %}
+
+
+
+
     </div>
     <!-- End Content -->
 

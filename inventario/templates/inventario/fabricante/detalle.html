@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ fabricante }}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ fabricante.nombre }}</h4>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

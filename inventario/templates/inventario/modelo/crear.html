@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
-{% block title %}Agregar Categoria{% endblock %}
+{% block title %}Agregar Modelo{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Registrar Equipo</h4>
+                    <h4 class="card-title">Registrar Modelo</h4>
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Registrar Categoria</button>
+                        <button type="submit" class="btn btn-primary">Registrar Modelo</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ form.media }}
 {% endblock %}
