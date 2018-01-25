@@ -37,7 +37,7 @@ class EstudianteDetailView(PermissionRequiredMixin, UserPassesTestMixin, DetailV
     context_object_name = 'estudiante'
     permission_required = ('estudiante.view_estudiante')
     model = Estudiante
-    template_name = 'estudiante/estudiante.html'
+    template_name = 'estudiantes/detalle.html'
 
     def test_func(self):
         return True

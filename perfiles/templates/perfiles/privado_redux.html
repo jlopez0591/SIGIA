@@ -5,156 +5,234 @@
 
 {% block content %}
     <div class="row">
-        <div class="container-fluid">
-            <!-- Introduccion a la persona y datos personales-->
-            <div class="card-deck">
+    <div class="container-fluid">
+    <!-- Introduccion a la persona y datos personales-->
+    <div class="card-deck">
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }} |
-                            {{ perfil.provincia }}-{{ perfil.clase }}-{{ perfil.tomo }}-{{ perfil.folio }}</h5>
-                        <hr/>
-                        <p class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item">Edad: {{ perfil.edad }}</li>
-                            <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>
-                            <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>
-                            <li class="list-group-item">Codigo: {{ perfil.cod_profesor }}</li>
-                        </ul>
-                        </p>
-                    </div>
-                </div>
-
-
-                <!-- Datos Academicos -->
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Informacion Institucional</h5>
-                        <p class="card-text"></p>
-                        <ul class="list-group">
-                            <li class="list-group-item">Fecha de Inicio de Labores: {{ perfil.tiempo_laborado }}</li>
-                            <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>
-                            <li class="list-group-item">Sede: {{ perfil.cod_sede }}</li>
-                            <li class="list-group-item">Facultad: {{ perfil.cod_unidad }}</li>
-                            <li class="list-group-item">Departamento: {{ perfil.cod_seccion }}</li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <!-- Actividades Realizadaso-->
-                <div class="card">
-                    <div class="card-body">
-                        {% if perfil.imagen %}
-                            <img class="card-img-top" src="{{ perfil.imagen }}" alt="Card image cap">
-                        {% else %}
-                            <img class="card-img-top" src="http://lorempixel.com/400/400/cats/" alt="Card image cap">
-                        {% endif %}
-                    </div>
-                </div>
-
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <img class="img-fluid " src="http://lorempixel.com/400/400/cats/" alt="Card image cap">
+            <hr/>
+            <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }} |
+                {{ perfil.provincia }}-{{ perfil.clase }}-{{ perfil.tomo }}-{{ perfil.folio }}</h5>
+            <hr/>
+            <p class="card-text">
+            <ul class="list-group">
+                <li class="list-group-item">Edad: {{ perfil.edad }}</li>
+                <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>
+                <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>
+                <li class="list-group-item">Codigo: {{ perfil.cod_profesor }}</li>
+            </ul>
+            </p>
         </div>
     </div>
-    <div class="row top-buffer">
-        <div class="container-fluid">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Actividades</h5>
-                        <p class="card-text">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                                   role="tab" aria-controls="pills-home" aria-selected="true">Realizadas</a>
-                            </li>
-                            {% if request.user == perfil.usuario %}
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                       role="tab" aria-controls="pills-profile" aria-selected="false">Pendientes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
-                                       role="tab" aria-controls="pills-contact" aria-selected="false">Rechazadas</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                 aria-labelledby="pills-home-tab">
-                                {% if perfil.usuario.actividades.aprobado %}
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Fecha de la Actividad</th>
-                                            <th>Nombre de la Actividad</th>
-                                        </tr>
-                                        </thead>
-                                        {% for actividad in perfil.usuario.actividades.aprobado %}
-                                            <tr>
-                                                <td>{{ actividad.fecha }}</td>
-                                                <td>{{ actividad.nombre_actividad }}</td>
-                                                <td></td>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                {% else %}
-                                    <div class="alert alert-info">
-                                        No ha realizado actividades recientemente
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                 aria-labelledby="pills-profile-tab">
-                                {% if perfil.usuario.actividades.en_espera %}
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Fecha de la Actividad</th>
-                                            <th>Nombre de la Actividad</th>
-                                        </tr>
-                                        </thead>
-                                        {% for actividad in perfil.usuario.actividades.en_espera %}
-                                            <tr>
-                                                <td>{{ actividad.fecha }}</td>
-                                                <td>{{ actividad.nombre_actividad }}</td>
-                                                <td>
-                                                    <a href="{% url 'actividad:detalle' actividad.pk %}" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-search"></i></a>
-                                                    <a href="#" class="btn btn-sm btn-light"><i
-                                                            class="fas fa-edit"></i></a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                {% else %}
-                                    <div class="alert alert-primary" role="alert">
-                                        No tiene actividades en espera
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                 aria-labelledby="pills-contact-tab">
-                                {% if perfil.usuario.actividades.rechazado %}
-                                    <ul class="list-group">
-                                        {% for actividad in perfil.usuario.actividades.rechazado %}
-                                            <li class="list-group-item">{{ actividad }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                {% else %}
-                                    <div class="alert alert-success" role="alert">
-                                        No tiene actividades rechazadas
-                                    </div>
-                                {% endif %}
-                            </div>
+
+
+    <!-- Datos Academicos -->
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Informacion Institucional</h5>
+            <p class="card-text"></p>
+            <ul class="list-group">
+                <li class="list-group-item">Fecha de Inicio de Labores: {{ perfil.tiempo_laborado }}</li>
+                <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>
+                <li class="list-group-item">Sede: {{ perfil.cod_sede }}</li>
+                <li class="list-group-item">Facultad: {{ perfil.cod_unidad }}</li>
+                <li class="list-group-item">Departamento: {{ perfil.cod_seccion }}</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Actividades</h5>
+            <p class="card-text">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                       role="tab" aria-controls="pills-home" aria-selected="true">Realizadas</a>
+                </li>
+                {% if request.user == perfil.usuario %}
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                           role="tab" aria-controls="pills-profile" aria-selected="false">Pendientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                           role="tab" aria-controls="pills-contact" aria-selected="false">Rechazadas</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                     aria-labelledby="pills-home-tab">
+                    {% include 'perfiles/includes/actividades.html' %}
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                     aria-labelledby="pills-profile-tab">
+                    {% if perfil.usuario.actividades.en_espera %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Fecha de la Actividad</th>
+                                <th>Nombre de la Actividad</th>
+                            </tr>
+                            </thead>
+                            {% for actividad in perfil.usuario.actividades.en_espera %}
+                                <tr>
+                                    <td>{{ actividad.fecha }}</td>
+                                    <td>{{ actividad.nombre_actividad }}</td>
+                                    <td>
+                                        <a href="{% url 'actividad:detalle' actividad.pk %}"
+                                           class="btn btn-sm btn-primary"><i
+                                                class="fas fa-search"></i></a>
+                                        <a href="#" class="btn btn-sm btn-light"><i
+                                                class="fas fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <div class="alert alert-primary" role="alert">
+                            No tiene actividades en espera
                         </div>
-                        </p>
-                    </div>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                     aria-labelledby="pills-contact-tab">
+                    {% if perfil.usuario.actividades.rechazado %}
+                        <ul class="list-group">
+                            {% for actividad in perfil.usuario.actividades.rechazado %}
+                                <li class="list-group-item">{{ actividad }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">
+                            No tiene actividades rechazadas
+                        </div>
+                    {% endif %}
                 </div>
             </div>
+            </p>
         </div>
     </div>
+
+
+    <!-- Actividades Realizadaso-->
+    {#                <div class="card">#}
+    {#                    <div class="card-body">#}
+    {#                        {% if perfil.imagen %}#}
+    {#                            <img class="card-img-top" src="{{ perfil.imagen }}" alt="Card image cap">#}
+    {#                        {% else %}#}
+    {#                            <img class="card-img-top" src="http://lorempixel.com/400/400/cats/" alt="Card image cap">#}
+    {#                        {% endif %}#}
+    {#                    </div>#}
+    {#                </div>#}
+
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="row top-buffer">#}
+    {#        <div class="container-fluid">#}
+    {#            <div class="col-12">#}
+    {#                <div class="card">#}
+    {#                    <div class="card-body">#}
+    {#                        <h5 class="card-title">Actividades</h5>#}
+    {#                        <p class="card-text">#}
+    {#                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">#}
+    {#                            <li class="nav-item">#}
+    {#                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"#}
+    {#                                   role="tab" aria-controls="pills-home" aria-selected="true">Realizadas</a>#}
+    {#                            </li>#}
+    {#                            {% if request.user == perfil.usuario %}#}
+    {#                                <li class="nav-item">#}
+    {#                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"#}
+    {#                                       role="tab" aria-controls="pills-profile" aria-selected="false">Pendientes</a>#}
+    {#                                </li>#}
+    {#                                <li class="nav-item">#}
+    {#                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"#}
+    {#                                       role="tab" aria-controls="pills-contact" aria-selected="false">Rechazadas</a>#}
+    {#                                </li>#}
+    {#                            {% endif %}#}
+    {#                        </ul>#}
+    {#                        <div class="tab-content" id="pills-tabContent">#}
+    {#                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"#}
+    {#                                 aria-labelledby="pills-home-tab">#}
+    {#                                {% if perfil.usuario.actividades.aprobado %}#}
+    {#                                    <table class="table">#}
+    {#                                        <thead>#}
+    {#                                        <tr>#}
+    {#                                            <th>Fecha de la Actividad</th>#}
+    {#                                            <th>Nombre de la Actividad</th>#}
+    {#                                        </tr>#}
+    {#                                        </thead>#}
+    {#                                        {% for actividad in perfil.usuario.actividades.aprobado %}#}
+    {#                                            <tr>#}
+    {#                                                <td>{{ actividad.fecha }}</td>#}
+    {#                                                <td>{{ actividad.nombre_actividad }}</td>#}
+    {#                                                <td></td>#}
+    {#                                            </tr>#}
+    {#                                        {% endfor %}#}
+    {#                                    </table>#}
+    {#                                {% else %}#}
+    {#                                    <div class="alert alert-info">#}
+    {#                                        No ha realizado actividades recientemente#}
+    {#                                    </div>#}
+    {#                                {% endif %}#}
+    {#                            </div>#}
+    {#                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"#}
+    {#                                 aria-labelledby="pills-profile-tab">#}
+    {#                                {% if perfil.usuario.actividades.en_espera %}#}
+    {#                                    <table class="table">#}
+    {#                                        <thead>#}
+    {#                                        <tr>#}
+    {#                                            <th>Fecha de la Actividad</th>#}
+    {#                                            <th>Nombre de la Actividad</th>#}
+    {#                                        </tr>#}
+    {#                                        </thead>#}
+    {#                                        {% for actividad in perfil.usuario.actividades.en_espera %}#}
+    {#                                            <tr>#}
+    {#                                                <td>{{ actividad.fecha }}</td>#}
+    {#                                                <td>{{ actividad.nombre_actividad }}</td>#}
+    {#                                                <td>#}
+    {#                                                    <a href="{% url 'actividad:detalle' actividad.pk %}"#}
+    {#                                                       class="btn btn-sm btn-primary"><i#}
+    {#                                                            class="fas fa-search"></i></a>#}
+    {#                                                    <a href="#" class="btn btn-sm btn-light"><i#}
+    {#                                                            class="fas fa-edit"></i></a>#}
+    {#                                                </td>#}
+    {#                                            </tr>#}
+    {#                                        {% endfor %}#}
+    {#                                    </table>#}
+    {#                                {% else %}#}
+    {#                                    <div class="alert alert-primary" role="alert">#}
+    {#                                        No tiene actividades en espera#}
+    {#                                    </div>#}
+    {#                                {% endif %}#}
+    {#                            </div>#}
+    {#                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"#}
+    {#                                 aria-labelledby="pills-contact-tab">#}
+    {#                                {% if perfil.usuario.actividades.rechazado %}#}
+    {#                                    <ul class="list-group">#}
+    {#                                        {% for actividad in perfil.usuario.actividades.rechazado %}#}
+    {#                                            <li class="list-group-item">{{ actividad }}</li>#}
+    {#                                        {% endfor %}#}
+    {#                                    </ul>#}
+    {#                                {% else %}#}
+    {#                                    <div class="alert alert-success" role="alert">#}
+    {#                                        No tiene actividades rechazadas#}
+    {#                                    </div>#}
+    {#                                {% endif %}#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                        </p>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 {% endblock content %}
 
 

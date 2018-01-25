@@ -146,9 +146,15 @@ class Perfil(models.Model):
         return codes
 
     def edad(self):
-        bd = date.today() - self.fecha_nacimiento
-        return int(bd.days / 365)
+        if self.fecha_nacimiento:
+            bd = date.today() - self.fecha_nacimiento
+            return int(bd.days / 365)
+        else:
+            return "No tiene registrado una fecha de nacimiento"
 
     def tiempo_laborado(self):
-        tl = date.today() - self.fecha_inicio
-        return int(tl.days / 365)
+        if self.fecha_inicio:
+            tl = date.today() - self.fecha_inicio
+            return int(tl.days / 365)
+        else:
+            return "No tiene registrado una fecha de inicio"

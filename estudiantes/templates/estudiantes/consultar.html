@@ -39,7 +39,6 @@
                             <th scope="col">Tomo</th>
                             <th scope="col">Folio</th>
                             <th scope="col">Nombre del Estudiante</th>
-                            <th scope="col">Facultad</th>
                             <th scope="col">Carrera</th>
                         </tr>
                         </thead>
@@ -51,8 +50,9 @@
                                 <td>{{ estudiante.tomo }}</td>
                                 <td>{{ estudiante.folio }}</td>
                                 <td>{{ estudiante.primer_apellido|title }}, {{ estudiante.primer_nombre|title }}</td>
-                                <td>{{ estudiante.carrera.unidad.nombre|title }}</td>
                                 <td>{{ estudiante.carrera.carrera.nombre|title }}</td>
+                                <td><a href="{{ estudiante.get_absolute_url }}" class="btn btn-sm btn-link"><i class="fa fa-search"></i></a>
+                                    <a href="{% url 'estudiante:editar' estudiante.pk %}" class="btn btn-sm btn-light"><i class="fa fa-edit"></i></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

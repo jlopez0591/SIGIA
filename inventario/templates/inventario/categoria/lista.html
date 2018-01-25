@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Categorias{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Categorias</h4>
+                    <table class="table">
+                        {% if categorias %}
+                            <tbody>
+                            {% for categoria in categorias %}
+                                <tr>
+                                    <td>{{ categoria.nombre }}</td>
+                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% else %}
+                            <div class="alert alert-info text-center">No hay categorias registradas</div>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

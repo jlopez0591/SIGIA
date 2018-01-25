@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Informacion del estudiante -->
+    <div class="row">
+        <div class="container-fluid">
+            <div class="card-deck">
+
+
+                <!-- Informacion Personal-->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ estudiante.primer_apellido }}, {{ estudiante.primer_nombre }}
+                            | {{ estudiante.provincia }}-{{ estudinate.clase }}-{{ estudiante.tomo }}-{{ estudiante.folio }}</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item">Direccion: {{ estudiante.direccion }}</li>
+                            <li class="list-group-item">Sexo: {{ estudiante.get_sexo_display }}</li>
+                            <li class="list-group-item">Telefono: {{ estudiante.telefono }}</li>
+                            <li class="list-group-item">Tipo de Sangre: {{ estudiante.get_tipo_sangre_display }}</li>
+                            <li class="list-group-item">Discapacidades: {{ estudiante.discapacidad }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Informacion Academica-->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Informacion Academica</h4>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">Sede: {{ estudiante.cod_sede }}</li>
+                            <li class="list-group-item">Facultad: {{ estudiante.cod_unidad }}</li>
+                            <li class="list-group-item">Escuela: {{ estudiante.cod_seccion }}</li>
+                            <li class="list-group-item">Carrera: {{ estudiante.cod_carrera }}</li>
+                        </ul>
+                        <hr/>
+                        <ul class="list-group">
+                            <li class="list-group-item">Turno: {{ estudiante.get_turno.display }}</li>
+                            <li class="list-group-item">Fecha de Ingreso: {{ estudiante.fecha_ingreso }}</li>
+                            <li class="list-group-item">Semestre Actual: {{ estudiante.get_semestre_display }}</li>
+                            <li class="list-group-item">Ultimo Anio Matriculado: {{ estudiante.ultimo_anio }}</li>
+                            <li class="list-group-item">Ultimo Semestre: {{ estudiante.ultimo_semestre }}</li>
+                            <li class="list-group-item">Fecha de Graduacion: {{ estudiante.fecha_graduacion }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Anteproyectos y Trabajos de Graduacion -->
+    <div class="row">
+        <div class="container-fluid">
+            <div class="card-deck">
+
+                <!--Anteproyecto-->
+                <div class="card"></div>
+
+                <!-- Trabajos de Graduacion -->
+                <div class="card"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Categoria{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Registrar Categoria</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Registrar Categoria</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

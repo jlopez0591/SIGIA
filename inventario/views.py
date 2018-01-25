@@ -1,10 +1,10 @@
 import csv
-import io
 
 from tablib import Dataset
 
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from django.urls import reverse_lazy
 
 from inventario.forms import BulkCreateForm, CategoriaForm, FabricanteForm, ModeloForm, EquipoForm
 from inventario.models import Categoria, Fabricante, Modelo, Equipo
@@ -39,20 +39,21 @@ class FabricanteCreateView(CreateView):
 class CategoriaListView(ListView):
     context_object_name = 'categorias'
     model = Categoria
-    template_name = 'inventario/categorias.html'
+    template_name = 'inventario/categoria/lista.html'
 
 
 class CategoriaDetailView(DetailView):
     context_object_name = 'categoria'
     model = Categoria
-    template_name = 'inventario/categoria.html'
+    template_name = 'inventario/categoria/detalle.html'
 
 
 class CategoriaCreateView(CreateView):
     context_object_name = 'form'
     form_class = CategoriaForm
     model = Categoria
-    template_name = 'form.html'
+    template_name = 'inventario/categoria/crear.html'
+    success_url = reverse_lazy('inventario:categoria-lista')
 
 
 # Modelos

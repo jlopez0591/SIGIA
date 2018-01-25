@@ -1,0 +1,21 @@
+{% if perfil.usuario.actividades.aprobado %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Fecha de la Actividad</th>
+            <th>Nombre de la Actividad</th>
+        </tr>
+        </thead>
+        {% for actividad in perfil.usuario.actividades.aprobado %}
+            <tr>
+                <td>{{ actividad.fecha }}</td>
+                <td>{{ actividad.nombre_actividad }}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <div class="alert alert-info">
+        No ha realizado actividades recientemente
+    </div>
+{% endif %}

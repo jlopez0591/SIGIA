@@ -76,6 +76,7 @@ class EstadiaCreateView(CreateView):
 
 
 class ActivityDetailView(DetailView):
+    model = Actividad
     context_object_name = 'actividad'
 
 

@@ -40,7 +40,7 @@ class PerfilDetailView(DetailView):
 class PerfilPublicoView(DetailView):
     model = Perfil
     context_object_name = 'perfil'
-    template_name = 'perfil/publico.html'
+    template_name = 'perfiles/privado_redux.html'
 
 
 class PerfilUpdateView(UpdateView):

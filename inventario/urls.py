@@ -31,6 +31,9 @@ urlpatterns = [
     url(r'^fabricante/carga/$', views.carga_fabricantes, name='carga-fabricantes'),
     url(r'^categoria/carga/$', views.carga_categorias, name='carga-categoria'),
     url(r'^modelos/carga/$', views.carga_modelos, name='carga-modelos'),
+
+    # JSONs
+
     # Autocompletes
     url(r'^categoria-autocomplete/$', CategoriaAutocomplete.as_view(), name='categoria-autocomplete'),
     url(r'^fabricante-autocomplete/$', FabricanteAutocomplete.as_view(), name='fabricante-autocomplete'),
