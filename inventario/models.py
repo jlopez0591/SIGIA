@@ -79,7 +79,7 @@ class Equipo(models.Model):
     cod_unidad = models.CharField(max_length=2, blank=True)
     observaciones = models.TextField(max_length=500, blank=True)
 
-    aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)
+    aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, blank=True, null=True, related_name='equipos')
 
     def __str__(self):

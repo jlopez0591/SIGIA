@@ -7,6 +7,8 @@ from inventario.views import CategoriaCreateView, CategoriaListView, CategoriaDe
     FabricanteListView, ModeloCreateView, ModeloListView, ModeloDetailView, AulaListView, AulaCreateView, \
     AulaDetailView, AulaUpdateView
 
+from . import views
+
 app_name = 'inventario'
 urlpatterns = [
     # CRUD Categoria
@@ -37,4 +39,10 @@ urlpatterns = [
     url(r'^modelo-autocomplete/$', ModeloAutocomplete.as_view(), name='modelo-autocomplete'),
     url(r'^aula-autocomplete/$', AulaAutocomplete.as_view(), name='aula-autocomplete'),
     # url(r'^modelo-autocomplete/$', ModeloAutocomplete.as_view(), name='modelo-autocomplete'),
+    # JSON
+    url(r'^categorias/json/$', views.categorias_json, name='categoria-json'),
+    url(r'^fabricantes/json/$', views.fabricantes_json, name='categoria-json'),
+    url(r'^modelos/json/$', views.modelos_json, name='categoria-json'),
+    url(r'^aulas/json/$', views.aulas_json, name='categoria-json'),
+    url(r'^equipos/json/$', views.equipos_json, name='categoria-json'),
 ]

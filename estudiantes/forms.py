@@ -4,8 +4,8 @@ from django.forms import ModelForm, TextInput
 from dal import autocomplete
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
 
 
 class StudentUpdateForm(forms.ModelForm):
