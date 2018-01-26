@@ -18,3 +18,13 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
+    {{ form.media }}
+    <script>
+        tinymce.init({
+            selector: '#id_observaciones'
+        });
+    </script>
+{% endblock %}

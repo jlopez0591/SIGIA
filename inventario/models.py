@@ -46,9 +46,9 @@ class Modelo(models.Model):
 
 
 class Aula(models.Model):
-    AULA = 1
-    LABORATORIO = 2
-    OFICINA = 3
+    AULA = '1'
+    LABORATORIO = '2'
+    OFICINA = '3'
     TIPOS = (
         (AULA, 'Aula'),
         (LABORATORIO, 'Laboratorio'),
@@ -62,7 +62,7 @@ class Aula(models.Model):
     cod_unidad = models.CharField(max_length=2, blank=True)
 
     def __str__(self):
-        return '{} - {} - {}'.format(self.ubicacion.unidad.nombre, self.get_tipo_display, self.numero)
+        return self.numero
 
     def save(self, *args, **kwargs):
         try:

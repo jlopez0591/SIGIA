@@ -1,11 +1,11 @@
 from django.conf.urls import url
 
-from inventario.autocomplete import CategoriaAutocomplete, FabricanteAutocomplete, ModeloAutocomplete
+from inventario.autocomplete import CategoriaAutocomplete, FabricanteAutocomplete, ModeloAutocomplete, AulaAutocomplete
+from inventario.models import Aula
 from inventario.views import CategoriaCreateView, CategoriaListView, CategoriaDetailView, FabricanteCreateView, \
     FabricanteDetailView, EquipoCreateView, EquipoListView, \
-    FabricanteListView, ModeloCreateView, ModeloListView, ModeloDetailView
-
-from inventario import views
+    FabricanteListView, ModeloCreateView, ModeloListView, ModeloDetailView, AulaListView, AulaCreateView, \
+    AulaDetailView, AulaUpdateView
 
 app_name = 'inventario'
 urlpatterns = [
@@ -26,17 +26,15 @@ urlpatterns = [
     url(r'^equipo/crear/$', EquipoCreateView.as_view(), name='crear-equipo'),
     url(r'^equipo/(?P<pk>[\d+])/$', ModeloCreateView.as_view(), name='detalle-equipo'),
     url(r'^equipo/(?P<pk>[\d+])/editar$', EquipoCreateView.as_view(), name='detalle-equipo'),
-
-    # Carga Masiva
-    url(r'^fabricante/carga/$', views.carga_fabricantes, name='carga-fabricantes'),
-    url(r'^categoria/carga/$', views.carga_categorias, name='carga-categoria'),
-    url(r'^modelos/carga/$', views.carga_modelos, name='carga-modelos'),
-
-    # JSONs
-
+    # CRUD Aula
+    url(r'^aulas/$', AulaListView.as_view(), name='lista-aulas'),
+    url(r'^aula/(?P<pk>[\d+])/$', AulaDetailView.as_view(), name='detalle-aulas'),
+    url(r'^aulas/crear$', AulaCreateView.as_view(), name='crear-aulas'),
+    url(r'^aula/(?P<pk>[\d+])/editar/$', AulaUpdateView.as_view(), name='editar-aulas'),
     # Autocompletes
     url(r'^categoria-autocomplete/$', CategoriaAutocomplete.as_view(), name='categoria-autocomplete'),
     url(r'^fabricante-autocomplete/$', FabricanteAutocomplete.as_view(), name='fabricante-autocomplete'),
     url(r'^modelo-autocomplete/$', ModeloAutocomplete.as_view(), name='modelo-autocomplete'),
-
+    url(r'^aula-autocomplete/$', AulaAutocomplete.as_view(), name='aula-autocomplete'),
+    # url(r'^modelo-autocomplete/$', ModeloAutocomplete.as_view(), name='modelo-autocomplete'),
 ]

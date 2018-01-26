@@ -2,12 +2,11 @@ import csv
 
 from tablib import Dataset
 
-from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 
-from inventario.forms import BulkCreateForm, CategoriaForm, FabricanteForm, ModeloForm, EquipoForm
-from inventario.models import Categoria, Fabricante, Modelo, Equipo
+from inventario.forms import BulkCreateForm, CategoriaForm, FabricanteForm, ModeloForm, EquipoForm, AulaForm
+from inventario.models import Aula, Categoria, Fabricante, Modelo, Equipo
 from inventario.resources import CategoriaResource, FabricanteResource, EquipoResource, ModeloResource
 
 from perfiles.models import Perfil
@@ -97,7 +96,7 @@ class EquipoUpdateView(UpdateView):
 class EquipoCreateView(CreateView):
     form_class = EquipoForm
     model = Equipo
-    template_name = 'form.html'
+    template_name = 'inventario/equipo/crear.html'
 
     def form_valid(self, form):
         usuario = Perfil.objects.get(usuario=self.request.user)
@@ -109,61 +108,39 @@ class EquipoCreateView(CreateView):
             return self.form_invalid(form)
 
 
-def carga_fabricantes(request):
-    if request.method == 'POST':
-        person_resource = FabricanteResource()
-        dataset = Dataset()
-        new_persons = request.FILES['myfile']
+class AulaListView(ListView):
+    paginate_by = 10
+    model = Aula
+    template_name = 'inventario/aula/lista.html'
+    context_object_name = 'aulas'
 
-        imported_data = dataset.load(new_persons.read())
-        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
-
-        if not result.has_errors():
-            person_resource.import_data(dataset, dry_run=False)  # Actually import now
-    return render(request, 'file_upload.html')
-
-
-def carga_categorias(request):
-    if request.method == 'POST':
-        person_resource = CategoriaResource()
-        dataset = Dataset()
-        new_persons = request.FILES['myfile']
-
-        imported_data = dataset.load(new_persons.read())
-        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
-
-        if not result.has_errors():
-            person_resource.import_data(dataset, dry_run=False)  # Actually import now
-    return render(request, 'file_upload.html')
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Aula.objects.all()
+        elif self.request.user.is_authenticated:
+            return Aula.objects.filter(ubicacion=self.request.user.perfil.unidad)
+        else:
+            return False
 
 
-def carga_modelos(request):
-    if request.method == 'POST':
-        person_resource = ModeloResource()
-        dataset = Dataset()
-        new_persons = request.FILES['myfile']
-
-        imported_data = dataset.load(new_persons.read())
-        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
-
-        if not result.has_errors():
-            person_resource.import_data(dataset, dry_run=False)  # Actually import now
-    return render(request, 'file_upload.html')
+class AulaDetailView(DetailView):
+    context_object_name = 'aula'
+    model = Aula
+    template_name = 'inventario/aula/detalle.html'
 
 
-def carga_equipos(request):
-    if request.method == 'POST':
-        person_resource = EquipoResource()
-        dataset = Dataset()
-        new_persons = request.FILES['myfile']
+class AulaCreateView(CreateView):
+    model = Aula
+    form_class = AulaForm
+    template_name = 'inventario/aula/crear.html'
+    success_url = reverse_lazy('inventario:lista-aulas')
 
-        imported_data = dataset.load(new_persons.read())
-        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
-
-        if not result.has_errors():
-            person_resource.import_data(dataset, dry_run=False)  # Actually import now
-    return render(request, 'file_upload.html')
+    def form_valid(self, form):
+        form.instance.cod_sede = self.request.user.perfil.cod_sede
+        form.instance.cod_sede = self.request.user.perfil.cod_unidad
+        return super(AulaCreateView, self).form_valid(form)
 
 
-def process_csv(csv_file):
-    return csv.DictReader(csv_file.read().decode('utf-8'))
+class AulaUpdateView(UpdateView):
+    model = Aula
+    template_name = 'inventario/aula/crear.html'

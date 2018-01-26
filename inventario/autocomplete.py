@@ -1,6 +1,18 @@
 from dal import autocomplete
 
-from inventario.models import Categoria, Fabricante, Modelo
+from inventario.models import Categoria, Fabricante, Modelo, Aula
+
+
+class AulaAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+            qs = Aula.objects.all()
+        else:
+            return Aula.objects.none()
+
+        if self.q:
+            qs = qs.filter(nombre__icontains=self.q)
+        return qs
 
 
 class FabricanteAutocomplete(autocomplete.Select2QuerySetView):

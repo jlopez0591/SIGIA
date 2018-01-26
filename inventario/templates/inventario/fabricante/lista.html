@@ -7,6 +7,10 @@
         <div class="col-sm-12 col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
+                    <p class="card-text">
+                        <a href="{% url 'inventario:crear-fabricante' %}"
+                           class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Registrar</a>
+                    </p>
                     <h4 class="card-title">Listado de Fabricantes</h4>
                     <table class="table">
                         {% if fabricantes %}
@@ -16,9 +20,10 @@
                                     <td>{{ fabricante.nombre }}</td>
                                     <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
                                         {% if fabricante.url %}
-                                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i> Fabricante </a>
+                                            <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
+                                                Fabricante </a>
                                         {% else %}
-                                        <a href="#" class="btn disabled"><i class="fas fa-link"></i> Fabricante</a>
+                                            <a href="#" class="btn disabled"><i class="fas fa-link"></i> Fabricante</a>
                                         {% endif %}
                                     </td>
                                 </tr>

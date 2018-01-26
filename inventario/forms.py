@@ -1,10 +1,8 @@
 from django import forms
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
 from dal import autocomplete
 
-from inventario.models import Fabricante, Categoria, Modelo, Equipo
+from inventario.models import Fabricante, Categoria, Modelo, Equipo, Aula
 
 
 class FabricanteForm(forms.ModelForm):
@@ -12,8 +10,14 @@ class FabricanteForm(forms.ModelForm):
         model = Fabricante
         fields = ('nombre', 'url')
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del Fabricante', }),
-            'url': forms.TextInput(attrs={'placeholder': 'Direccion Web del Fabricante', })
+            'nombre': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nombre del Fabricante',
+            }),
+            'url': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'URL Fabricante',
+            })
         }
         labels = {
             'nombre': 'Nombre del Fabricante',
@@ -25,6 +29,11 @@ class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = ('nombre',)
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'form-control',
+            })
+        }
         labels = {
             'nombre': 'Nombre de la Categoria'
         }
@@ -48,17 +57,43 @@ class ModeloForm(forms.ModelForm):
 class EquipoForm(forms.ModelForm):
     class Meta:
         model = Equipo
-        fields = ('etiqueta', 'modelo', 'observaciones')
+        fields = ('etiqueta', 'aula', 'modelo', 'observaciones')
         widgets = {
-            'modelo': autocomplete.ModelSelect2(url='inventario:modelo-autocomplete',
-                                                attrs={"data-placeholder": "Modelo del Equipo"}),
+            'modelo': autocomplete.ModelSelect2(
+                url='inventario:modelo-autocomplete',
+                attrs={
+                    "class": "form-control",
+                    "data-placeholder": "Modelo del Equipo"
+                }),
             'etiqueta': forms.TextInput(attrs={
+                'class': 'form-control',
                 'placeholder': 'Etiqueta del Equipo'
-            })
+            }),
+            'aula': autocomplete.ModelSelect2(
+                url='inventario:aula-autocomplete',
+                attrs={
+                "class": "form-control",
+                "data-placeholder": "Aula en la que se encuentra el equipo",
+            }),
         }
         labels = {
             'modelo': 'Modelo del Equipo',
             'etiqueta': 'Etiqueta del Equipo'
+        }
+
+
+class AulaForm(forms.ModelForm):
+    class Meta:
+        model = Aula
+        fields = ('numero', 'tipo')
+        widgets = {
+            'numero': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Numero de Aula'
+            }),
+            'tipo': forms.Select(choices=Aula.TIPOS, attrs={
+                'class': 'form-control'
+            }),
         }
 
 
