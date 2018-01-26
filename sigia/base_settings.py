@@ -125,5 +125,10 @@ LOGIN_REDIRECT_URL = 'perfil:ver'
 
 STATIC_URL = '/static/'
 
+# Media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 # Django-import-export
 IMPORT_EXPORT_USE_TRANSACTIONS = True

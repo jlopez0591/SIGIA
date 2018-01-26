@@ -79,7 +79,7 @@ class ModeloCreateView(CreateView):
 class EquipoListView(ListView):
     context_object_name = 'equipos'
     model = Equipo
-    template_name = 'inventario/equipos.html'
+    template_name = 'inventario/equipo/lista.html'
 
 
 class EquipoDetailView(DetailView):

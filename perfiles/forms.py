@@ -32,15 +32,46 @@ class PerfilForm(forms.ModelForm):
                 'placeholder': "Apellido Materno",
             }),
             'provincia': forms.TextInput(attrs={
-                'class': 'form-control cedula-field',
+                'class': 'form-control',
                 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'clase': forms.TextInput(attrs={
-                'class': 'form-control cedula-field',
+                'class': 'form-control cedula',
                 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
-            'fecha_nacimiento': forms.TextInput(attrs={'class': 'datepicker'}),
+            'tomo': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'folio': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'fecha_nacimiento': forms.SelectDateWidget(),
+            # 'fecha_nacimiento': forms.TextInput(attrs={'class': 'datepicker'}),
             'fecha_inicio': forms.TextInput(attrs={'class': 'datepicker'}),
+            'sexo': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'categoria': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'pais': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'cod_sede': forms.TextInput(attrs={
+                'class': 'form-control',
+                'disabled': True,
+                'placeholder': "Apellido Materno",
+            }),
+            'cod_unidad': forms.TextInput(attrs={
+                'class': 'form-control',
+                'disabled': True,
+                'placeholder': "Apellido Materno",
+            }),
+            'cod_seccion': forms.TextInput(attrs={
+                'class': 'form-control',
+                'disabled': True,
+                'placeholder': "Apellido Materno",
+            }),
         }
