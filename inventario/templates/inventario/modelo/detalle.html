@@ -14,6 +14,8 @@
                             <li class="list-group-item">Tipo: {{ modelo.categoria.nombre }}</li>
                             <li class="list-group-item">URL Soporte: {{ modelo.url }}</li>
                         </ul>
+                        <hr />
+                        <a href="{% url 'inventario:modelo-modificar' modelo.pk %}" class="btn btn-primary">Editar</a>
                     </h4>
                 </div>
             </div>

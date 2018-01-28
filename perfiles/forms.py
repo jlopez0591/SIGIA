@@ -48,8 +48,11 @@ class PerfilForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'fecha_nacimiento': forms.SelectDateWidget(),
-            # 'fecha_nacimiento': forms.TextInput(attrs={'class': 'datepicker'}),
-            'fecha_inicio': forms.TextInput(attrs={'class': 'datepicker'}),
+            'fecha_inicio': forms.TextInput(attrs={
+                'class': 'datepicker form-control',
+                'placeholder': 'Fecha de Inicio de Labores',
+                'disabled': True
+            }),
             'sexo': forms.TextInput(attrs={
                 'class': 'form-control'
             }),

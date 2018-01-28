@@ -10,60 +10,71 @@
 
 {% block content %}
     <div class="row">
-        <div class="card-deck">
+        <form method="post">
+            <div class="col-md-12">
 
-
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title"><h4>Informacion Personal</h4></div>
-                    <div class="card-body">
-                        <h5>Nombre</h5>
-                        {{ form.primer_nombre }}
-                        <hr/>
-                        {{ form.segundo_nombre }}
-                        <hr/>
-                        {{ form.primer_apellido }}
-                        <hr/>
-                        {{ form.segundo_apellido }}
-                        <hr/>
-                        {{ form.pais }}
-                        <hr/>
-                        <h5>Cedula</h5>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">{{ form.provincia }}</div>
-                            <div class="form-group col-md-3">{{ form.clase }}</div>
-                            <div class="form-group col-md-3">{{ form.tomo }}</div>
-                            <div class="form-group col-md-3">{{ form.folio }}</div>
-                        </div>
-                        <hr />
-                        <h5>Otros Datos</h5>
-                        {{ form.fecha_nacimiento }}
-                        <hr/>
-                        {{ form.imagen }}
-                        <hr />
-                        {{ form.fecha_inicio }}
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">Informacion Profesional</div>
-                    <div class="card-body">
-                        {{ form.categoria }}
-                        <hr />
-                        <h5 class="card-title">Codigo de Departamento</h5>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">{{ form.cod_sede }}</div>
-                            <div class="form-group col-md-4">{{ form.cod_unidad }}</div>
-                            <div class="form-group col-md-4">{{ form.cod_seccion }}</div>
+                {% csrf_token %}
+                <!--Inicio Deck-->
+                <div class="card-deck">
+                    <!--Datos Personales-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title"><h4>Informacion Personal</h4></div>
+                            <div class="card-body">
+                                <h5>Nombre</h5>
+                                {{ form.primer_nombre }}
+                                <hr/>
+                                {{ form.segundo_nombre }}
+                                <hr/>
+                                {{ form.primer_apellido }}
+                                <hr/>
+                                {{ form.segundo_apellido }}
+                                <hr/>
+                                {{ form.pais }}
+                                <hr/>
+                                <h5>Cedula</h5>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">{{ form.provincia }}</div>
+                                    <div class="form-group col-md-3">{{ form.clase }}</div>
+                                    <div class="form-group col-md-3">{{ form.tomo }}</div>
+                                    <div class="form-group col-md-3">{{ form.folio }}</div>
+                                </div>
+                                <hr/>
+                                <h5>Otros Datos</h5>
+                                {{ form.fecha_nacimiento }}
+                                <hr/>
+                                {{ form.imagen }}
+                                <hr/>
+                                {{ form.fecha_inicio }}
+                            </div>
                         </div>
                     </div>
+
+
+                    <!--Datos Academicos-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">Informacion Profesional</div>
+                            <div class="card-body">
+                                {{ form.categoria }}
+                                <hr/>
+                                <h5 class="card-title">Codigo de Departamento</h5>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">{{ form.cod_sede }}</div>
+                                    <div class="form-group col-md-4">{{ form.cod_unidad }}</div>
+                                    <div class="form-group col-md-4">{{ form.cod_seccion }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
+                <!--Fin Deck-->
             </div>
-
-
-        </div>
+            <div class="col-md-8 offset-md-2 top-buffer">
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </div>
+        </form>
     </div>
 {% endblock %}

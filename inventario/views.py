@@ -75,17 +75,32 @@ class ModeloCreateView(CreateView):
     template_name = 'inventario/modelo/crear.html'
 
 
+class ModeloUpdateView(UpdateView):
+    model = Modelo
+    form_class = ModeloForm
+    context_object_name = 'form'
+    template_name = 'inventario/modelo/crear.html'
+
+
 # Equipos
 class EquipoListView(ListView):
     context_object_name = 'equipos'
     model = Equipo
     template_name = 'inventario/equipo/lista.html'
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Equipo.objects.all()
+        elif self.request.user.is_authenticated:
+            return Equipo.objects.filter(ubicacion=self.request.user.perfil.unidad)
+        else:
+            return None
+
 
 class EquipoDetailView(DetailView):
     context_object_name = 'equipo'
     model = Equipo
-    template_name = 'inventario/equipo/equipo.html'
+    template_name = 'inventario/equipo/detalle.html'
 
 
 class EquipoUpdateView(UpdateView):

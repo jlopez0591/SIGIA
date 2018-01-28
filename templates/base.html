@@ -149,6 +149,30 @@
                         </div>
                     </li>
                 {% endif %}
+
+
+
+                {% if request.user.is_staff %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            Mi Facultad <i class="far fa-building"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#"><b>Inventario</b></a>
+                            <a class="dropdown-item" href="{% url 'inventario:lista-aulas' %}">Aulas <span
+                                    class="badge badge-primary">{{ request.user.perfil.unidad.aula_set.count }}</span></a>
+                            <a class="dropdown-item" href="{% url 'inventario:lista-equipo' %}">Equipos <span
+                                    class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
+                        </div>
+                    </li>
+                {% endif %}
+
+
+
+
+
                 {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
 

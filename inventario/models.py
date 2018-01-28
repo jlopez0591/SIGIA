@@ -80,7 +80,7 @@ class Equipo(models.Model):
     observaciones = models.TextField(max_length=500, blank=True)
 
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
-    ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, blank=True, null=True, related_name='equipos')
+    ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.CASCADE, blank=True, null=True, related_name='equipos')
 
     def __str__(self):
         return '{} {} {}'.format(self.ubicacion, self.modelo, self.etiqueta)

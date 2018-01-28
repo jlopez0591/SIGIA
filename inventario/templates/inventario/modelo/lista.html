@@ -16,7 +16,7 @@
                             {% for modelo in modelos %}
                                 <tr>
                                     <td>{{ modelo }}</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
+                                    <td><a href="{% url 'inventario:modelo-detalle' modelo.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
                                         {% if modelo.url %}
                                             <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
                                                 Modelo </a>

@@ -5,7 +5,7 @@ from inventario.models import Aula
 from inventario.views import CategoriaCreateView, CategoriaListView, CategoriaDetailView, FabricanteCreateView, \
     FabricanteDetailView, EquipoCreateView, EquipoListView, \
     FabricanteListView, ModeloCreateView, ModeloListView, ModeloDetailView, AulaListView, AulaCreateView, \
-    AulaDetailView, AulaUpdateView
+    AulaDetailView, AulaUpdateView, ModeloUpdateView
 
 from . import views
 
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^modelos/$', ModeloListView.as_view(), name='modelo-lista'),
     url(r'^modelo/crear/$', ModeloCreateView.as_view(), name='crear-modelo'),
     url(r'^modelo/(?P<pk>[\d+])/$', ModeloDetailView.as_view(), name='modelo-detalle'),
+    url(r'^modelo/(?P<pk>[\d+])/editar/$', ModeloUpdateView.as_view(), name='modelo-modificar'),
     # CRUD Equipo
     url(r'^equipos/$', EquipoListView.as_view(), name='lista-equipo'),
     url(r'^equipo/crear/$', EquipoCreateView.as_view(), name='crear-equipo'),
