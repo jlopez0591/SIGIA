@@ -27,13 +27,11 @@
                                     <td>{{ aula.numero }}</td>
                                     <td>{{ aula.get_tipo_display }}</td>
                                     <td><a href="{% url 'inventario:editar-aulas' aula.pk %}"
-                                           class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
-                                        {% if aula.url %}
-                                            <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
-                                                Aula </a>
-                                        {% else %}
-                                            <a href="#" class="btn disabled"><i class="fas fa-link"></i> Aula</a>
-                                        {% endif %}</td>
+                                           class="btn btn-outline-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
+                                        <a href="{% url 'inventario:detalle-aulas' aula.pk %}"
+                                           class="btn btn-outline-success btn-sm"><i class="fas fa-link"></i>
+                                            Aula </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

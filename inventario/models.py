@@ -64,6 +64,21 @@ class Aula(models.Model):
     def __str__(self):
         return self.numero
 
+    def equipos_categoria(self):
+        """
+        Genera diccionario de equipos con llave por categoria a la que pertenecen (eg. Computadoras)
+        :return:
+        """
+        equipos = dict()
+        qs = self.equipo_set.all()
+        for equipo in qs:
+            nombre = equipo.modelo.categoria.nombre
+            if nombre in equipos:
+                equipos[nombre].append(equipo)
+            else:
+                equipos[nombre] = [equipo]
+        return equipos
+
     def save(self, *args, **kwargs):
         try:
             self.ubicacion = Ubicacion.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
@@ -80,10 +95,11 @@ class Equipo(models.Model):
     observaciones = models.TextField(max_length=500, blank=True)
 
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
-    ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.CASCADE, blank=True, null=True, related_name='equipos')
+    ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.CASCADE, blank=True, null=True,
+                                  related_name='equipos')
 
     def __str__(self):
-        return '{} {} {}'.format(self.ubicacion, self.modelo, self.etiqueta)
+        return 'Facultad:{}, Equipo:{} Etiqueta:{}'.format(self.ubicacion, self.modelo, self.etiqueta)
 
     def get_absolute_url(self):
         return reverse('inventario:detalle-equipo', kwargs={

@@ -14,13 +14,18 @@
                     <h4 class="card-title">Listado de Fabricantes</h4>
                     <table class="table">
                         {% if fabricantes %}
+                            <thead>
+                            <tr>
+                                <td>Nombre del Fabricante</td>
+                            </tr>
+                            </thead>
                             <tbody>
                             {% for fabricante in fabricantes %}
                                 <tr>
                                     <td>{{ fabricante.nombre }}</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
+                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
                                         {% if fabricante.url %}
-                                            <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
+                                            <a href="#" class="btn btn-link btn-sm"><i class="fas fa-link"></i>
                                                 Fabricante </a>
                                         {% else %}
                                             <a href="#" class="btn disabled"><i class="fas fa-link"></i> Fabricante</a>

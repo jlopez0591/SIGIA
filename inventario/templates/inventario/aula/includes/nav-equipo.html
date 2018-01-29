@@ -1,0 +1,80 @@
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    {% for tipo in aula.equipos_categoria %}
+        {% if forloop.first %}
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-{{ tipo.lower }}-tab" data-toggle="pill"
+                   href="#pills-{{ tipo.lower }}" role="tab"
+                   aria-controls="pills-{{ tipo.lower }}" aria-selected="true">{{ tipo.capitalize }}</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" id="pills-{{ tipo.lower }}-tab" data-toggle="pill"
+                   href="#pills-{{ tipo.lower }}" role="tab"
+                   aria-controls="pills-{{ tipo.lower }}" aria-selected="true">{{ tipo.capitalize }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+
+<div class="tab-content" id="pills-tabContent">
+    {% for key, value in aula.equipos_categoria.items %}
+        {% if forloop.first %}
+            <div class="tab-pane fade show active" id="pills-{{ key.lower }}" role="tabpanel"
+                 aria-labelledby="pills-{{ key.lower }}-tab">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Etiqueta</td>
+                        <td>Modelo</td>
+                        <td>Ubicacion</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for equipo in value %}
+                        <tr>
+                            <td>{{ equipo.etiqueta }}</td>
+                            <td>{{ equipo.modelo }}</td>
+                            <td>{{ equipo.ubicacion }}</td>
+                            <td><a class="btn btn-outline-primary"
+                                   href="{% url 'inventario:detalle-equipo' equipo.pk %}">Detalle</a>
+                                <a class="btn btn-outline-success"
+                                   href="{% url 'inventario:editar-equipo' equipo.pk %}">Editar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="tab-pane fade" id="pills-{{ key.lower }}" role="tabpanel"
+                 aria-labelledby="pills-{{ key.lower }}-tab">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Etiqueta</td>
+                        <td>Modelo</td>
+                        <td>Aula</td>
+                        <td>Ubicacion</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for equipo in value %}
+                        <tr>
+                            <td>{{ equipo.etiqueta }}</td>
+                            <td>{{ equipo.modelo }}</td>
+                            <td>{{ equipo.aula.numero }}</td>
+                            <td>{{ equipo.ubicacion }}</td>
+                            <td><a class="btn btn-outline-primary"
+                                   href="{% url 'inventario:detalle-equipo' equipo.pk %}">Detalle</a>
+                                <a class="btn btn-outline-success"
+                                   href="{% url 'inventario:editar-equipo' equipo.pk %}">Editar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

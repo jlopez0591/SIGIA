@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Aula - {{ aula.numero }}{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 offset-md-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ aula.get_tipo_display }} - {{ aula.numero }}</h4>
+                    <div class="card-text">
+                        <h5 class="card-title">Inventario</h5>
+                        <p class="card-text">
+                            {% include 'inventario/aula/includes/nav-equipo.html' %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

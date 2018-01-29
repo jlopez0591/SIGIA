@@ -14,9 +14,7 @@ class EquipoListView(ListView):
     template_name = 'inventario/equipo/lista.html'
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return Equipo.objects.all()
-        elif self.request.user.is_authenticated:
+        if self.request.user.perfil:
             return Equipo.objects.filter(ubicacion=self.request.user.perfil.unidad)
         else:
             return None
@@ -28,12 +26,11 @@ class EquipoFacultadListView(ListView):
     template_name = 'inventario/equipo/lista.html'
 
     def get_queryset(self):
-        qs = []
-        if self.request.user.is_superuser:
-            qs = Equipo.objects.all()
-        elif self.request.user.is_authenticated:
+        if self.request.user.is_authenticated:
             unidad = self.request.user.perfil.unidad
             qs = unidad.equipos.all()
+        else:
+            qs = None
         return qs
 
 
@@ -53,6 +50,7 @@ class EquipoCreateView(SuccessMessageMixin, CreateView):
     form_class = EquipoForm
     model = Equipo
     template_name = 'inventario/equipo/crear.html'
+    success_url = reverse_lazy('inventario:lista-equipo')
 
     def form_valid(self, form):
         usuario = Perfil.objects.get(usuario=self.request.user)
