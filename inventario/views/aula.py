@@ -16,7 +16,7 @@ class AulaListView(ListView):
         if self.request.user.is_superuser:
             return Aula.objects.all()
         elif self.request.user.is_authenticated:
-            return Aula.objects.filter(ubicacion=self.request.user.perfil.unidad)
+            return Aula.objects.filter(ubicacion=self.request.user.perfil.unidad).order_by('tipo')
         else:
             return False
 

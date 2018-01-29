@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Agregar Categoria{% endblock %}
+{% block title %}Registrar Equipo{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -11,7 +11,7 @@
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Registrar Categoria</button>
+                        <button type="submit" class="btn btn-primary">Registrar Equipo</button>
                     </form>
                 </div>
             </div>

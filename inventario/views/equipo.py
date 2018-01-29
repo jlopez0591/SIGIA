@@ -7,6 +7,7 @@ from inventario.models import Equipo
 from perfiles.models import Perfil
 from django.contrib.messages.views import SuccessMessageMixin
 
+
 # Equipos
 class EquipoListView(ListView):
     context_object_name = 'equipos'
@@ -27,8 +28,7 @@ class EquipoFacultadListView(ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            unidad = self.request.user.perfil.unidad
-            qs = unidad.equipos.all()
+            qs = Equipo.objects.filter(ubicacion=self.kwargs['pk'])
         else:
             qs = None
         return qs

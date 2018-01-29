@@ -10,26 +10,10 @@
                     <h4 class="card-title">Listado de Equipos</h4>
                     <p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-equipo' %}"><i
                             class="fa fa-edit"></i> Registrar</a></p>
-                    <table class="table">
-                        {% if equipos %}
-                            <tbody>
-                            {% for equipo in equipos %}
-                                <tr>
-                                    <td>{{ equipo }}</td>
-                                    <td><a href="{% url 'inventario:detalle-equipo' equipo.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
-                                        {% if equipo.modelo.url %}
-                                            <a href="{{ equipo.modelo.url }}" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
-                                                Equipo </a>
-                                        {% else %}
-                                            <a href="#" class="btn disabled"><i class="fas fa-link"></i> Equipo</a>
-                                        {% endif %}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        {% else %}
-                            <div class="alert alert-info text-center">No hay equipos registradas</div>
-                        {% endif %}
-                    </table>
+                    {% include 'inventario/equipo/include/partial_equipo_list.html' %}
+                </div>
+                <div class="card-footer">
+                    {% include 'inventario/equipo/include/partial_pagination_footer.html' %}
                 </div>
             </div>
         </div>

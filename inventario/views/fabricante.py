@@ -1,18 +1,12 @@
-import csv
-
-from tablib import Dataset
-
-from django.http import JsonResponse
-from django.views.generic import CreateView, DetailView, UpdateView, ListView
-from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView
 
 from inventario.forms import FabricanteForm
 from inventario.models import Fabricante
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-# Fabricante
 class FabricanteListView(ListView):
+    paginate_by = 10
     context_object_name = 'fabricantes'
     model = Fabricante
     template_name = 'inventario/fabricante/lista.html'
