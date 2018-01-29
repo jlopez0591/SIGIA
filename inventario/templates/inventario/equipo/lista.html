@@ -16,7 +16,7 @@
                             {% for equipo in equipos %}
                                 <tr>
                                     <td>{{ equipo }}</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
+                                    <td><a href="{% url 'inventario:detalle-equipo' equipo.pk %}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a>
                                         {% if equipo.modelo.url %}
                                             <a href="{{ equipo.modelo.url }}" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
                                                 Equipo </a>

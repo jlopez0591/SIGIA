@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from import_export.admin import ImportExportModelAdmin
 
-from inventario.models import Fabricante, Categoria, Modelo, Equipo
+from inventario.models import Fabricante, Categoria, Modelo, Equipo, Aula
 
 
 # Register your models here.
@@ -23,3 +23,6 @@ class ModeloAdmin(ImportExportModelAdmin):
 class EquipoAdmin(ImportExportModelAdmin):
     pass
 
+@admin.register(Aula)
+class AulaAdmin(ImportExportModelAdmin):
+    pass

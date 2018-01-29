@@ -80,6 +80,7 @@ class ModeloUpdateView(UpdateView):
     form_class = ModeloForm
     context_object_name = 'form'
     template_name = 'inventario/modelo/crear.html'
+    success_url = reverse_lazy('inventario:equipo-lista     ')
 
 
 # Equipos
@@ -153,7 +154,7 @@ class AulaCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.cod_sede = self.request.user.perfil.cod_sede
-        form.instance.cod_sede = self.request.user.perfil.cod_unidad
+        form.instance.cod_unidad = self.request.user.perfil.cod_unidad
         return super(AulaCreateView, self).form_valid(form)
 
 

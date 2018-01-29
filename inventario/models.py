@@ -86,7 +86,7 @@ class Equipo(models.Model):
         return '{} {} {}'.format(self.ubicacion, self.modelo, self.etiqueta)
 
     def get_absolute_url(self):
-        return reverse('inventario:equipo-detalle', kwargs={
+        return reverse('inventario:detalle-equipo', kwargs={
             'pk': self.pk
         })
 

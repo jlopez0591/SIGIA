@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Equipo{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ equipo.etiqueta }}</h4>
+                    <div class="card-body">
+                        Modelo: {{ equipo.modelo.fabricante.nombre }} {{ equipo.modelo.nombre }}
+                        <hr/>
+                        Anotaciones: {{ equipo.observaciones }}
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <a class="btn btn-primary" href="{% url 'inventario:lista-equipo' %}">Ver Otros</a>
+                    <a class="btn btn-primary" href="{% url 'inventario:editar-equipo' equipo.pk %}">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
