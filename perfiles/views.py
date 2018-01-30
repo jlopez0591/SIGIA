@@ -46,7 +46,7 @@ class PerfilPublicoView(DetailView):
 class PerfilUpdateView(UpdateView):
     model = Perfil
     form_class = PerfilForm
-    success_url = reverse_lazy('')
+    success_url = reverse_lazy('perfil:ver')
     template_name = 'perfiles/editar.html'
     context_object_name = 'form'
 

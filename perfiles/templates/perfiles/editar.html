@@ -10,7 +10,8 @@
 
 {% block content %}
     <div class="row">
-        <form method="post">
+        {# TODO: Ver por que no actualiza   #}
+        <form method="post" enctype="multipart/form-data">
             <div class="col-md-12">
 
                 {% csrf_token %}
@@ -22,6 +23,8 @@
                             <div class="card-title"><h4>Informacion Personal</h4></div>
                             <div class="card-body">
                                 <h5>Nombre</h5>
+                                {{ form.primer_nombre.label_tag }}
+                                {{ form.primer_nombre.errors }}
                                 {{ form.primer_nombre }}
                                 <hr/>
                                 {{ form.segundo_nombre }}

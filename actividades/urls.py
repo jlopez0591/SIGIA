@@ -29,56 +29,58 @@ urlpatterns = [
 
     # Investigacion
     url(r'^investigacion/crear/$', ActivityCreateView.as_view(model=Investigacion, form_class=InvestigacionForm,
-                                                              template_name='actividades/investigacion_create_form.html'),
+                                                              template_name='actividades/investigacion/crear.html'),
         name='crear-investigacion'),
     url(r'^investigacion/(?P<pk>[0-9]+)/editar/$',
         ActivityUpdateView.as_view(model=Investigacion, form_class=InvestigacionForm), name='actualizar-investigacion'),
 
     # Libro
     url(r'^libro/crear/$',
-        ActivityCreateView.as_view(model=Libro, form_class=LibroForm, template_name='libro/crear.html'),
+        ActivityCreateView.as_view(model=Libro, form_class=LibroForm, template_name='actividades/libro/crear.html'),
         name='crear-libro'),
     url(r'^libro/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Libro, form_class=LibroForm),
         name='actualizar-libro'),
 
     # Conferencia
     url(r'^conferencia/crear/$', ActivityCreateView.as_view(model=Conferencia, form_class=ConferenciaForm,
-                                                            template_name='conferencia/crear.html'),
+                                                            template_name='actividades/conferencia/crear.html'),
         name='crear-conferencia'),
     url(r'^conferencia/(?P<pk>[0-9]+)/editar/$',
         ActivityUpdateView.as_view(model=Conferencia, form_class=ConferenciaForm), name='actualizar-conferencia'),
 
     # Ponencia
     url(r'^ponencia/crear/$',
-        ActivityCreateView.as_view(model=Ponencia, form_class=PonenciaForm, template_name='ponencia/crear.html'),
+        ActivityCreateView.as_view(model=Ponencia, form_class=PonenciaForm,
+                                   template_name='actividades/ponencia/crear.html'),
         name='crear-ponencia'),
     url(r'^ponencia/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Ponencia, form_class=PonenciaForm),
         name='actualizar-ponencia'),
 
     # Proyecto
     url(r'^proyecto/crear/$',
-        ActivityCreateView.as_view(model=Proyecto, form_class=ProyectoForm, template_name='proyecto/crear.html'),
+        ActivityCreateView.as_view(model=Proyecto, form_class=ProyectoForm,
+                                   template_name='actividades/proyecto/crear.html'),
         name='crear-proyecto'),
     url(r'^proyecto/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Proyecto, form_class=ProyectoForm),
         name='actualizar-proyecto'),
 
     # Premio
     url(r'^premio/crear/$',
-        ActivityCreateView.as_view(model=Premio, form_class=PremioForm, template_name='premio/crear.html'),
+        ActivityCreateView.as_view(model=Premio, form_class=PremioForm, template_name='actividades/premio/crear.html'),
         name='crear-premio'),
     url(r'^premio/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Premio, form_class=PremioForm),
         name='actualizar-premio'),
 
     # Idiomas
     url(r'^idioma/crear/$',
-        ActivityCreateView.as_view(model=Idioma, form_class=IdiomaForm, template_name='idioma/crear.html'),
+        ActivityCreateView.as_view(model=Idioma, form_class=IdiomaForm, template_name='actividades/idioma/crear.html'),
         name='crear-idioma'),
     url(r'^idioma/(?P<pk>[0-9]+)/editar/$', ActivityUpdateView.as_view(model=Idioma, form_class=IdiomaForm),
         name='editar-idioma'),
 
     # Titulo
     url(r'^titulo/crear/$',
-        ActivityCreateView.as_view(model=Titulo, form_class=TituloForm, template_name='titulo/crear.html'),
+        ActivityCreateView.as_view(model=Titulo, form_class=TituloForm, template_name='actividades/titulo/crear.html'),
         name='crear-titulo'),
     # url(r'^titulo/(?P<pk>[0-9]+)/editar/$', ActivityCreateView.as_view(model=Titulo, form_class=TituloForm),
     #     name='crear-titulo')

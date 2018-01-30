@@ -3,6 +3,7 @@ from django import forms
 from django.conf.global_settings import LANGUAGES
 
 from django.forms import ModelForm, TextInput
+from django import forms
 
 # My app imports
 from actividades.models import *
@@ -63,7 +64,7 @@ class InvestigacionForm(ModelForm):
                 "placeholder": "Nombre de la Actividad"
             }),
             "codigo": TextInput(attrs={
-                "placholder": "Codigo de la Actividad"
+                "placeholder": "Codigo de la Actividad"
             }),
             "fecha": TextInput(attrs={
                 "class": "datepicker",
@@ -131,7 +132,7 @@ class PonenciaForm(ModelForm):
             "nombre_actividad": TextInput(attrs={
                 "placeholder": "Nombre de la Actividad"
             }),
-            "pais": TextInput(attrs={
+            "pais": forms.Select(attrs={
                 "placeholder": "Pais donde se realizo la ponencia"
             }),
             "fecha": TextInput(attrs={
@@ -151,7 +152,7 @@ class ProyectoForm(ModelForm):
             "nombre_actividad": TextInput(attrs={
                 "placeholder": "Nombre del proyecto"
             }),
-            "tipo": TextInput(attrs={
+            "tipo": forms.Select(attrs={
                 "placeholder": "Tipo del proyecto"
             }),
             "fecha": TextInput(attrs={
@@ -181,10 +182,10 @@ class TituloForm(ModelForm):
         model = Titulo
         fields = ('info_titulo', 'centro_estudio', 'fecha', 'resumen', 'archivo',)
         widgets = {
-            "info_titulo": TextInput(attrs={
+            "info_titulo": forms.Select(attrs={
                 "placeholder": "Titulo Adquirido"
             }),
-            "centro_estudio": TextInput(attrs={
+            "centro_estudio": forms.Select(attrs={
                 "placeholder": "Centro de Estudio donde Adquirio el titulo"
             }),
             "fecha": TextInput(attrs={
