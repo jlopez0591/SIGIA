@@ -4,6 +4,8 @@ from django.conf.global_settings import LANGUAGES
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
+
 
 # Third party imports
 from django_countries.fields import CountryField
@@ -120,6 +122,9 @@ class Actividad(PolymorphicModel):
     def espera(self):
         self.estado = 'espera'
         self.save()
+
+    def get_absolute_url(self):
+        return reverse('actividad:detalle', kwargs={'pk': self.pk})
 
 
 class EstadiaPostdoctoral(Actividad):

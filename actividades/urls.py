@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, ActividadesPendientes, \
-    ActividadListView, ActividadesPropias, EstadiaCreateView
+    ActividadListView, ActividadesPropias, ActividadRechazarView
 from actividades.forms import *
 from actividades import views
 
@@ -8,10 +8,11 @@ app_name = 'actividad'
 urlpatterns = [
     # General actividades
     url(r'^lista/$', ActividadListView.as_view(), name='lista'),
-    url(r'^pendientes/$', views.actividades_pendientes, name='pendientes'),
+    url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
     url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
     url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),
     url(r'^(?P<pk>[0-9]+)/aprobar/$', views.aprobar_actividad, name='aprobar'),
+    url(r'^(?P<pk>[0-9]+)/rechazar/$', ActividadRechazarView.as_view(), name='rechazar'),
 
     # Estadia
     url(r'^estadia/crear/$', ActivityCreateView.as_view(model=EstadiaPostdoctoral, form_class=EstadiaForm,

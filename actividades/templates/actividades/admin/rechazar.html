@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-md-6 offset-sm-3 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Rechazar Actividad</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <p>{{ form.motivo_rechazo.label }}</p>
+                    {{ form.motivo_rechazo }}
+                    <hr />
+                    <button class="btn btn-primary">Rechazar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

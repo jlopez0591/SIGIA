@@ -2,40 +2,12 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-md-8 offset-md-2 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title"><h4>Actividades Pendientes</h4></div>
                     <div class="card-text">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">Clase</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Opciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for actividad in actividades %}
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>{{ actividad.nombre_actividad }}</td>
-                                    <td>{{ actividad.get_clase_display }}</td>
-                                    <td>{{ actividad.usuario }}</td>
-                                    <td>{{ actividad.fecha_creacion }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">Ver</button>
-                                        <button class="btn btn-sm btn-success">Aprobar</button>
-                                        <button class="btn btn-sm btn-danger">Rechazar</button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <hr/>
+                        {% include 'actividades/include/actividad_pendiente_parcial.html' %}
                         {% if actividades.has_other_pages %}
                             <ul class="pagination">
                                 {% if actividades.has_previous %}
@@ -43,13 +15,15 @@
                                         <a class="page-link" href="?page={{ actividades.previous_page_number }}">Previous</a>
                                     </li>
                                 {% else %}
-                                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    <li class="page-item disabled"><a class="page-link" href="#"
+                                                                      tabindex="-1">Previous</a>
                                     </li>
                                 {% endif %}
                                 <li class="page-item active"><a class="page-link" href="#">
                                     Pagina {{ actividades.number }} de {{ actividades.paginator.num_pages }} </a></li>
                                 {% if actividades.has_next %}
-                                    <li class="page-item"><a class="page-link" href="?page={{ actividades.next_page_number }}">next</a>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ actividades.next_page_number }}">next</a>
                                     </li>
                                 {% else %}
                                     <li class="page-item disabled"><a class="page-link"

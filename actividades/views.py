@@ -7,12 +7,11 @@ from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 
-from actividades.forms import EstadiaForm
+from actividades.forms import EstadiaForm, RechazarForm
 from actividades.models import Actividad, EstadiaPostdoctoral
 from perfiles.models import Perfil
 
@@ -24,23 +23,6 @@ class ActividadListView(UserPassesTestMixin, ListView):
 
     def test_func(self):
         return self.request.user.is_superuser
-
-
-def crear_estadia(request):
-    if request.method == 'POST':
-        u = User.objects.get(pk=request.user.pk)
-        print('Prueba')
-        form = EstadiaForm(request.POST)
-        if form.is_valid():
-            f = form.save(commit=False)
-            f.usuario = u
-            f.save()
-            return redirect('perfil:ver')
-        else:
-            print(form.errors)
-    else:
-        form = EstadiaForm()
-    return render(request, 'actividades/estadia_create_form.html', {'form': form})
 
 
 class ActivityCreateView(SuccessMessageMixin, CreateView):
@@ -55,24 +37,6 @@ class ActivityCreateView(SuccessMessageMixin, CreateView):
             return super(ActivityCreateView, self).form_valid(form)
         except IntegrityError:
             return self.form_invalid(form)
-
-
-class EstadiaCreateView(CreateView):
-    # permission_required = ''
-    form_class = EstadiaForm
-    model = EstadiaPostdoctoral
-    success_url = reverse_lazy('perfil:ver')
-    context_object_name = 'form'
-    template_name = 'form.html'
-
-    def form_valid(self, form):
-        form.instance.usuario = self.request.user
-        try:
-            print("Formulario Valido")
-            return super(EstadiaCreateView, self).form_valid(form)
-        except IntegrityError:
-            print("Formulario Invalido")
-            return super(EstadiaCreateView, self).form_invalid(form)
 
 
 class ActivityDetailView(DetailView):
@@ -111,7 +75,7 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
     model = Actividad
     context_object_name = 'actividades'
     permission_required = 'aprobar_actividad'
-    template_name = 'actividades/lista.html'
+    template_name = 'actividades/admin/pendientes.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -124,39 +88,33 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
         return qs
 
 
-def actividades_pendientes(request):
-    cantidad_por_pagina = 3
-    if request.user.is_authenticated():
-        lista = Actividad.objects.filter(estado='espera')
-    else:
-        u = Perfil.objects.get(usuario=request.user)
-        lista = Actividad.objects.filter(seccion=u.seccion, estado='espera')
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(lista, cantidad_por_pagina)
-    try:
-        actividades = paginator.page(page)
-    except PageNotAnInteger:
-        actividades = paginator.page(1)
-    except EmptyPage:
-        actividades = paginator.page(paginator.num_pages)
-    return render(request, 'actividades/lista.html', {'actividades': actividades})
-
-
 @permission_required('actividad.aprobar_actividad')
-def aprobar_actividad(request, actividad_pk):
+def aprobar_actividad(request, pk):
     if request.method == 'POST':
-        actividad = Actividad.objects.get(pk=actividad_pk)
+        actividad = Actividad.objects.get(pk=pk)
         usuario = Actividad.usuario
         texto = "ha sido aprobada!"
         actividad.aprobar()
         # Notificacion.objects.create(usuario=usuario, actividad=actividad, fecha_creada=timezone.now())
-        return reverse('actividad:lista')
+        return redirect(reverse('actividad:pendientes'))
 
 
-@permission_required('actividad.aprobar_actividad')
-def rechazar_actividad(request, actividad_pk):
-    if request.method == 'POST':
-        actividad = Actividad.objects.get(pk=actividad_pk)
-        actividad.aprobar()
-        return reverse('actividad:lista')
+# @permission_required('actividad.aprobar_actividad')
+# def rechazar_actividad(request, actividad_pk):
+#     if request.method == 'POST':
+#         actividad = Actividad.objects.get(pk=actividad_pk)
+#         actividad.rechazar()
+#         return reverse('actividad:lista')
+
+
+class ActividadRechazarView(SuccessMessageMixin, UpdateView):
+    context_object_name = 'form'
+    form_class = RechazarForm
+    model = Actividad
+    success_message = 'Actividad Rechazada'
+    template_name = 'actividades/admin/rechazar.html'
+
+    def form_valid(self, form):
+        form = form.instance
+        form.estado = 'rechazado'
+        return super(ActividadRechazarView, self).form_valid(form)

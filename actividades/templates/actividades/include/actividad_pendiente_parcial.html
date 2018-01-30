@@ -1,0 +1,33 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Clase</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for actividad in actividades %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ actividad.nombre_actividad }}</td>
+            <td>{{ actividad.get_clase_display }}</td>
+            <td>{{ actividad.usuario }}</td>
+            <td>{{ actividad.fecha_creacion }}</td>
+            <td>
+                <a class="btn btn-outline-primary" href="{% url 'actividad:detalle' actividad.pk %}">Ver</a>
+                <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success">Aprobar
+                    </button>
+                </form>
+                <a class="btn btn-outline-danger" href="{% url 'actividad:rechazar' actividad.pk %}">Rechazar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<hr/>

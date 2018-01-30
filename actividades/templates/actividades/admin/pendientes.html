@@ -5,10 +5,16 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 offset-3">
-            <table class="table table-responsive">
-
-            </table>
+        <div class="col-md-8 offset-md-2 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Actividades Pendientes</h4>
+                    {% include 'actividades/include/actividad_pendiente_parcial.html' %}
+                </div>
+                <div class="card-footer">
+                    {% include 'includes/partial_pagination.html' %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

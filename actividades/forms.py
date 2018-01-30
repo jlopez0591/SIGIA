@@ -9,6 +9,12 @@ from django import forms
 from actividades.models import *
 
 
+class RechazarForm(ModelForm):
+    class Meta:
+        model = Actividad
+        fields = ('motivo_rechazo', )
+
+
 class EstadiaForm(ModelForm):
     class Meta:
         model = EstadiaPostdoctoral
