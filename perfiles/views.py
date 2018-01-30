@@ -72,7 +72,7 @@ class ProfesoresAutocomplete(autocomplete.Select2QuerySetView):
             # q_objects = Q()
             # for carrera in carreras:
             #     q_objects |= Q(carrera=carrera)
-            qs = Person.objects.filter(**codigos, groups__name__in=['foo'])
+            # qs = Person.objects.filter(**codigos, groups__name__in=['foo'])
         else:
             return Person.objects.none()
 
