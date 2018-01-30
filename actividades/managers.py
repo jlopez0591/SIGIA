@@ -13,6 +13,9 @@ class ActividadQuerySet(models.QuerySet):
     def aprobado(self):
         return self.filter(estado='aprobado')
 
+    def puede_aprobar(self, usuario):
+        return self.filter(estado='espera', seccion=usuario.perfil.seccion)
+
 
 class ActividadManager(PolymorphicManager):
     def get_queryset(self):
@@ -26,3 +29,6 @@ class ActividadManager(PolymorphicManager):
 
     def aprobado(self):
         return self.get_queryset().aprobado()
+
+    def puede_aprobar(self, usuario):
+        return self.get_queryset().puede_aprobar(usuario)

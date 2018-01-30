@@ -338,14 +338,14 @@ class InfoTitulo(models.Model):
     POSTGRADO = 'postgrado'
     MAESTRIA = 'maestria'
     DOCTORADO = 'doctorado'
-    TIPOS = (
+    NIVEL = (
         (LICENCIATURA, 'Licenciatura'),
         (POSTGRADO, 'Postgrado'),
         (MAESTRIA, 'Maestria'),
         (DOCTORADO, 'Doctorado')
     )
     nombre = models.CharField(max_length=120, unique=True)
-    tipo = models.CharField(max_length=25, choices=TIPOS)  # TODO: Nivel en lugar de tipo.
+    nivel = models.CharField(max_length=25, choices=NIVEL)
 
     class Meta:
         verbose_name_plural = 'Informacion de Titulos'
