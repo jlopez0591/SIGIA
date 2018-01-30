@@ -148,15 +148,19 @@
                            aria-expanded="false">
                             Mi Facultad <i class="far fa-building"></i>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"><b>Inventario</b></a>
-                            <a class="dropdown-item"
-                               href="{% url 'inventario:facultad-aulas' request.user.perfil.unidad.pk %}">Aulas <span
-                                    class="badge badge-primary">{{ request.user.perfil.unidad.aula_set.count }}</span></a>
-                            <a class="dropdown-item"
-                               href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Equipos <span
-                                    class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
-                        </div>
+                        {% if request.user.perfil.unidad %}
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#"><b>Inventario</b></a>
+                                <a class="dropdown-item"
+                                   href="{% url 'inventario:facultad-aulas' request.user.perfil.unidad.pk %}">Aulas
+                                    <span
+                                            class="badge badge-primary">{{ request.user.perfil.unidad.aula_set.count }}</span></a>
+                                <a class="dropdown-item"
+                                   href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Equipos
+                                    <span
+                                            class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
+                            </div>
+                        {% endif %}
                     </li>
                 {% endif %}
 
