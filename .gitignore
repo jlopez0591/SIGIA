@@ -113,3 +113,5 @@ js-bs4/
 # Vagrant
 vagrant/
 logs/
+
+static/
