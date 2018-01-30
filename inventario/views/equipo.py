@@ -25,6 +25,7 @@ class EquipoFacultadListView(ListView):
     context_object_name = 'equipos'
     model = Equipo
     template_name = 'inventario/equipo/lista.html'
+    paginate_by = 10
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -43,7 +44,7 @@ class EquipoDetailView(DetailView):
 class EquipoUpdateView(UpdateView):
     form_class = EquipoForm
     model = Equipo
-    template_name = 'form.html'
+    template_name = 'inventario/equipo/crear.html'
 
 
 class EquipoCreateView(SuccessMessageMixin, CreateView):

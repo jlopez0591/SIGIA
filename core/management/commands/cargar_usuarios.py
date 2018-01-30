@@ -2,6 +2,7 @@ from datetime import datetime as dt
 
 import json
 import logging
+import os.path
 import random
 import string
 import sys
@@ -12,12 +13,15 @@ from django.contrib.auth.models import User, Group
 from sigia import base_settings
 from perfiles.models import Perfil
 
+fecha = dt.now()
 ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/import-files/user.json')
-LOG_FILE_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/creacion_usuarios/')
+LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/creacion_usuarios/')
+LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha.strftime("%Y-%m-%d"))
 
-get_date = dt.now()
-current_date = ''.format('%Y-%m-%d-%H:%M')
-logging.basicConfig(filename='{}{}.log'.format(LOG_FILE_LOCATION,current_date), level=logging.DEBUG,
+if not os.path.exists(LOG_FILE):
+    os.makedirs(LOG_FILE)
+
+logging.basicConfig(filename='{}.log'.format(LOG_FILE), level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -31,20 +35,7 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
-# lista = {
-#     'Profesores': permisos_profesores,
-#     'Director de Departamento': permisos_directores_departamento,
-#     'Director de Escuela': permisos_directores_escuela,
-#     'Administrativos': permisos_administrativos,
-#     'Comision de Anteproyecto': permisos_comision,
-#     'Decanos': permisos_decanos,
-# }
-
-
 class Command(BaseCommand):
-    """
-
-    """
     help = 'Carga usuarios iniciales'
 
     def handle(self, *args, **options):

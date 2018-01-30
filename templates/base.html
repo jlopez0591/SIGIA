@@ -89,12 +89,6 @@
                             <a class="dropdown-item" href="#"><b>Anteproyecto y Trabajo de Grado</b></a>
                             <a class="dropdown-item" href="{% url 'estudiante:crear-anteproyecto' %}">Anteproyecto</a>
                             <a class="dropdown-item" href="{% url 'estudiante:crear-proyecto' %}">Trabajo de Grado</a>
-                            <div class="dropdown-divider"></div>
-                            {#  Inventario #}
-                            <a class="dropdown-item" href="#"><b>Inventario</b></a>
-                            <a class="dropdown-item" href="{% url 'inventario:crear-aulas' %}">Aula</a>
-                            <a class="dropdown-item" href="{% url 'inventario:crear-equipo' %}">Equipo</a>
-                            <div class="dropdown-divider"></div>
                         </div>
                     </li>
                 {% endif %}
@@ -125,7 +119,7 @@
 
             {#  Navbar en la Derecha #}
             <ul class="navbar-nav mr-4">
-                {% if request.user.is_staff %}
+                {% if request.user.is_superuser %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true"
@@ -225,24 +219,6 @@
 
 
         {% block content %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="container jumbo-test">
-                        <div class="jumbotron">
-                            <h1 class="display-3">{% block jumbotron-title %}Bienvenido al Sistema
-                                SIGIA!{% endblock %}</h1>
-                            <p class="lead">{% block jumbotron-subtitle %}Lorem Ipsum{% endblock %}</p>
-                            <hr class="my-4">
-                            <p>{% block jumbotron-content %}It uses utility classes for typography and spacing to space
-                                content out within the larger
-                                container.{% endblock %}</p>
-                            <p class="lead">
-                                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         {% endblock %}
 
 

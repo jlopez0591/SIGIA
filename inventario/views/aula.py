@@ -29,12 +29,8 @@ class AulaFacultadListView(ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            pk = self.kwargs['pk']
-            try:
-                u = UnidadInstancia.objects.get(pk=pk)
-                aulas = u.aula_set.all()
-            except:
-                aulas = None
+            u = UnidadInstancia.objects.get(pk=self.kwargs['pk'])
+            aulas = u.aula_set.all().order_by('tipo')
             return aulas
         else:
             return None

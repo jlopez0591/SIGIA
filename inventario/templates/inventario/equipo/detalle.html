@@ -11,12 +11,17 @@
                     <div class="card-body">
                         Modelo: {{ equipo.modelo.fabricante.nombre }} {{ equipo.modelo.nombre }}
                         <hr/>
-                        Anotaciones: {{ equipo.observaciones }}
+                        Anotaciones: {{ equipo.observaciones|safe }}
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a class="btn btn-primary" href="{% url 'inventario:lista-equipo' %}">Ver Otros</a>
-                    <a class="btn btn-primary" href="{% url 'inventario:editar-equipo' equipo.pk %}">Editar</a>
+                    {% if request.user.is_superuser %}
+                        <a class="btn btn-outline-primary" href="{% url 'inventario:lista-equipo' %}">Ver Otros</a>
+                    {% else %}
+                        <a class="btn btn-outline-primary"
+                           href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Ver Otros</a>
+                    {% endif %}
+                    <a class="btn btn-outline-info" href="{% url 'inventario:editar-equipo' equipo.pk %}">Editar</a>
                 </div>
             </div>
         </div>

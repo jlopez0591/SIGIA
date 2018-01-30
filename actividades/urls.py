@@ -80,6 +80,6 @@ urlpatterns = [
     url(r'^titulo/crear/$',
         ActivityCreateView.as_view(model=Titulo, form_class=TituloForm, template_name='titulo/crear.html'),
         name='crear-titulo'),
-    url(r'^titulo/(?P<pk>[0-9]+)/editar/$', ActivityCreateView.as_view(model=Titulo, form_class=TituloForm),
-        name='crear-titulo')
+    # url(r'^titulo/(?P<pk>[0-9]+)/editar/$', ActivityCreateView.as_view(model=Titulo, form_class=TituloForm),
+    #     name='crear-titulo')
 ]
