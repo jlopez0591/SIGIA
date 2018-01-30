@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     # My apps
     'actividades',
-    'core',
+    # 'core',
     'estudiantes',
     'inventario',
     'perfiles',
