@@ -5,10 +5,11 @@ from django.views.generic import DetailView, UpdateView
 from django.urls import reverse_lazy
 
 from perfiles.models import Perfil, Person
-from perfiles.forms import PerfilForm
+from perfiles.forms import PerfilForm, PerfilTestForm
 from .filters import PerfilFilter
 
 from dal import autocomplete
+
 
 def consulta_profesor(request):
     profesores = Perfil.objects.profesores()
@@ -45,15 +46,16 @@ class PerfilPublicoView(DetailView):
 
 class PerfilUpdateView(UpdateView):
     model = Perfil
-    form_class = PerfilForm
+    form_class = PerfilTestForm  # PerfilForm
     success_url = reverse_lazy('perfil:ver')
-    template_name = 'perfiles/editar.html'
+    template_name = 'form.html'  # 'perfiles/editar.html'
     context_object_name = 'form'
 
     def get_object(self, queryset=None):
         usuario = self.request.user
         object = Perfil.objects.get_or_create(usuario=usuario)[0]
         return object
+
 
 class ProfesoresAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):

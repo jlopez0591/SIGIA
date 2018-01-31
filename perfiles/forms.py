@@ -78,3 +78,8 @@ class PerfilForm(forms.ModelForm):
                 'placeholder': "Apellido Materno",
             }),
         }
+
+class PerfilTestForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ('__all__')
