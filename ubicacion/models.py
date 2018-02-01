@@ -316,7 +316,7 @@ class SeccionInstancia(models.Model):
     cod_seccion = models.CharField(max_length=2)
 
     ubicacion = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, related_name='secciones', blank=True,
-                                  null=True, limit_choices_to=(Q(unidad__tipo='1')) | Q(unidad__tipo='6'))
+                                  null=True, limit_choices_to=(Q(unidad__tipo='FA')) | Q(unidad__tipo='6'))
     activo = models.BooleanField(default=True)
 
     class Meta:
