@@ -13,32 +13,32 @@ class PerfilForm(forms.ModelForm):
         widgets = {
             'primer_nombre': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Primer Nombre",
             }),
             'segundo_nombre': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Segundo Nombre",
             }),
             'primer_apellido': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Apellido Paterno",
             }),
             'segundo_apellido': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'provincia': forms.Select(attrs={
                 'class': 'form-control',
-                #'disabled': True,
+                ## 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'clase': forms.Select(attrs={
                 'class': 'form-control cedula',
-                #'disabled': True,
+                ## 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'tomo': forms.TextInput(attrs={
@@ -66,17 +66,17 @@ class PerfilForm(forms.ModelForm):
             }),
             'cod_sede': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'cod_unidad': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'cod_seccion': forms.TextInput(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                # 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
         }
