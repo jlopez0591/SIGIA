@@ -41,6 +41,7 @@ class ActivityCreateView(SuccessMessageMixin, CreateView):
 
 class ActivityDetailView(DetailView):
     model = Actividad
+    template_name = 'actividades/detalle.html'
     context_object_name = 'actividad'
 
 
@@ -99,22 +100,33 @@ def aprobar_actividad(request, pk):
         return redirect(reverse('actividad:pendientes'))
 
 
-# @permission_required('actividad.aprobar_actividad')
-# def rechazar_actividad(request, actividad_pk):
-#     if request.method == 'POST':
-#         actividad = Actividad.objects.get(pk=actividad_pk)
-#         actividad.rechazar()
-#         return reverse('actividad:lista')
-
-
 class ActividadRechazarView(SuccessMessageMixin, UpdateView):
     context_object_name = 'form'
     form_class = RechazarForm
     model = Actividad
     success_message = 'Actividad Rechazada'
+    success_url = reverse_lazy('actividad:pendientes')
     template_name = 'actividades/admin/rechazar.html'
 
     def form_valid(self, form):
         form = form.instance
         form.estado = 'rechazado'
         return super(ActividadRechazarView, self).form_valid(form)
+
+
+def detalle_actividad(request, pk):
+    plantillas = {
+        'conferencia': '',
+        'estadia': '',
+        'idioma': '',
+        'investigacion': '',
+        'libro': '',
+        'ponencia': '',
+        'premio': '',
+        'proyecto': '',
+        'publicacion': '',
+        'titulo': ''
+    }
+    clase = Actividad.objects.get(pk=pk).clase.lower()
+    plantilla = plantillas[clase]
+    return render(request, plantilla, {})

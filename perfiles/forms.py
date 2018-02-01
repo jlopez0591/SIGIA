@@ -31,14 +31,14 @@ class PerfilForm(forms.ModelForm):
                 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
-            'provincia': forms.TextInput(attrs={
+            'provincia': forms.Select(attrs={
                 'class': 'form-control',
-                'disabled': True,
+                #'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
-            'clase': forms.TextInput(attrs={
+            'clase': forms.Select(attrs={
                 'class': 'form-control cedula',
-                'disabled': True,
+                #'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
             'tomo': forms.TextInput(attrs={
@@ -47,13 +47,15 @@ class PerfilForm(forms.ModelForm):
             'folio': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
-            'fecha_nacimiento': forms.SelectDateWidget(),
+            'fecha_nacimiento': forms.TextInput(attrs={
+                'class': 'datepicker form-control',
+                'placeholder': 'Fecha de Inicio de Labores'
+            }),
             'fecha_inicio': forms.TextInput(attrs={
                 'class': 'datepicker form-control',
                 'placeholder': 'Fecha de Inicio de Labores',
-                'disabled': True
             }),
-            'sexo': forms.TextInput(attrs={
+            'sexo': forms.Select(attrs={
                 'class': 'form-control'
             }),
             'categoria': forms.Select(attrs={

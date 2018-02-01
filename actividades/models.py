@@ -1,4 +1,6 @@
+import datetime
 import logging
+import os
 
 from django.conf.global_settings import LANGUAGES
 from django.db import models
@@ -13,12 +15,24 @@ from polymorphic.models import PolymorphicModel
 
 # Utilities and helpers
 from .managers import ActividadManager
+from .validators import validate_file_type
 
 # Other apps import
 from ubicacion.models import SeccionInstancia
 from perfiles.models import Perfil
 
 logger = logging.getLogger(__name__)
+
+def user_directory_path(instance, filename):
+    """
+    Retorna el path en el cual salvar los archivos (actividades en este modulo)
+    :param instance:
+    :param filename:
+    :return:
+    """
+    # actividades/tipo/fecha/usuario/filename
+    data = datetime.datetime.now().strftime('%Y/%b')
+    return 'actividades/{0}/{1}/{2}/filename'.format(instance.clase, data, instance.usuario.username)
 
 
 # Create your models here.
@@ -79,6 +93,8 @@ class Actividad(PolymorphicModel):
     estado = models.CharField(max_length=25, choices=STATUS, default='espera')
     motivo_rechazo = models.TextField(max_length=500, blank=True)
 
+    archivo = models.FileField(upload_to=user_directory_path, validators=[validate_file_type])
+
     objects = ActividadManager()
 
     class Meta:
@@ -129,7 +145,6 @@ class Actividad(PolymorphicModel):
 
 class EstadiaPostdoctoral(Actividad):
     lugar = models.CharField(max_length=1020)
-    archivo = models.FileField(blank=True, upload_to='files/estadias-postdoctorales')
 
     class Meta:
         verbose_name_plural = 'Estadias postdoctorales'
@@ -163,7 +178,6 @@ class Publicacion(Actividad):
         (OTRO, 'Otros'))
     tipo = models.CharField(max_length=100, choices=TIPOS, default='otros')
     lugar_publicacion = models.CharField(max_length=1020)
-    archivo = models.FileField(blank=True, upload_to='files/publicaciones')
 
     class Meta:
         verbose_name_plural = 'Publicaciones'
@@ -178,7 +192,6 @@ class Publicacion(Actividad):
 
 class Investigacion(Actividad):
     codigo = models.CharField(max_length=100)
-    archivo = models.FileField(blank=True, upload_to='files/investigaciones')
 
     class Meta:
         unique_together = ('codigo',)
@@ -195,7 +208,6 @@ class Investigacion(Actividad):
 class Libro(Actividad):
     isbn = models.CharField(max_length=1020)
     editorial = models.CharField(max_length=1020)
-    archivo = models.FileField(blank=True, upload_to='files/libros')
 
     class Meta:
         unique_together = ('isbn',)
@@ -210,7 +222,6 @@ class Libro(Actividad):
 
 
 class Conferencia(Actividad):
-    archivo = models.FileField(blank=True, null=True, upload_to='files/conferencias')
 
     class Meta:
         verbose_name_plural = 'Conferencia'
@@ -225,7 +236,6 @@ class Conferencia(Actividad):
 
 class Ponencia(Actividad):
     pais = CountryField()
-    archivo = models.FileField(blank=True, null=True, upload_to='files/ponencias')
 
     class Meta:
         verbose_name_plural = 'Ponencias'
@@ -276,7 +286,6 @@ class Proyecto(Actividad):
         (GRAFICO, 'Diseno Grafico'),
         (ARTE, 'Obra de Arte')
     )
-    archivo = models.FileField(blank=True, null=True, upload_to='files/actividad')  # TODO: upload_to? :P
     tipo = models.CharField(max_length=100, choices=TIPOS)
 
     class Meta:
@@ -296,7 +305,6 @@ class Premio(Actividad):
         ('internacional', 'Internacional')
     )
     tipo = models.CharField(max_length=100, choices=TIPOS)
-    archivo = models.FileField(upload_to='files/premios', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Premios'
@@ -374,7 +382,6 @@ class CentroEstudio(models.Model):
 class Titulo(Actividad):
     info_titulo = models.ForeignKey(InfoTitulo, on_delete=models.CASCADE)
     centro_estudio = models.ForeignKey(CentroEstudio, on_delete=models.CASCADE)
-    archivo = models.FileField(upload_to='titulos/', blank=True)
 
     class Meta:
         verbose_name = 'Titulos'

@@ -10,74 +10,115 @@
 
 {% block content %}
     <div class="row">
-        {# TODO: Ver por que no actualiza   #}
         <form method="post" enctype="multipart/form-data">
-            <div class="col-md-12">
-
-                {% csrf_token %}
-                <!--Inicio Deck-->
-                <div class="card-deck">
-                    <!--Datos Personales-->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title"><h4>Informacion Personal</h4></div>
-                            <div class="card-body">
-                                <h5>Nombre</h5>
-                                {{ form.primer_nombre.label_tag }}
-                                {{ form.primer_nombre.errors }}
-                                {{ form.primer_nombre }}
-                                <hr/>
-                                {{ form.segundo_nombre }}
-                                <hr/>
-                                {{ form.primer_apellido }}
-                                <hr/>
-                                {{ form.segundo_apellido }}
-                                <hr/>
-                                {{ form.pais }}
-                                <hr/>
-                                <h5>Cedula</h5>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">{{ form.provincia }}</div>
-                                    <div class="form-group col-md-3">{{ form.clase }}</div>
-                                    <div class="form-group col-md-3">{{ form.tomo }}</div>
-                                    <div class="form-group col-md-3">{{ form.folio }}</div>
-                                </div>
-                                <hr/>
-                                <h5>Otros Datos</h5>
-                                {{ form.fecha_nacimiento }}
-                                <hr/>
-                                {{ form.imagen }}
-                                <hr/>
-                                {{ form.fecha_inicio }}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!--Datos Academicos-->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title">Informacion Profesional</div>
-                            <div class="card-body">
-                                {{ form.categoria }}
-                                <hr/>
-                                <h5 class="card-title">Codigo de Departamento</h5>
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">{{ form.cod_sede }}</div>
-                                    <div class="form-group col-md-4">{{ form.cod_unidad }}</div>
-                                    <div class="form-group col-md-4">{{ form.cod_seccion }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <!--Fin Deck-->
+            <div class="row">
+                {{ form.non_field_errors }}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
             </div>
-            <div class="col-md-8 offset-md-2 top-buffer">
-                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            <div class="row">
+                <div class="col-md-12">
+                    {% csrf_token %}
+                    <!--Inicio Deck-->
+                    <div class="card-deck">
+                        <!--Datos Personales-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title"><h4>Informacion Personal</h4></div>
+                                <div class="card-body">
+                                    <h5>Nombre</h5>
+                                    {{ form.primer_nombre.label_tag }}
+                                    {{ form.primer_nombre.errors }}
+                                    {{ form.primer_nombre }}
+                                    <hr/>
+                                    {{ form.segundo_nombre.label_tag }}
+                                    {{ form.segundo_nombre.errors }}
+                                    {{ form.segundo_nombre }}
+                                    <hr/>
+                                    {{ form.primer_apellido.label_tag }}
+                                    {{ form.primer_apellido.errors }}
+                                    {{ form.primer_apellido }}
+                                    <hr/>
+                                    {{ form.segundo_apellido.label_tag }}
+                                    {{ form.segundo_apellido.errors }}
+                                    {{ form.segundo_apellido }}
+                                    <hr/>
+                                    {{ form.sexo.label_tag }}
+                                    {{ form.sexo.errors }}
+                                    {{ form.sexo }}
+                                    <hr />
+                                    {{ form.pais.label_tag }}
+                                    {{ form.pais.errors }}
+                                    {{ form.pais }}
+                                    <hr/>
+                                    <h5>Cedula</h5>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            {{ form.provincia.label_tag }}
+                                            {{ form.provincia.errors }}{{ form.provincia }}</div>
+                                        <div class="form-group col-md-3">
+                                            {{ form.clase.label_tag }}
+                                            {{ form.clase.errors }} {{ form.clase }}</div>
+                                        <div class="form-group col-md-3">
+                                            {{ form.tomo.label_tag }}
+                                            {{ form.tomo.errors }}{{ form.tomo }}</div>
+                                        <div class="form-group col-md-3">{{ form.folio.label_tag }}
+                                            {{ form.folio.errors }}{{ form.folio }}</div>
+                                    </div>
+                                    <hr/>
+                                    <h5>Otros Datos</h5>
+                                    {{ form.imagen.label_tag }}
+                                    {{ form.imagen.errors }}
+                                    {{ form.imagen }}
+                                    <hr/>
+                                    {{ form.fecha_nacimiento.label_tag }}
+                                    {{ form.fecha_nacimiento.errors }}
+                                    {{ form.fecha_nacimiento }}
+                                    <hr/>
+                                    {{ form.fecha_inicio.label_tag }}
+                                    {{ form.fecha_inicio.errors }}
+                                    {{ form.fecha_inicio }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Datos Academicos-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">Informacion Profesional</div>
+                                <div class="card-body">
+                                    {{ form.categoria.label_tag }}
+                                    {{ form.categoria.errors }}
+                                    {{ form.categoria }}
+                                    <hr/>
+                                    <h5 class="card-title">Codigo de Departamento</h5>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">{{ form.cod_sede.label_tag }}
+                                            {{ form.cod_sede.errors }}{{ form.cod_sede }}</div>
+                                        <div class="form-group col-md-4">{{ form.cod_unidad.label_tag }}
+                                            {{ form.cod_unidad.errors }}{{ form.cod_unidad }}</div>
+                                        <div class="form-group col-md-4">{{ form.cod_seccion.label_tag }}
+                                            {{ form.cod_seccion.errors }}{{ form.cod_seccion }}</div>
+                                    </div>
+                                    <hr/>
+                                    <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!--Fin Deck-->
+                </div>
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    {% include 'includes/partial_datepicker.html' %}
 {% endblock %}
