@@ -83,7 +83,7 @@ class Perfil(models.Model):
     cedula = models.CharField(max_length=20, blank=True)
 
     # Info. Profesor
-    imagen = models.ImageField(upload_to='perfil/')
+    imagen = models.ImageField(upload_to='perfil/', blank=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
     pais = CountryField(blank=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
