@@ -50,7 +50,7 @@ class Actividad(PolymorphicModel):
     OTRO = 'otro'
 
     CLASES = (
-        (ESTADIA, 'Estadia Postdoctoral'),
+        (ESTADIA, 'Estadia Postdoctoral'), # Fecha Final
         (PUBLICACION, 'Publicacion'),
         (INVESTIGACION, 'Investigacion'),
         (LIBRO, 'Libro'),
@@ -87,6 +87,8 @@ class Actividad(PolymorphicModel):
     cod_seccion = models.CharField(max_length=2, blank=True)
 
     fecha = models.DateField()  # Fecha en que se dio la actividad
+
+
     fecha_creacion = models.DateTimeField(blank=True)  # Fecha en que se registro la actividad
     nombre_actividad = models.CharField(max_length=120)
     resumen = models.TextField(max_length=1000, blank=True)
@@ -145,6 +147,7 @@ class Actividad(PolymorphicModel):
 
 class EstadiaPostdoctoral(Actividad):
     lugar = models.CharField(max_length=1020)
+    duracion = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'Estadias postdoctorales'
