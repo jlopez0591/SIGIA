@@ -13,6 +13,13 @@ from django_countries.fields import CountryField
 # This app imports
 from .managers import PerfilManager
 
+# Other apps
+from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia
+
+
+def imagen_pergil_location(instance, filename):
+    pass
+
 
 class Person(User):
     class Meta:
@@ -92,6 +99,7 @@ class Perfil(models.Model):
     cod_sede = models.CharField(max_length=2, blank=True, default='XX')
     cod_unidad = models.CharField(max_length=2, blank=True, default='XX')
     cod_seccion = models.CharField(max_length=2, blank=True, default='XX')
+    # cod_secciones = models.ArrayField()
 
     # Foreign Keys
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='perfil')
@@ -104,7 +112,7 @@ class Perfil(models.Model):
                                 limit_choices_to=Q(seccion__tipo='ES') | Q(seccion__tipo='DE'),
                                 null=True,
                                 on_delete=models.SET_NULL, related_name='personal', blank=True)
-
+    # secciones = models.ManyToManyField(SeccionInstancia)
     objects = PerfilManager()
 
     class Meta:
@@ -114,14 +122,22 @@ class Perfil(models.Model):
         return self.nombre_completo + str(self.usuario.pk)
 
     def save(self, *args, **kwargs):
-        self.seccion = self.asignar_ubicacion()
-        self.cedula = self.armar_cedula()
-        self.nombre_completo = '{} {} {} {}'.format(self.primer_nombre, self.segundo_nombre, self.primer_apellido,
-                                                    self.segundo_apellido)
+        try:
+            # self.sede = Sede.objects.get()
+            pass
+        except:
+            pass
+        try:
+            # self.unidad = UnidadInstancia.objects.get()
+            pass
+        except:
+            pass
+        try:
+            # self.seccion = SeccionInstancia.objects.get()
+            pass
+        except:
+            pass
         return super(Perfil, self).save()
-
-    def get_unidad(self):
-        return self.seccion.ubicacion
 
     def asignar_ubicacion(self):
         seccion_model = apps.get_model('ubicacion', 'SeccionInstancia')
@@ -130,9 +146,6 @@ class Perfil(models.Model):
                                              cod_seccion=self.cod_seccion)
         except ObjectDoesNotExist:
             return None
-
-    def armar_cedula(self):
-        return '{}-{}-{}-{}'.format(self.provincia, self.clase, self.tomo, self.folio)
 
     def get_absolute_url(self):
         return reverse('perfil:publico', kwargs={'pk': self.pk})

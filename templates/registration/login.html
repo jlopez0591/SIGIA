@@ -12,11 +12,24 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Iniciar Sesion</h4>
+                        <p>Nombre de Usuario</p>
+                        {{ form.username.errors }}
                         <div>{% render_field form.username class="form-control" placeholder="Nombre de Usuario" %}</div>
+                        {{ form.username.help_text }}
                         <hr/>
+                        {{ form.password.label }}
+                        {{ form.username.errors }}
                         <div>{% render_field form.password class="form-control" placeholder="Password" %}</div>
+                        {{ form.username.help_text }}
                         <hr/>
                         <button class="btn btn-outline-dark btn-block" type="submit">Iniciar Sesion</button>
+                        <p class="card-text">
+                            {{ form.non_field_errors }}
+                            {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field.errors }}
+                                {{ hidden_field }}
+                            {% endfor %}
+                        </p>
                     </div>
                 </div>
             </form>
