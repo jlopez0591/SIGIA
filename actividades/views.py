@@ -75,7 +75,7 @@ class ActividadesPropias(ListView):
 class ActividadesPendientes(PermissionRequiredMixin, ListView):
     model = Actividad
     context_object_name = 'actividades'
-    permission_required = 'aprobar_actividad'
+    permission_required = 'actividades.aprobar_actividad'
     template_name = 'actividades/admin/pendientes.html'
     paginate_by = 10
 
