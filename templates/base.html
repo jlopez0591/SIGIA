@@ -64,7 +64,7 @@
                 {% endif %}
 
                 {# Registro #}
-                {% if request.user.is_authenticated %}
+                {% if perms.actividades.add_actividad or perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true"
@@ -73,29 +73,41 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {# Actividades de los profesores TODO: arar los permisos para la creacion de#}
-                            <a class="dropdown-item" href="#"><b>Actividad</b></a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia Postdoctorla</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-investigacion' %}">Investigacion</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-libro' %}">Libro</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-conferencia' %}">Conferencia</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-ponencia' %}">Ponencia</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-proyecto' %}">Proyecto</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-premio' %}">Premio</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-idioma' %}">Idioma</a>
-                            <a class="dropdown-item" href="{% url 'actividad:crear-titulo' %}">Titulo</a>
-                            <div class="dropdown-divider"></div>
+                            {% if perms.actividades.add_actividad %}
+                                <a class="dropdown-item" href="#"><b>Actividad</b></a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia
+                                    Postdoctorla</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
+                                <a class="dropdown-item"
+                                   href="{% url 'actividad:crear-investigacion' %}">Investigacion</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-libro' %}">Libro</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-conferencia' %}">Conferencia</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-ponencia' %}">Ponencia</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-proyecto' %}">Proyecto</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-premio' %}">Premio</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-idioma' %}">Idioma</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-titulo' %}">Titulo</a>
+                            {% endif %}
                             {#  Anteproyectos y Trabajos de Grado #}
-                            <a class="dropdown-item" href="#"><b>Anteproyecto y Trabajo de Grado</b></a>
-                            <a class="dropdown-item" href="{% url 'estudiante:crear-anteproyecto' %}">Anteproyecto</a>
-                            <a class="dropdown-item" href="{% url 'estudiante:crear-proyecto' %}">Trabajo de Grado</a>
+                            {% if perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><b>Anteproyecto y Trabajo de Grado</b></a>
+                                {% if perms.estudiantes.add_anteproyecto %}
+                                    <a class="dropdown-item"
+                                       href="{% url 'estudiante:crear-anteproyecto' %}">Anteproyecto</a>
+                                {% endif %}
+                                {% if perms.estudiantes.add_proyecto %}
+                                    <a class="dropdown-item" href="{% url 'estudiante:crear-proyecto' %}">Trabajo
+                                        de
+                                        Grado</a>{% endif %}
+                            {% endif %}
                         </div>
                     </li>
                 {% endif %}
 
 
                 {# Listados #}
-                {% if request.user.is_authenticated %}
+                {% if request.user.is_staff or perms.actividades.aprobar_actividad or perms.actividades.estudiantes.aprobar_anteproyecto %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true"
@@ -103,14 +115,20 @@
                             Pendientes <i class="fas fa-tasks"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {# Actividades de los profesores TODO: Agregar los permisos para la creacion de#}
-                            <a class="dropdown-item" href="{% url 'actividad:pendientes' %}">Actividades</a>
-                            <div class="dropdown-divider"></div>
+                            {# Actividades de los profesores TODO: Agregar los permisos para la creacion de #}
+                            {% if perms.actividades.aprobar_actividad %}
+                                <a class="dropdown-item" href="{% url 'actividad:pendientes' %}">Actividades</a>
+                                <div class="dropdown-divider"></div>
+                            {% endif %}
                             {#  Anteproyectos y Trabajos de Grado #}
-                            <a class="dropdown-item" href="{% url 'actividad:pendientes' %}">Anteproyecto</a>
-                            <div class="dropdown-divider"></div>
+                            {% if perms.estudiantes.aprobar_anteproyecto %}
+                                <a class="dropdown-item" href="#">Anteproyecto</a>
+                                <div class="dropdown-divider"></div>
+                            {% endif %}
                             {# Solicitud #}
-                            <a class="dropdown-item" href="{% url 'solicitud:lista' %}">Solicitud</a>
+                            {% if request.user.is_staff %}
+                                <a class="dropdown-item" href="{% url 'solicitud:lista' %}">Solicitud</a>
+                            {% endif %}
                         </div>
                     </li>
                 {% endif %}
@@ -175,7 +193,7 @@
                            data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             {{ request.user.get_full_name }}{% if request.user.is_superuser %}
-                                <i class="fas fa-user-plus"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}
+                                <i class="fas fa-user-plus"></i>{% else %} <i class="fas fa-user-circle"></i>{% endif %}
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -204,6 +204,11 @@ class Anteproyecto(models.Model):
     archivo = models.FileField(blank=True)
     resumen = models.TextField(max_length=500, blank=True)
 
+    class Meta:
+        permissions = (
+            ('aprobar_anteproyecto', 'Aprobar Anteproyecto'),
+        )
+
     def __str__(self):
         return self.nombre_proyecto
 
