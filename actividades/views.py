@@ -47,7 +47,7 @@ class ActivityDetailView(DetailView):
 
 class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
     context_object_name = 'actividad'
-    permission_required = 'actividad.change_actividad'
+    permission_required = 'actividades.change_actividad'
     success_url = reverse_lazy('insight:perfil')
 
     def get_object(self, queryset=None):
@@ -96,7 +96,7 @@ def aprobar_actividad(request, pk):
         usuario = Actividad.usuario
         texto = "ha sido aprobada!"
         actividad.aprobar()
-        # Notificacion.objects.create(usuario=usuario, actividad=actividad, fecha_creada=timezone.now())
+        # Notificacion.objects.create(usuario=usuario, fecha_creada=timezone.now())
         return redirect(reverse('actividad:pendientes'))
 
 
@@ -113,20 +113,3 @@ class ActividadRechazarView(SuccessMessageMixin, UpdateView):
         form.estado = 'rechazado'
         return super(ActividadRechazarView, self).form_valid(form)
 
-
-def detalle_actividad(request, pk):
-    plantillas = {
-        'conferencia': '',
-        'estadia': '',
-        'idioma': '',
-        'investigacion': '',
-        'libro': '',
-        'ponencia': '',
-        'premio': '',
-        'proyecto': '',
-        'publicacion': '',
-        'titulo': ''
-    }
-    clase = Actividad.objects.get(pk=pk).clase.lower()
-    plantilla = plantillas[clase]
-    return render(request, plantilla, {})
