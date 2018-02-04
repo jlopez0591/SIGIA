@@ -21,5 +21,5 @@ def validate_file_type(upload):
     file_type = magic.from_file(full_tmp_path, mime=True)
     default_storage.delete(tmp_path)
 
-    if file_type not in 'application/pdf':  # TODO: Verificar este pedazo
+    if file_type not in settings.VALID_FILE_FIELDS:  # TODO: Incorporar listado de formatos permitidos
         raise ValidationError('Tipo de archivo no soportado, solo aceptamos .PDF')

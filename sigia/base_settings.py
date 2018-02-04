@@ -118,7 +118,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = 'perfil:ver'
+LOGIN_REDIRECT_URL = 'core:index'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -132,3 +132,6 @@ MEDIA_URL = '/media/'
 
 # Django-import-export
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+# Helpers
+VALID_FILE_FIELDS = ['application/pdf', 'image/jpg', 'image/png']
