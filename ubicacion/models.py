@@ -18,9 +18,6 @@ logger = logging.getLogger(__name__)
 
 # Create your models here.
 class Sede(models.Model):
-    '''
-        Define la informacion de una sede y a su vez actua como una ubicacion
-    '''
     CAMPUS = 'CU'
     CENTRO_REGIONAL = 'CR'
     EXTENSION = 'EX'
@@ -70,8 +67,7 @@ class Sede(models.Model):
         Realiza conteo de las carreras por tipo
         :return: Conteo de carreras por tipo
         """
-        carreras = self.carrerainstancia_set.all()
-        # carreras = CarreraInstancia.objects.filter(cod_sede=cs, carrera__activo=True)
+        carreras = self.carreras.all()
         conteo = {}
         for instancia in carreras:
             tipo = instancia.carrera.get_tipo_display()
@@ -353,7 +349,7 @@ class CarreraInstancia(models.Model):
     '''
     objects = CarreraInstanciaManager()
 
-    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
     unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True,
                                related_name='carrera_instancia')
     seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, blank=True, null=True,
@@ -421,6 +417,3 @@ class CarreraInstancia(models.Model):
     def nombre_completo(self):
         return '{} - {} - {} - {}'.format(self.sede.nombre, self.unidad.nombre, self.seccion.nombre,
                                           self.carrera.nombre)
-
-    def natural_key(self):
-        return ((self.cod_sede, self.cod_unidad, self.cod_seccion, self.cod_carrera),)
