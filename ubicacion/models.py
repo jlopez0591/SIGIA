@@ -7,8 +7,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-# App Imports
-from perfiles.models import Perfil
 
 # My imports
 from .managers import (CarreraInstanciaManager, CarreraManager,
@@ -57,11 +55,10 @@ class Sede(models.Model):
         Cuenta las uniadades por tipo y las guarda en un diccionario
         :return: Cantidad de unidades por tipo en diccionario python
         """
-        cs = self.cod_sede
-        unidades = UnidadInstancia.objects.filter(cod_sede=cs)
+        unidades = self.unidades.all()
         unidad_dict = {}
-        for unidad in unidades:
-            tipo = unidad.unidad.get_tipo_display()
+        for instancia in unidades:
+            tipo = instancia.unidad.get_tipo_display()
             if tipo in unidad_dict:
                 unidad_dict[tipo] += 1
             else:
@@ -73,11 +70,11 @@ class Sede(models.Model):
         Realiza conteo de las carreras por tipo
         :return: Conteo de carreras por tipo
         """
-        cs = self.cod_sede
-        carreras = CarreraInstancia.objects.filter(cod_sede=cs, carrera__activo=True)
+        carreras = self.carrerainstancia_set.all()
+        # carreras = CarreraInstancia.objects.filter(cod_sede=cs, carrera__activo=True)
         conteo = {}
-        for carrera in carreras:
-            tipo = carrera.carrera.get_tipo_display()
+        for instancia in carreras:
+            tipo = instancia.carrera.get_tipo_display()
             if tipo in conteo:
                 conteo[tipo] += 1
             else:

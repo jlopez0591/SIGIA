@@ -14,7 +14,7 @@ from django_countries.fields import CountryField
 from .managers import PerfilManager
 
 # Other apps
-from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia #TODO: Revisar el import
+from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraInstancia
 
 
 def imagen_pergil_location(instance, filename):

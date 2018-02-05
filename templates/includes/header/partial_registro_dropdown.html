@@ -1,0 +1,38 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        Registrar <i class="fas fa-pen-square"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {# Actividades de los profesores TODO: arar los permisos para la creacion de#}
+        {% if perms.actividades.add_actividad %}
+            <a class="dropdown-item" href="#"><b>Actividad</b></a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia
+                Postdoctorla</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
+            <a class="dropdown-item"
+               href="{% url 'actividad:crear-investigacion' %}">Investigacion</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-libro' %}">Libro</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-conferencia' %}">Conferencia</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-ponencia' %}">Ponencia</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-proyecto' %}">Proyecto</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-premio' %}">Premio</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-idioma' %}">Idioma</a>
+            <a class="dropdown-item" href="{% url 'actividad:crear-titulo' %}">Titulo</a>
+        {% endif %}
+        {#  Anteproyectos y Trabajos de Grado #}
+        {% if perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><b>Anteproyecto y Trabajo de Grado</b></a>
+            {% if perms.estudiantes.add_anteproyecto %}
+                <a class="dropdown-item"
+                   href="{% url 'estudiante:crear-anteproyecto' %}">Anteproyecto</a>
+            {% endif %}
+            {% if perms.estudiantes.add_proyecto %}
+                <a class="dropdown-item" href="{% url 'estudiante:crear-proyecto' %}">Trabajo
+                    de
+                    Grado</a>{% endif %}
+        {% endif %}
+    </div>
+</li>

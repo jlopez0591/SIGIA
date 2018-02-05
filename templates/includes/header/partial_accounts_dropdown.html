@@ -1,0 +1,23 @@
+<li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        {{ request.user.get_full_name }}{% if request.user.is_superuser %}
+            <i class="fas fa-user-plus"></i>{% else %} <i class="fas fa-user-circle"></i>{% endif %}
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'perfil:ver' %}">Perfil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'perfil:editar' %}">Editar Perfil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Notificaciones</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Solicitudes</a>  <!--TODO: Crear vista -->
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/logout/">Cerrar Sesion</a>
+    </div>
+
+
+</li>

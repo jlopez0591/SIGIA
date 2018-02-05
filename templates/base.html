@@ -1,15 +1,10 @@
 {% load staticfiles %}
 <!doctype html>
 <html lang="en">
-
 <head>
-    <title>{% block title %}Sistema SIGIA{% endblock %}</title>
-    <!-- Required meta tags -->
+    <title>SIGIA - {% block title %}Sistema SIGIA{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <!-- include libraries(jQuery, bootstrap) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     {#    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">#}
@@ -22,7 +17,6 @@
 <body>
 <!-- wrapper -->
 <div class="wrapper">
-
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
         <a class="navbar-brand" href="{% url 'core:index' %}">SIGIA</a>
@@ -34,182 +28,36 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-
                 {#  Consultas  #}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Consultar <i class="fas fa-search"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'ubicacion:sedes' %}">Sedes</a>
-                        <a class="dropdown-item" href="{% url 'ubicacion:unidades' %}">Facultades</a>
-                        <a class="dropdown-item" href="{% url 'ubicacion:secciones' %}">Escuelas</a>
-                        <a class="dropdown-item" href="{% url 'ubicacion:carreras' %}">Carreras</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesor</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes</a>
-                    </div>
-                </li>
-
+                {% include 'includes/header/partial_search_dropdown.html' %}
                 <!-- Consultas -->
                 {% if request.user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" role="button">
-                            Reportes <i class="fas fa-file"></i>
-                        </a>
-                    </li>
+                    {% include 'includes/header/partial_reportes_dropdown.html' %}
                 {% endif %}
 
                 {# Registro #}
                 {% if perms.actividades.add_actividad or perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Registrar <i class="fas fa-pen-square"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {# Actividades de los profesores TODO: arar los permisos para la creacion de#}
-                            {% if perms.actividades.add_actividad %}
-                                <a class="dropdown-item" href="#"><b>Actividad</b></a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia
-                                    Postdoctorla</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
-                                <a class="dropdown-item"
-                                   href="{% url 'actividad:crear-investigacion' %}">Investigacion</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-libro' %}">Libro</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-conferencia' %}">Conferencia</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-ponencia' %}">Ponencia</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-proyecto' %}">Proyecto</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-premio' %}">Premio</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-idioma' %}">Idioma</a>
-                                <a class="dropdown-item" href="{% url 'actividad:crear-titulo' %}">Titulo</a>
-                            {% endif %}
-                            {#  Anteproyectos y Trabajos de Grado #}
-                            {% if perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><b>Anteproyecto y Trabajo de Grado</b></a>
-                                {% if perms.estudiantes.add_anteproyecto %}
-                                    <a class="dropdown-item"
-                                       href="{% url 'estudiante:crear-anteproyecto' %}">Anteproyecto</a>
-                                {% endif %}
-                                {% if perms.estudiantes.add_proyecto %}
-                                    <a class="dropdown-item" href="{% url 'estudiante:crear-proyecto' %}">Trabajo
-                                        de
-                                        Grado</a>{% endif %}
-                            {% endif %}
-                        </div>
-                    </li>
+                    {% include 'includes/header/partial_registro_dropdown.html' %}
                 {% endif %}
-
 
                 {# Listados #}
                 {% if request.user.is_staff or perms.actividades.aprobar_actividad or perms.actividades.estudiantes.aprobar_anteproyecto %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Pendientes <i class="fas fa-tasks"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {# Actividades de los profesores TODO: Agregar los permisos para la creacion de #}
-                            {% if perms.actividades.aprobar_actividad %}
-                                <a class="dropdown-item" href="{% url 'actividad:pendientes' %}">Actividades</a>
-                                <div class="dropdown-divider"></div>
-                            {% endif %}
-                            {#  Anteproyectos y Trabajos de Grado #}
-                            {% if perms.estudiantes.aprobar_anteproyecto %}
-                                <a class="dropdown-item" href="#">Anteproyecto</a>
-                                <div class="dropdown-divider"></div>
-                            {% endif %}
-                            {# Solicitud #}
-                            {% if request.user.is_staff %}
-                                <a class="dropdown-item" href="{% url 'solicitud:lista' %}">Solicitud</a>
-                            {% endif %}
-                        </div>
-                    </li>
+                    {% include 'includes/header/partial_director_departamento_dropdown.html' %}
                 {% endif %}
             </ul>
-
 
             {#  Navbar en la Derecha #}
             <ul class="navbar-nav mr-4">
                 {% if request.user.is_superuser %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Utilidades <i class="fas fa-wrench"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/admin/">Admin</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><b>Inventario</b></a>
-                            <a class="dropdown-item" href="{% url 'inventario:fabricante-lista' %}">Fabricantes</a>
-                            <a class="dropdown-item" href="{% url 'inventario:categoria-lista' %}">Categorias</a>
-                            <a class="dropdown-item" href="{% url 'inventario:modelo-lista' %}">Modelos</a>
-                            <a class="dropdown-item" href="{% url 'inventario:lista-aulas' %}">Aulas</a>
-                            <a class="dropdown-item" href="{% url 'inventario:lista-equipo' %}">Equipos</a>
-                        </div>
-                    </li>
+                    {% include 'includes/header/partial_admin_utils_dropdown.html' %}
                 {% endif %}
 
-
-
-                {% if request.user.is_staff %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Mi Facultad <i class="far fa-building"></i>
-                        </a>
-                        {% if request.user.perfil.unidad %}
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#"><b>Inventario</b></a>
-                                <a class="dropdown-item"
-                                   href="{% url 'inventario:facultad-aulas' request.user.perfil.unidad.pk %}">Aulas
-                                    <span
-                                            class="badge badge-primary">{{ request.user.perfil.unidad.aula_set.count }}</span></a>
-                                <a class="dropdown-item"
-                                   href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Equipos
-                                    <span
-                                            class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
-                            </div>
-                        {% endif %}
-                    </li>
+                {% if request.user.perfil.unidad %}
+                    {% include 'includes/header/partial_unidad_dropdown.html' %}
                 {% endif %}
-
-
-
-
 
                 {% if request.user.is_authenticated %}
-                    <li class="nav-item dropdown">
-
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            {{ request.user.get_full_name }}{% if request.user.is_superuser %}
-                                <i class="fas fa-user-plus"></i>{% else %} <i class="fas fa-user-circle"></i>{% endif %}
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'perfil:ver' %}">Perfil</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'perfil:editar' %}">Editar Perfil</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Notificaciones</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Solicitudes</a>  <!--TODO: Crear vista -->
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout/">Cerrar Sesion</a>
-                        </div>
-
-
-                    </li>
+                    {% include 'includes/header/partial_accounts_dropdown.html' %}
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="/login/">Iniciar Sesion</a>
@@ -268,8 +116,6 @@
 
     <!-- /wrapper -->
 </div>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
@@ -279,5 +125,4 @@
         crossorigin="anonymous"></script>
 {% block javascript %}{% endblock %}
 </body>
-
 </html>

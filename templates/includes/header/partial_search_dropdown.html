@@ -1,0 +1,17 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        Consultar <i class="fas fa-search"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'ubicacion:sedes' %}">Sedes</a>
+        <a class="dropdown-item" href="{% url 'ubicacion:unidades' %}">Facultades</a>
+        <a class="dropdown-item" href="{% url 'ubicacion:secciones' %}">Escuelas</a>
+        <a class="dropdown-item" href="{% url 'ubicacion:carreras' %}">Carreras</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesor</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes</a>
+    </div>
+</li>
