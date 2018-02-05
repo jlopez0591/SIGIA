@@ -1,9 +1,6 @@
 # Python imports
 from datetime import date
-
-from django.apps import apps
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -19,19 +16,6 @@ from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraIns
 
 def imagen_pergil_location(instance, filename):
     pass
-
-
-class Person(User):
-    class Meta:
-        proxy = True
-
-    def codigos(self):
-        codes = {
-            'cod_sede': self.perfil.cod_sede,
-            'cod_unidad': self.perfil.cod_unidad,
-            'cod_seccion': self.perfil.cod_seccion
-        }
-        return codes
 
 
 class Perfil(models.Model):
@@ -108,10 +92,9 @@ class Perfil(models.Model):
                              null=True)
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, related_name='personal',
                                blank=True, null=True)
-    seccion = models.ForeignKey('ubicacion.SeccionInstancia',
-                                limit_choices_to=Q(seccion__tipo='ES') | Q(seccion__tipo='DE'),
-                                null=True,
-                                on_delete=models.SET_NULL, related_name='personal', blank=True)
+    secciones = models.ManyToManyField('ubicacion.SeccionInstancia', blank=True,
+                                       limit_choices_to=Q(seccion__tipo='ES') | Q(seccion__tipo='DE'),
+                                       )
     # secciones = models.ManyToManyField(SeccionInstancia)
     objects = PerfilManager()
 
@@ -119,33 +102,24 @@ class Perfil(models.Model):
         verbose_name_plural = 'Perfiles'
 
     def __str__(self):
-        return self.nombre_completo + str(self.usuario.pk)
+        return self.usuario.username
 
     def save(self, *args, **kwargs):
         try:
-            # self.sede = Sede.objects.get()
-            pass
+            self.sede = Sede.objects.get(cod_sede=self.cod_sede)
         except:
             pass
         try:
-            # self.unidad = UnidadInstancia.objects.get()
-            pass
+            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
         except:
             pass
         try:
-            # self.seccion = SeccionInstancia.objects.get()
-            pass
+            s = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+                                             cod_seccion=self.cod_seccion)
+            self.secciones.add(s)
         except:
             pass
         return super(Perfil, self).save()
-
-    def asignar_ubicacion(self):
-        seccion_model = apps.get_model('ubicacion', 'SeccionInstancia')
-        try:
-            return seccion_model.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                             cod_seccion=self.cod_seccion)
-        except ObjectDoesNotExist:
-            return None
 
     def get_absolute_url(self):
         return reverse('perfil:publico', kwargs={'pk': self.pk})

@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
 from django.views.generic import DetailView, UpdateView
 from django.urls import reverse_lazy
 
-from perfiles.models import Perfil, Person
+from perfiles.models import Perfil
 from perfiles.forms import PerfilForm, PerfilTestForm
 from .filters import PerfilFilter
 
@@ -60,24 +61,12 @@ class PerfilUpdateView(UpdateView):
 class ProfesoresAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if self.request.user.is_superuser:
-            qs = Person.objects.all()
+            qs = User.objects.all()
         elif self.request.user.is_authenticated():
             perfil = Perfil.objects.get(usuario=self.request.user)
-            codigos = {
-                'cod_sede': perfil.cod_sede,
-                'cod_unidad': perfil.cod_unidad,
-                'cod_seccion': perfil.cod_seccion
-            }
-            # # usuario = Person.objects.get(pk=self.request.user.pk)
-            # carreras = perfil.seccion.carreras.all()
-            # # Estudiante.objects.get(**usuario.kwargs_ubicacion())
-            # q_objects = Q()
-            # for carrera in carreras:
-            #     q_objects |= Q(carrera=carrera)
-            # qs = Person.objects.filter(**codigos, groups__name__in=['foo'])
         else:
-            return Person.objects.none()
+            return User.objects.none()
 
         if self.q:
-            qs = qs.filter(first_name__icontains=self.q)
+            qs = qs.filter(username__icontains=self.q)
         return qs

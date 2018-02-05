@@ -15,6 +15,11 @@
                href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Equipos
                 <span
                         class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
+            <a class="dropdown-item" href="#">Profesores</a>
+            <a class="dropdown-item" href="#">Estudiantes</a>
+            <a class="dropdown-item" href="#">Actividades</a>
+            <a class="dropdown-item" href="#">Anteproyectos</a>
+            <a class="dropdown-item" href="#">Trabajos de Graduacion</a>
         </div>
     {% endif %}
 </li>

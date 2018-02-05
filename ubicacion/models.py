@@ -162,7 +162,7 @@ class Seccion(models.Model):
 
     cod_unidad = models.CharField(max_length=2)
     cod_seccion = models.CharField(max_length=2)
-    nombre = models.CharField(max_length=120)  # No es unico porque los datos de la U no son unicos
+    nombre = models.CharField(max_length=120)
     tipo = models.CharField(max_length=2, choices=TIPOS, default=ESCUELA)
     activo = models.BooleanField(default=True)
     unidad = models.ForeignKey(Unidad, limit_choices_to=Q(tipo='FA'), blank=True, null=True, on_delete=models.SET_NULL)

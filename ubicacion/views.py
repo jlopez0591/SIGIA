@@ -1,15 +1,8 @@
-# Python import
-
-# Third party
 from dal import autocomplete
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-# Django imports
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
-
-from perfiles.models import Person
-# My imports
 from ubicacion.filters import (CarreraFilter, SeccionFilter, SedeFilter,
                                UnidadFilter)
 from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia, Unidad, Seccion, Carrera
@@ -168,7 +161,6 @@ class CarreraInstanciaAutocomplete(autocomplete.Select2QuerySetView):
         if self.request.user.is_superuser:
             qs = CarreraInstancia.objects.all()
         elif self.request.user.is_authenticated():
-            perfil = Person.objects.get(usuario=self.request.user.pk)
             qs = CarreraInstancia.objects.all()
         else:
             return CarreraInstancia.objects.none()
