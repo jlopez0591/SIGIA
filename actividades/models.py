@@ -32,7 +32,7 @@ def user_directory_path(instance, filename):
     """
     # actividades/tipo/fecha/usuario/filename
     data = datetime.datetime.now().strftime('%Y/%b')
-    return 'actividades/{0}/{1}/{2}/filename'.format(instance.clase, data, instance.usuario.username)
+    return 'actividades/{0}/{1}/{2}/{3}'.format(instance.clase, data, instance.usuario.username, filename)
 
 
 # Create your models here.
@@ -147,7 +147,7 @@ class Actividad(PolymorphicModel):
 
 class EstadiaPostdoctoral(Actividad):
     lugar = models.CharField(max_length=1020)
-    duracion = models.IntegerField()
+    duracion = models.PositiveIntegerField(blank=True, default=0)
 
     class Meta:
         verbose_name_plural = 'Estadias postdoctorales'
@@ -195,6 +195,8 @@ class Publicacion(Actividad):
 
 class Investigacion(Actividad):
     codigo = models.CharField(max_length=100)
+    duracion = models.PositiveIntegerField(blank=True, default=0)
+
 
     class Meta:
         unique_together = ('codigo',)
@@ -225,6 +227,7 @@ class Libro(Actividad):
 
 
 class Conferencia(Actividad):
+    duracion = models.PositiveIntegerField(blank=True, default=0)
 
     class Meta:
         verbose_name_plural = 'Conferencia'

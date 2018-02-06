@@ -1,5 +1,3 @@
-import logging
-
 from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -149,32 +147,14 @@ class Estudiante(models.Model):
         return super(Estudiante, self).save()
 
     def __str__(self):
-        """
-
-        :return:
-        """
-        return '{} - {}, {}'.format(self.get_cedula(), self.primer_apellido, self.primer_nombre)
+        return '{}, {}'.format(self.primer_apellido, self.primer_nombre)
 
     def get_absolute_url(self):
-        """
-
-        :return:
-        """
         return reverse('estudiante:detalle', kwargs={'pk': self.pk})
 
     def anteproyectos_aprobados(self):
-        """
-
-        :return:
-        """
+        # TODO: Pasar esto al manager de anteproyectos
         return self.anteproyectos.filter(estado='aprobado')
-
-    def get_cedula(self):
-        """
-
-        :return:
-        """
-        return '{}-{}-{}-{}'.format(self.provincia, self.clase, self.tomo, self.folio)
 
 
 class Anteproyecto(models.Model):
@@ -186,6 +166,8 @@ class Anteproyecto(models.Model):
         ('rechazado', 'Rechazado'),
         ('aprobado', 'Aprobado')
     )
+    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, null=True,
+                                related_name='anteproyectos')
     seccion = models.ForeignKey('ubicacion.SeccionInstancia', on_delete=models.SET_NULL, null=True,
                                 related_name='anteproyectos')
     carrera = models.ForeignKey('ubicacion.CarreraInstancia', on_delete=models.SET_NULL, null=True,
@@ -246,6 +228,8 @@ class Proyecto(models.Model):
         ('3', 'Maestria'),
         ('4', 'Doctorado')
     )
+    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, null=True,
+                                related_name='proyectos')
     seccion = models.ForeignKey('ubicacion.SeccionInstancia', on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')
     carrera = models.ForeignKey('ubicacion.CarreraInstancia', on_delete=models.SET_NULL, null=True,
