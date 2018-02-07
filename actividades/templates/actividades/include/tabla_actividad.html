@@ -17,8 +17,8 @@
                 <td>{{ actividad.fecha_creacion }}</td>
                 <td>{{ actividad.get_estado_display }}</td>
                 <td>
-                    <a class="btn btn-outline-primary" href="{% url 'actividad:detalle' actividad.pk %}">Ver</a>\
-                    {% if perms.actividad.aprobar_actividad %}
+                    <a class="btn btn-outline-primary" href="{% url 'actividad:detalle' actividad.pk %}">Ver</a>
+                    {% if perms.actividad.aprobar_actividad and actividad.usuario not in request.user or request.user.is_superuser %}
                         <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-outline-success">Aprobar
