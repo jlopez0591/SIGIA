@@ -31,14 +31,6 @@
                 {#  Consultas  #}
                 {% include 'includes/header/partial_search_dropdown.html' %}
                 <!-- Consultas -->
-                {% if request.user.is_authenticated %}
-                    {% include 'includes/header/partial_reportes_dropdown.html' %}
-                {% endif %}
-
-                {# Registro #}
-                {% if perms.actividades.add_actividad or perms.estudiantes.add_anteproyecto or perms.estudiantes.add_proyecto %}
-                    {% include 'includes/header/partial_registro_dropdown.html' %}
-                {% endif %}
 
                 {# Listados #}
                 {% if request.user.is_staff or perms.actividades.aprobar_actividad or perms.actividades.estudiantes.aprobar_anteproyecto %}
