@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block title %}Lista Equipos{% endblock %}
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -12,10 +16,17 @@
                             class="fa fa-edit"></i> Registrar</a></p>
                     {% include 'inventario/equipo/include/partial_equipo_list.html' %}
                 </div>
-                <div class="card-footer">
-                    {% include 'includes/partial_pagination.html' %}
-                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#inventario').DataTable();
+        });
+    </script>
 {% endblock %}
