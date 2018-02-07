@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
 {% block head %}
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -11,11 +10,10 @@
         <div class="col-md-8 offset-md-2 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Actividades Pendientes</h4>
-                    {% include 'actividades/include/actividad_pendiente_parcial.html' %}
-                </div>
-                <div class="card-footer">
-                    {% include 'includes/partial_pagination.html' %}
+                    <div class="card-title"><h4>Actividades Pendientes</h4></div>
+                    <div class="card-text">
+                        {% include 'actividades/include/tabla_actividad.html' %}
+                    </div>
                 </div>
             </div>
         </div>

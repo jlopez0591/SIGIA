@@ -2,22 +2,34 @@
 
 {% block title %}Listado de Aulas{% endblock %}
 
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-6 offset-md-3">
+
+
             <div class="card">
+                <div class="card-header"><p class="card-text"><a class="btn btn-primary"
+                                                                 href="{% url 'inventario:crear-aulas' %}"><i
+                        class="fa fa-edit"></i> Registrar</a></p></div>
                 <div class="card-body">
                     <h4 class="card-title">Listado de Aulas - {% if request.user.is_superuser %}General{% else %}
                         {{ request.user.perfil.unidad }}{% endif %}</h4>
-                    <p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-aulas' %}"><i
-                            class="fa fa-edit"></i> Registrar</a></p>
-                    <table class="table">
-                        {% if aulas %}
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="enhance">
                             <thead>
                             <tr>
-                                <th>Unidad</th>
-                                <th>Numero</th>
-                                <th>Tipo</th>
+                                <th scope="col">Unidad</th>
+                                <th scope="col">Numero</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -33,17 +45,28 @@
                                             Aula </a>
                                     </td>
                                 </tr>
+                            {% empty %}
+                                <div class="alert alert-info text-center">No hay aulas registradas</div>
                             {% endfor %}
                             </tbody>
-                        {% else %}
-                            <div class="alert alert-info text-center">No hay aulas registradas</div>
-                        {% endif %}
-                    </table>
-                </div>
-                <div class="card-footer">
-                    {% include 'includes/partial_pagination.html' %}
+                        </table>
+                    </div>
+
+
                 </div>
             </div>
+
+
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#enhance").DataTable();
+        });
+    </script>
 {% endblock %}

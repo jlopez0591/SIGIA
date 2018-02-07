@@ -27,7 +27,7 @@ class ActividadListView(UserPassesTestMixin, ListView):
 
 class ActivityCreateView(SuccessMessageMixin, CreateView):
     # permission_required = ''
-    success_url = reverse_lazy('perfil:ver')
+    success_url = reverse_lazy('actividad:propias')
     context_object_name = 'form'
     success_message = 'Actividad Registrada'
 
@@ -39,6 +39,7 @@ class ActivityCreateView(SuccessMessageMixin, CreateView):
             return self.form_invalid(form)
 
 
+# TODO: Dynamic model and template: https://stackoverflow.com/questions/20049067/class-based-detailview-dynamically-choose-template
 class ActivityDetailView(DetailView):
     model = Actividad
     template_name = 'actividades/detalle.html'
@@ -64,11 +65,11 @@ class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
 class ActividadesPropias(ListView):
     model = Actividad
     context_object_name = 'actividades'
-    template_name = 'actividad/lista.html'
+    template_name = 'actividades/propias.html'
 
     def get_queryset(self):
         usuario = self.request.user
-        qs = Actividad.objects.get(usuario=usuario)
+        qs = Actividad.objects.filter(usuario=usuario)
         return qs
 
 
@@ -105,7 +106,7 @@ class ActividadRechazarView(SuccessMessageMixin, UpdateView):
     form_class = RechazarForm
     model = Actividad
     success_message = 'Actividad Rechazada'
-    success_url = reverse_lazy('actividad:pendientes')
+    success_url = reverse_lazy('core:index')
     template_name = 'actividades/admin/rechazar.html'
 
     def form_valid(self, form):

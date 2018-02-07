@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Actividades{% endblock %}
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Registrar Actividad
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia
+                                    Postdoctoral</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-publicacion' %}">Publicacion</a>
+                                <a class="dropdown-item"
+                                   href="{% url 'actividad:crear-investigacion' %}">Investigacion</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-libro' %}">Libro</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-conferencia' %}">Conferencia</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-ponencia' %}">Ponencia</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-proyecto' %}">Proyecto</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-premio' %}">Premio</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-idioma' %}">Idioma</a>
+                                <a class="dropdown-item" href="{% url 'actividad:crear-titulo' %}">Titulo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <h4 class="card-title">Mis Actividades</h4>
+                    <div class="card-text">
+                        {% include 'actividades/include/tabla_actividad.html' %}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#actividades').DataTable();
+        });
+    </script>
+{% endblock %}

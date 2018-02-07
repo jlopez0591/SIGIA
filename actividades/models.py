@@ -1,13 +1,11 @@
 import datetime
 import logging
-import os
 
 from django.conf.global_settings import LANGUAGES
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
-
 
 # Third party imports
 from django_countries.fields import CountryField
@@ -22,6 +20,7 @@ from ubicacion.models import SeccionInstancia
 from perfiles.models import Perfil
 
 logger = logging.getLogger(__name__)
+
 
 def user_directory_path(instance, filename):
     """
@@ -50,7 +49,7 @@ class Actividad(PolymorphicModel):
     OTRO = 'otro'
 
     CLASES = (
-        (ESTADIA, 'Estadia Postdoctoral'), # Fecha Final
+        (ESTADIA, 'Estadia Postdoctoral'),  # Fecha Final
         (PUBLICACION, 'Publicacion'),
         (INVESTIGACION, 'Investigacion'),
         (LIBRO, 'Libro'),
@@ -87,7 +86,6 @@ class Actividad(PolymorphicModel):
     cod_seccion = models.CharField(max_length=2, blank=True)
 
     fecha = models.DateField()  # Fecha en que se dio la actividad
-
 
     fecha_creacion = models.DateTimeField(blank=True)  # Fecha en que se registro la actividad
     nombre_actividad = models.CharField(max_length=120)
@@ -155,6 +153,12 @@ class EstadiaPostdoctoral(Actividad):
     def __str__(self):
         return '{}'.format(self.fecha)
 
+    def get_absolute_url(self):
+        pass
+
+    def get_edit_url(self):
+        return reverse('actividad:actualizar-estadia', kwargs={'pk': self.pk})
+
     def save(self, *args, **kwargs):
         self.clase = self.ESTADIA
         return super(EstadiaPostdoctoral, self).save()
@@ -196,7 +200,6 @@ class Publicacion(Actividad):
 class Investigacion(Actividad):
     codigo = models.CharField(max_length=100)
     duracion = models.PositiveIntegerField(blank=True, default=0)
-
 
     class Meta:
         unique_together = ('codigo',)

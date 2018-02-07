@@ -7,7 +7,6 @@ from ubicacion.models import UnidadInstancia
 from django.contrib.messages.views import SuccessMessageMixin
 
 class AulaListView(ListView):
-    paginate_by = 10
     model = Aula
     template_name = 'inventario/aula/lista.html'
     context_object_name = 'aulas'
@@ -16,13 +15,12 @@ class AulaListView(ListView):
         if self.request.user.is_superuser:
             return Aula.objects.all()
         elif self.request.user.is_authenticated:
-            return Aula.objects.filter(ubicacion=self.request.user.perfil.unidad).order_by('tipo')
+            return Aula.objects.filter(ubicacion=self.request.user.perfil.unidad)
         else:
             return False
 
 
 class AulaFacultadListView(ListView):
-    paginate_by = 10
     model = Aula
     template_name = 'inventario/aula/lista.html'
     context_object_name = 'aulas'

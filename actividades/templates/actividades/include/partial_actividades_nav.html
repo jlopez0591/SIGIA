@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Actividades</h5>
+        <p class="card-text">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                   role="tab" aria-controls="pills-home" aria-selected="true">Realizadas</a>
+            </li>
+            {% if request.user == perfil.usuario %}
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                       role="tab" aria-controls="pills-profile" aria-selected="false">Pendientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                       role="tab" aria-controls="pills-contact" aria-selected="false">Rechazadas</a>
+                </li>
+            {% endif %}
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                 aria-labelledby="pills-home-tab">
+                {% include 'perfiles/includes/actividades.html' %}
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                 aria-labelledby="pills-profile-tab">
+                {% if perfil.usuario.actividades.en_espera %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Fecha de la Actividad</th>
+                            <th>Nombre de la Actividad</th>
+                        </tr>
+                        </thead>
+                        {% for actividad in perfil.usuario.actividades.en_espera %}
+                            <tr>
+                                <td>{{ actividad.fecha }}</td>
+                                <td>{{ actividad.nombre_actividad }}</td>
+                                <td>
+                                    <a href="{% url 'actividad:detalle' actividad.pk %}"
+                                       class="btn btn-sm btn-primary"><i
+                                            class="fas fa-search"></i></a>
+                                    <a href="#" class="btn btn-sm btn-light"><i
+                                            class="fas fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="alert alert-primary" role="alert">
+                        No tiene actividades en espera
+                    </div>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                 aria-labelledby="pills-contact-tab">
+                {% if perfil.usuario.actividades.rechazado %}
+                    <ul class="list-group">
+                        {% for actividad in perfil.usuario.actividades.rechazado %}
+                            <li class="list-group-item">{{ actividad }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        No tiene actividades rechazadas
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        </p>
+    </div>
+</div>

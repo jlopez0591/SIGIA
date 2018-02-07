@@ -10,10 +10,11 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ actividad.nombre_actividad.capitalize }}</h4>
-                    {% if actividad.resumen %}<p class="card-text">Resumen: {{ actividad.resumen }}</p>{% endif %}
+                    {% if actividad.resumen %}<p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>{% endif %}
                     {#                    <p class="card-text">Archivo</p>#}
                     <p class="card-text">Fecha: {{ actividad.fecha }}</p>
-                    <p class="card-text"><a href="/media/{{ actividad.archivo }}" class="btn btn-outline-info"><i class="fa-file-archive-o"></i> Descargar Archivo</a></p>
+                    <p class="card-text"><a href="/media/{{ actividad.archivo }}" class="btn btn-outline-info"><i
+                            class="fa-file-archive-o"></i> Descargar Archivo</a></p>
                     <ul class="list-group list-group-flush">
                         {% if request.user == actividad.usuario or request.user.perfil.seccion == actividad.ubicacion and perms.actividad.aprobar_actividad %}
                             {% if actividad.estado %}
@@ -23,6 +24,9 @@
                             {% endif %}
                         {% endif %}
                     </ul>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="#" class="btn btn-outline-primary">Editar</a>
                 </div>
             </div>
         </div>

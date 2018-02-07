@@ -1,0 +1,36 @@
+<div class="table table-responsive">
+    <table class="table" id="actividades">
+        <thead>
+        <tr>
+            <th scope="col">Titulo</th>
+            <th scope="col">Clase</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for actividad in actividades %}
+            <tr>
+                <td>{{ actividad.nombre_actividad }}</td>
+                <td>{{ actividad.get_clase_display }}</td>
+                <td>{{ actividad.fecha_creacion }}</td>
+                <td>{{ actividad.get_estado_display }}</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="{% url 'actividad:detalle' actividad.pk %}">Ver</a>\
+                    {% if perms.actividad.aprobar_actividad %}
+                        <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-success">Aprobar
+                            </button>
+                        </form>
+                        <a class="btn btn-outline-danger"
+                           href="{% url 'actividad:rechazar' actividad.pk %}">Rechazar</a>{% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <div class="alert alert-info text-center">No hay actividades registradas</div>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
