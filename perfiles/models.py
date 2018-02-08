@@ -91,10 +91,10 @@ class Perfil(models.Model):
                              null=True)
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, related_name='personal',
                                blank=True, null=True)
-    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, related_name='profesor',
+    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='profesor',
                                   limit_choices_to=Q(seccion__tipo='DE'),
                                   )
-    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, limit_choices_to={
+    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, limit_choices_to={
         'seccion__tipo': 'ES'
     }, related_name='administrativos')
     objects = PerfilManager()
