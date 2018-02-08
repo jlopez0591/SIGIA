@@ -87,15 +87,16 @@ class Perfil(models.Model):
 
     # Foreign Keys
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='perfil')
-    # Considerar usar M2M Field y ArrayField de Postgres
     sede = models.ForeignKey('ubicacion.Sede', on_delete=models.SET_NULL, related_name='personal', blank=True,
                              null=True)
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, related_name='personal',
                                blank=True, null=True)
-    secciones = models.ManyToManyField('ubicacion.SeccionInstancia', blank=True,
-                                       limit_choices_to=Q(seccion__tipo='ES') | Q(seccion__tipo='DE'),
-                                       )
-    # secciones = models.ManyToManyField(SeccionInstancia)
+    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, related_name='profesor',
+                                  limit_choices_to=Q(seccion__tipo='DE'),
+                                  )
+    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, limit_choices_to={
+        'seccion__tipo': 'ES'
+    }, related_name='administrativos')
     objects = PerfilManager()
 
     class Meta:
@@ -116,21 +117,12 @@ class Perfil(models.Model):
         try:
             s = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
                                              cod_seccion=self.cod_seccion)
-            self.secciones.add(s)
         except:
             pass
         return super(Perfil, self).save()
 
     def get_absolute_url(self):
         return reverse('perfil:publico', kwargs={'pk': self.pk})
-
-    def codigos(self):
-        codes = {
-            'cod_sede': self.cod_sede,
-            'cod_unidad': self.cod_unidad,
-            'cod_seccion': self.cod_seccion
-        }
-        return codes
 
     def edad(self):
         if self.fecha_nacimiento:

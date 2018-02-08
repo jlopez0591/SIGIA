@@ -5,7 +5,7 @@ from django.conf.global_settings import LANGUAGES
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 # Third party imports
 from django_countries.fields import CountryField
@@ -105,7 +105,7 @@ class Actividad(PolymorphicModel):
         unique_together = ('usuario', 'nombre_actividad')
 
     def __str__(self):
-        return '{}: {}'.format(self.fecha, self.clase)
+        return '{}: {}'.format(self.fecha, self.clase.capitalize())
 
     def save(self, *args, **kwargs):
         try:
@@ -141,6 +141,34 @@ class Actividad(PolymorphicModel):
 
     def get_absolute_url(self):
         return reverse('actividad:detalle', kwargs={'pk': self.pk})
+
+    def get_edit_url(self):
+        opciones = dict()
+        opciones[self.ESTADIA] = reverse_lazy('actividad:actualizar-estadia', kwargs={'pk': self.pk})
+        opciones[self.PUBLICACION] = reverse_lazy('actividad:actualizar-publicacion', kwargs={'pk': self.pk})
+        opciones[self.INVESTIGACION] = reverse_lazy('actividad:actualizar-investigacion', kwargs={'pk': self.pk})
+        opciones[self.LIBRO] = reverse_lazy('actividad:actualizar-libro', kwargs={'pk': self.pk})
+        opciones[self.CONFERENCIA] = reverse_lazy('actividad:actualizar-conferencia', kwargs={'pk': self.pk})
+        opciones[self.PONENCIA] = reverse_lazy('actividad:actualizar-ponencia', kwargs={'pk': self.pk})
+        opciones[self.PROYECTO] = reverse_lazy('actividad:actualizar-proyecto', kwargs={'pk': self.pk})
+        opciones[self.PREMIO] = reverse_lazy('actividad:actualizar-premio', kwargs={'pk': self.pk})
+        opciones[self.IDIOMA] = reverse_lazy('actividad:actualizar-idioma', kwargs={'pk': self.pk})
+        opciones[self.TITULO] = reverse_lazy('actividad:actualizar-titulo', kwargs={'pk': self.pk})
+        return opciones[self.clase]
+
+    def get_detail_url(self):
+        opciones = dict()
+        opciones[self.ESTADIA] = reverse_lazy('actividad:actualizar-estadia', kwargs={'pk': self.pk})
+        opciones[self.PUBLICACION] = reverse_lazy('actividad:actualizar-publicacion', kwargs={'pk': self.pk})
+        opciones[self.INVESTIGACION] = reverse_lazy('actividad:actualizar-investigacion', kwargs={'pk': self.pk})
+        opciones[self.LIBRO] = reverse_lazy('actividad:actualizar-libro', kwargs={'pk': self.pk})
+        opciones[self.CONFERENCIA] = reverse_lazy('actividad:actualizar-conferencia', kwargs={'pk': self.pk})
+        opciones[self.PONENCIA] = reverse_lazy('actividad:actualizar-ponencia', kwargs={'pk': self.pk})
+        opciones[self.PROYECTO] = reverse_lazy('actividad:actualizar-proyecto', kwargs={'pk': self.pk})
+        opciones[self.PREMIO] = reverse_lazy('actividad:actualizar-premio', kwargs={'pk': self.pk})
+        opciones[self.IDIOMA] = reverse_lazy('actividad:actualizar-idioma', kwargs={'pk': self.pk})
+        opciones[self.TITULO] = reverse_lazy('actividad:actualizar-titulo', kwargs={'pk': self.pk})
+        return opciones[self.clase]
 
 
 class EstadiaPostdoctoral(Actividad):
@@ -350,7 +378,7 @@ class Idioma(Actividad):
 
     def save(self, *args, **kwargs):
         self.clase = self.IDIOMA
-        self.nombre_actividad = 'Idioma - {}'.format(self.nombre)
+        self.nombre_actividad = 'Idioma - {}'.format(self.get_nombre_display())
         self.fecha = timezone.now()
         return super(Idioma, self).save()
 
