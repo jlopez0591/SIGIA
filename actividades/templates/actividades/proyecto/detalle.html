@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Detalle de Actividad
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% if actividad.usuario == request.user %}
+                    <li class="breadcrumb-item"><a href="{% url 'actividad:propias' %}">Mis Actividades</a></li>
+                    {% elif perms.actividad.aprobar_actividad %}
+                    <li class="breadcrumb-item"><a href="{% url 'actividad:pendientes' %}">Actividades Pendientes</a></li>
+                    {% endif %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ actividad.nombre_actividad }}</li>
+
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ actividad.nombre_actividad.capitalize }}</h4>
+                    {% if actividad.resumen %}<p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>{% endif %}
+                    <p class="card-text">Fecha: {{ actividad.fecha }}</p>
+                    <ul class="list-group list-group-flush">
+                        {% if request.user == actividad.usuario or request.user.perfil.seccion == actividad.ubicacion and perms.actividad.aprobar_actividad %}
+                            {% if actividad.estado %}
+                                <li class="list-group-item">Estado: {{ actividad.get_estado_display }}</li>{% endif %}
+                            {% if actividad.motivo_rechazo %}
+                                <li class="list-group-item">Motivo de Rechazo{{ actividad.motivo_rechazo }}</li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-info"><i
+                            class="fa-file-archive-o"></i> Descargar Archivo</a>
+                    <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

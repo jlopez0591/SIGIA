@@ -9,6 +9,16 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mis Actividades</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 offset-md-3 col-sm-12">
             <div class="card">
                 <div class="card-header">
@@ -43,7 +53,6 @@
                         {% include 'actividades/include/tabla_actividad.html' %}
                     </div>
                 </div>
-
 
 
             </div>

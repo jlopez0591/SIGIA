@@ -26,7 +26,7 @@ class ActividadListView(UserPassesTestMixin, ListView):
 
 
 class ActivityCreateView(SuccessMessageMixin, CreateView):
-    # permission_required = ''
+    permission_required = 'actividades.create_actividad'
     success_url = reverse_lazy('actividad:propias')
     context_object_name = 'form'
     success_message = 'Actividad Registrada'
@@ -39,7 +39,6 @@ class ActivityCreateView(SuccessMessageMixin, CreateView):
             return self.form_invalid(form)
 
 
-# TODO: Dynamic model and template: https://stackoverflow.com/questions/20049067/class-based-detailview-dynamically-choose-template
 class ActivityDetailView(DetailView):
     context_object_name = 'actividad'
 
@@ -80,7 +79,7 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            qs = Actividad.objects.filter(estado='espera')
+            qs = Actividad.objects.en_espera()
         else:
             qs = Actividad.objects.puede_aprobar(usuario=self.request.user)
         return qs
@@ -90,10 +89,7 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
 def aprobar_actividad(request, pk):
     if request.method == 'POST':
         actividad = Actividad.objects.get(pk=pk)
-        usuario = Actividad.usuario
-        texto = "ha sido aprobada!"
         actividad.aprobar()
-        # Notificacion.objects.create(usuario=usuario, fecha_creada=timezone.now())
         return redirect(reverse('actividad:pendientes'))
 
 
@@ -109,4 +105,3 @@ class ActividadRechazarView(SuccessMessageMixin, UpdateView):
         form = form.instance
         form.estado = 'rechazado'
         return super(ActividadRechazarView, self).form_valid(form)
-
