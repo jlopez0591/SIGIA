@@ -64,7 +64,7 @@ class Perfil(models.Model):
     fecha_inicio = models.DateField(blank=True, null=True)
 
     # Info. Personal
-    sexo = models.CharField(max_length=1, choices=GENERO)
+    sexo = models.CharField(max_length=1, choices=GENERO, blank=True, null=True)
 
     provincia = models.CharField(max_length=5, choices=PROVINCIAS, default='00')
     clase = models.CharField(max_length=5, default='00', choices=CLASE)
@@ -115,7 +115,7 @@ class Perfil(models.Model):
         except:
             pass
         try:
-            s = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+            self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
                                              cod_seccion=self.cod_seccion)
         except:
             pass
