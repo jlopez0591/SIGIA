@@ -41,8 +41,6 @@ class ActivityCreateView(SuccessMessageMixin, CreateView):
 
 # TODO: Dynamic model and template: https://stackoverflow.com/questions/20049067/class-based-detailview-dynamically-choose-template
 class ActivityDetailView(DetailView):
-    model = Actividad
-    template_name = 'actividades/detalle.html'
     context_object_name = 'actividad'
 
 
@@ -84,9 +82,7 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
         if self.request.user.is_superuser:
             qs = Actividad.objects.filter(estado='espera')
         else:
-            perfil = Perfil.objects.get(usuario=self.request.user)
-            codigos = perfil.seccion
-            qs = Actividad.objects.filter(seccion=codigos, estado='espera')
+            qs = Actividad.objects.puede_aprobar(usuario=self.request.user)
         return qs
 
 

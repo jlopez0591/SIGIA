@@ -14,7 +14,7 @@ class ActividadQuerySet(models.QuerySet):
         return self.filter(estado='aprobado')
 
     def puede_aprobar(self, usuario):
-        return self.filter(estado='espera', seccion=usuario.perfil.seccion)
+        return self.filter(estado='espera', departamento=usuario.perfil.departamento)
 
 
 class ActividadManager(PolymorphicManager):

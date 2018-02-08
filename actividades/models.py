@@ -79,7 +79,7 @@ class Actividad(PolymorphicModel):
                              on_delete=models.SET_NULL)
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', blank=True, null=True, related_name='actividades',
                                on_delete=models.SET_NULL)
-    ubicacion = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='actividades',
+    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='actividades',
                                   on_delete=models.SET_NULL)
     cod_sede = models.CharField(max_length=2, blank=True)
     cod_unidad = models.CharField(max_length=2, blank=True)
@@ -139,8 +139,8 @@ class Actividad(PolymorphicModel):
         self.estado = 'espera'
         self.save()
 
-    def get_absolute_url(self):
-        return reverse('actividad:detalle', kwargs={'pk': self.pk})
+    # def get_absolute_url(self):
+    #     return reverse('actividad:detalle', kwargs={'pk': self.pk})
 
     def get_edit_url(self):
         opciones = dict()
@@ -156,18 +156,18 @@ class Actividad(PolymorphicModel):
         opciones[self.TITULO] = reverse_lazy('actividad:actualizar-titulo', kwargs={'pk': self.pk})
         return opciones[self.clase]
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
         opciones = dict()
-        opciones[self.ESTADIA] = reverse_lazy('actividad:actualizar-estadia', kwargs={'pk': self.pk})
-        opciones[self.PUBLICACION] = reverse_lazy('actividad:actualizar-publicacion', kwargs={'pk': self.pk})
-        opciones[self.INVESTIGACION] = reverse_lazy('actividad:actualizar-investigacion', kwargs={'pk': self.pk})
-        opciones[self.LIBRO] = reverse_lazy('actividad:actualizar-libro', kwargs={'pk': self.pk})
-        opciones[self.CONFERENCIA] = reverse_lazy('actividad:actualizar-conferencia', kwargs={'pk': self.pk})
-        opciones[self.PONENCIA] = reverse_lazy('actividad:actualizar-ponencia', kwargs={'pk': self.pk})
-        opciones[self.PROYECTO] = reverse_lazy('actividad:actualizar-proyecto', kwargs={'pk': self.pk})
-        opciones[self.PREMIO] = reverse_lazy('actividad:actualizar-premio', kwargs={'pk': self.pk})
-        opciones[self.IDIOMA] = reverse_lazy('actividad:actualizar-idioma', kwargs={'pk': self.pk})
-        opciones[self.TITULO] = reverse_lazy('actividad:actualizar-titulo', kwargs={'pk': self.pk})
+        opciones[self.ESTADIA] = reverse_lazy('actividad:detalle-estadia', kwargs={'pk': self.pk})
+        opciones[self.PUBLICACION] = reverse_lazy('actividad:detalle-publicacion', kwargs={'pk': self.pk})
+        opciones[self.INVESTIGACION] = reverse_lazy('actividad:detalle-investigacion', kwargs={'pk': self.pk})
+        opciones[self.LIBRO] = reverse_lazy('actividad:detalle-libro', kwargs={'pk': self.pk})
+        opciones[self.CONFERENCIA] = reverse_lazy('actividad:detalle-conferencia', kwargs={'pk': self.pk})
+        opciones[self.PONENCIA] = reverse_lazy('actividad:detalle-ponencia', kwargs={'pk': self.pk})
+        opciones[self.PROYECTO] = reverse_lazy('actividad:detalle-proyecto', kwargs={'pk': self.pk})
+        opciones[self.PREMIO] = reverse_lazy('actividad:detalle-premio', kwargs={'pk': self.pk})
+        opciones[self.IDIOMA] = reverse_lazy('actividad:detalle-idioma', kwargs={'pk': self.pk})
+        opciones[self.TITULO] = reverse_lazy('actividad:detalle-titulo', kwargs={'pk': self.pk})
         return opciones[self.clase]
 
 
