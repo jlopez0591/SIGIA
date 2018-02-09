@@ -16,7 +16,7 @@ from .managers import ActividadManager
 from .validators import validate_file_type
 
 # Other apps import
-from ubicacion.models import SeccionInstancia
+from ubicacion.models import SeccionInstancia, Sede, UnidadInstancia
 from perfiles.models import Perfil
 
 logger = logging.getLogger(__name__)
@@ -80,7 +80,7 @@ class Actividad(PolymorphicModel):
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', blank=True, null=True, related_name='actividades',
                                on_delete=models.SET_NULL)
     departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='actividades',
-                                  on_delete=models.SET_NULL)
+                                     on_delete=models.SET_NULL)
     cod_sede = models.CharField(max_length=2, blank=True)
     cod_unidad = models.CharField(max_length=2, blank=True)
     cod_seccion = models.CharField(max_length=2, blank=True)
@@ -115,8 +115,8 @@ class Actividad(PolymorphicModel):
                     self.cod_sede = p.cod_sede
                     self.cod_unidad = p.cod_unidad
                     self.cod_seccion = p.cod_seccion
-                    self.ubicacion = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                                                  cod_seccion=self.cod_seccion)
+                    self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+                                                                     cod_seccion=self.cod_seccion)
                 except:
                     logger.error(
                         'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,
@@ -351,7 +351,22 @@ class Premio(Actividad):
 
     def save(self, *args, **kwargs):
         self.clase = self.PREMIO
-        return super(Premio, self).save()
+        self.fecha_creacion = timezone.now()
+        try:
+            p = Perfil.objects.get(usuario=self.usuario)
+            if p:
+                try:
+                    self.sede = p.sede
+                    self.unidad = p.unidad
+                    self.departamento = p.departamento
+                except:
+                    logger.error(
+                        'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,
+                                                                                            self.cod_unidad,
+                                                                                            self.cod_seccion))
+        except:
+            logger.error('Error! No se pudo encontrar un usuario durante la creacion de la actividad.')
+        return super(Actividad, self).save()
 
 
 class Idioma(Actividad):

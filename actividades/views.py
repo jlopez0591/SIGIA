@@ -1,7 +1,5 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -11,12 +9,11 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 
-from actividades.forms import EstadiaForm, RechazarForm
-from actividades.models import Actividad, EstadiaPostdoctoral
+from actividades.forms import RechazarForm
+from actividades.models import Actividad
 from perfiles.models import Perfil
 
 
-# Create your views here.
 class ActividadListView(UserPassesTestMixin, ListView):
     model = Actividad
     paginate_by = 25
@@ -88,20 +85,72 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
 @permission_required('actividad.aprobar_actividad')
 def aprobar_actividad(request, pk):
     if request.method == 'POST':
+        perfil = Perfil.objects.get(usuario=request.user)
         actividad = Actividad.objects.get(pk=pk)
-        actividad.aprobar()
+        if request.user.is_superuser or perfil.departamento == actividad.departamento:
+            actividad.aprobar()
         return redirect(reverse('actividad:pendientes'))
 
 
-class ActividadRechazarView(SuccessMessageMixin, UpdateView):
+# @permission_required('actividad.aprobar_actividad')
+# def rechazar_actividad(request, pk):
+#     actividad_inst = 1
+#     if request.method == 'POST':
+#         form = RechazarForm(request.POST)
+#         if form.is_valid():
+#             form.estado = 'rechazado'
+#             form.save()
+#             return redirect(reverse_lazy('actividad:pendientes'))
+#     else:
+#         form = RechazarForm()
+#         template = 'actividades/admin/rechazar.html'
+#         context = {'form': form}
+#     return render(request, template, context)
+
+
+class ActividadRechazarView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     context_object_name = 'form'
     form_class = RechazarForm
     model = Actividad
     success_message = 'Actividad Rechazada'
-    success_url = reverse_lazy('core:index')
+    # success_url = reverse_lazy('actividad:pendientes')
     template_name = 'actividades/admin/rechazar.html'
+    permission_required = 'actividades.aprobar_actividad'
+    permission_denied_message = 'No tiene los permisos necesarios para realizar esta accion'
 
     def form_valid(self, form):
         form = form.instance
         form.estado = 'rechazado'
         return super(ActividadRechazarView, self).form_valid(form)
+
+    # def get_success_url(self):
+    #     return self.success_url
+
+
+# def post_edit(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     if request.method == "POST":
+#         form = PostForm(request.POST, instance=post)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.author = request.user
+#             post.published_date = timezone.now()
+#             post.save()
+#             return redirect('post_detail', pk=post.pk)
+#     else:
+#         form = PostForm(instance=post)
+#     return render(request, 'blog/post_edit.html', {'form': form})
+
+@permission_required('actividad.aprobar_actividad')
+def rechazar_actividad(request, pk):
+    actividad = Actividad.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = RechazarForm(request.POST, instance=actividad)
+        if form.is_valid():
+            actividad = form.save(commit=False)
+            actividad.estado = 'rechazado'
+            actividad.save()
+            return redirect('actividad:pendientes')
+    else:
+        form = RechazarForm(instance=actividad)
+    return render(request, 'actividades/admin/rechazar.html', {'form': form})

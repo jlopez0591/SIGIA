@@ -12,7 +12,8 @@ urlpatterns = [
     url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
     url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),  # TODO: Test if can remove
     url(r'^(?P<pk>[0-9]+)/aprobar/$', views.aprobar_actividad, name='aprobar'),
-    url(r'^(?P<pk>[0-9]+)/rechazar/$', ActividadRechazarView.as_view(), name='rechazar'),
+    # url(r'^(?P<pk>[0-9]+)/rechazar/$', ActividadRechazarView.as_view(), name='rechazar'),
+    url(r'^(?P<pk>[0-9]+)/rechazar/$', views.rechazar_actividad, name='rechazar'),
 
     # Estadia
     url(r'^estadia/crear/$', ActivityCreateView.as_view(model=EstadiaPostdoctoral, form_class=EstadiaForm,

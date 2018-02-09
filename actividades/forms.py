@@ -1,18 +1,14 @@
-# Django imports
-from django import forms
-from django.conf.global_settings import LANGUAGES
-
 from django.forms import ModelForm, TextInput
 from django import forms
 
-# My app imports
-from actividades.models import *
+from actividades.models import Actividad, EstadiaPostdoctoral, Publicacion, Investigacion, Libro, Conferencia, Ponencia, \
+    Premio, Titulo, Idioma, Proyecto
 
 
 class RechazarForm(ModelForm):
     class Meta:
         model = Actividad
-        fields = ('motivo_rechazo', )
+        fields = ('motivo_rechazo',)
 
 
 class EstadiaForm(ModelForm):
@@ -202,19 +198,6 @@ class TituloForm(ModelForm):
 
 
 class IdiomaForm(ModelForm):
-    # nombre = forms.ChoiceField(choices=LANGUAGES)
-
     class Meta:
         model = Idioma
         fields = ('nombre', 'nivel_hablado', 'nivel_escrito',)
-        # widgets = {
-        #     "nombre": TextInput(attrs={
-        #         "class": "form-control"
-        #     }),
-        #     "nivel_hablado": TextInput(attrs={
-        #         "placeholder": "Nivel de dominio hablado"
-        #     }),
-        #     "nivel_escrito": TextInput(attrs={
-        #         "placeholder": "Nivel de dominio escrito"
-        #     })
-        # }
