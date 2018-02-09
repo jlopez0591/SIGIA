@@ -74,7 +74,6 @@ class Actividad(PolymorphicModel):
     usuario = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
     clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
 
-    # ubicacion
     sede = models.ForeignKey('ubicacion.Sede', blank=True, null=True, related_name='actividades',
                              on_delete=models.SET_NULL)
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', blank=True, null=True, related_name='actividades',
@@ -85,9 +84,9 @@ class Actividad(PolymorphicModel):
     cod_unidad = models.CharField(max_length=2, blank=True)
     cod_seccion = models.CharField(max_length=2, blank=True)
 
-    fecha = models.DateField()  # Fecha en que se dio la actividad
+    fecha = models.DateField()
 
-    fecha_creacion = models.DateTimeField(blank=True)  # Fecha en que se registro la actividad
+    fecha_creacion = models.DateTimeField(blank=True)
     nombre_actividad = models.CharField(max_length=120)
     resumen = models.TextField(max_length=1000, blank=True)
     estado = models.CharField(max_length=25, choices=STATUS, default='espera')
@@ -136,9 +135,6 @@ class Actividad(PolymorphicModel):
     def espera(self):
         self.estado = 'espera'
         self.save()
-
-    # def get_absolute_url(self):
-    #     return reverse('actividad:detalle', kwargs={'pk': self.pk})
 
     def get_edit_url(self):
         opciones = dict()

@@ -43,7 +43,6 @@ class ActivityDetailView(DetailView):
 class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
     context_object_name = 'actividad'
     permission_required = 'actividades.change_actividad'
-    success_url = reverse_lazy('insight:perfil')
 
     def get_object(self, queryset=None):
         object = super(ActivityUpdateView, self).get_object()
