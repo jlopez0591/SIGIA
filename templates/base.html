@@ -48,6 +48,14 @@
                     {% include 'includes/header/partial_unidad_dropdown.html' %}
                 {% endif %}
 
+                {% if request.user.perfil.departamento %}
+                    {% include 'includes/header/partial_departamento_dropdown.html' %}
+                {% endif %}
+
+                {% if request.user.perfil.escuela %}
+                    {% include 'includes/header/partial_escuela_dropdown.html' %}
+                {% endif %}
+
                 {% if request.user.is_authenticated %}
                     {% include 'includes/header/partial_accounts_dropdown.html' %}
                 {% else %}

@@ -1,0 +1,16 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        Mi Departamento <i class="far fa-building"></i>
+    </a>
+    {% if request.user.perfil.unidad %}
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Profesores <span
+                    class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
+            <a class="dropdown-item" href="#">Actividades <span
+                    class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
+            <a class="dropdown-item" href="#">Reportes</a>
+        </div>
+    {% endif %}
+</li>

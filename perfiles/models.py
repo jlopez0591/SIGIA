@@ -92,11 +92,11 @@ class Perfil(models.Model):
     unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, related_name='personal',
                                blank=True, null=True)
     departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='profesor',
-                                  limit_choices_to=Q(seccion__tipo='DE'),
-                                  )
-    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, limit_choices_to={
-        'seccion__tipo': 'ES'
-    }, related_name='administrativos')
+                                     limit_choices_to=Q(seccion__tipo='DE'),
+                                     )
+    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True,
+                                # limit_choices_to=Q(seccion__tipo='ES'),
+                                related_name='administrativos')
     objects = PerfilManager()
 
     class Meta:
@@ -116,7 +116,7 @@ class Perfil(models.Model):
             pass
         try:
             self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                             cod_seccion=self.cod_seccion)
+                                                             cod_seccion=self.cod_seccion)
         except:
             pass
         return super(Perfil, self).save()

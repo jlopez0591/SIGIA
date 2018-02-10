@@ -96,7 +96,7 @@ class LibroForm(ModelForm):
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
-                "placeholder": "Fecha de Publicacion"
+                "placeholder": "Fecha de Publicacion (YYYY-MM-DD)"
             }),
             "resumen": TextInput(attrs={
                 "cols": 80,
@@ -116,7 +116,7 @@ class ConferenciaForm(ModelForm):
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
-                "placeholder": "Fecha en que se realizo la conferencia,"
+                "placeholder": "Fecha en que se realizo la conferencia (YYYY-MM-DD)"
             }),
             "resumen": TextInput(attrs={
                 "cols": 80,
@@ -138,7 +138,7 @@ class PonenciaForm(ModelForm):
                 "placeholder": "Pais donde se realizo la ponencia"
             }),
             "fecha": TextInput(attrs={
-                "placeholder": "Fecha en que se realizo la ponencia",
+                "placeholder": "Fecha en que se realizo la ponencia (YYYY-MM-DD)",
                 'class': 'datepicker',
             }),
             "resumen": "",
@@ -159,7 +159,7 @@ class ProyectoForm(ModelForm):
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
-                "placeholder": "Fecha en que se realizo el proyecto",
+                "placeholder": "Fecha en que se realizo el proyecto (YYYY-MM-DD)",
             }),
         }
 
@@ -174,7 +174,7 @@ class PremioForm(ModelForm):
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
-                "placeholder": "Fecha en que se recibio el premio",
+                "placeholder": "Fecha en que se recibio el premio (YYYY-MM-DD)",
             }),
         }
 
@@ -192,7 +192,7 @@ class TituloForm(ModelForm):
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
-                "placeholder": "Fecha en que obtuvo el titulo",
+                "placeholder": "Fecha en que obtuvo el titulo (YYYY-MM-DD)",
             }),
         }
 
