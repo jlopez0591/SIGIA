@@ -117,8 +117,13 @@
             </div>
         </form>
     </div>
+
+
 {% endblock %}
 
 {% block javascript %}
     {% include 'includes/partial_datepicker.html' %}
+        <script>
+            $( "#id_imagen" ).addClass( "custom-file-input" );
+        </script>
 {% endblock %}
