@@ -10,6 +10,9 @@ class PerfilForm(forms.ModelForm):
             'fecha_inicio',
             'sexo', 'provincia', 'clase', 'tomo', 'folio',
             'imagen', 'categoria', 'pais', 'cod_sede', 'cod_unidad', 'cod_seccion')
+        labels = {
+            'fecha_nacimiento': 'Fecha de Nacimiento'
+        }
         widgets = {
             'primer_nombre': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -49,11 +52,12 @@ class PerfilForm(forms.ModelForm):
             }),
             'fecha_nacimiento': forms.TextInput(attrs={
                 'class': 'datepicker form-control',
-                'placeholder': 'Fecha de Inicio de Labores'
+                'placeholder': 'YYYY-MM-DD'
             }),
             'fecha_inicio': forms.TextInput(attrs={
                 'class': 'datepicker form-control',
-                'placeholder': 'Fecha de Inicio de Labores',
+                'label': 'Fecha de Incio de Labores',
+                'placeholder': 'YYYY-MM-DD',
             }),
             'sexo': forms.Select(attrs={
                 'class': 'form-control'
