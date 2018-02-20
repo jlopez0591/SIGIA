@@ -67,7 +67,7 @@ class Actividad(PolymorphicModel):
     APROBADO = 'aprobado'
 
     STATUS = (
-        (ESPERA, 'En Espera'),
+        (ESPERA, 'En Espera de Aprobacion'),
         (RECHAZADO, 'Rechazado'),
         (APROBADO, 'Aprobado')
     )
@@ -374,6 +374,7 @@ class Idioma(Actividad):
         self.clase = self.IDIOMA
         self.nombre_actividad = 'Idioma - {}'.format(self.get_nombre_display())
         self.fecha = timezone.now()
+        self.estado = self.APROBADO
         return super(Idioma, self).save()
 
 

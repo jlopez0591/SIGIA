@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ actividad.clase }} {{ actividad.nombre_actividad }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ actividad.nombre_actividad }}</h4>
+                    <p class="card-text">Fecha: {{ actividad.fecha }}</p>
+                    <p class="card-text">Duracion: {{ actividad.duracion }} Dias</p>
+                    <hr />
+                    <p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info" ><i class="fa fa-edit"></i> Editar</a>
+                    <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i class="fa fa-file"></i> Documento</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

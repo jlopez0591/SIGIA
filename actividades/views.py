@@ -6,20 +6,11 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 
 from actividades.forms import RechazarForm
 from actividades.models import Actividad
 from perfiles.models import Perfil
-
-
-class ActividadListView(UserPassesTestMixin, ListView):
-    model = Actividad
-    paginate_by = 25
-
-    def test_func(self):
-        return self.request.user.is_superuser
 
 
 class ActivityCreateView(SuccessMessageMixin, CreateView):
@@ -91,55 +82,6 @@ def aprobar_actividad(request, pk):
         return redirect(reverse('actividad:pendientes'))
 
 
-# @permission_required('actividad.aprobar_actividad')
-# def rechazar_actividad(request, pk):
-#     actividad_inst = 1
-#     if request.method == 'POST':
-#         form = RechazarForm(request.POST)
-#         if form.is_valid():
-#             form.estado = 'rechazado'
-#             form.save()
-#             return redirect(reverse_lazy('actividad:pendientes'))
-#     else:
-#         form = RechazarForm()
-#         template = 'actividades/admin/rechazar.html'
-#         context = {'form': form}
-#     return render(request, template, context)
-
-
-class ActividadRechazarView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
-    context_object_name = 'form'
-    form_class = RechazarForm
-    model = Actividad
-    success_message = 'Actividad Rechazada'
-    # success_url = reverse_lazy('actividad:pendientes')
-    template_name = 'actividades/admin/rechazar.html'
-    permission_required = 'actividades.aprobar_actividad'
-    permission_denied_message = 'No tiene los permisos necesarios para realizar esta accion'
-
-    def form_valid(self, form):
-        form = form.instance
-        form.estado = 'rechazado'
-        return super(ActividadRechazarView, self).form_valid(form)
-
-    # def get_success_url(self):
-    #     return self.success_url
-
-
-# def post_edit(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     if request.method == "POST":
-#         form = PostForm(request.POST, instance=post)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.author = request.user
-#             post.published_date = timezone.now()
-#             post.save()
-#             return redirect('post_detail', pk=post.pk)
-#     else:
-#         form = PostForm(instance=post)
-#     return render(request, 'blog/post_edit.html', {'form': form})
-
 @permission_required('actividad.aprobar_actividad')
 def rechazar_actividad(request, pk):
     actividad = Actividad.objects.get(pk=pk)
@@ -153,3 +95,21 @@ def rechazar_actividad(request, pk):
     else:
         form = RechazarForm(instance=actividad)
     return render(request, 'actividades/admin/rechazar.html', {'form': form})
+
+# class ActividadRechazarView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
+#     context_object_name = 'form'
+#     form_class = RechazarForm
+#     model = Actividad
+#     success_message = 'Actividad Rechazada'
+#     # success_url = reverse_lazy('actividad:pendientes')
+#     template_name = 'actividades/admin/rechazar.html'
+#     permission_required = 'actividades.aprobar_actividad'
+#     permission_denied_message = 'No tiene los permisos necesarios para realizar esta accion'
+#
+#     def form_valid(self, form):
+#         form = form.instance
+#         form.estado = 'rechazado'
+#         return super(ActividadRechazarView, self).form_valid(form)
+
+# def get_success_url(self):
+#     return self.success_url

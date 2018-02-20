@@ -17,7 +17,7 @@
                 <td>{{ actividad.usuario }}</td>
                 <td>{{ actividad.fecha_creacion }}</td>
                 <td>
-                    <a class="btn btn-outline-primary" href="{% url 'actividad:detalle' actividad.pk %}">Ver</a>
+                    <a class="btn btn-outline-primary" href="{{ actividad.get_absolute_url }}">Ver</a>
                     <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-success">Aprobar

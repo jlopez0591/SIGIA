@@ -1,13 +1,12 @@
 from django.conf.urls import url
 from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, ActividadesPendientes, \
-    ActividadListView, ActividadesPropias, ActividadRechazarView
+    ActividadesPropias
 from actividades.forms import *
 from actividades import views
 
 app_name = 'actividad'
 urlpatterns = [
     # General actividades
-    url(r'^lista/$', ActividadListView.as_view(), name='lista'),
     url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
     url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
     url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),  # TODO: Test if can remove
@@ -30,9 +29,9 @@ urlpatterns = [
                                                             template_name='actividades/publicacion/crear.html'),
         name='crear-publicacion'),
     url(r'^publicacion/(?P<pk>[0-9]+)/editar/$',
-        ActivityUpdateView.as_view(model=Publicacion, form_class=PublicacionForm), name='actualizar-publicacion'),
+        ActivityUpdateView.as_view(model=Publicacion, form_class=PublicacionForm, template_name='actividades/publicacion/crear.html'), name='actualizar-publicacion'),
     url(r'^publicacion/(?P<pk>[0-9]+)/$',
-        ActivityDetailView.as_view(model=Publicacion, template_name='actividades/publicacion/detalle.html'),
+        ActivityDetailView.as_view(model=Publicacion, template_name='actividades/detalle.html'),
         name='detalle-publicacion'),
 
     # Investigacion

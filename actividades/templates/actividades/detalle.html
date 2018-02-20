@@ -1,32 +1,59 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Detalle de Actividad
-{% endblock %}
+<p class="card-text"></p>
+{% block title %}{{ actividad.clase }} - {{ actividad.nombre_actividad }}{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-6 offset-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ actividad.nombre_actividad.capitalize }}</h4>
-                    {% if actividad.resumen %}<p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>{% endif %}
-                    {#                    <p class="card-text">Archivo</p>#}
+                    <h4 class="card-title">{{ actividad.clase.capitalize }}: {{ actividad.nombre_actividad }}</h4>
+                    <p class="card-text">Realizado
+                        por: {{ actividad.usuario.get_full_name }}, {{ actividad.usuario.perfil.codigo }}</p>
+                    {% if request.user == actividad.usuario or perms.actividades.aprobar_actividad and request.user.perfil.departamento == actividad.departamento %}
+                        <p class="card-text">Estado: {{ actividad.get_estado_display }}</p>
+                    {% endif %}
                     <p class="card-text">Fecha: {{ actividad.fecha }}</p>
-                    <p class="card-text"><a href="/media/{{ actividad.archivo }}" class="btn btn-outline-info"><i
-                            class="fa-file-archive-o"></i> Descargar Archivo</a></p>
-                    <ul class="list-group list-group-flush">
-                        {% if request.user == actividad.usuario or request.user.perfil.seccion == actividad.ubicacion and perms.actividad.aprobar_actividad %}
-                            {% if actividad.estado %}
-                                <li class="list-group-item">Estado: {{ actividad.get_estado_display }}</li>{% endif %}
-                            {% if actividad.motivo_rechazo %}
-                                <li class="list-group-item">Motivo de Rechazo{{ actividad.motivo_rechazo }}</li>
-                            {% endif %}
-                        {% endif %}
-                    </ul>
+                    {#   Campos Especificos   #}
+                    {% if actividad.lugar %}
+                        <p class="card-text">Lugar donde se realizo: {{ actividad.lugar }}</p>
+                    {% endif %}
+                    {% if actividad.duracion %}
+                        <p class="card-text">Duracion: {{ actividad.duracion }} Dias</p>
+                    {% endif %}
+                    {% if actividad.tipo %}
+                        <p class="card-text">Tipo de publicacion: {{ actividad.get_tipo_display }}</p>
+                    {% endif %}
+                    {% if actividad.lugar_publicacion %}
+                        <p class="card-text">Lugar de Publicacion: {{ actividad.lugar_publicacion }}</p>
+                    {% endif %}
+                    {% if actividad.codigo %}
+                        <p class="card-text">Codigo de Investigacion: {{ actividad.codigo }}</p>
+                    {% endif %}
+                    {% if actividad.isbn %}
+                        <p class="card-text">Codigo ISBN: {{ actividad.isbn }}</p>
+                    {% endif %}
+                    {% if actividad.editorial %}
+                        <p class="card-text">Editorial: {{ actividad.editorial }}</p>
+                    {% endif %}
+                    {% if actividad.pais %}
+                        <p class="card-text">Pais: {{ actividad.pais }}</p>
+                    {% endif %}
+                    {% if actividad.info_titulo %}
+                        <p class="card-text">Nombre del Titulo: {{ actividad.info_titulo }}</p>
+                    {% endif %}
+                    {% if actividad.centro_estudio %}
+                        <p class="card-text">Centro de Estudio: {{ actividad.centro_estudio }}</p>
+                    {% endif %}
+                    <hr/>
+                    <p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="#" class="btn btn-outline-primary">Editar</a>
+                    <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info"><i class="fa fa-edit"></i>
+                        Editar</a>
+                    <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i
+                            class="fa fa-file"></i> Documento</a>
                 </div>
             </div>
         </div>
