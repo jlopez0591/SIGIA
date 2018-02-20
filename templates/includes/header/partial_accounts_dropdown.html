@@ -3,7 +3,7 @@
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
        data-toggle="dropdown" aria-haspopup="true"
        aria-expanded="false">
-        {{ request.user.get_full_name }}{% if request.user.is_superuser %}
+        {{ request.user.perfil.primer_nombre }} {{ request.user.perfil.primer_apellido }}{% if request.user.is_superuser %}
             <i class="fas fa-user-plus"></i>{% else %} <i class="fas fa-user-circle"></i>{% endif %}
     </a>
 
