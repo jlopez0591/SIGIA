@@ -115,5 +115,3 @@ vagrant/
 logs/
 
 static/
-# Django
-manage.py
