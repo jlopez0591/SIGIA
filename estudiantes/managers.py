@@ -41,6 +41,10 @@ class AnteproyectoQuerySet(models.QuerySet):
     def pertenece_a(self, estudiante):
         return self.filter(estudiante=estudiante)
 
+    def puede_aprobar(self, usuario):
+        escuela_usuario = usuario.perfil.escuela
+        return self.filter(seccion=escuela_usuario, estado='pendiente')
+
 
 class AnteproyectoManager(models.Manager):
     def get_queryset(self):
@@ -57,3 +61,6 @@ class AnteproyectoManager(models.Manager):
 
     def pertenece_a(self, estudiante):
         return self.get_queryset().pertenece_a(estudiante=estudiante)
+
+    def puede_aprobar(self, usuario):
+        return self.get_queryset().puede_aprobar(usuario=usuario)

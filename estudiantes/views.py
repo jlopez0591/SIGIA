@@ -116,14 +116,11 @@ def rechazar_anteproyecto(request, pk):
 
 @permission_required('estudiante.change_anteproyecto')
 def anteproyectos_pendientes(request):
-    seccion = request.user.perfil.seccion
-    carreras = seccion.secciones.all()
-    q_objects = Q()  # Crear un objecto Q para comenzar
-    for carrera in carreras:
-        q_objects |= Q(carrera=carrera)  # 'or' Juntar los objetos Q.
-    datos = Anteproyecto.objects.all().filter(q_objects)
-    anteproyectos = datos.exclude(estado='4')
-    return render(request, 'estudiante/anteproyectos.html', {
+    if request.user.is_superuser:
+        anteproyectos = Anteproyecto.objects.pendientes()
+    else:
+        anteproyectos = Anteproyecto.objects.puede_aprobar(usuario=request.user)
+    return render(request, 'estudiantes/anteproyecto/lista.html', {
         'anteproyectos': anteproyectos
     })
 

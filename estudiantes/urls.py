@@ -9,13 +9,12 @@ urlpatterns = [
     url(r'^(?P<pk>[\d]+)/editar/$', EstudianteUpdateView.as_view(), name='editar'),
     url(r'^consulta/$', estudiante_search, name='lista'),
 
-    # Proposal
     url(r'^anteproyecto/crear/$', AnteproyectoCreateView.as_view(), name='crear-anteproyecto'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/editar/$', AnteproyectoUpdateView.as_view(), name='editar-anteproyecto'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/detalle/$', AnteproyectoDetailView.as_view(), name='anteproyecto-detalle'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/aprobar/$', aprobar_anteproyecto, name='aprobar-anteproyecto'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/rechazar/$', rechazar_anteproyecto, name='rechazar-anteproyecto'),
-    url(r'^anteproyectos/$', anteproyectos_pendientes, name='lista-anteproyectos'),  # anteproyectos por aprobar
+    url(r'^anteproyectos/$', anteproyectos_pendientes, name='lista-anteproyectos'),
 
     # Proyects
     url(r'^proyecto/crear/$', ProyectoCreateView.as_view(), name='crear-proyecto'),

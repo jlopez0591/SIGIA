@@ -1,0 +1,23 @@
+<table class="table table-responsive">
+    <thead>
+    <tr>
+        <th>Nombre del Proyecto</th>
+        <th>Fecha Registro</th>
+        <th>Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for anteproyecto in anteproyectos %}
+        <tr>
+            <td>{{ anteproyecto.nombre_proyecto }}</td>
+            <td>{{ anteproyecto.fecha_registro }}</td>
+            <td>
+                {# Ver #}
+                {# Editar #}
+                {# Rechazar #}
+                {# Aprobar #}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

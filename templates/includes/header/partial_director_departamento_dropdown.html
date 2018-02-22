@@ -12,7 +12,7 @@
         {% endif %}
         {#  Anteproyectos y Trabajos de Grado #}
         {% if perms.estudiantes.aprobar_anteproyecto %}
-            <a class="dropdown-item" href="#">Anteproyecto</a>
+            <a class="dropdown-item" href="{% url 'estudiante:lista-anteproyectos' %}">Anteproyecto</a>
             <div class="dropdown-divider"></div>
         {% endif %}
         {# Solicitud #}

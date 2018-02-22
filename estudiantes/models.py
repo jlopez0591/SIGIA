@@ -7,10 +7,11 @@ from django.urls import reverse
 
 from django_countries.fields import CountryField
 
-from .managers import EstudianteManager
+from .managers import EstudianteManager, AnteproyectoManager
+
+from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraInstancia
 
 
-# Create your models here.
 class Estudiante(models.Model):
     SEXO = (
         ('M', 'Hombre'),
@@ -166,11 +167,13 @@ class Anteproyecto(models.Model):
         ('rechazado', 'Rechazado'),
         ('aprobado', 'Aprobado')
     )
-    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, null=True,
+    sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
-    seccion = models.ForeignKey('ubicacion.SeccionInstancia', on_delete=models.SET_NULL, null=True,
+    unidad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
-    carrera = models.ForeignKey('ubicacion.CarreraInstancia', on_delete=models.SET_NULL, null=True,
+    seccion = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name='anteproyectos')
+    carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
     estudiante = models.ManyToManyField(Estudiante, related_name='anteproyectos')
     cod_sede = models.CharField(max_length=120, blank=True)
@@ -181,10 +184,13 @@ class Anteproyecto(models.Model):
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
     nombre_proyecto = models.CharField(max_length=120, blank=True)
 
+    fecha_registro = models.DateField(blank=True, null=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)
     estado = models.CharField(max_length=15, choices=ESTADO, default='pendiente')
     archivo = models.FileField(blank=True)
     resumen = models.TextField(max_length=500, blank=True)
+
+    objects = AnteproyectoManager()
 
     class Meta:
         permissions = (
@@ -200,24 +206,28 @@ class Anteproyecto(models.Model):
         })
 
     def save(self, *args, **kwargs):
-        self.cod_sede = self.carrera.cod_sede
-        self.cod_unidad = self.carrera.cod_unidad
-        self.cod_seccion = self.carrera.cod_seccion
-        self.cod_carrera = self.carrera.cod_carrera
-        try:
-            sede = apps.get_model('ubicacion', 'Sede')
-            facultad = apps.get_model('ubicacion', 'UnidadInstancia')
-            escuela = apps.get_model('ubicacion', 'SeccionInstancia')
-            carrera = apps.get_model('ubicacion', 'CarreraInstancia')
-            self.sede = sede.objects.get(cod_sede=self.cod_sede)
-            self.unidad = facultad.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
-            self.escuela = escuela.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                               cod_seccion=self.cod_seccion)
-            self.carrera = carrera.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                               cod_seccion=self.cod_seccion,
-                                               cod_carrera=self.cod_carrera)
-        except:
-            pass
+        # self.cod_sede = self.carrera.cod_sede
+        # self.cod_unidad = self.carrera.cod_unidad
+        # self.cod_seccion = self.carrera.cod_seccion
+        # self.cod_carrera = self.carrera.cod_carrera
+        # try:
+        #     sede = apps.get_model('ubicacion', 'Sede')
+        #     facultad = apps.get_model('ubicacion', 'UnidadInstancia')
+        #     escuela = apps.get_model('ubicacion', 'SeccionInstancia')
+        #     carrera = apps.get_model('ubicacion', 'CarreraInstancia')
+        #     self.sede = sede.objects.get(cod_sede=self.cod_sede)
+        #     self.unidad = facultad.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
+        #     self.escuela = escuela.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+        #                                        cod_seccion=self.cod_seccion)
+        #     self.carrera = carrera.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+        #                                        cod_seccion=self.cod_seccion,
+        #                                        cod_carrera=self.cod_carrera)
+        # except:
+        #     pass
+        self.sede = self.estudiante[0].sede
+        self.unidad = self.estudiante[0].unidad
+        self.seccion = self.estudiante[0].escuela
+        self.carrera = self.estudiante[0].carrera
         return super(Anteproyecto, self).save()
 
 
