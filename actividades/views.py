@@ -13,11 +13,11 @@ from actividades.models import Actividad
 from perfiles.models import Perfil
 
 
-class ActivityCreateView(SuccessMessageMixin, CreateView):
-    permission_required = 'actividades.create_actividad'
+class ActivityCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy('actividad:propias')
     context_object_name = 'form'
     success_message = 'Actividad Registrada'
+    permission_required = 'actividades.add_actividad'
 
     def form_valid(self, form):
         form.instance.usuario = self.request.user
@@ -44,6 +44,9 @@ class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
             return object
         else:
             raise PermissionDenied
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 
 class ActividadesPropias(ListView):

@@ -8,7 +8,7 @@
         <div class="col-md-6 offset-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ actividad.clase.capitalize }}: {{ actividad.nombre_actividad }}</h4>
+                    <h4 class="card-title">{{ actividad.get_clase_display.capitalize }}: {{ actividad.nombre_actividad }}</h4>
                     <p class="card-text">Realizado
                         por: {{ actividad.usuario.get_full_name }}, {{ actividad.usuario.perfil.codigo }}</p>
                     {% if request.user == actividad.usuario or perms.actividades.aprobar_actividad and request.user.perfil.departamento == actividad.departamento %}
@@ -50,6 +50,14 @@
                     <p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>
                 </div>
                 <div class="card-footer text-right">
+                    {% if perms.actividades.aprobar_actividad %}
+                        <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i> Aprobar
+                            </button>
+                        </form><hr />
+                        <a class="btn btn-outline-danger"
+                           href="{% url 'actividad:rechazar' actividad.pk %}"><i class="fas fa-times-circle"></i> Rechazar</a>{% endif %}
                     <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info"><i class="fa fa-edit"></i>
                         Editar</a>
                     <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i

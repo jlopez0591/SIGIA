@@ -175,9 +175,6 @@ class EstadiaPostdoctoral(Actividad):
     def __str__(self):
         return '{}'.format(self.fecha)
 
-    def get_absolute_url(self):
-        pass
-
     def get_edit_url(self):
         return reverse('actividad:actualizar-estadia', kwargs={'pk': self.pk})
 

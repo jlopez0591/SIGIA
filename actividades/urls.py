@@ -19,9 +19,10 @@ urlpatterns = [
                                                         template_name='actividades/estadia/crear.html'),
         name='crear-estadia'),
     url(r'^estadia/(?P<pk>[0-9]+)/editar/$',
-        ActivityUpdateView.as_view(model=EstadiaPostdoctoral, form_class=EstadiaForm), name='actualizar-estadia'),
+        ActivityUpdateView.as_view(model=EstadiaPostdoctoral, form_class=EstadiaForm,
+                                   template_name='actividades/estadia/crear.html'), name='actualizar-estadia'),
     url(r'^estadia/(?P<pk>[0-9]+)/$',
-        ActivityDetailView.as_view(model=EstadiaPostdoctoral, template_name='actividades/estadia/detalle.html'),
+        ActivityDetailView.as_view(model=EstadiaPostdoctoral, template_name='actividades/detalle.html'),
         name='detalle-estadia'),
 
     # Publicacion
@@ -29,7 +30,8 @@ urlpatterns = [
                                                             template_name='actividades/publicacion/crear.html'),
         name='crear-publicacion'),
     url(r'^publicacion/(?P<pk>[0-9]+)/editar/$',
-        ActivityUpdateView.as_view(model=Publicacion, form_class=PublicacionForm, template_name='actividades/publicacion/crear.html'), name='actualizar-publicacion'),
+        ActivityUpdateView.as_view(model=Publicacion, form_class=PublicacionForm,
+                                   template_name='actividades/publicacion/crear.html'), name='actualizar-publicacion'),
     url(r'^publicacion/(?P<pk>[0-9]+)/$',
         ActivityDetailView.as_view(model=Publicacion, template_name='actividades/detalle.html'),
         name='detalle-publicacion'),
