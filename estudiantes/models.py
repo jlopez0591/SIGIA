@@ -206,28 +206,6 @@ class Anteproyecto(models.Model):
         })
 
     def save(self, *args, **kwargs):
-        # self.cod_sede = self.carrera.cod_sede
-        # self.cod_unidad = self.carrera.cod_unidad
-        # self.cod_seccion = self.carrera.cod_seccion
-        # self.cod_carrera = self.carrera.cod_carrera
-        # try:
-        #     sede = apps.get_model('ubicacion', 'Sede')
-        #     facultad = apps.get_model('ubicacion', 'UnidadInstancia')
-        #     escuela = apps.get_model('ubicacion', 'SeccionInstancia')
-        #     carrera = apps.get_model('ubicacion', 'CarreraInstancia')
-        #     self.sede = sede.objects.get(cod_sede=self.cod_sede)
-        #     self.unidad = facultad.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
-        #     self.escuela = escuela.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-        #                                        cod_seccion=self.cod_seccion)
-        #     self.carrera = carrera.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-        #                                        cod_seccion=self.cod_seccion,
-        #                                        cod_carrera=self.cod_carrera)
-        # except:
-        #     pass
-        self.sede = self.estudiante[0].sede
-        self.unidad = self.estudiante[0].unidad
-        self.seccion = self.estudiante[0].escuela
-        self.carrera = self.estudiante[0].carrera
         return super(Anteproyecto, self).save()
 
 
