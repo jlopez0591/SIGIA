@@ -75,6 +75,23 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
         return qs
 
 
+class ListaActividades(PermissionRequiredMixin, ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    permission_required = 'actividades.aprobar_actividad'
+    template_name = 'actividades/pendientes.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            qs = Actividad.objects.aprobado()
+        elif True:  # TODO: Verificar permiso de Decano
+            qs = Actividad.objects.aprobado().filter()  # TODO: Filter por facultad
+        else:
+            qs = None
+        return qs
+
+
 @permission_required('actividad.aprobar_actividad')
 def aprobar_actividad(request, pk):
     if request.method == 'POST':

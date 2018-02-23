@@ -1,12 +1,13 @@
 from django.conf.urls import url
 from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, ActividadesPendientes, \
-    ActividadesPropias
+    ActividadesPropias, ListaActividades
 from actividades.forms import *
 from actividades import views
 
 app_name = 'actividad'
 urlpatterns = [
     # General actividades
+    url(r'^$', ListaActividades.as_view(), name='lista'),
     url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
     url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
     url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),  # TODO: Test if can remove

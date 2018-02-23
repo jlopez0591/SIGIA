@@ -178,6 +178,10 @@ class AnteproyectoAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(nombre_proyecto__icontains=self.q)
 
 
+def proyectos_facultad(request):
+    pass
+
+
 @permission_required('estudiante.view_estudiante')
 def reporte_estudiante(request, pk):
     pass

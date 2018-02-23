@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^anteproyectos/$', views.anteproyectos_facultad, name='anteproyectos-unidad'),
 
     # Proyects
+    url(r'^proyectos/$', views.proyectos_facultad, name='proyectos-facultad'),
     url(r'^proyecto/crear/$', ProyectoCreateView.as_view(), name='crear-proyecto'),
     url(r'^proyecto/(?P<pk>[\d]+)/editar/$', ProyectoUpdateView.as_view(), name='editar-proyecto'),
     url(r'^proyecto/(?P<pk>[\d]+)/detalle/$', ProyectoDetailView.as_view(), name='detalle-proyecto'),

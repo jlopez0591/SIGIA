@@ -15,15 +15,15 @@
                href="{% url 'inventario:facultad-equipo' request.user.perfil.unidad.pk %}">Equipos
                 <span
                         class="badge badge-primary">{{ request.user.perfil.unidad.equipos.count }}</span></a>
-            <a class="dropdown-item" href="#">Profesores <span
+            <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
                     class="badge badge-primary">{{ request.user.perfil.unidad.personal.profesores.count }}</span></a>
-            <a class="dropdown-item" href="#">Estudiantes <span
+            <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
                     class="badge badge-primary">{{ request.user.perfil.unidad.estudiantes.count }}</span></a>
-            <a class="dropdown-item" href="#">Actividades <span
+            <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
                     class="badge badge-primary">{{ request.user.perfil.unidad.actividades.count }}</span></a>
             <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
                     class="badge badge-primary">{{ request.user.perfil.unidad.anteproyectos.count }}</span></a>
-            <a class="dropdown-item" href="#">Trabajos de Graduacion <span
+            <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Trabajos de Graduacion <span
                     class="badge badge-primary">{{ request.user.perfil.unidad.proyectos.count }}</span></a>
             <a class="dropdown-item" href="#">Reportes</a>
         </div>
