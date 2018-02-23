@@ -18,13 +18,12 @@ from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 from perfiles.models import Perfil
 
 
-
 # @permission_required('estudiante.view_estudiante')
 def estudiante_search(request):
     if request.user.is_superuser:
         estudiante = Estudiante.objects.all()
     else:
-        usuario = User.objects.get(pk=request.user.pk) # TODO: get_object_or_404
+        usuario = User.objects.get(pk=request.user.pk)  # TODO: get_object_or_404
         sf = usuario.perfil.codigos()
         estudiante = Estudiante.objects.filter(**sf)  # TODO: Reemplazar por kwargs, ver arriba
     filter = EstudianteFilter(request.GET, queryset=estudiante)
@@ -125,6 +124,19 @@ def anteproyectos_pendientes(request):
     })
 
 
+def anteproyectos_facultad(request):
+    user = request.user
+    if user.is_superuser:
+        anteproyectos = Anteproyecto.objects.all()
+    elif user.has_perms('estudiantes.add_anteproyecto'):
+        anteproyectos = Anteproyecto.objects.escuela(usuario=user)
+    else:
+        anteproyectos = None
+    return render(request, 'estudiantes/anteproyecto/lista.html', {
+        'anteproyectos': anteproyectos
+    })
+
+
 class EstudianteAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -169,17 +181,3 @@ class AnteproyectoAutocomplete(autocomplete.Select2QuerySetView):
 @permission_required('estudiante.view_estudiante')
 def reporte_estudiante(request, pk):
     pass
-    # # Datos estudiante
-    # estudiante = Estudiante.objects.get(pk=pk)
-    #
-    # # Crear HTML
-    # html_string = render_to_string('estudiante-template.html', {'estudiante': estudiante})
-    # html = HTML(string=html_string)
-    # html.write_pdf(target='/tmp/estudiante.pdf');
-    #
-    # fs = FileSystemStorage('/tmp')
-    # with fs.open('estudiante.pdf') as pdf:
-    #     response = HttpResponse(pdf, content_type='application/pdf')
-    #     response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-    #
-    # return response

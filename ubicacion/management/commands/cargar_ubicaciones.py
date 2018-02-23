@@ -26,7 +26,7 @@ logging.basicConfig(filename='{}.log'.format(LOG_FILE), level=logging.DEBUG,
 
 
 class Command(BaseCommand):
-    help = 'Carga y actualiza los datos de las ubicaciones'
+    help = 'Cargar y/o actualizar los datos de las ubicaciones'
 
     def handle(self, *args, **options):
         with open(ARCHIVO, 'r') as f:
@@ -140,10 +140,10 @@ def apply_activo(data):
 
 
 # TODO: Necesario la creacion de webservice por parte de la DI
-def load_webservices(url):
+def load_webservice(url):
     """
     Consulta webservice de la DI y regresa los datos de ubicacion.
-    :param url:
-    :return: data
+    :param url: Direccion de acceso al webservice de la DI.
+    :return: Objeto diccionario con lista de las ubicaciones.
     """
     pass

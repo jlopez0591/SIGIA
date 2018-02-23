@@ -14,7 +14,8 @@ urlpatterns = [
     url(r'^anteproyecto/(?P<pk>[\d]+)/detalle/$', AnteproyectoDetailView.as_view(), name='anteproyecto-detalle'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/aprobar/$', aprobar_anteproyecto, name='aprobar-anteproyecto'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/rechazar/$', rechazar_anteproyecto, name='rechazar-anteproyecto'),
-    url(r'^anteproyectos/$', anteproyectos_pendientes, name='lista-anteproyectos'),
+    url(r'^anteproyectos/pendientes/$', anteproyectos_pendientes, name='lista-anteproyectos'),
+    url(r'^anteproyectos/$', views.anteproyectos_facultad, name='anteproyectos-unidad'),
 
     # Proyects
     url(r'^proyecto/crear/$', ProyectoCreateView.as_view(), name='crear-proyecto'),

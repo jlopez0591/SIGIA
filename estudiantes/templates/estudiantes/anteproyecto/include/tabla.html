@@ -1,23 +1,25 @@
-<table class="table table-responsive">
-    <thead>
-    <tr>
-        <th>Nombre del Proyecto</th>
-        <th>Fecha Registro</th>
-        <th>Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for anteproyecto in anteproyectos %}
+<div class="table-responsive">
+    <table class="table table-responsive">
+        <thead>
         <tr>
-            <td>{{ anteproyecto.nombre_proyecto }}</td>
-            <td>{{ anteproyecto.fecha_registro }}</td>
-            <td>
-                {# Ver #}
-                {# Editar #}
-                {# Rechazar #}
-                {# Aprobar #}
-            </td>
+            <th>Nombre del Proyecto</th>
+            <th>Fecha Registro</th>
+            <th>Opciones</th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for anteproyecto in anteproyectos %}
+            <tr>
+                <td>{{ anteproyecto.nombre_proyecto }}</td>
+                <td>{{ anteproyecto.fecha_registro }}</td>
+                <td>
+                    {# Ver #}<a class="btn btn-outline-info" href="#"> Ver</a>
+                    {# Editar #}<a class="btn btn-outline-info" href="#"> Editar</a>
+                    {# Rechazar #}<a href=# class="btn btn-outline-danger"> Rechazar</a>
+                    {# Aprobar #}<a href="#" class="btn-outline-success">Aprobar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

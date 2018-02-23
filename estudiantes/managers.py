@@ -45,6 +45,14 @@ class AnteproyectoQuerySet(models.QuerySet):
         escuela_usuario = usuario.perfil.escuela
         return self.filter(seccion=escuela_usuario, estado='pendiente')
 
+    def facultad(self, usuario):
+        facultad = usuario.perfil.unidad
+        return self.filter(unidad=facultad, estado='pendiente')
+
+    def escuela(self, usuario):
+        escuela = usuario.perfil.escuela
+        return self.filter(seccion=escuela)
+
 
 class AnteproyectoManager(models.Manager):
     def get_queryset(self):
@@ -64,3 +72,9 @@ class AnteproyectoManager(models.Manager):
 
     def puede_aprobar(self, usuario):
         return self.get_queryset().puede_aprobar(usuario=usuario)
+
+    def facultad(self, usuario):
+        return self.get_queryset().facultad(usuario=usuario)
+
+    def escuela(self, usuario):
+        return self.get_queryset().escuela(usuario=usuario)
