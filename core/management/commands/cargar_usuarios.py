@@ -35,6 +35,18 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+def cargar_usuarios():
+    """
+    Carga lista de usuarios
+    :return:
+    """
+    pass
+
+
+def cargar_webservice(url):
+    pass
+
+
 class Command(BaseCommand):
     help = 'Carga usuarios iniciales'
 

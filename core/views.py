@@ -1,9 +1,25 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
 
-# Create your views here.
+
 def index(request):
     return render(request, 'index.html', {})
 
-def json_test(request):
-    return JsonResponse({'foo': 'bar'})
+
+def cambiar_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Su password fue actualizado correctamente!')
+            return redirect('core:index')
+        else:
+            messages.error(request, 'Por favor corriga el error.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'form.html', {
+        'form': form
+    })

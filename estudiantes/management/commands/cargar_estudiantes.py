@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand
 from estudiantes.models import Estudiante
 
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
-ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test-data/estudiantes.json')
+ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test-data/node-estudiante.json')
 LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/estudiantes/creacion')
 LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha)
 

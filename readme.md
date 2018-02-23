@@ -6,20 +6,49 @@ realizan dentro de las unidades academicas de la universidad.
 
 Entre las acciones que se pretenden implementar se tienen las siguientes:
 
-1.
-1.
-1.
-1.
+### Modulo de Profesores
+Entre las funcionalidades que este modulo le brinadara a los profesores se tienen las siguientes:
+
+1. Presentarles un perfil con el cual podran mantener sus datos al dia.
+1. Registro de actividades realizadas
+1. Panel para aprobacion de actividades realizadas (Para los directores de departamento)
+1. Imprimir reporte/hoja de vida de los profesores (disponible solo para el profesor al cual pertenece el informe)
+
+### Modulo de Estudiantes
+
+1. Presentar el perfil de los estudiantes y la posibilidad de actualizar los datos de los mismos
+1. Registro de anteproyecto
+1. Aprobacion de anteproyecto
+1. Registro de trabajos de graduacion
+
+### Modulo de Inventario
+
+1. Registro del inventario de las facultades por salon en el que se encuentra.
+
+### Reportes
+
+Utilizando los datos existentes y recolectados por el sistema este proveera de reportes basicos y puntuales
+de:
+
+1. Facultades
+1. Escuelas
+1. Departamentos
+
 
 # Requerimientos
 
+1. PostgreSQL 9.5.2
+1. Nginx
 1. Python 3.5.2
+1. Django 1.11.8
 1. Ver archivo Pipfile
 
 # Setup inicial
-## Ejecutar los siguientes comandos
-1. run makemigrations
-1. run migrations
+## Ejecutar los siguientes comandos administrativos (manage.py)
+1. makemigrations
+1. migrate
+1. crear_grupos
+1. createsuperuser
 
 #### Views
 1. Include list unapproved activities view.
@@ -30,6 +59,11 @@ Entre las acciones que se pretenden implementar se tienen las siguientes:
 1. Agregar graficas de unidades
 1. Generar reportes personalizados (Utilizando la reportlab o weasyprint o wkhtmltopdf)
 1. Implementar documentacion con sphinx
+
+### Cron Jobs
+Entre los cron jobs que se utilizaran para mantener actualizado los datos se utilizaran los siguientes comandos administrativos
+1. cargar_ubicaciones
+1. cargar_estudiantes
 
 # To-Do - Durante pruebas
 1. Restringir el acceso a vistas

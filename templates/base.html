@@ -56,6 +56,8 @@
                     {% include 'includes/header/partial_escuela_dropdown.html' %}
                 {% endif %}
 
+                {% if request.user.perfil.seccion %}{% endif %}
+
                 {% if request.user.is_authenticated %}
                     {% include 'includes/header/partial_accounts_dropdown.html' %}
                 {% else %}
