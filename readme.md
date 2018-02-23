@@ -12,8 +12,6 @@
 1. run makemigrations
 1. run migrations
 
-# To-do - Antepruebas
-
 #### Views
 1. Include list unapproved activities view.
 1. Include rejected activities view.
