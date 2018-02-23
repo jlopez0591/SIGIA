@@ -17,7 +17,6 @@ from .validators import validate_file_type
 
 # Other apps import
 from ubicacion.models import SeccionInstancia, Sede, UnidadInstancia
-from perfiles.models import Perfil
 
 logger = logging.getLogger(__name__)
 
@@ -108,12 +107,11 @@ class Actividad(PolymorphicModel):
 
     def save(self, *args, **kwargs):
         try:
-            p = Perfil.objects.get(usuario=self.usuario)
-            if p:
+            if self.usuario.perfil:
                 try:
-                    self.sede = p.sede
-                    self.unidad = p.unidad
-                    self.departamento = p.departamento
+                    self.sede = self.usuario.perfil.sede
+                    self.unidad = self.usuario.perfil.unidad
+                    self.departamento = self.usuario.perfil.departamento
                 except:
                     logger.error(
                         'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,

@@ -12,6 +12,7 @@ from .managers import PerfilManager
 
 # Other apps
 from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraInstancia
+from actividades.models import Titulo
 
 
 def imagen_pergil_location(instance, filename):
@@ -123,6 +124,23 @@ class Perfil(models.Model):
 
     def get_absolute_url(self):
         return reverse('perfil:publico', kwargs={'pk': self.pk})
+
+    def nivel_academico(self):
+        actividades = self.usuario.actividades.filter(clase='titulo')
+        niveles = list()
+        for actividad in actividades:
+            titulo = Titulo.objects.get(pk=actividad.pk)
+            nivel = titulo.info_titulo.nivel
+            if nivel not in niveles:
+                niveles.append(nivel)
+        if 'doctorado' in niveles:
+            return 'Doctor'
+        elif 'maestria' in niveles:
+            return 'Magister'
+        elif 'postgrado' in niveles:
+            return 'Postgrado'
+        else:
+            return 'Licenciado'
 
     def edad(self):
         if self.fecha_nacimiento:

@@ -13,8 +13,10 @@ from dal import autocomplete
 
 
 def consulta_profesor(request):
-    profesores = Perfil.objects.profesores()
-    print(request)
+    if request.user.is_superuser:
+        profesores = Perfil.objects.profesores()
+    elif request.user.has_perms('ubicacion:ver-profesores'):
+        profesores = Perfil.objects.profesores().filter() # TODO: Agregar filter por ubicacion.
     filter = PerfilFilter(request.GET, queryset=profesores)
     paginator = Paginator(filter.qs, 10)
     page = request.GET.get('page')
