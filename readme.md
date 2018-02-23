@@ -1,8 +1,17 @@
 # Plataforma SIGIA para la Universidad de Panama
 
-## Descripcion del proyecto.
+El sistema de gestion de informacion academica/administrativa (SIGIA) es una plataforma la cual 
+pretende proveer un conjunto de aplicaciones para agilizar y facilitar varias de las acciones que se
+realizan dentro de las unidades academicas de la universidad.
 
-# Requirements
+Entre las acciones que se pretenden implementar se tienen las siguientes:
+
+1.
+1.
+1.
+1.
+
+# Requerimientos
 
 1. Python 3.5.2
 1. Ver archivo Pipfile

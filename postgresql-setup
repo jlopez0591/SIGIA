@@ -1,0 +1,8 @@
+sudo -u postgres psql
+CREATE DATABASE sigia;
+CREATE USER sigia_user WITH PASSWORD 'password';
+ALTER ROLE sigia_user SET client_encoding TO 'utf8';
+ALTER ROLE sigia_user SET timezone TO 'UTC';
+ALTER ROLE sigia_user SET default_transaction_isolation TO 'read committed';
+GRANT ALL PRIVILEGES ON DATABASE sigia TO sigia_user;
+\q
