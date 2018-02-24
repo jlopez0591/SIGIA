@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from django_countries.fields import CountryField
 
-from .managers import EstudianteManager, AnteproyectoManager
+from .managers import EstudianteManager, AnteproyectoManager, ProyectoManager
 
 from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraInstancia
 
@@ -58,19 +58,14 @@ class Estudiante(models.Model):
         ('AB+', 'AB+'),
         ('AB-', 'AB-')
     )
-    # Informacion cedula del estudiante
     provincia = models.CharField(
         max_length=5, blank=True, choices=PROVINCIAS, default='00')
     clase = models.CharField(max_length=5, blank=True,
                              choices=CLASE, default='00')
     tomo = models.CharField(max_length=5, blank=True, default='000')
     folio = models.CharField(max_length=5, blank=True, default='0000')
-
-    # Información personal del estudiante
-    # Actualmente en el sistema se registra como los dos
     primer_nombre = models.CharField(max_length=120, blank=True)
     segundo_nombre = models.CharField(max_length=120, blank=True)
-    # Actualmente en el sistema se registra como los dos
     primer_apellido = models.CharField(max_length=120, blank=True)
     segundo_apellido = models.CharField(max_length=120, blank=True)
 
@@ -87,32 +82,26 @@ class Estudiante(models.Model):
     telefono_oficina = models.CharField(max_length=10, blank=True)
     celular = models.CharField(max_length=12, blank=True)
     celular_oficina = models.CharField(max_length=12, blank=True)  #
-
-    # Informacion academica
     cod_sede = models.CharField(max_length=2, blank=True, default='XX')
-    cod_unidad = models.CharField(max_length=2, blank=True, default='XX')
-    cod_seccion = models.CharField(max_length=2, blank=True, default='XX')
+    cod_facultad = models.CharField(max_length=2, blank=True, default='XX')
+    cod_escuela = models.CharField(max_length=2, blank=True, default='XX')
     cod_carrera = models.CharField(max_length=2, blank=True, default='XX')
     turno = models.CharField(max_length=1, blank=True,
-                             choices=TURNOS)  # una letra, d, v, n
-    # Actualmente se registra es el anio de ingreso (como int)
+                             choices=TURNOS)
     fecha_ingreso = models.DateField(blank=True, null=True)
     semestre_ingreso = models.CharField(
         max_length=1, blank=True, choices=SEMESTRES)
-    # Se refiere a ultimo anio de matricula.
     ultimo_anio = models.CharField(max_length=4, blank=True)
     ultimo_semestre = models.CharField(max_length=1, blank=True)  # I, II, V
     fecha_graduacion = models.DateField(blank=True, null=True)
-    # ano_cursa = models.CharField(max_length=1, blank=True)  # romanos
 
-    # Información Academica
-    sede = models.ForeignKey('ubicacion.Sede', on_delete=models.SET_NULL, null=True, related_name='estudiantes',
+    sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, related_name='estudiantes',
                              blank=True)
-    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, null=True,
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
                                related_name='estudiantes', blank=True)
-    escuela = models.ForeignKey('ubicacion.SeccionInstancia', on_delete=models.SET_NULL, null=True,
+    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='estudiantes', blank=True)
-    carrera = models.ForeignKey('ubicacion.CarreraInstancia', on_delete=models.SET_NULL, null=True,
+    carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='estudiantes',
                                 blank=True)
 
@@ -125,26 +114,19 @@ class Estudiante(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        """
-
-        :param args:
-        :param kwargs:
-        :return:
-        """
         try:
-            sede = apps.get_model('ubicacion', 'Sede')
-            facultad = apps.get_model('ubicacion', 'UnidadInstancia')
-            escuela = apps.get_model('ubicacion', 'SeccionInstancia')
-            carrera = apps.get_model('ubicacion', 'CarreraInstancia')
-            self.sede = sede.objects.get(cod_sede=self.cod_sede)
-            self.unidad = facultad.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
-            self.escuela = escuela.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                               cod_seccion=self.cod_seccion)
-            self.carrera = carrera.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                               cod_seccion=self.cod_seccion,
-                                               cod_carrera=self.cod_carrera)
+            self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
+            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+                                                        cod_seccion=self.cod_seccion)
+            self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
+                                                        cod_seccion=self.cod_seccion,
+                                                        cod_carrera=self.cod_carrera)
         except:
-            pass
+            print('Hubo un error al guardar los datos del estudiante{}{}{}{}. Error: {}'.format(self.provincia,
+                                                                                                self.clase, self.tomo,
+                                                                                                self.folio,
+                                                                                                1))  # TODO: sys.exc
         return super(Estudiante, self).save()
 
     def __str__(self):
@@ -153,32 +135,25 @@ class Estudiante(models.Model):
     def get_absolute_url(self):
         return reverse('estudiante:detalle', kwargs={'pk': self.pk})
 
-    def anteproyectos_aprobados(self):
-        # TODO: Pasar esto al manager de anteproyectos
-        return self.anteproyectos.filter(estado='aprobado')
-
 
 class Anteproyecto(models.Model):
-    """
-
-    """
     ESTADO = (
         ('pendiente', 'Pendiente'),
         ('rechazado', 'Rechazado'),
         ('aprobado', 'Aprobado')
     )
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, blank=True,
-                                related_name='anteproyectos')
-    unidad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
-                                related_name='anteproyectos')
-    seccion = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True, blank=True,
+                             related_name='anteproyectos')
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name='anteproyectos')
+    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
     estudiante = models.ManyToManyField(Estudiante, related_name='anteproyectos')
     cod_sede = models.CharField(max_length=120, blank=True)
-    cod_unidad = models.CharField(max_length=120, blank=True)
-    cod_seccion = models.CharField(max_length=120, blank=True)
+    cod_facultad = models.CharField(max_length=120, blank=True)
+    cod_escuela = models.CharField(max_length=120, blank=True)
     cod_carrera = models.CharField(max_length=120, blank=True)
     asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
@@ -195,6 +170,8 @@ class Anteproyecto(models.Model):
     class Meta:
         permissions = (
             ('aprobar_anteproyecto', 'Aprobar Anteproyecto'),
+            ('ver_anteproyecto_facultad', 'Ver Anteproyectos en Facultad'),
+            ('ver_anteproyecto_escuela', 'Ver Anteproyecto en Escuela'),
         )
 
     def __str__(self):
@@ -210,29 +187,41 @@ class Anteproyecto(models.Model):
 
 
 class Proyecto(models.Model):
+    LICENCIATURA = 'licenciatura'
+    ESPECIALIZACION = 'especializacion'
+    MAESTRIA = 'maestria'
+    DOCTORADO = 'doctorado'
     PROGRAMAS = (
-        ('1', 'Licenciatura'),
-        ('2', 'Especialización'),
-        ('3', 'Maestria'),
-        ('4', 'Doctorado')
+        (LICENCIATURA, 'Licenciatura'),
+        (ESPECIALIZACION, 'Especialización'),
+        (MAESTRIA, 'Maestria'),
+        (DOCTORADO, 'Doctorado')
     )
-    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, null=True,
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
+                                 related_name='proyectos')
+    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')
-    seccion = models.ForeignKey('ubicacion.SeccionInstancia', on_delete=models.SET_NULL, null=True,
-                                related_name='proyectos')
-    carrera = models.ForeignKey('ubicacion.CarreraInstancia', on_delete=models.SET_NULL, null=True,
+    carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')
     estudiante = models.ManyToManyField(Estudiante, related_name='proyectos')
     anteproyecto = models.ForeignKey(
         Anteproyecto, on_delete=models.SET_NULL, null=True)
     jurados = models.ManyToManyField(User, related_name='jurado', limit_choices_to=Q(
-        groups__name='Profesores'))  # Extender para que se pueda consultar desde
+        groups__name='Profesores'))
     fecha_entrega = models.DateField(blank=True, null=True)
     fecha_sustentacion = models.DateField(blank=True, null=True)
-    programa = models.CharField(max_length=1, choices=PROGRAMAS, default='1')
+    programa = models.CharField(max_length=1, choices=PROGRAMAS, default=LICENCIATURA)
     nota = models.CharField(max_length=3, blank=True)
     detalle = models.TextField(max_length=500, blank=True)
     archivo = models.FileField(blank=True)
+
+    objects = ProyectoManager
+
+    class Meta:
+        permissions = (
+            ('ver_proyecto_facultad', 'Ver proyectos en facultad'),
+            ('ver_proyecto_escuela', 'Ver proyectos en escuela')
+        )
 
     def __str__(self):
         return self.anteproyecto.nombre_proyecto

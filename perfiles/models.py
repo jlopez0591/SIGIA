@@ -52,7 +52,6 @@ class Perfil(models.Model):
         ('AV', 'AV'),
         ('PI', 'PI'),
     )
-    # Nombre
     primer_nombre = models.CharField(max_length=120, blank=True)
     segundo_nombre = models.CharField(max_length=120, blank=True)
     primer_apellido = models.CharField(max_length=120, blank=True)
@@ -60,11 +59,9 @@ class Perfil(models.Model):
 
     nombre_completo = models.CharField(max_length=480, blank=True)
 
-    # Fechas
     fecha_nacimiento = models.DateField(blank=True, null=True)
     fecha_inicio = models.DateField(blank=True, null=True)
 
-    # Info. Personal
     sexo = models.CharField(max_length=1, choices=GENERO, blank=True, null=True)
 
     provincia = models.CharField(max_length=5, choices=PROVINCIAS, default='00')
@@ -72,31 +69,26 @@ class Perfil(models.Model):
     tomo = models.CharField(max_length=5, default='000')
     folio = models.CharField(max_length=5, default='0000')
 
-    cedula = models.CharField(max_length=20, blank=True)
-
-    # Info. Profesor
     imagen = models.ImageField(upload_to='perfil/', blank=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
     pais = CountryField(blank=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
 
-    # Info Ubicacion
     cod_sede = models.CharField(max_length=2, blank=True, default='XX')
-    cod_unidad = models.CharField(max_length=2, blank=True, default='XX')
-    cod_seccion = models.CharField(max_length=2, blank=True, default='XX')
-    # cod_secciones = models.ArrayField()
+    cod_facultad = models.CharField(max_length=2, blank=True, default='XX')
+    cod_escuela = models.CharField(max_length=2, blank=True, default='XX')
+    cod_departamento = models.CharField(max_length=2, blank=True, default='XX')
 
-    # Foreign Keys
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='perfil')
-    sede = models.ForeignKey('ubicacion.Sede', on_delete=models.SET_NULL, related_name='personal', blank=True,
+    sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, related_name='personal', blank=True,
                              null=True)
-    unidad = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.SET_NULL, related_name='personal',
-                               blank=True, null=True)
-    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='profesor',
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, related_name='personal',
+                                 blank=True, null=True)
+    departamento = models.ForeignKey(SeccionInstancia, blank=True, null=True, related_name='profesor',
                                      limit_choices_to=Q(seccion__tipo='DE'),
                                      )
-    escuela = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True,
-                                # limit_choices_to=Q(seccion__tipo='ES'),
+    escuela = models.ForeignKey(SeccionInstancia, blank=True, null=True,
+                                limit_choices_to=Q(seccion__tipo='ES'),
                                 related_name='administrativos')
     objects = PerfilManager()
 
@@ -117,7 +109,7 @@ class Perfil(models.Model):
             pass
         try:
             self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                                             cod_seccion=self.cod_seccion)
+                                                             cod_seccion=self.cod_departamento)
         except:
             pass
         return super(Perfil, self).save()

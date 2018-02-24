@@ -164,7 +164,9 @@ class EstudianteAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-class AnteproyectoAutocomplete(autocomplete.Select2QuerySetView):
+class AnteproyectoAutocomplete(PermissionRequiredMixin, autocomplete.Select2QuerySetView):
+    permission_required = 'estudiante.add_anteproyecto'
+
     def get_queryset(self):
         if self.request.user.is_superuser:
             qs = Anteproyecto.objects.all()
@@ -178,8 +180,10 @@ class AnteproyectoAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(nombre_proyecto__icontains=self.q)
 
 
+@permission_required('estudiante.ver_proyectos_facultad')
 def proyectos_facultad(request):
-    pass
+    proyectos = Proyecto.objects.facultad()
+
 
 
 @permission_required('estudiante.view_estudiante')

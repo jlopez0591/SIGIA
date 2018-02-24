@@ -23,7 +23,7 @@ class StudentUpdateForm(forms.ModelForm):
             'pais', 'correo', 'telefono_oficina', 'celular',
             'celular_oficina',
             # Info academica
-            'cod_sede', 'cod_unidad', 'cod_seccion', 'cod_carrera',
+            'cod_sede', 'cod_facultad', 'cod_escuela', 'cod_carrera',
             'turno', 'fecha_ingreso', 'semestre_ingreso', 'ultimo_anio',
             'ultimo_semestre', 'fecha_graduacion'
         )

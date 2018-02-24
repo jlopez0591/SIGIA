@@ -78,3 +78,15 @@ class AnteproyectoManager(models.Manager):
 
     def escuela(self, usuario):
         return self.get_queryset().escuela(usuario=usuario)
+
+
+class ProyectoQueryset(models.QuerySet):
+
+    def facultad(self, facultad):
+        return self.filter(unidad=facultad)
+
+
+class ProyectoManager(models.Manager):
+
+    def get_queryset(self):
+        return ProyectoQueryset(self.model, using=self._db)

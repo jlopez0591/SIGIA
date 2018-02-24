@@ -1,14 +1,9 @@
-# Python imports
 import logging
-
-# Django imports
-from django.apps import apps
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 
-# My imports
 from .managers import (CarreraInstanciaManager, CarreraManager,
                        SeccionInstanciaManager, SeccionManager, SedeManager,
                        UnidadInstanciaManager, UnidadManager)
@@ -16,7 +11,6 @@ from .managers import (CarreraInstanciaManager, CarreraManager,
 logger = logging.getLogger(__name__)
 
 
-# Create your models here.
 class Sede(models.Model):
     CAMPUS = 'CU'
     CENTRO_REGIONAL = 'CR'
@@ -139,14 +133,6 @@ class Unidad(models.Model):
 
 
 class Seccion(models.Model):
-    '''
-        Define la informacion de las secciones, estan pueden ser
-        Escuelas:
-        Departamentos:
-        Coordinaciones:
-        Decanatos:
-        Organizaciones:
-    '''
     ESCUELA = 'ES'
     DEPARTAMENTO = 'DE'
     COMISION = 'CO'
@@ -183,11 +169,11 @@ class Departamento(models.Model):
     cod_unidad = models.CharField(max_length=2)
     cod_departamento = models.CharField(max_length=2)
 
+    def __str__(self):
+        return '{} - {}'.format(self.cod_unidad, self.cod_departamento)
+
 
 class Carrera(models.Model):
-    '''
-        Almacena la informacion de las carreras dentro de las secciones de tipo escuela
-    '''
     REGULAR = 'R'
     POSTGRADO = 'P'
     MAESTRIA = 'M'
@@ -232,10 +218,6 @@ class Carrera(models.Model):
 
 
 class UnidadInstancia(models.Model):
-    '''
-        Describe y actua como una de las ubicaciones dentro de la institucion
-        Obtiene su informacion mediante las variables sede y unidad.
-    '''
     objects = UnidadInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='unidades', blank=True, null=True)
@@ -294,10 +276,6 @@ class UnidadInstancia(models.Model):
 
 
 class SeccionInstancia(models.Model):
-    '''
-            Describe y actua como una de las secciones dentro de una unidad
-            Obtiene su informacion mediante las variables sede, unidad y seccion
-    '''
     objects = SeccionInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
@@ -343,10 +321,6 @@ class SeccionInstancia(models.Model):
 
 
 class CarreraInstancia(models.Model):
-    '''
-        Describe y actua como una de las carreras dentro de una seccion
-        Obtiene su informacion mediante las variables sede, unidad, seccion y carrera.
-    '''
     objects = CarreraInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')

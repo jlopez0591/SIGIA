@@ -79,7 +79,7 @@ class ListaActividades(PermissionRequiredMixin, ListView):
     model = Actividad
     context_object_name = 'actividades'
     permission_required = 'actividades.aprobar_actividad'
-    template_name = 'actividades/pendientes.html'
+    template_name = 'actividades/lista.html'
     paginate_by = 10
 
     def get_queryset(self):

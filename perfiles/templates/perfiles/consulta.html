@@ -1,123 +1,46 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
 
 {% block title %}Consultar - Profesores{% endblock %}
 {% block content %}
-{#    <div class="row">#}
-{#        <div class="col-md-12">#}
-{#            <div class="card">#}
-{#                <div class="card-body">#}
-{#                    <h4 class="card-title">Busqueda de Profesor</h4>#}
-{#                    <div class="container">#}
-{#                        <h4></h4>#}
-{#                        <form>#}
-{#                            <div class="form-row">#}
-{#                                <div class="col">{% render_field filter.form.provincia class="form-control" placeholder="Provincia" %}</div>#}
-{#                                <div class="col">{% render_field filter.form.clase class="form-control" placeholder="Clase" %}</div>#}
-{#                                <div class="col">{% render_field filter.form.tomo class="form-control" placeholder="Tomo" %}</div>#}
-{#                                <div class="col">{% render_field filter.form.folio class="form-control" placeholder="Folio" %}</div>#}
-{#                                <button type="submit" class="btn btn-primary">#}
-{#                                    <i class="fa fa-search" aria-hidden="true"></i> Buscar#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </form>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Listado de Profesores</h4>
 
                     {% if perfiles %}
-                        <table class="table table-responsive">
-                            <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Nivel Academico</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                        <tbody>
-                            {% for perfil in perfiles %}
+                        <div class="table-responsive">
+                            <table class="table" id="profesores">
+                                <thead>
                                 <tr>
-                                    <td></td>
+                                    <th>Nombre</th>
+                                    <th>Codigo</th>
+                                    <th>Departamento</th>
+                                    <th>Nivel Academico</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for perfil in perfiles %}
+                                    <tr>
+                                        <td>{{ perfil.primer_nombre }} {{ perfil.primer_apellido }}</td>
+                                        <td>{{ perfil.codigo }}</td>
+                                        <td>{{ perfil.departamento }}</td>
+                                        <td>{{ perfil.nivel_academico }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     {% else %}
                         <div class="alert alert-info" role="alert">
-                          No hay profesores registrados en su facultad.
+                            No hay profesores registrados en su facultad.
                         </div>
                     {% endif %}
-
-
-{#                    <div id="accordion" role="tablist">#}
-{#                        {% for perfil in perfiles %}#}
-{#                            <div class="card">#}
-{#                                <div class="card-header" role="tab" id="headingOne">#}
-{#                                    <h5 class="mb-0">#}
-{#                                        <a class="collapsed" data-toggle="collapse"#}
-{#                                           href="#collapse{{ forloop.counter }}" aria-expanded="false"#}
-{#                                           aria-controls="collapse{{ forloop.counter }}">#}
-{#                                            {{ perfil }}#}
-{#                                        </a>#}
-{#                                    </h5>#}
-{#                                </div>#}
-{#                                <div id="collapse{{ forloop.counter }}" class="collapse" role="tabpanel"#}
-{#                                     aria-labelledby="headingOne" data-parent="#accordion">#}
-{#                                    <div class="card-body">#}
-{#                                        <table class="table table-sm">#}
-{#                                            <thead>#}
-{#                                            <tr>#}
-{#                                                <p>Test</p>#}
-{#                                            </tr>#}
-{#                                            </thead>#}
-{#                                        </table>#}
-{#                                        <hr/>#}
-{#                                        <div class="text-right">#}
-{#                                            <a href="{{ perfil.get_absolute_url }}">Ver Detalle</a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{##}
-{##}
-{#                    <nav aria-label="...">#}
-{#                        <ul class="pagination">#}
-{#                            {% if perfiles.has_previous %}#}
-{#                                <li class="page-item">#}
-{#                                    <a class="page-link" href="?page={{ perfiles.previous_page_number }}">Previous</a>#}
-{#                                </li>#}
-{#                            {% else %}#}
-{#                                <li class="page-item disabled">#}
-{#                                    <a class="page-link" href="#" tabindex="-1">Previous</a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                            <li class="page-item active">#}
-{#                                <a class="page-link" href="#">#}
-{#                                    Page {{ perfiles.number }} of {{ perfiles.paginator.num_pages }} </a>#}
-{#                            </li>#}
-{#                            {% if perfiles.has_next %}#}
-{#                                <li class="page-item">#}
-{#                                    <a class="page-link" href="?page=#}
-{#                                            {{ perfiles.next_page_number }}{% if request.GET %}&cod_sede={{ request.GET.cod_sede }}&cod_unidad={{ request.GET.cod_unidad }}{% endif %}">next</a>#}
-{#                                </li>#}
-{#                            {% else %}#}
-{#                                <li class="page-item disabled">#}
-{#                                    <a class="page-link" href="#">next</a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                        </ul>#}
-{#                    </nav>#}
-
 
                 </div>
             </div>
@@ -130,7 +53,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#actividades').DataTable();
+            $('#profesores').DataTable();
         });
     </script>
 {% endblock %}
