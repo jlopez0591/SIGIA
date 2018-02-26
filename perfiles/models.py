@@ -104,12 +104,17 @@ class Perfil(models.Model):
         except:
             pass
         try:
-            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
+            self.facultad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_facultad)
+        except:
+            print('Error!')
+        try:
+            self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_facultad,
+                                                             cod_seccion=self.cod_departamento)
         except:
             pass
         try:
-            self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                                             cod_seccion=self.cod_departamento)
+            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_facultad,
+                                                             cod_seccion=self.cod_escuela)
         except:
             pass
         return super(Perfil, self).save()

@@ -89,13 +89,13 @@
                 "cod_unidad": "24",
                 "cod_seccion": "1",
                 "nombre": "INGENIERIA EN ELECTRONICA Y COMUNIC",
-                "tipo": ""
+                "tipo": "ES"
             },
             {
                 "cod_unidad": "24",
                 "cod_seccion": "2",
                 "nombre": "INGENIERIA EN INFORMATICA",
-                "tipo": ""
+                "tipo": "ES"
             }
         ],
         "carreras": [

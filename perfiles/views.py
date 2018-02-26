@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
 from django.views.generic import DetailView, UpdateView
@@ -7,7 +6,6 @@ from django.urls import reverse_lazy
 
 from perfiles.models import Perfil
 from perfiles.forms import PerfilForm, PerfilTestForm
-from .filters import PerfilFilter
 
 from dal import autocomplete
 

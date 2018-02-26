@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     # Third party apps
     'auditlog',
     'django_countries',
-    'django_filters',
     'import_export',
     'polymorphic',
     'widget_tweaks',

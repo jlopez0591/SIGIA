@@ -13,24 +13,24 @@ from dal import autocomplete
 
 # My imports
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
-from estudiantes.filters import EstudianteFilter
+
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 from perfiles.models import Perfil
 
 
-# @permission_required('estudiante.view_estudiante')
-def estudiante_search(request):
-    if request.user.is_superuser:
-        estudiante = Estudiante.objects.all()
-    else:
-        usuario = User.objects.get(pk=request.user.pk)  # TODO: get_object_or_404
-        sf = usuario.perfil.codigos()
-        estudiante = Estudiante.objects.filter(**sf)  # TODO: Reemplazar por kwargs, ver arriba
-    filter = EstudianteFilter(request.GET, queryset=estudiante)
-    return render(request, 'estudiantes/consultar.html', {
-        'filter': filter,
-        'estudiante': estudiante,
-    })
+# # @permission_required('estudiante.view_estudiante')
+# def estudiante_search(request):
+#     if request.user.is_superuser:
+#         estudiante = Estudiante.objects.all()
+#     else:
+#         usuario = User.objects.get(pk=request.user.pk)  # TODO: get_object_or_404
+#         sf = usuario.perfil.codigos()
+#         estudiante = Estudiante.objects.filter(**sf)  # TODO: Reemplazar por kwargs, ver arriba
+#     filter = EstudianteFilter(request.GET, queryset=estudiante)
+#     return render(request, 'estudiantes/consultar.html', {
+#         'filter': filter,
+#         'estudiante': estudiante,
+#     })
 
 
 class EstudianteDetailView(PermissionRequiredMixin, UserPassesTestMixin, DetailView):

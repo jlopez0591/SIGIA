@@ -1,79 +1,89 @@
 from dal import autocomplete
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
-from ubicacion.filters import (CarreraFilter, SeccionFilter, SedeFilter,
-                               UnidadFilter)
+# from ubicacion.filters import (CarreraFilter, SeccionFilter, SedeFilter,
+#                                UnidadFilter)
 from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia, Unidad, Seccion, Carrera
 
 
 def consulta_sede(request):
-    sedes = Sede.objects.all().order_by('cod_sede')
-    filter = SedeFilter(request.GET, queryset=sedes)
-    paginator = Paginator(filter.qs, 10)
-    page = request.GET.get('page')
-    try:
-        sede_p = paginator.page(page)
-    except PageNotAnInteger:
-        sede_p = paginator.page(1)
-    except EmptyPage:
-        sede_p = paginator.page(paginator.num_pages)
+    sedes = Sede.objects.activas().order_by('cod_sede')
     return render(request, 'ubicacion/consulta/sede.html', {
-        'filter': filter,
-        'sedes': sede_p
+        'sedes': sedes
     })
 
 
 def consulta_unidad(request):
-    unidades = UnidadInstancia.objects.all()
-    filter = UnidadFilter(request.GET, queryset=unidades.order_by('cod_sede','cod_unidad'))
-    paginator = Paginator(filter.qs, 10)
-    page = request.GET.get('page')
-    try:
-        unidad_p = paginator.page(page)
-    except PageNotAnInteger:
-        unidad_p = paginator.page(1)
-    except EmptyPage:
-        unidad_p = paginator.page(paginator.num_pages)
-    return render(request, 'ubicacion/consulta/facultad.html', {
-        'filter': filter,
-        'unidades': unidad_p
+    sedes = Sede.objects.activas().order_by('cod_sede')
+    return render(request, 'ubicacion/consulta/sede.html', {
+        'sedes': sedes
     })
 
 
 def consulta_seccion(request):
-    secciones = SeccionInstancia.objects.all().order_by('cod_sede', 'cod_unidad', 'cod_seccion')
-    filter = SeccionFilter(request.GET, queryset=secciones)
-    paginator = Paginator(filter.qs, 10)
-    page = request.GET.get('page')
-    try:
-        seccion_p = paginator.page(page)
-    except PageNotAnInteger:
-        seccion_p = paginator.page(1)
-    except EmptyPage:
-        seccion_p = paginator.page(paginator.num_pages)
-    return render(request, 'ubicacion/consulta/escuela.html', {
-        'filter': filter,
-        'secciones': seccion_p
+    sedes = Sede.objects.activas().order_by('cod_sede')
+    return render(request, 'ubicacion/consulta/sede.html', {
+        'sedes': sedes
     })
 
 
 def consulta_carrera(request):
-    carreras = CarreraInstancia.objects.all().order_by('cod_sede', 'cod_unidad', 'cod_seccion', 'cod_carrera')
-    filter = CarreraFilter(request.GET, queryset=carreras)
-    paginator = Paginator(filter.qs, 10)
-    page = request.GET.get('page')
-    try:
-        carrera_p = paginator.page(page)
-    except PageNotAnInteger:
-        carrera_p = paginator.page(1)
-    except EmptyPage:
-        carrera_p = paginator.page(paginator.num_pages)
-    return render(request, 'ubicacion/consulta/carrera.html', {
-        'filter': filter,
-        'carrers': carrera_p
+    sedes = Sede.objects.activas().order_by('cod_sede')
+    return render(request, 'ubicacion/consulta/sede.html', {
+        'sedes': sedes
     })
+
+
+# def consulta_unidad(request):
+#     unidades = UnidadInstancia.objects.all()
+#     filter = UnidadFilter(request.GET, queryset=unidades.order_by('cod_sede','cod_unidad'))
+#     paginator = Paginator(filter.qs, 10)
+#     page = request.GET.get('page')
+#     try:
+#         unidad_p = paginator.page(page)
+#     except PageNotAnInteger:
+#         unidad_p = paginator.page(1)
+#     except EmptyPage:
+#         unidad_p = paginator.page(paginator.num_pages)
+#     return render(request, 'ubicacion/consulta/facultad.html', {
+#         'filter': filter,
+#         'unidades': unidad_p
+#     })
+#
+#
+# def consulta_seccion(request):
+#     secciones = SeccionInstancia.objects.all().order_by('cod_sede', 'cod_unidad', 'cod_seccion')
+#     filter = SeccionFilter(request.GET, queryset=secciones)
+#     paginator = Paginator(filter.qs, 10)
+#     page = request.GET.get('page')
+#     try:
+#         seccion_p = paginator.page(page)
+#     except PageNotAnInteger:
+#         seccion_p = paginator.page(1)
+#     except EmptyPage:
+#         seccion_p = paginator.page(paginator.num_pages)
+#     return render(request, 'ubicacion/consulta/escuela.html', {
+#         'filter': filter,
+#         'secciones': seccion_p
+#     })
+#
+#
+# def consulta_carrera(request):
+#     carreras = CarreraInstancia.objects.all().order_by('cod_sede', 'cod_unidad', 'cod_seccion', 'cod_carrera')
+#     filter = CarreraFilter(request.GET, queryset=carreras)
+#     paginator = Paginator(filter.qs, 10)
+#     page = request.GET.get('page')
+#     try:
+#         carrera_p = paginator.page(page)
+#     except PageNotAnInteger:
+#         carrera_p = paginator.page(1)
+#     except EmptyPage:
+#         carrera_p = paginator.page(paginator.num_pages)
+#     return render(request, 'ubicacion/consulta/carrera.html', {
+#         'filter': filter,
+#         'carrers': carrera_p
+#     })
 
 
 class SedeDetailView(DetailView):
@@ -186,6 +196,7 @@ def get_escuelas(request):
     escuelas = Seccion.objects.filter(tipo='ES').values()
     lista = list(escuelas)
     return JsonResponse(lista, safe=False)
+
 
 def get_departamentos(request):
     escuelas = Seccion.objects.filter(tipo='DE').values()
