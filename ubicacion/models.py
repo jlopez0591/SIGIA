@@ -90,7 +90,7 @@ class Sede(models.Model):
         estudiantes = self.estudiantes.all()
         for estudiante in estudiantes:
             cs = estudiante.cod_sede
-            cf = estudiante.cod_unidad  # Codigo de Facultad
+            cf = estudiante.cod_facultad  # Codigo de Facultad
             nombre_facultad = UnidadInstancia.objects.get(cod_sede=cs, cod_unidad=cf).unidad.nombre.title()
             if nombre_facultad in conteo:
                 conteo[nombre_facultad] += 1

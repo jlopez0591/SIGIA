@@ -7,6 +7,8 @@ from sigia import base_settings
 from django.core.management.base import BaseCommand
 from estudiantes.models import Estudiante
 
+from sigia.base_settings import DEBUG
+
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
 ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test-data/node-estudiante.json')
 LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/estudiantes/creacion')

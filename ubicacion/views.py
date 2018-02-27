@@ -15,23 +15,23 @@ def consulta_sede(request):
 
 
 def consulta_unidad(request):
-    sedes = Sede.objects.activas().order_by('cod_sede')
-    return render(request, 'ubicacion/consulta/sede.html', {
-        'sedes': sedes
+    unidades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_unidad')
+    return render(request, 'ubicacion/consulta/facultad.html', {
+        'unidades': unidades
     })
 
 
 def consulta_seccion(request):
-    sedes = Sede.objects.activas().order_by('cod_sede')
-    return render(request, 'ubicacion/consulta/sede.html', {
-        'sedes': sedes
+    secciones = SeccionInstancia.objects.activas().order_by('cod_sede', 'cod_unidad', 'cod_seccion')
+    return render(request, 'ubicacion/consulta/escuela.html', {
+        'secciones': secciones
     })
 
 
 def consulta_carrera(request):
-    sedes = Sede.objects.activas().order_by('cod_sede')
-    return render(request, 'ubicacion/consulta/sede.html', {
-        'sedes': sedes
+    carreras = CarreraInstancia.objects.activas().order_by('cod_sede', 'cod_unidad', 'cod_seccion', 'cod_carrera')
+    return render(request, 'ubicacion/consulta/carrera.html', {
+        'carreras': carreras
     })
 
 
