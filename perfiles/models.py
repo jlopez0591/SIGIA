@@ -84,7 +84,7 @@ class Perfil(models.Model):
                              null=True)
     facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, related_name='personal',
                                  blank=True, null=True)
-    departamento = models.ForeignKey(SeccionInstancia, blank=True, null=True, related_name='profesor',
+    departamento = models.ForeignKey(SeccionInstancia, blank=True, null=True, related_name='personal',
                                      limit_choices_to=Q(seccion__tipo='DE'),
                                      )
     escuela = models.ForeignKey(SeccionInstancia, blank=True, null=True,

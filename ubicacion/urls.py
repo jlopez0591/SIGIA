@@ -32,6 +32,25 @@ urlpatterns = [
     url(r'^departamentos/json/$', views.get_departamentos, name='escuelas-json'),
     url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
     # data-urls
-    url(r'^sede/(?P<sede_pk>[\w]+)/profesores/json$', views.profesores_sede, name='profesores-sede'),
-    url(r'^sede/(?P<sede_pk>[\w]+)/estudiantes/json$', views.estudiantes_sede, name='estudiantes-sede'),
+    # Sedes
+    url(r'^sede/(?P<sede_pk>[\w]+)/profesores/json/$', views.profesores_sede, name='profesores-sede'),
+    url(r'^sede/(?P<sede_pk>[\w]+)/estudiantes/json/$', views.estudiantes_sede, name='estudiantes-sede'),
+    # Facultades
+    # Escuelas
+    url(r'^escuela/(?P<escuela_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_escuela,
+        name='escuela-estudiantes'),
+    url(r'^escuela/(?P<escuela_pk>[\w+])/proyecto/json/$', views.proyectos_semestre_escuela, name='escuela-proyectos'),
+    url(r'^escuela/(?P<escuela_pk>[\w+])/anteproyecto/json/$', views.anteproyectos_semestre_escuela,
+        name='escuela-anteproyectos'),
+    # Departamento
+    url(r'^departamento/(?P<departamento_pk>[\w+])/profesores/json/$', views.profesores_nivel,
+        name='departamento-profesores'),
+    url(r'^departamento/(?P<departamento_pk>[\w+])/actividades/json/$', views.actividades_tipo,
+        name='departamento-actividades'),
+    # Carreras
+    url(r'^carrera/(?P<carrera_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_carrera,
+        name='carrera-estudiantes'),
+    url(r'^escuela/(?P<carrera_pk>[\w+])/anteproyectos/json/$', views.anteproyectos_semestre_carrera,
+        name='carrera-anteproyectos'),
+    url(r'^escuela/(?P<carrera_pk>[\w+])/proyectos/json/$', views.proyectos_semestre_carrera, name='carrera-proyectos'),
 ]

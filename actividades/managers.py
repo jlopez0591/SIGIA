@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime as dt
 from polymorphic.manager import PolymorphicManager
 
 
@@ -17,6 +18,10 @@ class ActividadQuerySet(models.QuerySet):
 
     def propias(self, usuario):
         return self.filter(usuario=usuario)
+
+    def actuales(self):
+        fecha = dt.now()
+        return self.filter(fecha__year=fecha.year)
 
 
 class ActividadManager(PolymorphicManager):
@@ -37,3 +42,6 @@ class ActividadManager(PolymorphicManager):
 
     def propias(self, usuario):
         return self.get_queryset().propias(usuario)
+
+    def actuales(self):
+        return self.get_queryset().actuales()
