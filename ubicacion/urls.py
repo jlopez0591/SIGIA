@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^unidad/(?P<cod_sede>[\w]+)/(?P<cod_unidad>[\w]+)/$',
         views.UnidadDetailView.as_view(),
         name='unidad'),
-    url(r'^seccion/(?P<cod_sede>[\w]+)/(?P<cod_unidad>[\w]+)/(?P<cod_seccion>[\w]+)/$',
-        views.SeccionDetailView.as_view(), name='seccion'),
+    url(r'^seccion/(?P<cod_sede>[\w]+)/(?P<cod_facultad>[\w]+)/(?P<cod_escuela>[\w]+)/$',
+        views.detalle_seccion, name='seccion'),
     url(
         r'^carrera/(?P<cod_sede>[\w]+)/(?P<cod_unidad>[\w]+)/(?P<cod_seccion>[\w]+)/(?P<cod_carrera>[\w]+)/$',
         views.CarreraDetailView.as_view(), name='carrera'),

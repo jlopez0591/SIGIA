@@ -116,11 +116,11 @@ class Estudiante(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
-            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
-            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                                        cod_seccion=self.cod_seccion)
-            self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad,
-                                                        cod_seccion=self.cod_seccion,
+            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+                                                        cod_escuela=self.cod_escuela)
+            self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+                                                        cod_escuela=self.cod_escuela,
                                                         cod_carrera=self.cod_carrera)
         except:
             print('Hubo un error al guardar los datos del estudiante{}{}{}{}. Error: {}'.format(self.provincia,
