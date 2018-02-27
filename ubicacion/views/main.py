@@ -1,8 +1,6 @@
-from dal import autocomplete
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
-from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia, Unidad, Seccion, Carrera
+from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia
 
 
 def consulta_sede(request):
@@ -77,50 +75,3 @@ class CarreraDetailView(DetailView):
         carrera = self.kwargs['cod_carrera']
         return get_object_or_404(CarreraInstancia, cod_sede=sede, cod_unidad=unidad, cod_seccion=seccion,
                                  cod_carrera=carrera)
-
-
-class CarreraInstanciaAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            qs = CarreraInstancia.objects.all()
-        elif self.request.user.is_authenticated():
-            qs = CarreraInstancia.objects.all()
-        else:
-            return CarreraInstancia.objects.none()
-
-        if self.q:
-            qs = qs.filter(nombre_proyecto__icontains=self.q)
-        return qs
-
-
-def get_sedes(request):
-    sedes = Sede.objects.all().values()
-    sedes_list = list(sedes)
-    return JsonResponse(sedes_list, safe=False)
-
-
-def get_facultades(request):
-    facultades = Unidad.objects.all().values()
-    lista = list(facultades)
-    return JsonResponse(lista, safe=False)
-
-
-def get_escuelas(request):
-    escuelas = Seccion.objects.filter(tipo='ES').values()
-    lista = list(escuelas)
-    return JsonResponse(lista, safe=False)
-
-
-def get_departamentos(request):
-    escuelas = Seccion.objects.filter(tipo='DE').values()
-    lista = list(escuelas)
-    return JsonResponse(lista, safe=False)
-
-
-def get_carreras(request):
-    carreras = Carrera.objects.all().values()
-    lista = list(carreras)
-    return JsonResponse(lista, safe=False)
-
-
-
