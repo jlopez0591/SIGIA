@@ -61,10 +61,10 @@
                         Profesores por facultad
                     </div>
                     <div class="card-body">
-                        <p class="card-title">Cantidad de profesores: {{ sede.get_profesores_count }}</p>
                         <p class="card-text">
                         <h3 class="text-right">
-                            <canvas id="profesorChart"></canvas>
+                            <canvas id="profesorChart"
+                                    data-url="{% url 'ubicacion:profesores-sede' sede.pk %}"></canvas>
                         </h3>
                         </p>
                     </div>
@@ -77,10 +77,10 @@
                         Estudiantes por Facultad
                     </div>
                     <div class="card-body">
-                        <p class="card-title">Cantidad de Estudiantes: {{ sede.estudiantes.count }}</p>
                         <p class="card-text">
                         <h3 class="text-right" id="estudianteChartHolder">
-                            <canvas id="estudianteChart"></canvas>
+                            <canvas id="estudianteChart"
+                                    data-url="{% url 'ubicacion:estudiantes-sede' sede.pk %}"></canvas>
                         </h3>
                         </p>
                     </div>
@@ -93,101 +93,120 @@
 {% block javascript %}
     <script>
         function randomRGB() {
+            var colores = [];
             var r = Math.floor(Math.random() * 256);
             var g = Math.floor(Math.random() * 256);
             var b = Math.floor(Math.random() * 256);
-            return 'rgba(' + r + ',' + g + ',' + b + ',' + 0.2 + ')'; //Recordar el 0.2 para el alpha.
-            //return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; //Recordar el 0.2 para el alpha.
+            colores.push('rgb(' + r + ',' + g + ',' + b + ')');  // Centro
+            colores.push('rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')'); // Borde
+            return colores;
         }
 
-        var estudiantesFacultad = {{ sede.get_estudiante_facultad_count|safe }};
-        var profesoresFacultad = {"test": 1};
-
-        console.log(profesoresFacultad);
-
-        //TODO: Datasets son SEPARADOS
-        chartData = {
-            "estudiantes": {
-                "etiquetas": [],
-                "datos": [],
-                "colores": [],
-                "borde": []
-            },
-            "profesores": {
-                "etiquetas": [],
-                "datos": [],
-                "colores": [],
-                "borde": []
-            }
-        };
-        for (var facultad in estudiantesFacultad) {
-            rgb = randomRGB();
-            chartData["estudiantes"]["etiquetas"].push(facultad);
-            chartData["estudiantes"]["datos"].push(estudiantesFacultad[facultad]);
-            chartData["estudiantes"]["colores"].push(rgb);
-            chartData["estudiantes"]["borde"].push(rgb);
-            console.log(rgb);
-        }
-
-        for (var facultad in profesoresFacultad) {
-            rgb = randomRGB();
-            chartData["profesores"]["etiquetas"].push(facultad);
-            chartData["profesores"]["datos"].push(profesoresFacultad[facultad]);
-            chartData["profesores"]["colores"].push(rgb);
-            chartData["profesores"]["borde"].push(rgb);
-        }
-        var ctx = document.getElementById("myChart");
         var estudiantectx = document.getElementById("estudianteChart");
-        var profesorctx = document.getElementById('profesorChart');
-        /*
-        * TODO:
-        * Generar datos de la grafica iterando encima del valor pasado por el metodo
-        * que envia los estudiantes segmentados por facultad
-        * */
-        var estudianteChart = new Chart(estudiantectx, {
-            type: 'bar',
-            data: {
-                labels: chartData["estudiantes"]["etiquetas"],
-                datasets: [{
-                    label: "Estudiantes",
-                    data: chartData["estudiantes"]["datos"],
-                    backgroundColor: chartData["estudiantes"]["colores"],
-                    borderColor: chartData["estudiantes"]["borde"],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        var estudiante_url = estudiantectx.getAttribute("data-url");
+        var estudiantes_info = {
+            "etiquetas": [],
+            "datos": []
+        };
 
-        var profesorChart = new Chart(profesorctx, {
-            type: 'bar',
-            data: {
-                labels: chartData["profesores"]["etiquetas"],
-                datasets: [{
-                    label: "Profesores",
-                    data: chartData["profesores"]["datos"],
-                    backgroundColor: chartData["profesores"]["colores"],
-                    borderColor: chartData["profesores"]["borde"],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+        var profesorctx = document.getElementById('profesorChart');
+        var profesor_url = profesorctx.getAttribute("data-url");
+        var profesores_info = {
+            "etiquetas": [],
+            "datos": []
+        };
+
+        window.onload = function () {
+
+            // Grafica Estudiante
+            $.ajax({
+                url: estudiante_url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (info) {
+                    var estudiantedata = info;
+                    for (var facultad in estudiantedata) {
+                        estudiantes_info["etiquetas"].push(facultad);
+                        estudiantes_info["datos"].push(estudiantedata[facultad]);
+                    }
+
+                    var colores = randomRGB();
+                    var estudianteChartData = {
+                        labels: estudiantes_info["etiquetas"],
+                        datasets: [{
+                            label: 'Estudiantes',
+                            backgroundColor: colores[1],
+                            borderColor: colores[0],
+                            borderWidth: 1,
+                            data: estudiantes_info["datos"]
+                        }]
+                    };
+
+                    var estudianteChart = new Chart(estudiantectx, {
+                        type: 'bar',
+                        data: {},
+                        options: {}
+                    });
+
+                    window.myBar = new Chart(estudiantectx, {
+                        type: 'bar',
+                        data: estudianteChartData,
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Estudiantes por Facultad'
+                            }
                         }
-                    }]
+                    });
                 }
-            }
-        });
+            });
+
+            // Grafica Profesor
+            $.ajax({
+                url: profesor_url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (info) {
+                    var profesordata = info;
+                    for (var facultad in profesordata) {
+                        profesores_info["etiquetas"].push(facultad);
+                        profesores_info["datos"].push(profesordata[facultad]);
+                    }
+
+                    var colores = randomRGB();
+                    var profesorChartData = {
+                        labels: profesores_info["etiquetas"],
+                        datasets: [{
+                            label: "Profesores",
+                            backgroundColor: colores[1],
+                            borderColor: colores[0],
+                            borderWidth: 1,
+                            data: profesores_info["datos"]
+                        }]
+                    };
+
+                    window.myBar = new Chart(profesorctx, {
+                        type: 'horizontalBar',
+                        data: profesorChartData,
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Profesores por Facultad'
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        };
     </script>
 {% endblock %}

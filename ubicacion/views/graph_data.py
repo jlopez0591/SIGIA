@@ -13,7 +13,7 @@ def profesores_sede(request, sede_pk):
     conteo = {}
     for profesor in profesores:
         cs = profesor.cod_sede
-        cf = profesor.cod_unidad
+        cf = profesor.cod_facultad
         facultad = UnidadInstancia.objects.get(cod_sede=cs, cod_unidad=cf)
         ubicacion = facultad.unidad.nombre
         if ubicacion in conteo:
