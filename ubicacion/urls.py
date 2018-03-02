@@ -48,9 +48,9 @@ urlpatterns = [
     url(r'^departamento/(?P<departamento_pk>[\w+])/actividades/json/$', views.actividades_tipo,
         name='departamento-actividades'),
     # Carreras
-    url(r'^carrera/(?P<carrera_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_carrera,
+    url(r'^carrera/(?P<carrera_pk>[\w]+)/estudiantes/json/$', views.estudiantes_semestre_carrera,
         name='carrera-estudiantes'),
-    url(r'^escuela/(?P<carrera_pk>[\w+])/anteproyectos/json/$', views.anteproyectos_semestre_carrera,
+    url(r'^escuela/(?P<carrera_pk>[\w]+)/anteproyectos/json/$', views.anteproyectos_semestre_carrera,
         name='carrera-anteproyectos'),
-    url(r'^escuela/(?P<carrera_pk>[\w+])/proyectos/json/$', views.proyectos_semestre_carrera, name='carrera-proyectos'),
+    url(r'^escuela/(?P<carrera_pk>[\w]+)/proyectos/json/$', views.proyectos_semestre_carrera, name='carrera-proyectos'),
 ]

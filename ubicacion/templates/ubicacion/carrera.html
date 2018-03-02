@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+
 
 {% block title %}
     {{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}
@@ -17,7 +19,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                           {{ carrera.carrera.nombre.capitalize }} {{ carrera.carrera.get_tipo_display }} : {{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}</h4>
+                            {{ carrera.carrera.nombre.capitalize }} {{ carrera.carrera.get_tipo_display }}
+                            : {{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}</h4>
                     </div>
                 </div>
             </div>
@@ -57,30 +60,31 @@
         {#    Graficas    #}
 
         <div class="row top-buffer">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header" data-url="">Estudiantes por Semestre</div>
+                    <div class="card-header" id="carrera-anteproyecto">
+                        Anteproyectos por Estado
+                    </div>
                     <div class="card-body">
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <canvas id="anteproyectosChart"
+                                    data-url="{% url 'ubicacion:carrera-anteproyectos' carrera.pk %}"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header" data-url="">Proyectos por Categoria</div>
-                    <div class="card-body">
-                        <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
+                    <div class="card-header" id="carrera-proyectos">Proyectos por
+                        Categoria
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header" data-url="">Actividades Realizadas</div>
                     <div class="card-body">
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <canvas id="proyectosChart"
+                                    data-url="{% url 'ubicacion:carrera-proyectos' carrera.pk %}"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,4 +95,5 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="{% static 'ubicacion/js/carrera.js' %}"></script>
 {% endblock %}

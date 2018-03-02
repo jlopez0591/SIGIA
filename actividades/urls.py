@@ -115,6 +115,10 @@ urlpatterns = [
     url(r'^titulo/crear/$',
         ActivityCreateView.as_view(model=Titulo, form_class=TituloForm, template_name='actividades/titulo/crear.html'),
         name='crear-titulo'),
-    # url(r'^titulo/(?P<pk>[0-9]+)/editar/$', ActivityCreateView.as_view(model=Titulo, form_class=TituloForm),
-    #     name='crear-titulo')
+    url(r'^titulo/(?P<pk>[0-9]+)/$',
+        ActivityDetailView.as_view(model=Titulo, template_name='actividades/detalle.html'),
+        name='detalle-titulo'),
+    url(r'^titulo/(?P<pk>[0-9]+)/editar/$',
+        ActivityUpdateView.as_view(model=Titulo, form_class=TituloForm, template_name='actividades/titulo/crear.html'),
+        name='actualizar-titulo')
 ]

@@ -4,7 +4,7 @@
        aria-expanded="false">
         Mi Departamento <i class="far fa-building"></i>
     </a>
-    {% if request.user.perfil.unidad %}
+    {% if request.user.perfil.departamento %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Profesores <span
                     class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>

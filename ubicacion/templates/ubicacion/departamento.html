@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            : {{ seccion.cod_sede }}-{{ seccion.cod_unidad }}-{{ seccion.cod_seccion }}</h4>
+                           {{ seccion.seccion.get_tipo_display }} : {{ seccion.cod_sede }}-{{ seccion.cod_unidad }}-{{ seccion.cod_seccion }}</h4>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="card-header">Cantidad de Profesores</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.profesor.all.count }}</h3>
+                        <h3 class="text-right">{{ seccion.personal.profesores.count }}</h3>
                     </div>
                 </div>
             </div>
