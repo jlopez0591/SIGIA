@@ -2,14 +2,11 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8 offset-md-2 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title"><h4>Anteproyectos Pendientes</h4>
-                        <hr/>
-                        {% if perms.estudiantes.add_anteproyecto %}
-                            <a class="btn btn-outline-primary" href="{% url 'estudiante:crear-anteproyecto' %}">Registrar</a></div>
-                        {% endif %}
+    <div class="col-md-8 offset-md-2 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><h4>Anteproyectos Pendientes</h4>
+                    <hr/>
                     <div class="card-text">
                         {% include 'estudiantes/anteproyecto/include/tabla.html' %}
                     </div>
@@ -17,4 +14,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#anteproyectos').DataTable();
+        });
+    </script>
 {% endblock %}

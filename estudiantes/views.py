@@ -1,36 +1,12 @@
-from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
-
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
-
 from dal import autocomplete
-
-# Third party
-
-# My imports
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
-
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 from perfiles.models import Perfil
-
-
-# # @permission_required('estudiante.view_estudiante')
-# def estudiante_search(request):
-#     if request.user.is_superuser:
-#         estudiante = Estudiante.objects.all()
-#     else:
-#         usuario = User.objects.get(pk=request.user.pk)  # TODO: get_object_or_404
-#         sf = usuario.perfil.codigos()
-#         estudiante = Estudiante.objects.filter(**sf)  # TODO: Reemplazar por kwargs, ver arriba
-#     filter = EstudianteFilter(request.GET, queryset=estudiante)
-#     return render(request, 'estudiantes/consultar.html', {
-#         'filter': filter,
-#         'estudiante': estudiante,
-#     })
 
 
 class EstudianteDetailView(PermissionRequiredMixin, UserPassesTestMixin, DetailView):
@@ -183,7 +159,6 @@ class AnteproyectoAutocomplete(PermissionRequiredMixin, autocomplete.Select2Quer
 @permission_required('estudiante.ver_proyectos_facultad')
 def proyectos_facultad(request):
     proyectos = Proyecto.objects.facultad()
-
 
 
 @permission_required('estudiante.view_estudiante')

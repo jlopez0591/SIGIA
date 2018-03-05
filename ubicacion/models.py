@@ -259,13 +259,14 @@ class CarreraInstancia(models.Model):
     objects = CarreraInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
-    facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True,
+    unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True,
                                  related_name='carrera_instancia')
     seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
 
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
     ubicacion = models.ForeignKey(SeccionInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')
 

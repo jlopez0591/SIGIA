@@ -8,7 +8,7 @@
                     <div class="card-title"><h4>Solicitudes Pendientes</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="solicitudes">
                             <thead>
                             <tr>
                                 <th>Usuario</th>
@@ -33,4 +33,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#solicitudes').DataTable();
+        });
+    </script>
 {% endblock %}

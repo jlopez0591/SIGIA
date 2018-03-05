@@ -23,11 +23,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for unidad in unidades %}
+                            {% for facultad in facultades %}
                                 <tr>
-                                    <th>{{ unidad.cod_sede }}-{{ unidad.cod_facultad }}</th>
-                                    <th>{{ unidad.unidad.nombre.capitalize }}</th>
-                                    <th><a href="{% url 'ubicacion:unidad' unidad.cod_sede unidad.cod_facultad %}"
+                                    <th>{{ facultad.cod_sede }}-{{ facultad.cod_facultad }}</th>
+                                    <th>{{ facultad.facultad.nombre.capitalize }}</th>
+                                    <th><a href="{% url 'ubicacion:unidad' facultad.cod_sede facultad.cod_facultad %}"
                                            class="btn btn-outline-info">Ver
                                         Detalle</a></th>
                                 </tr>

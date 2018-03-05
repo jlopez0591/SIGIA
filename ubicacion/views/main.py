@@ -11,9 +11,9 @@ def consulta_sede(request):
 
 
 def consulta_unidad(request):
-    unidades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_facultad')
+    facultades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_facultad')
     return render(request, 'ubicacion/consulta/facultad.html', {
-        'unidades': unidades
+        'facultades': facultades
     })
 
 

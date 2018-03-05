@@ -16,7 +16,7 @@ class EquipoListView(ListView):
 
     def get_queryset(self):
         if self.request.user.perfil:
-            return Equipo.objects.filter(ubicacion=self.request.user.perfil.unidad)
+            return Equipo.objects.filter(ubicacion=self.request.user.perfil.facultad)
         else:
             return None
 
