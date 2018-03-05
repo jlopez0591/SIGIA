@@ -1,6 +1,6 @@
-from PIL import Image
 from datetime import date
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -101,21 +101,12 @@ class Perfil(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
-        except:
-            pass
-        try:
             self.facultad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
-        except:
-            print('Error!')
-        try:
+            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+                                                        cod_escuela=self.cod_escuela)
             self.departamento = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                              cod_escuela=self.cod_departamento)
-        except:
-            pass
-        try:
-            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
-                                                             cod_escuela=self.cod_escuela)
-        except:
+        except ObjectDoesNotExist:
             pass
         return super(Perfil, self).save()
 
