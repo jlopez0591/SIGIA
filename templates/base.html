@@ -39,11 +39,18 @@
 
             {#  Navbar en la Derecha #}
             <ul class="navbar-nav mr-4">
+                {% if request.user.is_authenticated %}
+                    {% include 'includes/header/partial_accounts_dropdown.html' %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Iniciar Sesion</a>
+                    </li>
+                {% endif %}
                 {% if request.user.is_superuser %}
                     {% include 'includes/header/partial_admin_utils_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.unidad %}
+                {% if request.user.perfil.facultad %}
                     {% include 'includes/header/partial_unidad_dropdown.html' %}
                 {% endif %}
 
@@ -56,15 +63,6 @@
                 {% endif %}
 
                 {% if request.user.perfil.seccion %}{% endif %}
-
-                {% if request.user.is_authenticated %}
-                    {% include 'includes/header/partial_accounts_dropdown.html' %}
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/">Iniciar Sesion</a>
-                    </li>
-                {% endif %}
-
             </ul>
             {#  Fin del Navbar #}
         </div>

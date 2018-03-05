@@ -1,4 +1,63 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ solicitud.titulo.capitalize }}</h4>
+                    <div class="card-text">
+                        <p>Creado: {{ solicitud.fecha_creacion }}</p>
+                        Ultima Modificacion: {{ solicitud.fecha_modificacion }}
+                        <hr>
+                        <p>Descripcion</p>
+                        {{ solicitud.resumen }}
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text">
+                        {#                    TODO: Agregar boton para comentarios con permisos correspondientes#}
+                        <h4 class="card-title">Comentarios</h4>
+                        {% if request.user == solicitud.usuario %}
+                            <form method="post" action="{% url 'solicitud:comentario' solicitud.pk %}">
+                                {% csrf_token %}
+                                {{ form.non_field_errors }}
+                                {{ form.source.errors }}
+                                {{ form.source }}
+                                <p>{{ form.resumen.label_tag }}</p>
+                                <p>{{ form.resumen.errors }}</p>
+                                <p>{{ form.resumen }}</p>
+                                <button type="submit" class="btn btn-outline-info">Agregar Comentario</button>
+                            </form>
+                        {% endif %}
+                        <hr>
+                        {% if solicitud.comentarios %}
+                            <ul class="list-group">
+                                {% for comentario in solicitud.comentarios.all reversed %}
+                                    <li class="list-group-item top-buffer">
+                                        <div class="card">
+                                            <div class="card-header">{{ comentario.fecha }}</div>
+                                            <div class="card-body">
+                                                <div class="card-text">
+                                                    <p class="card-text">{{ comentario.resumen.capitalize }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-right">{{ comentario.usuario.username.capitalize }}</div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -27,6 +27,7 @@ class SolicitudDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(SolicitudDetailView, self).get_context_data(**kwargs)
         context['titulo'] = self.object.titulo
+        context['form'] = ComentarioForm
         return context
 
 
@@ -79,7 +80,7 @@ class UserSolicitudView(ListView):
     context_object_name = 'solicitudes'
     model = Solicitud
     paginate_by = 10
-    template_name = 'solicitud/usuario.html'
+    template_name = 'solicitud/lista.html'
 
     def get_context_data(self, **kwargs):
         context = super(UserSolicitudView, self).get_context_data()
@@ -101,10 +102,8 @@ def crear_comentario(request, solicitud_pk):
             comentario.usuario = request.user
             comentario.fecha = timezone.now()
             comentario.save()
-
-            # TODO: Averiguar como paginar los comentarios.
+            solicitud.actualizar_fecha_modificacion()
             solicitud_url = reverse('solicitud:detalle', kwargs={'pk': solicitud_pk})
-            # solicitud_post_url =
             return redirect(solicitud_url)
     else:
         form = ComentarioForm()

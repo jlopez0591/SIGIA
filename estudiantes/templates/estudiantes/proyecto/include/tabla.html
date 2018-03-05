@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-bordered" id="anteproyectos">
+    <table class="table table-bordered" id="proyectos">
         <thead>
         <tr>
             <th>Nombre del Proyecto</th>
@@ -8,15 +8,15 @@
         </tr>
         </thead>
         <tbody>
-        {% for anteproyecto in anteproyectos %}
+        {% for proyecto in proyectos %}
             <tr>
-                <td>{{ anteproyecto.nombre_proyecto }}</td>
-                <td>{{ anteproyecto.fecha_registro }}</td>
+                <td>{{ proyecto.nombre_proyecto }}</td>
+                <td>{{ proyecto.fecha_registro }}</td>
                 <td>
                     <div class="btn-group">
-                        {# Ver #}<a class="btn btn-outline-info" href="{{ anteproyecto.get_absolute_url }}"> Ver</a>
+                        {# Ver #}<a class="btn btn-outline-info" href="{{ proyecto.get_absolute_url }}"> Ver</a>
                         {# Editar #}<a class="btn btn-outline-info"
-                                       href="{% url 'estudiante:editar-anteproyecto' anteproyecto.pk %}"> Editar</a>
+                                       href="{% url 'estudiante:editar-proyecto' proyecto.pk %}"> Editar</a>
                         {# Rechazar #}<a href=# class="btn btn-outline-danger"> Rechazar</a>
                         {# Aprobar #}<a href="#" class="btn-outline-success">Aprobar</a>
                     </div>

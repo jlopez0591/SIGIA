@@ -4,14 +4,6 @@ from django.urls import reverse
 from django.utils import timezone
 
 
-# TODO: Importar el date.
-
-class Person(User):
-    class Meta:
-        proxy = True
-
-
-# Create your models here.
 class Solicitud(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     titulo = models.CharField(max_length=120)
@@ -44,7 +36,7 @@ class Comentario(models.Model):
     solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE, related_name='comentarios')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateTimeField(blank=True, null=True)
-    resumen = models.TextField(max_length=500, blank=True)
+    resumen = models.TextField(max_length=500)
 
     def __str__(self):
         return '{0} - {1}'.format(self.usuario.get_full_name(), self.fecha)

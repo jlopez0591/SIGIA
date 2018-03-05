@@ -208,8 +208,9 @@ class Proyecto(models.Model):
     estudiante = models.ManyToManyField(Estudiante, related_name='proyectos')
     anteproyecto = models.ForeignKey(
         Anteproyecto, on_delete=models.SET_NULL, null=True)
-    jurados = models.ManyToManyField(User, related_name='jurado', limit_choices_to=Q(
-        groups__name='Profesores'))
+    jurados = models.ManyToManyField(User, related_name='jurado', limit_choices_to={
+        'groups__name': 'Profesores'
+    })
     fecha_entrega = models.DateField(blank=True, null=True)
     fecha_sustentacion = models.DateField(blank=True, null=True)
     programa = models.CharField(max_length=25, choices=PROGRAMAS, default=LICENCIATURA)

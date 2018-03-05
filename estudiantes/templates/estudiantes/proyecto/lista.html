@@ -11,10 +11,12 @@
     <div class="col-md-8 offset-md-2 col-sm-12">
         <div class="card">
             <div class="card-body">
-                <div class="card-title"><h4>Anteproyectos</h4>
+                <div class="card-title"><h4>Proyectos de Graduacion</h4>
+
                     <hr/>
                     <div class="card-text">
-                        {% include 'estudiantes/anteproyecto/include/tabla.html' %}
+                        <p><a class="btn btn-outline-primary" href="{% url 'estudiante:crear-proyecto' %}">Registrar Proyecto</a></p>
+                        {% include 'estudiantes/proyecto/include/tabla.html' %}
                     </div>
                 </div>
             </div>
@@ -27,7 +29,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#anteproyectos').DataTable();
+            $('#proyectos').DataTable();
         });
     </script>
 {% endblock %}

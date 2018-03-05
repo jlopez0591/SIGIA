@@ -1,0 +1,15 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+       data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        Mi Facultad <i class="far fa-building"></i>
+    </a>
+    {% if request.user.perfil.escuela %}
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'inventario:lista-aulas' %}">Aulas <span
+                    class="badge badge-primary">{{ request.user.perfil.facultad.aula_set.all.count }}</span></a>
+            <a class="dropdown-item" href="{% url 'inventario:lista-equipo' %}">Equipos <span
+                    class="badge badge-primary">{{ request.user.perfil.facultad.equipos.all.count }}</a>
+        </div>
+    {% endif %}
+</li>

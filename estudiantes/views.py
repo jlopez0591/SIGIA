@@ -47,9 +47,9 @@ class EstudianteUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateV
 class AnteproyectoCreateView(PermissionRequiredMixin, CreateView):
     model = Anteproyecto
     permission_required = 'estudiante.add_anteproyecto'
-    template_name = 'form.html'
+    template_name = 'estudiantes/anteproyecto/crear.html'
     form_class = AnteproyectoForm
-    success_url = reverse_lazy('core:index')
+    success_url = reverse_lazy('estudiante:anteproyectos-unidad')
 
 
 class AnteproyectoDetailView(PermissionRequiredMixin, DetailView):

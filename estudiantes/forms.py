@@ -51,9 +51,6 @@ class AnteproyectoForm(forms.ModelForm):
             'carrera': autocomplete.ModelSelect2(url='ubicacion:carrera-autocomplete', attrs={
                 "data-placeholder": "Carrera"
             }),
-            'resumen': forms.TextInput(attrs={
-                'label': 'Prueba'
-            }),
             'archivo': '',
         }
 

@@ -8,7 +8,7 @@
 {% block title %}Consultar - Profesores{% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Listado de Profesores</h4>
@@ -22,6 +22,7 @@
                                     <th>Codigo</th>
                                     <th>Departamento</th>
                                     <th>Nivel Academico</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +32,11 @@
                                         <td>{{ perfil.codigo }}</td>
                                         <td>{{ perfil.departamento }}</td>
                                         <td>{{ perfil.nivel_academico }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-info" href="{{ perfil.get_absolute_url }}"> Ver</a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
