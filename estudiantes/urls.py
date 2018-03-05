@@ -7,7 +7,7 @@ urlpatterns = [
     # Students
     url(r'^(?P<pk>[\d]+)/$', EstudianteDetailView.as_view(), name='detalle'),
     url(r'^(?P<pk>[\d]+)/editar/$', EstudianteUpdateView.as_view(), name='editar'),
-    # url(r'^consulta/$', estudiante_search, name='lista'),
+    url(r'^consulta/$', EstudianteListView.as_view(), name='lista'),
 
     url(r'^anteproyecto/crear/$', AnteproyectoCreateView.as_view(), name='crear-anteproyecto'),
     url(r'^anteproyecto/(?P<pk>[\d]+)/editar/$', AnteproyectoUpdateView.as_view(), name='editar-anteproyecto'),

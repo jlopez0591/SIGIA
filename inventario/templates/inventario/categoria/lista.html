@@ -2,6 +2,13 @@
 
 {% block title %}Lista Categorias{% endblock %}
 
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-6 offset-md-3">
@@ -12,13 +19,19 @@
                            class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Registrar</a>
                     </p>
                     <h4 class="card-title">Listado de Categorias</h4>
-                    <table class="table">
+                    <table class="table" id="enhance">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+                        </tr>
+                        </thead>
                         {% if categorias %}
                             <tbody>
                             {% for categoria in categorias %}
                                 <tr>
                                     <td>{{ categoria.nombre }}</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> </a></td>
+                                    <td><a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> Editar</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -30,4 +43,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#enhance").DataTable();
+        });
+    </script>
 {% endblock %}

@@ -10,30 +10,11 @@ from perfiles.forms import PerfilForm, PerfilTestForm
 from dal import autocomplete
 
 
-# def consulta_profesor(request):
-#     if request.user.is_superuser:
-#         profesores = Perfil.objects.profesores()
-#     elif request.user.has_perms('ubicacion:ver-profesores'):
-#         profesores = Perfil.objects.profesores().filter() # TODO: Agregar filter por ubicacion.
-#     filter = PerfilFilter(request.GET, queryset=profesores)
-#     paginator = Paginator(filter.qs, 10)
-#     page = request.GET.get('page')
-#     try:
-#         perfil_p = paginator.page(page)
-#     except PageNotAnInteger:
-#         perfil_p = paginator.page(1)
-#     except EmptyPage:
-#         perfil_p = paginator.page(paginator.num_pages)
-#     return render(request, 'perfiles/consulta.html', {
-#         'filter': filter,
-#         'perfiles': perfil_p
-#     })
-
 def consulta_profesor(request):
     if request.user.is_superuser:
         profesores = Perfil.objects.profesores()
-    elif request.user.perfil.unidad:
-        profesores = Perfil.objects.filter(unidad=request.user.perfil.unidad)
+    elif request.user.perfil.facultad:
+        profesores = Perfil.objects.filter(facultad=request.user.perfil.facultad)
     else:
         profesores = None
     return render(request, 'perfiles/consulta.html', {

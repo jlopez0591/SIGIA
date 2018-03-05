@@ -1,16 +1,35 @@
+{#<li class="nav-item dropdown">#}
+{#    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+{#       data-toggle="dropdown" aria-haspopup="true"#}
+{#       aria-expanded="false">#}
+{#        Mi Escuela <i class="far fa-building"></i>#}
+{#    </a>#}
+{#    {% if request.user.perfil.unidad %}#}
+{#        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#            <a class="dropdown-item" href="#">Estudiantes <span#}
+{#                    class="badge badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>#}
+{#            <a class="dropdown-item" href="#">Anteproyectos <span#}
+{#                    class="badge badge-primary">{{ request.user.perfil.escuela.anteproyectos.count }}</span></a>#}
+{#            <a class="dropdown-item" href="#">Proyectos de Grado <span#}
+{#                    class="badge badge-primary">{{ request.user.perfil.escuela.proyectos.count }}</span></a>#}
+{#            <a class="dropdown-item" href="#">Reportes</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#</li>#}
+
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
        data-toggle="dropdown" aria-haspopup="true"
        aria-expanded="false">
         Mi Escuela <i class="far fa-building"></i>
     </a>
-    {% if request.user.perfil.unidad %}
+    {% if request.user.perfil.escuela %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Estudiantes <span
+            <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
                     class="badge badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>
-            <a class="dropdown-item" href="#">Anteproyectos <span
-                    class="badge badge-primary">{{ request.user.perfil.escuela.anteproyectos.count }}</span></a>
-            <a class="dropdown-item" href="#">Proyectos de Grado <span
+            <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
+                    class="badge badge-primary">{{ request.user.perfil.escuela.anteproyectos.aprobados.count }}</span></a>
+            <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Proyectos <span
                     class="badge badge-primary">{{ request.user.perfil.escuela.proyectos.count }}</span></a>
             <a class="dropdown-item" href="#">Reportes</a>
         </div>

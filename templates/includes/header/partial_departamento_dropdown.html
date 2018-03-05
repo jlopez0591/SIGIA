@@ -6,9 +6,9 @@
     </a>
     {% if request.user.perfil.departamento %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Profesores <span
+            <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
                     class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
-            <a class="dropdown-item" href="#">Actividades <span
+            <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
                     class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
             <a class="dropdown-item" href="#">Reportes</a>
         </div>

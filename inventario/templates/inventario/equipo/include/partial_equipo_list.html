@@ -1,33 +1,35 @@
 <table class="table" id="inventario">
-    <thead>
-    <tr>
-        <td>Etiqueta</td>
-        <td>Modelo</td>
-        <td>Aula</td>
-        <td>Opciones</td>
-    </tr>
-    </thead>
-    <tbody>
-    {% for equipo in equipos %}
+    {% if equipos %}
+        <thead>
         <tr>
-            <td>{{ equipo.etiqueta }}</td>
-            <td>{{ equipo.modelo }}</td>
-            <td>{{ equipo.aula }}</td>
-
-            <td><a href="{% url 'inventario:detalle-equipo' equipo.pk %}" class="btn btn-outline-primary"><i
-                    class="fa fa-edit"></i> Detalle</a>
-                <a href="{% url 'inventario:editar-equipo' equipo.pk %}" class="btn btn-outline-info"><i
-                        class="fas fa-link"></i> Editar</a>
-                {% if equipo.modelo.url %}
-                    <a href="{{ equipo.modelo.url }}" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
-                        Equipo </a>
-                {% else %}
-                    <a href="#" class="btn disabled"><i class="fas fa-link"></i> URL Soporte</a>
-                {% endif %}
-            </td>
+            <td>Etiqueta</td>
+            <td>Modelo</td>
+            <td>Aula</td>
+            <td>Opciones</td>
         </tr>
-    {% empty %}
+        </thead>
+        <tbody>
+        {% for equipo in equipos %}
+            <tr>
+                <td>{{ equipo.etiqueta }}</td>
+                <td>{{ equipo.modelo }}</td>
+                <td>{{ equipo.aula }}</td>
+
+                <td><a href="{% url 'inventario:detalle-equipo' equipo.pk %}" class="btn btn-outline-primary"><i
+                        class="fa fa-edit"></i> Detalle</a>
+                    <a href="{% url 'inventario:editar-equipo' equipo.pk %}" class="btn btn-outline-info"><i
+                            class="fas fa-link"></i> Editar</a>
+                    {% if equipo.modelo.url %}
+                        <a href="{{ equipo.modelo.url }}" class="btn btn-primary btn-sm"><i class="fas fa-link"></i>
+                            Equipo </a>
+                    {% else %}
+                        <a href="#" class="btn disabled"><i class="fas fa-link"></i> URL Soporte</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% else %}
         <div class="alert alert-info text-center">No hay equipos registradas</div>
-    {% endfor %}
-    </tbody>
+    {% endif %}
 </table>

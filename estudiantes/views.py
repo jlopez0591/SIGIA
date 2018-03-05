@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import permission_required
@@ -7,6 +7,21 @@ from dal import autocomplete
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 from perfiles.models import Perfil
+
+
+class EstudianteListView(PermissionRequiredMixin, ListView):
+    permission_required = ('estudiante.view_estudiante')
+    context_object_name = 'estudiantes'
+    model = Estudiante
+    template_name = 'estudiantes/consultar.html'
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            qs = Estudiante.objects.all()
+        elif self.request.user.perfil.escuela:
+            # TODO: Manager para estudiante
+            qs = Estudiante.objects.filter(escuela=self.request.user.perfil.escuela)
+        return qs
 
 
 class EstudianteDetailView(PermissionRequiredMixin, UserPassesTestMixin, DetailView):
@@ -158,7 +173,14 @@ class AnteproyectoAutocomplete(PermissionRequiredMixin, autocomplete.Select2Quer
 
 @permission_required('estudiante.ver_proyectos_facultad')
 def proyectos_facultad(request):
-    proyectos = Proyecto.objects.facultad()
+    if request.user.is_superuser:
+        qs = Anteproyecto.objects.aprobados()
+    elif request.user.perfil.escuela:
+        # TODO: Manager para anteproyectos
+        qs = Anteproyecto.objects.filter(escuela=request.user.perfil.escuela)
+    else:
+        qs = None
+    return render(request, 'estudiantes/proyecto/lista.html', {'proyectos': qs})
 
 
 @permission_required('estudiante.view_estudiante')

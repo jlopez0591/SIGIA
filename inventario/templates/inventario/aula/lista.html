@@ -12,8 +12,6 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-6 offset-md-3">
-
-
             <div class="card">
                 <div class="card-header"><p class="card-text"><a class="btn btn-primary"
                                                                  href="{% url 'inventario:crear-aulas' %}"><i
@@ -38,11 +36,14 @@
                                     <td>{{ aula.ubicacion }}</td>
                                     <td>{{ aula.numero }}</td>
                                     <td>{{ aula.get_tipo_display }}</td>
-                                    <td><a href="{% url 'inventario:editar-aulas' aula.pk %}"
-                                           class="btn btn-outline-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
-                                        <a href="{% url 'inventario:detalle-aulas' aula.pk %}"
-                                           class="btn btn-outline-success btn-sm"><i class="fas fa-link"></i>
-                                            Aula </a>
+                                    <td>
+                                        <div class="btn-group"><a href="{% url 'inventario:editar-aulas' aula.pk %}"
+                                                                  class="btn btn-outline-primary btn-sm"><i
+                                                class="fa fa-edit"></i> Editar</a>
+                                            <a href="{% url 'inventario:detalle-aulas' aula.pk %}"
+                                               class="btn btn-outline-info btn-sm"><i class="fas fa-link"></i>
+                                                Aula </a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% empty %}
@@ -51,12 +52,8 @@
                             </tbody>
                         </table>
                     </div>
-
-
                 </div>
             </div>
-
-
         </div>
     </div>
 {% endblock %}

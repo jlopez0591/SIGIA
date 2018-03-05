@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block title %}Solicitudes Pendientes{% endblock %}
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+
 {% block content %}
     <div class="row">
         <div class="col-8 offset-2 col-xs-12">
@@ -15,6 +23,7 @@
                                 <th>Titulo</th>
                                 <th>Fecha Creacion</th>
                                 <th>Fecha de Ultimo Comentario</th>
+                                <th>Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -24,6 +33,12 @@
                                     <td>{{ solicitud.titulo }}</td>
                                     <td>{{ solicitud.fecha_creacion }}</td>
                                     <td>{{ solicitud.fecha_modificacion }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-outline-info"
+                                               href="{{ solicitud.get_absolute_url }}">Ver</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
