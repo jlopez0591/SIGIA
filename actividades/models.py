@@ -16,7 +16,7 @@ from .managers import ActividadManager
 from .validators import validate_file_type
 
 # Other apps import
-from ubicacion.models import SeccionInstancia, Sede, UnidadInstancia
+from ubicacion.models import SeccionInstancia, Sede, UnidadInstancia, DepartamentoInstancia
 
 logger = logging.getLogger(__name__)
 
@@ -73,15 +73,17 @@ class Actividad(PolymorphicModel):
     usuario = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
     clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
 
-    sede = models.ForeignKey('ubicacion.Sede', blank=True, null=True, related_name='actividades',
+    sede = models.ForeignKey(Sede, blank=True, null=True, related_name='actividades',
                              on_delete=models.SET_NULL)
-    unidad = models.ForeignKey('ubicacion.UnidadInstancia', blank=True, null=True, related_name='actividades',
+    unidad = models.ForeignKey(UnidadInstancia, blank=True, null=True, related_name='actividades',
                                on_delete=models.SET_NULL)
-    departamento = models.ForeignKey('ubicacion.SeccionInstancia', blank=True, null=True, related_name='actividades',
+    departamento = models.ForeignKey(SeccionInstancia, blank=True, null=True, related_name='actividades',
                                      on_delete=models.SET_NULL)
+    # departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='actividades',
+    #                                  on_delete=models.SET_NULL)
     cod_sede = models.CharField(max_length=2, blank=True)
-    cod_unidad = models.CharField(max_length=2, blank=True)
-    cod_seccion = models.CharField(max_length=2, blank=True)
+    cod_facultad = models.CharField(max_length=2, blank=True)
+    cod_escuela = models.CharField(max_length=2, blank=True)
 
     fecha = models.DateField()
 
@@ -115,8 +117,8 @@ class Actividad(PolymorphicModel):
                 except:
                     logger.error(
                         'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,
-                                                                                            self.cod_unidad,
-                                                                                            self.cod_seccion))
+                                                                                            self.cod_facultad,
+                                                                                            self.cod_escuela))
         except:
             logger.error('Error! No se pudo encontrar un usuario durante la creacion de la actividad.')
         self.fecha_creacion = timezone.now()

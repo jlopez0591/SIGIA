@@ -59,7 +59,7 @@ class Aula(models.Model):
 
     ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', null=True, blank=True, on_delete=models.CASCADE)
     cod_sede = models.CharField(max_length=2, blank=True)
-    cod_unidad = models.CharField(max_length=2, blank=True)
+    cod_facultad = models.CharField(max_length=2, blank=True)
 
     def __str__(self):
         return self.numero
@@ -81,7 +81,7 @@ class Aula(models.Model):
 
     def save(self, *args, **kwargs):
         try:
-            self.ubicacion = Ubicacion.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
+            self.ubicacion = Ubicacion.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except:
             pass
         return super(Aula, self).save()
@@ -91,7 +91,7 @@ class Equipo(models.Model):
     etiqueta = models.CharField(max_length=120, unique=True)
     modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE, related_name='equipos')
     cod_sede = models.CharField(max_length=2, blank=True)
-    cod_unidad = models.CharField(max_length=2, blank=True)
+    cod_facultad = models.CharField(max_length=2, blank=True)
     observaciones = models.TextField(max_length=500, blank=True)
 
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
@@ -108,7 +108,7 @@ class Equipo(models.Model):
 
     def save(self, *args, **kwargs):
         try:
-            self.ubicacion = Ubicacion.objects.get(cod_sede=self.cod_sede, cod_unidad=self.cod_unidad)
+            self.ubicacion = Ubicacion.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except:
             pass
         return super(Equipo, self).save()

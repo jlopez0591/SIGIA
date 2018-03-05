@@ -81,7 +81,7 @@ class UnidadQuerySet(models.QuerySet):
 
 class UnidadManager(models.Manager):
     def get_by_natural_key(self, codigo):
-        return self.get(cod_unidad=codigo)
+        return self.get(cod_facultad=codigo)
 
     def get_queryset(self):
         return UnidadQuerySet(self.model, using=self._db)
@@ -135,8 +135,8 @@ class SeccionQuerySet(models.QuerySet):
 
 
 class SeccionManager(models.Manager):
-    def get_by_natural_key(self, cod_unidad, cod_seccion):
-        return self.get(cod_unidad=cod_unidad, cod_seccion=cod_seccion)
+    def get_by_natural_key(self, cod_facultad, cod_escuela):
+        return self.get(cod_facultad=cod_facultad, cod_escuela=cod_escuela)
 
     def get_queryset(self):
         return SeccionQuerySet(self.model, using=self._db)
@@ -190,8 +190,8 @@ class CarreraQuerySet(models.QuerySet):
 
 
 class CarreraManager(models.Manager):
-    def get_by_natural_key(self, cod_unidad, cod_seccion, cod_carrera):
-        return self.get(cod_unidad=cod_unidad, cod_seccion=cod_seccion, cod_carrera=cod_carrera)
+    def get_by_natural_key(self, cod_facultad, cod_escuela, cod_carrera):
+        return self.get(cod_facultad=cod_facultad, cod_escuela=cod_escuela, cod_carrera=cod_carrera)
 
     def get_queryset(self):
         return CarreraQuerySet(self.model, using=self._db)
@@ -245,8 +245,8 @@ class UnidadInstanciasQuerySet(models.QuerySet):
 
 
 class UnidadInstanciaManager(models.Manager):
-    def get_by_natural_key(self, cod_sede, cod_unidad):
-        return self.get(cod_sede=cod_sede, cod_unidad=cod_unidad)
+    def get_by_natural_key(self, cod_sede, cod_facultad):
+        return self.get(cod_sede=cod_sede, cod_facultad=cod_facultad)
 
     def get_queryset(self):
         return UnidadInstanciasQuerySet(self.model, using=self._db)
@@ -303,8 +303,8 @@ class SeccionInstanciaQuerySet(models.QuerySet):
 
 
 class SeccionInstanciaManager(models.Manager):
-    def get_by_natural_key(self, cod_sede, cod_unidad, cod_seccion):
-        return self.get(cod_sede=cod_sede, cod_unidad=cod_unidad, cod_seccion=cod_seccion)
+    def get_by_natural_key(self, cod_sede, cod_facultad, cod_escuela):
+        return self.get(cod_sede=cod_sede, cod_facultad=cod_facultad, cod_escuela=cod_escuela)
 
     def get_queryset(self):
         return SeccionInstanciaQuerySet(self.model, using=self._db)
@@ -358,8 +358,8 @@ class CarreraInstanciaQuerySet(models.QuerySet):
 
 
 class CarreraInstanciaManager(models.Manager):
-    def get_by_natural_key(self, cod_sede, cod_unidad, cod_seccion, cod_carrera):
-        return self.get(cod_sede=cod_sede, cod_unidad=cod_unidad, cod_seccion=cod_seccion, cod_carrera=cod_carrera)
+    def get_by_natural_key(self, cod_sede, cod_facultad, cod_escuela, cod_carrera):
+        return self.get(cod_sede=cod_sede, cod_facultad=cod_facultad, cod_escuela=cod_escuela, cod_carrera=cod_carrera)
 
     def get_queryset(self):
         return CarreraInstanciaQuerySet(self.model, using=self._db)

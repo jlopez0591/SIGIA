@@ -24,10 +24,10 @@
                             <tbody>
                             {% for carrera in carreras %}
                                 <tr>
-                                    <th>{{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}</th>
+                                    <th>{{ carrera.cod_sede }}-{{ carrera.cod_facultad }}-{{ carrera.cod_escuela }}-{{ carrera.cod_carrera }}</th>
                                     <th>{{ carrera.carrera.nombre.capitalize }}</th>
                                     <th>
-                                        <a href="{% url 'ubicacion:carrera' carrera.cod_sede carrera.cod_unidad carrera.cod_seccion carrera.cod_carrera %}"
+                                        <a href="{% url 'ubicacion:carrera' carrera.cod_sede carrera.cod_facultad carrera.cod_escuela carrera.cod_carrera %}"
                                            class="btn btn-outline-info">Ver
                                             Detalle</a></th>
                                 </tr>

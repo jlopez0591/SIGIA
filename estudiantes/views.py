@@ -146,8 +146,8 @@ class EstudianteAutocomplete(autocomplete.Select2QuerySetView):
             perfil = Perfil.objects.get(usuario=self.request.user)
             codigos = {
                 'cod_sede': perfil.cod_sede,
-                'cod_unidad': perfil.cod_unidad,
-                'cod_seccion': perfil.cod_seccion
+                'cod_facultad': perfil.cod_facultad,
+                'cod_escuela': perfil.cod_escuela
             }
             # # usuario = Person.objects.get(pk=self.request.user.pk)
             # carreras = perfil.seccion.carreras.all()

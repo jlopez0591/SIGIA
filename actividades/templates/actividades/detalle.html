@@ -53,15 +53,20 @@
                     {% if perms.actividades.aprobar_actividad %}
                         <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i> Aprobar
+                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>
+                                Aprobar
                             </button>
-                        </form><hr />
+                        </form>
+                        <hr/>
+                        <div class="btn-group">
                         <a class="btn btn-outline-danger"
-                           href="{% url 'actividad:rechazar' actividad.pk %}"><i class="fas fa-times-circle"></i> Rechazar</a>{% endif %}
+                           href="{% url 'actividad:rechazar' actividad.pk %}"><i class="fas fa-times-circle"></i>
+                            Rechazar</a>{% endif %}
                     <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info"><i class="fa fa-edit"></i>
                         Editar</a>
                     <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i
                             class="fa fa-file"></i> Documento</a>
+                    </div>
                 </div>
             </div>
         </div>

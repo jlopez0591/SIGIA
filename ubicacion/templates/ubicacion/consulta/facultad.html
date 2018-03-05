@@ -25,9 +25,9 @@
                             <tbody>
                             {% for unidad in unidades %}
                                 <tr>
-                                    <th>{{ unidad.cod_sede }}-{{ unidad.cod_unidad }}</th>
+                                    <th>{{ unidad.cod_sede }}-{{ unidad.cod_facultad }}</th>
                                     <th>{{ unidad.unidad.nombre.capitalize }}</th>
-                                    <th><a href="{% url 'ubicacion:unidad' unidad.cod_sede unidad.cod_unidad %}"
+                                    <th><a href="{% url 'ubicacion:unidad' unidad.cod_sede unidad.cod_facultad %}"
                                            class="btn btn-outline-info">Ver
                                         Detalle</a></th>
                                 </tr>

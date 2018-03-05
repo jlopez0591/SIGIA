@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ seccion.cod_sede }}-{{ seccion.cod_unidad }}-{{ seccion.cod_seccion }}
+    {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}
 {% endblock %}
 
 {% block head %}
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                           {{ seccion.seccion.nombre.capitalize }} : {{ seccion.cod_sede }}-{{ seccion.cod_unidad }}-{{ seccion.cod_seccion }}</h4>
+                           {{ seccion.seccion.nombre.capitalize }} : {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</h4>
                     </div>
                 </div>
             </div>

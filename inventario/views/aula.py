@@ -49,7 +49,7 @@ class AulaCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.cod_sede = self.request.user.perfil.cod_sede
-        form.instance.cod_unidad = self.request.user.perfil.cod_unidad
+        form.instance.cod_facultad = self.request.user.perfil.cod_facultad
         return super(AulaCreateView, self).form_valid(form)
 
 

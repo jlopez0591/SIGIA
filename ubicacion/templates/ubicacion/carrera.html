@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    {{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}
+    {{ carrera.cod_sede }}-{{ carrera.cod_facultad }}-{{ carrera.cod_escuela }}-{{ carrera.cod_carrera }}
 {% endblock %}
 
 {% block head %}
@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <h4 class="card-title">
                             {{ carrera.carrera.nombre.capitalize }} {{ carrera.carrera.get_tipo_display }}
-                            : {{ carrera.cod_sede }}-{{ carrera.cod_unidad }}-{{ carrera.cod_seccion }}-{{ carrera.cod_carrera }}</h4>
+                            : {{ carrera.cod_sede }}-{{ carrera.cod_facultad }}-{{ carrera.cod_escuela }}-{{ carrera.cod_carrera }}</h4>
                     </div>
                 </div>
             </div>

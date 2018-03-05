@@ -1,6 +1,4 @@
-from django.apps import apps
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -98,7 +96,7 @@ class Estudiante(models.Model):
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, related_name='estudiantes',
                              blank=True)
     facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
-                               related_name='estudiantes', blank=True)
+                                 related_name='estudiantes', blank=True)
     escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='estudiantes', blank=True)
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
@@ -197,6 +195,10 @@ class Proyecto(models.Model):
         (MAESTRIA, 'Maestria'),
         (DOCTORADO, 'Doctorado')
     )
+    # cod_sede
+    # cod_facultad
+    # cod_escuela
+    # cod_carrera
     facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
                                  related_name='proyectos')
     escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
@@ -210,7 +212,7 @@ class Proyecto(models.Model):
         groups__name='Profesores'))
     fecha_entrega = models.DateField(blank=True, null=True)
     fecha_sustentacion = models.DateField(blank=True, null=True)
-    programa = models.CharField(max_length=1, choices=PROGRAMAS, default=LICENCIATURA)
+    programa = models.CharField(max_length=25, choices=PROGRAMAS, default=LICENCIATURA)
     nota = models.CharField(max_length=3, blank=True)
     detalle = models.TextField(max_length=500, blank=True)
     archivo = models.FileField(blank=True)
@@ -224,12 +226,12 @@ class Proyecto(models.Model):
         )
 
     def __str__(self):
-        return self.anteproyecto.nombre_proyecto
+        return 'Proyecto'
 
-    def clean(self):
-        if self.jurados.count() > 3:
-            raise ValidationError('No se puede asignar mas de 3 jurados.')
-        super(Proyecto, self).clean()
+    # def clean(self):
+    #     if self.jurados.count() > 3:
+    #         raise ValidationError('No se puede asignar mas de 3 jurados.')
+    #     super(Proyecto, self).clean()
 
     def get_absolute_url(self):
         return reverse('estudiante:proyecto', kwargs={'pk': self.pk})

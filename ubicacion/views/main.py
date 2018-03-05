@@ -11,21 +11,21 @@ def consulta_sede(request):
 
 
 def consulta_unidad(request):
-    unidades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_unidad')
+    unidades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_facultad')
     return render(request, 'ubicacion/consulta/facultad.html', {
         'unidades': unidades
     })
 
 
 def consulta_seccion(request):
-    secciones = SeccionInstancia.objects.activas().order_by('cod_sede', 'cod_unidad', 'cod_seccion')
+    secciones = SeccionInstancia.objects.activas().order_by('cod_sede', 'cod_facultad', 'cod_escuela')
     return render(request, 'ubicacion/consulta/escuela.html', {
         'secciones': secciones
     })
 
 
 def consulta_carrera(request):
-    carreras = CarreraInstancia.objects.activas().order_by('cod_sede', 'cod_unidad', 'cod_seccion', 'cod_carrera')
+    carreras = CarreraInstancia.objects.activas().order_by('cod_sede', 'cod_facultad', 'cod_escuela', 'cod_carrera')
     return render(request, 'ubicacion/consulta/carrera.html', {
         'carreras': carreras
     })
@@ -48,13 +48,13 @@ class UnidadDetailView(DetailView):
 
     def get_object(self, queryset=None):
         sede = self.kwargs['cod_sede']
-        unidad = self.kwargs['cod_unidad']
+        unidad = self.kwargs['cod_facultad']
         return get_object_or_404(UnidadInstancia, cod_sede=sede,
-                                 cod_unidad=unidad)
+                                 cod_facultad=unidad)
 
 
 def detalle_seccion(request, cod_sede, cod_facultad, cod_escuela):
-    seccion = get_object_or_404(SeccionInstancia, cod_sede=cod_sede, cod_unidad=cod_facultad, cod_seccion=cod_escuela)
+    seccion = get_object_or_404(SeccionInstancia, cod_sede=cod_sede, cod_facultad=cod_facultad, cod_escuela=cod_escuela)
     if seccion.seccion.tipo == 'ES':
         plantilla = 'ubicacion/escuela.html'
     else:
@@ -70,8 +70,8 @@ class CarreraDetailView(DetailView):
 
     def get_object(self, queryset=None):
         sede = self.kwargs['cod_sede']
-        unidad = self.kwargs['cod_unidad']
-        seccion = self.kwargs['cod_seccion']
+        unidad = self.kwargs['cod_facultad']
+        seccion = self.kwargs['cod_escuela']
         carrera = self.kwargs['cod_carrera']
-        return get_object_or_404(CarreraInstancia, cod_sede=sede, cod_unidad=unidad, cod_seccion=seccion,
+        return get_object_or_404(CarreraInstancia, cod_sede=sede, cod_facultad=unidad, cod_escuela=seccion,
                                  cod_carrera=carrera)

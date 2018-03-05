@@ -26,11 +26,11 @@
                             <tbody>
                             {% for seccion in secciones %}
                                 <tr>
-                                    <th>{{ seccion.cod_sede }}-{{ seccion.cod_unidad }}-{{ seccion.cod_seccion }}</th>
+                                    <th>{{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</th>
                                     <th>{{ seccion.seccion.nombre.capitalize }}</th>
                                     <th>{{ seccion.seccion.get_tipo_display.capitalize }}</th>
                                     <th>
-                                        <a href="{% url 'ubicacion:seccion' seccion.cod_sede seccion.cod_unidad seccion.cod_seccion %}"
+                                        <a href="{% url 'ubicacion:seccion' seccion.cod_sede seccion.cod_facultad seccion.cod_escuela %}"
                                            class="btn btn-outline-info">Ver
                                             Detalle</a></th>
                                 </tr>

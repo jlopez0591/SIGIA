@@ -56,7 +56,7 @@ class EquipoCreateView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         usuario = Perfil.objects.get(usuario=self.request.user)
         form.instance.cod_sede = usuario.cod_sede
-        form.instance.cod_unidad = usuario.cod_unidad
+        form.instance.cod_facultad = usuario.cod_facultad
         try:
             return super(EquipoCreateView, self).form_valid(form)
         except:
