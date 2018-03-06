@@ -115,21 +115,3 @@ def rechazar_actividad(request, pk):
     else:
         form = RechazarForm(instance=actividad)
     return render(request, 'actividades/admin/rechazar.html', {'form': form})
-
-# class ActividadRechazarView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
-#     context_object_name = 'form'
-#     form_class = RechazarForm
-#     model = Actividad
-#     success_message = 'Actividad Rechazada'
-#     # success_url = reverse_lazy('actividad:pendientes')
-#     template_name = 'actividades/admin/rechazar.html'
-#     permission_required = 'actividades.aprobar_actividad'
-#     permission_denied_message = 'No tiene los permisos necesarios para realizar esta accion'
-#
-#     def form_valid(self, form):
-#         form = form.instance
-#         form.estado = 'rechazado'
-#         return super(ActividadRechazarView, self).form_valid(form)
-
-# def get_success_url(self):
-#     return self.success_url

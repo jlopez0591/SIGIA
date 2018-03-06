@@ -6,11 +6,23 @@
     </a>
     {% if request.user.perfil.departamento %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
-                    class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
-                    class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
-            <a class="dropdown-item" href="#">Reportes</a>
+            <a class="dropdown-item" href="#">Dashboard</a>
+
+            {% if perms.ubicacion.ver_reporte_departamento %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Reportes</a>
+            {% endif %}
+
+            {% if perms.perfil.ver_departamento %}
+                <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
+                        class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
+            {% endif %}
+
+            {% if perms.actividades.ver_departamento %}
+                <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
+                        class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
+            {% endif %}
+
         </div>
     {% endif %}
 </li>

@@ -7,8 +7,9 @@ from django.utils import timezone
 class Solicitud(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     titulo = models.CharField(max_length=120)
-    fecha_creacion = models.DateField(blank=True, null=True)
-    fecha_modificacion = models.DateTimeField(blank=True, null=True)
+
+    fecha_creacion = models.DateField(blank=True, null=True, auto_now_add=True)
+    fecha_modificacion = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500, blank=True)
     resuelto = models.BooleanField(default=False)
 
@@ -16,8 +17,6 @@ class Solicitud(models.Model):
         return self.titulo
 
     def save(self, *args, **kwargs):
-        self.fecha_creacion = timezone.now()
-        self.fecha_modificacion = timezone.now()
         return super(Solicitud, self).save()
 
     def get_absolute_url(self):
@@ -27,15 +26,11 @@ class Solicitud(models.Model):
         self.resuelto = True
         self.save()
 
-    def actualizar_fecha_modificacion(self):
-        self.fecha_modificacion = timezone.now()
-        self.save()
-
 
 class Comentario(models.Model):
     solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE, related_name='comentarios')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    fecha = models.DateTimeField(blank=True, null=True)
+    fecha = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500)
 
     def __str__(self):

@@ -64,20 +64,20 @@ class Perfil(models.Model):
 
     sexo = models.CharField(max_length=1, choices=GENERO, blank=True, null=True)
 
-    provincia = models.CharField(max_length=5, choices=PROVINCIAS, default='00')
-    clase = models.CharField(max_length=5, default='00', choices=CLASE)
-    tomo = models.CharField(max_length=5, default='000')
-    folio = models.CharField(max_length=5, default='0000')
+    provincia = models.CharField(max_length=5, choices=PROVINCIAS, default='00', blank=True, null=True)
+    clase = models.CharField(max_length=5, default='00', choices=CLASE, blank=True, null=True)
+    tomo = models.CharField(max_length=5, default='000', blank=True, null=True)
+    folio = models.CharField(max_length=5, default='0000', blank=True, null=True)
 
     imagen = models.ImageField(upload_to='perfil/', blank=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
-    pais = CountryField(blank=True)
+    pais = CountryField(blank=True, null=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
 
-    cod_sede = models.CharField(max_length=2, blank=True, default='XX')
-    cod_facultad = models.CharField(max_length=2, blank=True, default='XX')
-    cod_escuela = models.CharField(max_length=2, blank=True, default='XX')
-    cod_departamento = models.CharField(max_length=2, blank=True, default='XX')
+    cod_sede = models.CharField(max_length=2, blank=True, default='XX', null=True)
+    cod_facultad = models.CharField(max_length=2, blank=True, default='XX', null=True)
+    cod_escuela = models.CharField(max_length=2, blank=True, default='XX', null=True)
+    cod_departamento = models.CharField(max_length=2, blank=True, default='XX', null=True)
 
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='perfil')
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, related_name='personal', blank=True,

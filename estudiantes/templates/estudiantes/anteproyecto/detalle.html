@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+<p class="card-text"></p>
+{% block title %}{{ anteproyecto.nombre_proyecto.capitalize }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-header">{{ anteproyecto.nombre_proyecto }}</div>
+                <div class="card-body">
+                    <p class="card-text">{{ anteproyecto.resumen|safe }}</p>
+                    <hr>
+                    <p class="card-text"><a href="{{ anteproyecto.archivo }}" class="btn btn-outline-primary"><span
+                            class="fa fa-file"></span> Archivo</a></p>
+                </div>
+                <div class="card-footer text-right">
+                    <div class="btn-group">
+                        <a class="btn btn-outline-info" href="{% url 'estudiante:editar-anteproyecto' anteproyecto.pk %}"><span class="fa fa-edit"></span> Editar</a>
+                        <a class="btn btn-outline-success"><span class="fa fa-check"></span> Aprobar</a>
+                        <a class="btn btn-outline-danger"><span class="fa fa-eraser"></span> Rechazar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

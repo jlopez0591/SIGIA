@@ -25,13 +25,26 @@
     </a>
     {% if request.user.perfil.escuela %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
-                    class="badge badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
-                    class="badge badge-primary">{{ request.user.perfil.escuela.anteproyectos.aprobados.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Proyectos <span
-                    class="badge badge-primary">{{ request.user.perfil.escuela.proyectos.count }}</span></a>
-            <a class="dropdown-item" href="#">Reportes</a>
+
+
+            {% if perms.estudiantes.ver_estudiantes %}
+                <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
+                        class="badge badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>
+            {% endif %}
+
+            {% if perms.estudiantes.add_anteproyecto %}
+                <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
+                        class="badge badge-primary">{{ request.user.perfil.escuela.anteproyectos.all.count }}</span></a>
+            {% endif %}
+
+            {% if perms.estudiantes.add_proyecto %}
+                <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Proyectos <span
+                        class="badge badge-primary">{{ request.user.perfil.escuela.proyectos.count }}</span></a>
+            {% endif %}
+
+            {% if perms.ubicacion.ver_reporte_escuela %}
+                <a class="dropdown-item" href="#">Reportes</a>
+            {% endif %}
         </div>
     {% endif %}
 </li>

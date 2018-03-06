@@ -9,7 +9,7 @@ class PerfilForm(forms.ModelForm):
             'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 'fecha_nacimiento',
             'fecha_inicio',
             'sexo', 'provincia', 'clase', 'tomo', 'folio',
-            'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento')
+            'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento', 'cod_escuela')
         labels = {
             'fecha_nacimiento': 'Fecha de Nacimiento'
         }
@@ -79,6 +79,11 @@ class PerfilForm(forms.ModelForm):
                 'placeholder': "Apellido Materno",
             }),
             'cod_departamento': forms.TextInput(attrs={
+                'class': 'form-control',
+                # 'disabled': True,
+                'placeholder': "Apellido Materno",
+            }),
+            'cod_escuela': forms.TextInput(attrs={
                 'class': 'form-control',
                 # 'disabled': True,
                 'placeholder': "Apellido Materno",

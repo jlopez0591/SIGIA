@@ -34,7 +34,7 @@ class StudentUpdateForm(forms.ModelForm):
 class AnteproyectoForm(forms.ModelForm):
     class Meta:
         model = Anteproyecto
-        fields = ('estudiante', 'asesor', 'carrera',
+        fields = ('estudiante', 'asesor', 'cod_carrera',
                   'nombre_proyecto', 'archivo', 'resumen')
         widgets = {
             'estudiante': autocomplete.ModelSelect2Multiple(url='estudiante:autocomplete', attrs={
@@ -53,6 +53,10 @@ class AnteproyectoForm(forms.ModelForm):
             }),
             'archivo': '',
         }
+
+    def __init__(self, *args, **kwargs):
+        super(AnteproyectoForm, self).__init__(*args, **kwargs)
+
 
 
 class ProyectoForm(forms.ModelForm):

@@ -32,7 +32,7 @@
                 <!-- Consultas -->
 
                 {# Listados #}
-                {% if request.user.is_staff or perms.actividades.aprobar_actividad or perms.actividades.estudiantes.aprobar_anteproyecto %}
+                {% if request.user.is_staff or perms.actividades.aprobar_actividad or perms.estudiantes.aprobar_anteproyecto %}
                     {% include 'includes/header/partial_director_departamento_dropdown.html' %}
                 {% endif %}
             </ul>

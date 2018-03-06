@@ -1,3 +1,5 @@
+from django.db.models.signals import m2m_changed
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
@@ -157,7 +159,8 @@ class Anteproyecto(models.Model):
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
     nombre_proyecto = models.CharField(max_length=120, blank=True)
 
-    fecha_registro = models.DateField(blank=True, null=True)
+    registrado_por = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
+    fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)
     estado = models.CharField(max_length=15, choices=ESTADO, default='pendiente')
     archivo = models.FileField(blank=True)
@@ -181,6 +184,14 @@ class Anteproyecto(models.Model):
         })
 
     def save(self, *args, **kwargs):
+        self.cod_sede = self.registrado_por.perfil.cod_sede
+        self.cod_facultad = self.registrado_por.perfil.cod_facultad
+        self.cod_escuela = self.registrado_por.perfil.cod_escuela
+        self.sede = self.registrado_por.perfil.sede
+        self.facultad = self.registrado_por.perfil.facultad
+        self.escuela = self.registrado_por.perfil.escuela
+        self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+                                                    cod_escuela=self.cod_escuela, cod_carrera=self.cod_carrera)
         return super(Anteproyecto, self).save()
 
 
@@ -195,10 +206,10 @@ class Proyecto(models.Model):
         (MAESTRIA, 'Maestria'),
         (DOCTORADO, 'Doctorado')
     )
-    # cod_sede
-    # cod_facultad
-    # cod_escuela
-    # cod_carrera
+    cod_sede = models.CharField(max_length=120, blank=True)
+    cod_facultad = models.CharField(max_length=120, blank=True)
+    cod_escuela = models.CharField(max_length=120, blank=True)
+    cod_carrera = models.CharField(max_length=120, blank=True)
     facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
                                  related_name='proyectos')
     escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
@@ -227,12 +238,15 @@ class Proyecto(models.Model):
         )
 
     def __str__(self):
-        return 'Proyecto'
-
-    # def clean(self):
-    #     if self.jurados.count() > 3:
-    #         raise ValidationError('No se puede asignar mas de 3 jurados.')
-    #     super(Proyecto, self).clean()
+        return 'Proyecto {}'.format(self.anteproyecto.nombre_proyecto)
 
     def get_absolute_url(self):
         return reverse('estudiante:proyecto', kwargs={'pk': self.pk})
+
+
+def regions_changed(sender, **kwargs):
+    if kwargs['instance'].jurados.count() > 3:
+        raise ValidationError("No puede asignar mas de 3 jurados.")
+
+
+m2m_changed.connect(regions_changed, sender=Proyecto.jurados.through)

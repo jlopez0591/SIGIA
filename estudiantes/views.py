@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
@@ -51,19 +52,26 @@ class AnteproyectoCreateView(PermissionRequiredMixin, CreateView):
     form_class = AnteproyectoForm
     success_url = reverse_lazy('estudiante:anteproyectos-unidad')
 
+    def form_valid(self, form):
+        form.instance.registrado_por = self.request.user
+        try:
+            return super(AnteproyectoCreateView, self).form_valid(form)
+        except IntegrityError:
+            return self.form_invalid(form)
+
 
 class AnteproyectoDetailView(PermissionRequiredMixin, DetailView):
     model = Anteproyecto
     permission_required = 'estudiante.change_anteproyecto'
-    template_name = 'estudiante/anteproyecto.html'
+    template_name = 'estudiantes/anteproyecto/detalle.html'
     context_object_name = 'anteproyecto'
 
 
 class AnteproyectoUpdateView(PermissionRequiredMixin, UpdateView):
     model = Anteproyecto
     permission_required = 'estudiante.change_anteproyecto'
-    template_name = 'form.html'
-    fields = ('__all__')
+    template_name = 'estudiantes/anteproyecto/crear.html'
+    form_class = AnteproyectoForm
 
 
 class ProyectoCreateView(PermissionRequiredMixin, CreateView):
@@ -77,7 +85,7 @@ class ProyectoCreateView(PermissionRequiredMixin, CreateView):
 class ProyectoDetailView(PermissionRequiredMixin, DetailView):
     model = Proyecto
     permission_required = 'estudiante.change_proyecto'
-    template_name = 'estudiante/proyecto.html'
+    template_name = 'estudiantes/proyecto/detalle.html'
     context_object_name = 'proyecto'
 
 
@@ -118,9 +126,9 @@ def anteproyectos_pendientes(request):
 def anteproyectos_facultad(request):
     user = request.user
     if user.is_superuser:
-        anteproyectos = Anteproyecto.objects.all()
+        anteproyectos = Anteproyecto.objects.aprobados()
     elif user.has_perms('estudiantes.add_anteproyecto'):
-        anteproyectos = Anteproyecto.objects.escuela(usuario=user)
+        anteproyectos = Anteproyecto.objects.aprobados().escuela(usuario=user)
     else:
         anteproyectos = None
     return render(request, 'estudiantes/anteproyecto/lista.html', {
@@ -177,7 +185,7 @@ def proyectos_facultad(request):
         qs = Anteproyecto.objects.aprobados()
     elif request.user.perfil.escuela:
         # TODO: Manager para anteproyectos
-        qs = Anteproyecto.objects.filter(escuela=request.user.perfil.escuela)
+        qs = Anteproyecto.objects.aprobados().filter(escuela=request.user.perfil.escuela)
     else:
         qs = None
     return render(request, 'estudiantes/proyecto/lista.html', {'proyectos': qs})

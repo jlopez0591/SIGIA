@@ -6,26 +6,64 @@
     </a>
     {% if request.user.perfil.facultad %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#"><b>Inventario</b></a>
             <a class="dropdown-item"
-               href="{% url 'inventario:facultad-aulas' request.user.perfil.facultad.pk %}">Aulas
-                <span
-                        class="badge badge-primary">{{ request.user.perfil.facultad.aula_set.count }}</span></a>
-            <a class="dropdown-item"
-               href="{% url 'inventario:facultad-equipo' request.user.perfil.facultad.pk %}">Equipos
-                <span
-                        class="badge badge-primary">{{ request.user.perfil.facultad.equipos.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
-                    class="badge badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
-                    class="badge badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
-                    class="badge badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
-                    class="badge badge-primary">{{ request.user.perfil.facultad.anteproyectos.count }}</span></a>
-            <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Trabajos de Graduacion <span
-                    class="badge badge-primary">{{ request.user.perfil.facultad.proyectos.count }}</span></a>
-            <a class="dropdown-item" href="#">Reportes</a>
+               href="{% url 'ubicacion:unidad' request.user.perfil.facultad.cod_sede request.user.perfil.facultad.cod_facultad %}">Dashboard</a>
+
+
+            {% if perms.unidad.ver_reporte %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Reportes</a>
+            {% endif %}
+
+            {% if perms.inventario.add_aula %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"
+                   href="{% url 'inventario:facultad-aulas' request.user.perfil.facultad.pk %}">Aulas
+                    <span
+                            class="badge badge-primary">{{ request.user.perfil.facultad.aula_set.count }}</span></a>
+            {% endif %}
+
+            {% if perms.inventario.add_equipo %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"
+                   href="{% url 'inventario:facultad-equipo' request.user.perfil.facultad.pk %}">Equipos
+                    <span
+                            class="badge badge-primary">{{ request.user.perfil.facultad.equipos.count }}</span></a>
+            {% endif %}
+
+
+            {% if perms.perfiles.ver_perfil %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
+                        class="badge badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
+            {% endif %}
+
+
+            {% if perms.estudiantes.ver_estudiante %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
+                        class="badge badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
+            {% endif %}
+
+            {% if perms.actividades.change_actividad %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
+                        class="badge badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
+            {% endif %}
+
+            {% if perms.actividades.change_anteproyecto %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'estudiante:anteproyectos-unidad' %}">Anteproyectos <span
+                        class="badge badge-primary">{{ request.user.perfil.facultad.anteproyectos.count }}</span></a>
+            {% endif %}
+
+            {% if perms.actividades.change_proyecto %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'estudiante:proyectos-facultad' %}">Trabajos de Graduacion <span
+                        class="badge badge-primary">{{ request.user.perfil.facultad.proyectos.count }}</span></a>
+            {% endif %}
+
+
         </div>
     {% endif %}
 </li>

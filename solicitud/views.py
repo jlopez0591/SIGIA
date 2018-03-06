@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.utils import timezone
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -100,9 +99,7 @@ def crear_comentario(request, solicitud_pk):
             comentario = form.save(commit=False)
             comentario.solicitud = solicitud
             comentario.usuario = request.user
-            comentario.fecha = timezone.now()
             comentario.save()
-            solicitud.actualizar_fecha_modificacion()
             solicitud_url = reverse('solicitud:detalle', kwargs={'pk': solicitud_pk})
             return redirect(solicitud_url)
     else:

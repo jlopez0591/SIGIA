@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="col-sm-12 col-md-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Registrar Equipo</h4>
@@ -13,6 +13,27 @@
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Formatos de Codigo de Carrera</h4>
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Escuela</th>
+                        </tr>
+                        </thead>
+                        {% for carrera in request.user.perfil.escuela.carreras.all %}
+                            <tr>
+                                <td>{{ carrera.cod_carrera }}</td>
+                                <td>{{ carrera.carrera.nombre }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>

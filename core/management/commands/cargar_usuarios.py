@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 
+import csv
 import json
 import logging
 import os.path
@@ -14,12 +15,13 @@ from sigia import base_settings
 from perfiles.models import Perfil
 
 fecha = dt.now()
-ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/import-files/user.json')
-LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/creacion_usuarios/')
-LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha.strftime("%Y-%m-%d"))
+ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/usuarios.json')
+LOG_LOCATION = '{}/{}/{}'.format(base_settings.BASE_DIR, 'logs/creacion_usuarios/', fecha.strftime("%Y-%m-%d"))
+LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha.strftime("%X"))
+URL = ''
 
-if not os.path.exists(LOG_FILE):
-    os.makedirs(LOG_FILE)
+if not os.path.exists(LOG_LOCATION):
+    os.makedirs(LOG_LOCATION)
 
 logging.basicConfig(filename='{}.log'.format(LOG_FILE), level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -35,12 +37,16 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
-def cargar_usuarios():
+def cargar_usuarios(usuarios_dict):
     """
     Carga lista de usuarios
     :return:
     """
     pass
+    # with open('', 'wb') as f:
+    #     w = csv.DictWriter(f, usuarios_dict.keys())
+    #     w.writeheader()
+    #     w.writerow(usuarios_dict)
 
 
 def cargar_webservice(url):
@@ -51,12 +57,17 @@ class Command(BaseCommand):
     help = 'Carga usuarios iniciales'
 
     def handle(self, *args, **options):
+        if base_settings.DEBUG is True:
+            datos = cargar_usuarios(ARCHIVO)
+        else:
+            datos = cargar_webservice(URL)
         with open(ARCHIVO, 'r') as f:
             data = json.load(f)
             for i, row in enumerate(data):
                 try:
                     ds = row['info_perfil']
-                    user_name = '{}{}{}{}'.format(ds['provincia'], ds['clase'], ds['tomo'], ds['folio'])
+                    user_name = '{}{}'.format(ds['primer_nombre'][0], ds['primer_apellido'])
+                    # user_name = '{}{}{}{}'.format(ds['provincia'], ds['clase'], ds['tomo'], ds['folio']) # Removido para pruebas
                     passcode = id_generator()
                     u, created = User.objects.get_or_create(username=user_name, first_name=ds['primer_nombre'],
                                                             last_name=ds['primer_apellido'])
@@ -66,11 +77,10 @@ class Command(BaseCommand):
                         result = 'Usuario {} creado con password {}'.format(user_name, passcode)
                         logging.debug(result)
                         try:
-                            for grupo in row['grupos']:
-                                g = Group.objects.get(name=grupo.title())
-                                u.groups.add(g)
+                            g = Group.objects.get(name='Profesores')
+                            u.groups.add(g)
                         except:
-                            warning = 'Error al asignar grupo {} al usuario: {} - Error: {}'.format(grupo, user_name,
+                            warning = 'Error al asignar grupo {} al usuario: {} - Error: {}'.format('Profesores', user_name,
                                                                                                     sys.exc_info()[1])
                             logging.warning(warning)
                         try:
