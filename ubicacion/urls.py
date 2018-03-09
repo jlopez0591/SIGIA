@@ -10,17 +10,11 @@ urlpatterns = [
     url(r'^secciones/$', views.consulta_seccion, name='secciones'),
     url(r'^carreras/$', views.consulta_carrera, name='carreras'),
 
-    # Detalle
-    url(r'^sede/(?P<cod_sede>[\w]+)/$', views.SedeDetailView.as_view(),
-        name='sede'),
-    url(r'^unidad/(?P<cod_sede>[\w]+)/(?P<cod_facultad>[\w]+)/$',
-        views.UnidadDetailView.as_view(),
-        name='unidad'),
-    url(r'^seccion/(?P<cod_sede>[\w]+)/(?P<cod_facultad>[\w]+)/(?P<cod_escuela>[\w]+)/$',
-        views.detalle_seccion, name='seccion'),
-    url(
-        r'^carrera/(?P<cod_sede>[\w]+)/(?P<cod_facultad>[\w]+)/(?P<cod_escuela>[\w]+)/(?P<cod_carrera>[\w]+)/$',
-        views.CarreraDetailView.as_view(), name='carrera'),
+    # Detalle v2
+    url(r'^sede/(?P<pk>[\w]+)/$', views.SedeDetailView.as_view(), name='sede'),
+    url(r'^facultad/(?P<pk>[\w]+)$', views.UnidadDetailView.as_view(), name='unidad'),
+    url(r'^seccion/(?P<pk>[\w]+)/$', views.detalle_seccion, name='seccion'),
+    url(r'^carrera/(?P<pk>[\w]+)/$', views.CarreraDetailView.as_view(), name='carrera'),
 
     # Autocomplete
     url(r'^carrera-autocomplete/$', CarreraInstanciaAutocomplete.as_view(), name='carrera-autocomplete'),

@@ -36,21 +36,11 @@ class SedeDetailView(DetailView):
     context_object_name = 'sede'
     template_name = 'ubicacion/sede.html'
 
-    def get_object(self, queryset=None):
-        cod_sede = self.kwargs['cod_sede']
-        return get_object_or_404(Sede, cod_sede=cod_sede)
-
 
 class UnidadDetailView(DetailView):
     model = UnidadInstancia
     context_object_name = 'unidad'
     template_name = 'ubicacion/facultad.html'
-
-    def get_object(self, queryset=None):
-        sede = self.kwargs['cod_sede']
-        unidad = self.kwargs['cod_facultad']
-        return get_object_or_404(UnidadInstancia, cod_sede=sede,
-                                 cod_facultad=unidad)
 
 
 def detalle_seccion(request, cod_sede, cod_facultad, cod_escuela):
@@ -67,11 +57,3 @@ class CarreraDetailView(DetailView):
     model = CarreraInstancia
     context_object_name = 'carrera'
     template_name = 'ubicacion/carrera.html'
-
-    def get_object(self, queryset=None):
-        sede = self.kwargs['cod_sede']
-        unidad = self.kwargs['cod_facultad']
-        seccion = self.kwargs['cod_escuela']
-        carrera = self.kwargs['cod_carrera']
-        return get_object_or_404(CarreraInstancia, cod_sede=sede, cod_facultad=unidad, cod_escuela=seccion,
-                                 cod_carrera=carrera)

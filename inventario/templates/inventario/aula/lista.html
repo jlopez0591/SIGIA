@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="col-sm-12 col-md-12">
             <div class="card">
                 <div class="card-header"><p class="card-text"><a class="btn btn-primary"
                                                                  href="{% url 'inventario:crear-aulas' %}"><i
@@ -20,38 +20,42 @@
                     <h4 class="card-title">Listado de Aulas - {% if request.user.is_superuser %}General{% else %}
                         {{ request.user.perfil.unidad }}{% endif %}</h4>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="enhance">
-                            <thead>
-                            <tr>
-                                <th scope="col">Unidad</th>
-                                <th scope="col">Numero</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Opciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for aula in aulas %}
+                    {% if aulas %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="enhance">
+                                <thead>
                                 <tr>
-                                    <td>{{ aula.ubicacion }}</td>
-                                    <td>{{ aula.numero }}</td>
-                                    <td>{{ aula.get_tipo_display }}</td>
-                                    <td>
-                                        <div class="btn-group"><a href="{% url 'inventario:editar-aulas' aula.pk %}"
-                                                                  class="btn btn-outline-primary btn-sm"><i
-                                                class="fa fa-edit"></i> Editar</a>
-                                            <a href="{% url 'inventario:detalle-aulas' aula.pk %}"
-                                               class="btn btn-outline-info btn-sm"><i class="fas fa-link"></i>
-                                                Aula </a>
-                                        </div>
-                                    </td>
+                                    <th scope="col">Unidad</th>
+                                    <th scope="col">Numero</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Opciones</th>
                                 </tr>
-                            {% empty %}
-                                <div class="alert alert-info text-center">No hay aulas registradas</div>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                {% for aula in aulas %}
+                                    <tr>
+                                        <td>{{ aula.ubicacion }}</td>
+                                        <td>{{ aula.numero }}</td>
+                                        <td>{{ aula.get_tipo_display }}</td>
+                                        <td>
+                                            <div class="btn-group"><a href="{% url 'inventario:editar-aulas' aula.pk %}"
+                                                                      class="btn btn-outline-primary btn-sm"><i
+                                                    class="fa fa-edit"></i> Editar</a>
+                                                <a href="{% url 'inventario:detalle-aulas' aula.pk %}"
+                                                   class="btn btn-outline-info btn-sm"><i class="fas fa-link"></i>
+                                                    Aula </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <div class="alert alert-info text-center">No hay aulas registradas</div>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info text-center">No hay aulas registradas</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

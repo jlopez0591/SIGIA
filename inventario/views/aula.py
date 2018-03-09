@@ -5,6 +5,10 @@ from inventario.forms import AulaForm
 from inventario.models import Aula
 from ubicacion.models import UnidadInstancia
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import Http404
+from django.shortcuts import get_list_or_404
+
 
 class AulaListView(ListView):
     model = Aula
@@ -26,12 +30,15 @@ class AulaFacultadListView(ListView):
     context_object_name = 'aulas'
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            u = UnidadInstancia.objects.get(pk=self.kwargs['pk'])
-            aulas = u.aula_set.all().order_by('tipo')
-            return aulas
-        else:
-            return None
+        qs = None
+        unidad = UnidadInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.is_authenticated:
+            if usuario.perfil.facultad is not unidad:
+                if not usuario.is_superuser:
+                    Http404("Esta unidad no existe")
+            qs = Aula.objects.filter(ubicacion=self.kwargs['pk'])
+        return qs
 
 
 class AulaDetailView(DetailView):

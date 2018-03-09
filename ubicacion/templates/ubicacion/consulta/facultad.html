@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>{{ facultad.cod_sede }}-{{ facultad.cod_facultad }}</th>
                                     <th>{{ facultad.facultad.nombre.capitalize }}</th>
-                                    <th><a href="{% url 'ubicacion:unidad' facultad.cod_sede facultad.cod_facultad %}"
+                                    <th><a href="{% url 'ubicacion:unidad' facultad.pk %}"
                                            class="btn btn-outline-info">Ver
                                         Detalle</a></th>
                                 </tr>

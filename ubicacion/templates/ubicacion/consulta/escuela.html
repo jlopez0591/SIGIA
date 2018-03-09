@@ -30,7 +30,7 @@
                                     <th>{{ seccion.seccion.nombre.capitalize }}</th>
                                     <th>{{ seccion.seccion.get_tipo_display.capitalize }}</th>
                                     <th>
-                                        <a href="{% url 'ubicacion:seccion' seccion.cod_sede seccion.cod_facultad seccion.cod_escuela %}"
+                                        <a href="{% url 'ubicacion:seccion' seccion.pk %}"
                                            class="btn btn-outline-info">Ver
                                             Detalle</a></th>
                                 </tr>
