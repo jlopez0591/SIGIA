@@ -5,12 +5,13 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 offset-md-3 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ actividad.get_clase_display.capitalize }}: {{ actividad.nombre_actividad }}</h4>
                     <p class="card-text">Realizado
-                        por: {{ actividad.usuario.get_full_name }}, {{ actividad.usuario.perfil.codigo }}</p>
+                        por: {{ actividad.usuario.perfil.primer_apellido }}, {{ actividad.usuario.perfil.primer_nombre }}
+                        - {{ actividad.usuario.perfil.codigo }}</p>
                     {% if request.user == actividad.usuario or perms.actividades.aprobar_actividad and request.user.perfil.departamento == actividad.departamento %}
                         <p class="card-text">Estado: {{ actividad.get_estado_display }}</p>
                     {% endif %}
@@ -46,26 +47,34 @@
                     {% if actividad.centro_estudio %}
                         <p class="card-text">Centro de Estudio: {{ actividad.centro_estudio }}</p>
                     {% endif %}
-                    <hr/>
-                    <p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>
+                    {% if actividad.resumen %}
+                        <hr/>
+                        <p class="card-text">Resumen: {{ actividad.resumen|safe }}</p>
+                    {% endif %}
+                    {% if request.user == actividad.usuario %}
+                        <hr/>
+                        <p class="card-text">Motivo de Rechazo: {{ actividad.motivo_rechazo|safe }}</p>
+                        <hr/>
+                    {% endif %}
                 </div>
                 <div class="card-footer text-right">
-                    {% if perms.actividades.aprobar_actividad %}
-                        <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>
-                                Aprobar
-                            </button>
-                        </form>
-                        <hr/>
-                        <div class="btn-group">
-                        <a class="btn btn-outline-danger"
-                           href="{% url 'actividad:rechazar' actividad.pk %}"><i class="fas fa-times-circle"></i>
-                            Rechazar</a>{% endif %}
-                    <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info"><i class="fa fa-edit"></i>
-                        Editar</a>
-                    <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i
-                            class="fa fa-file"></i> Documento</a>
+                    <div class="btn-group">
+                        {% if perms.actividades.aprobar_actividad %}
+                            <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-success"><i
+                                        class="fas fa-check-circle"></i>
+                                    Aprobar
+                                </button>
+                            </form>
+                            <hr/>
+                            <a class="btn btn-outline-danger"
+                               href="{% url 'actividad:rechazar' actividad.pk %}"><i class="fas fa-times-circle"></i>
+                                Rechazar</a>{% endif %}
+                        <a href="{{ actividad.get_edit_url }}" class="btn btn-outline-info"><i class="fa fa-edit"></i>
+                            Editar</a>
+                        <a href="/media/{{ actividad.archivo }}" class="btn btn-outline-primary" download=""><i
+                                class="fa fa-file"></i> Documento</a>
                     </div>
                 </div>
             </div>

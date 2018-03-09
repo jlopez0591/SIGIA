@@ -2,19 +2,30 @@
 
 {% block content %}
     <div class="row">
-    <div class="col-md-6 offset-sm-3 col-sm-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Rechazar Actividad</h4>
-                <form method="post">
-                    {% csrf_token %}
-                    <p>{{ form.motivo_rechazo.label }}</p>
-                    {{ form.motivo_rechazo }}
-                    <hr />
-                    <button class="btn btn-primary">Rechazar</button>
-                </form>
+        <div class="col-md-6 offset-sm-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Rechazar Actividad</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>{{ form.motivo_rechazo.label }}</p>
+                        <p>{{ form.motivo_rechazo.errors }}</p>
+                        {{ form.motivo_rechazo }}
+                        <hr/>
+                        <button class="btn btn-primary">Rechazar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#id_motivo_rechazo'
+        });
+    </script>
+    {{ form.media }}
 {% endblock %}

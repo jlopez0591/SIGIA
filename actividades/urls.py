@@ -10,9 +10,9 @@ urlpatterns = [
     url(r'^$', ListaActividades.as_view(), name='lista'),
     url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
     url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
-    url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),  # TODO: Test if can remove
+    # TODO: Revisar
+    url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),
     url(r'^(?P<pk>[0-9]+)/aprobar/$', views.aprobar_actividad, name='aprobar'),
-    # url(r'^(?P<pk>[0-9]+)/rechazar/$', ActividadRechazarView.as_view(), name='rechazar'),
     url(r'^(?P<pk>[0-9]+)/rechazar/$', views.rechazar_actividad, name='rechazar'),
 
     # Estadia
@@ -120,5 +120,11 @@ urlpatterns = [
         name='detalle-titulo'),
     url(r'^titulo/(?P<pk>[0-9]+)/editar/$',
         ActivityUpdateView.as_view(model=Titulo, form_class=TituloForm, template_name='actividades/titulo/crear.html'),
-        name='actualizar-titulo')
+        name='actualizar-titulo'),
+
+    # API v2
+    # TODO: Revisar el API
+    # url(r'^usuario/(?P<pk>[0-9]+)/$', ActividadesUsuario.as_view(), name='propias'), # Atenuarse a estandar RESTful
+    # url(r'^departamento/(?P<pk>[0-9]+)/pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
+    # url(r'^departamento/(?P<pk>[0-9]+)/pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
 ]
