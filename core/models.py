@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 class Notificacion(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    titulo = models.CharField(blank=True, max_length=120    )
+    titulo = models.CharField(blank=True, max_length=120)
+    texto = models.CharField(max_length=120)
     url = models.URLField(blank=True)
 
     def __str__(self):
-        return '{}-{}'.format(self.usuario.get_full_name(), self.titulo)
+        return '{}-{}'.format(self.usuario.username, self.titulo)

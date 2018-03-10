@@ -15,7 +15,7 @@ class SolicitudListview(ListView):
     model = Solicitud
     paginate_by = 10
     queryset = Solicitud.objects.filter(resuelto=False).order_by('-fecha_creacion')
-    template_name = 'solicitud/lista.html'
+    template_name = 'solicitud/pendientes.html'
 
 
 class SolicitudDetailView(DetailView):
@@ -52,18 +52,12 @@ def detalle_solicitud(request, solicitud_pk):
 
 class SolicitudCreateView(CreateView):
     model = Solicitud
-    template_name = 'form.html'
+    template_name = 'solicitud/crear.html'
     form_class = SolicitudForm
 
     def form_valid(self, form):
         form.instance.usuario = self.request.user
         return super(SolicitudCreateView, self).form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super(SolicitudCreateView, self).get_context_data()
-        context['boton'] = 'Solicitud'
-        context['titulo'] = 'Crear Solicitud'
-        return context
 
 
 class SolicitudUpdateView(UpdateView):

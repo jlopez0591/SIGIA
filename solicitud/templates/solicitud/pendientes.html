@@ -13,16 +13,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="card-title"><h4>Solicitudes</h4>
+                    <div class="card-title"><h4>Solicitudes Pendientes</h4>
                     </div>
                     <div class="card-body">
-                        <div class="btn-group">
-                            <a class="btn btn-outline-info" href="{% url 'solicitud:crear' %}"> Crear Solicitud</a>
-                        </div>
                         <hr>
                         <table class="table table-bordered" id="solicitudes">
                             <thead>
                             <tr>
+                                <th>Usuario</th>
                                 <th>Titulo</th>
                                 <th>Fecha Creacion</th>
                                 <th>Fecha de Ultimo Comentario</th>
@@ -32,6 +30,7 @@
                             <tbody>
                             {% for solicitud in solicitudes %}
                                 <tr>
+                                    <td>{{ solicitud.usuario }}</td>
                                     <td>{{ solicitud.titulo }}</td>
                                     <td>{{ solicitud.fecha_creacion }}</td>
                                     <td>{{ solicitud.fecha_modificacion }}</td>

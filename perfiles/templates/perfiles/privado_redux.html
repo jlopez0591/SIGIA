@@ -6,52 +6,39 @@
 
 {% block content %}
     <div class="row">
-    <div class="container-fluid">
-    <!-- Introduccion a la persona y datos personales-->
-    <div class="card-deck">
-
-    <div class="card">
-        <div class="card-body">
-            {% if perfil.imagen %}
-                <img class="img-fluid " src="{{ perfil.imagen.url }}" alt="Card image cap">
-            {% else %}
-                <img class="img-fluid " src="http://lorempixel.com/400/400/cats/" alt="Card image cap">
-            {% endif %}
-            <hr/>
-            <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }} |
-                {{ perfil.provincia }}-{{ perfil.clase }}-{{ perfil.tomo }}-{{ perfil.folio }}</h5>
-            <hr/>
-            <p class="card-text">
-            <ul class="list-group">
-                <li class="list-group-item">Edad: {{ perfil.edad }}</li>
-                <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>
-                <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>
-                <li class="list-group-item">Codigo: {{ perfil.cod_profesor }}</li>
-            </ul>
-            </p>
+        <div class="col-12">
+            <!-- Introduccion a la persona y datos personales-->
+            <div class="card">
+                <div class="card-body">
+                    {% if perfil.imagen %}
+                        <img class="img-fluid " src="{{ perfil.imagen.url }}" alt="Card image cap">
+                    {% else %}
+                        <img class="img-fluid " src="http://lorempixel.com/400/400/cats/" alt="Card image cap">
+                    {% endif %}
+                    <hr/>
+                    <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }} |
+                        {{ perfil.provincia }}-{{ perfil.clase }}-{{ perfil.tomo }}-{{ perfil.folio }}</h5>
+                    <hr/>
+                    <ul class="list-group">
+                        <li class="list-group-item">Edad: {{ perfil.edad }}</li>
+                        <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>
+                        <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>
+                        <li class="list-group-item">Codigo: {{ perfil.cod_profesor }}</li>
+                    </ul>
+                    <hr/>
+                    <h5 class="card-title">Informacion Institucional</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Fecha de Inicio de Labores: {{ perfil.tiempo_laborado }}</li>
+                        <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>
+                        <li class="list-group-item">Sede: {{ perfil.cod_sede }}</li>
+                        <li class="list-group-item">Facultad: {{ perfil.cod_facultad }}</li>
+                        <li class="list-group-item">Departamento: {{ perfil.cod_escuela }}</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-
-
-    <!-- Datos Academicos -->
-
-    <div class="card d-sm-block">
-        <div class="card-body">
-            <h5 class="card-title">Informacion Institucional</h5>
-            <p class="card-text"></p>
-            <ul class="list-group">
-                <li class="list-group-item">Fecha de Inicio de Labores: {{ perfil.tiempo_laborado }}</li>
-                <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>
-                <li class="list-group-item">Sede: {{ perfil.cod_sede }}</li>
-                <li class="list-group-item">Facultad: {{ perfil.cod_facultad }}</li>
-                <li class="list-group-item">Departamento: {{ perfil.cod_escuela }}</li>
-            </ul>
-        </div>
-    </div>
-
-    {% if request.user == perfil.usuario %}
-
-    {% endif %}
 {% endblock content %}
 
 
