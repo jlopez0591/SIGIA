@@ -15,8 +15,11 @@ django-auditlog = "*"
 django-countries = "*"
 django-polymorphic = "*"
 pylatex = "*"
+django-import-export = "*"
+pillow = "*"
 
 
 [dev-packages]
 
 sphinx = "*"
+pylint = "*"

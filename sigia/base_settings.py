@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django_countries',
     'import_export',
     'polymorphic',
-    'widget_tweaks',
     # My apps
     'actividades',
     'core',

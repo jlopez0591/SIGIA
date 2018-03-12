@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime as dt
-from polymorphic.manager import PolymorphicManager
+# from polymorphic.manager import PolymorphicManager
+from polymorphic.managers import PolymorphicManager
 
 
 class ActividadQuerySet(models.QuerySet):
