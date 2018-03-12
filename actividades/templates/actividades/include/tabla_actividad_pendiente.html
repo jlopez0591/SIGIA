@@ -19,9 +19,18 @@
                     <td>{{ actividad.get_estado_display }}</td>
                     </td>
                     <td>
-                        <div class="btn-group">
-                            <a class="btn btn-outline-primary" href="{{ actividad.get_absolute_url }}">Ver</a>
-                        </div>
+                        {% if perms.actividad.aprobar_actividad and actividad.usuario not in request.user or request.user.is_superuser %}
+                            <form method="post" action="{% url 'actividad:aprobar' actividad.pk %}">
+                                {% csrf_token %}
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-primary" href="{{ actividad.get_absolute_url }}">Ver</a>
+                                    <button type="submit" class="btn btn-outline-success">Aprobar
+                                    </button>
+                                    <a class="btn btn-outline-danger"
+                                       href="{% url 'actividad:rechazar' actividad.pk %}">Rechazar</a>
+                                </div>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

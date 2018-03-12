@@ -114,3 +114,6 @@ vagrant/
 logs/
 
 static/
+workspace.xml
+.idea/
+test_data/
