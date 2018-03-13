@@ -17,6 +17,7 @@ django-polymorphic = "*"
 pylatex = "*"
 django-import-export = "*"
 pillow = "*"
+xkcdpass = "*"
 
 
 [dev-packages]
