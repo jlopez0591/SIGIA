@@ -17,8 +17,9 @@ from perfiles.models import Perfil
 fecha = dt.now()
 ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/usuarios.json')
 LOG_LOCATION = '{}/{}/{}'.format(base_settings.BASE_DIR,
-                                 'logs/usuarios/', fecha.strftime("%Y-%m-%d"))
-LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha.strftime("%X"))
+                                 'logs/usuarios/creacion/', fecha.strftime("%Y-%m-%d"))
+LOG_FILE = '{}/{}.log'.format(LOG_LOCATION, fecha.strftime("%X"))
+USER_CSV = '{}/{}'.format(base_settings.BASE_DIR, 'logs/usuarios/csv/')
 URL = ''
 
 GRUPOS = {
@@ -33,7 +34,11 @@ GRUPOS = {
 if not os.path.exists(LOG_LOCATION):
     os.makedirs(LOG_LOCATION)
 
-logging.basicConfig(filename='creacion_{}.log'.format(LOG_FILE), level=logging.DEBUG,
+if not os.path.exists(USER_CSV):
+    os.makedirs(USER_CSV)
+
+
+logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -64,6 +69,7 @@ class Command(BaseCommand):
     help = 'Carga usuarios iniciales'
 
     def handle(self, *args, **options):
+        lista_usuarios = list()
         usuarios_creados = dict() # Listado de usuarios creados en la corrida
         wordfile = xp.locate_wordfile() # Inicializacion de xkcdpass
         words = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=5) # Iniciar el listado para xkcdpass
@@ -89,7 +95,7 @@ class Command(BaseCommand):
                 if created:
                     u.set_password(passcode)
                     u.save()
-                    usuarios_creados.update({i: {'usuario': user_name, 'password': passcode}})
+                    lista_usuarios.append({'usuario': user_name, 'password': passcode})
                     # Agregar a grupos
                     grupos = row['grupos'].split()
                     for grupo in grupos:
@@ -103,10 +109,13 @@ class Command(BaseCommand):
                     ds['fecha_nacimiento'] = dt.strptime(ds['fecha_nacimiento'], '%Y-%m-%d').date()
                     Perfil.objects.update_or_create(usuario=u, defaults=ds)
             except:
-                print("Error")
+                logging.error('ERROR!')
         
         # Guardar la carga actual.
-        with open(USER_CSV, 'a') as uc:
-            w = csv.DictWriter(uc, usuarios_creados.keys())
+        ubicacion = input("Introduzca un nombre para el registro: ")
+        file = '{}/{}.csv'.format(USER_CSV, ubicacion)
+        with open(file, 'a') as uc:
+            w = csv.DictWriter(uc, fieldnames=['usuario', 'password'])
             w.writeheader()
-            w.writerow(usuarios_creados)
+            for data in lista_usuarios:
+                w.writerow(data)
