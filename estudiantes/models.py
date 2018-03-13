@@ -135,6 +135,7 @@ class Estudiante(models.Model):
     def get_absolute_url(self):
         return reverse('estudiante:detalle', kwargs={'pk': self.pk})
 
+
 # TODO: Combinar con Trabajo de Graduacion.
 class Anteproyecto(models.Model):
     ESTADO = (
@@ -142,6 +143,7 @@ class Anteproyecto(models.Model):
         ('rechazado', 'Rechazado'),
         ('aprobado', 'Aprobado')
     )
+    # region Ubicacion
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, blank=True,
                              related_name='anteproyectos')
     facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
@@ -155,10 +157,10 @@ class Anteproyecto(models.Model):
     cod_facultad = models.CharField(max_length=120, blank=True)
     cod_escuela = models.CharField(max_length=120, blank=True)
     cod_carrera = models.CharField(max_length=120, blank=True)
+    # endregion
     asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
     nombre_proyecto = models.CharField(max_length=120, blank=True)
-
     registrado_por = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
     fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)

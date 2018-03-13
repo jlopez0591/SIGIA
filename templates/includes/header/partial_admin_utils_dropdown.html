@@ -10,11 +10,14 @@
         {% endif %}
         {% if perms.inventario.add_equipo %}
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><b>Inventario</b></a>
             <a class="dropdown-item" href="{% url 'inventario:fabricante-lista' %}">Fabricantes</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'inventario:categoria-lista' %}">Categorias</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'inventario:modelo-lista' %}">Modelos</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'inventario:lista-aulas' %}">Aulas</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'inventario:lista-equipo' %}">Equipos</a>
         {% endif %}
     </div>

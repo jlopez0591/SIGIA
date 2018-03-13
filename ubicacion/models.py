@@ -259,9 +259,18 @@ class DepartamentoInstancia(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.departamento = Departamento.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                          cod_departamento=self.cod_departamento)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.ubicacion = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
@@ -272,13 +281,14 @@ class CarreraInstancia(models.Model):
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
     unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True,
-                                 related_name='carrera_instancia')
+                               related_name='carrera_instancia')
     seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
 
-    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
+    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True,
+                                 related_name='carreras')
     ubicacion = models.ForeignKey(SeccionInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')
 

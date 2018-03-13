@@ -14,11 +14,13 @@
             {% endif %}
 
             {% if perms.perfil.ver_departamento %}
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
                         class="badge badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
             {% endif %}
 
             {% if perms.actividades.ver_departamento %}
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
                         class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
             {% endif %}

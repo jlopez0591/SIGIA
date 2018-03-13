@@ -1,34 +1,21 @@
 import logging
 import sys
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 
 logger = logging.getLogger(__name__)
 
-permisos_profesores = [
-    'add_idioma', 'add_titulo', 'add_ponencia', 'add_investigacion', 'add_premio', 'add_libro',
-    'add_publicacion', 'add_estadiapostdoctoral', 'add_conferencia'
-]
+permisos_profesores = []
 
-permisos_directores_departamento = [
-    'aprobar_actividad', 'rechazar_actividad', 'consultar_detalle_departamento', 'ver_detalle_profesor'
-]
+permisos_directores_departamento = []
 
-permisos_directores_escuela = [
-    'consultar_detalle_escuela', 'consultar_detalle_carrera', 'ver_detalle_estudiante'
-]
+permisos_directores_escuela = []
 
-permisos_administrativos = [
-    'registrar_equipo', 'editar_equipo'
-]
+permisos_administrativos = []
 
-permisos_comision = [
-    'create_anteproyecto', 'change_anteproyecto'
-]
+permisos_comision = []
 
-permisos_decanos = [
-    'consultar_detalle_unidad', 'consultar_detalle_lescuela', 'consultar_detalle_departamento', 'consultar_detalle_escuela'
-]
+permisos_decanos = []
 
 lista = {
     'Profesores': permisos_profesores,
@@ -41,9 +28,6 @@ lista = {
 
 
 class Command(BaseCommand):
-    '''
-        Comando para generar grupos y asignar permisos
-    '''
     help = 'Crea los grupos de usuarios para el sistema y asigna permisos correspondientes.'
 
     def handle(self, *args, **options):

@@ -14,11 +14,11 @@
                 <td>{{ proyecto.fecha_registro }}</td>
                 <td>
                     <div class="btn-group">
-                        {# Ver #}<a class="btn btn-outline-info" href="{{ proyecto.get_absolute_url }}"> Ver</a>
+                        {# Ver #}<a class="btn btn-outline-primary" href="{{ proyecto.get_absolute_url }}"> Ver</a>
                         {# Editar #}<a class="btn btn-outline-info"
                                        href="{% url 'estudiante:editar-proyecto' proyecto.pk %}"> Editar</a>
                         {# Rechazar #}<a href=# class="btn btn-outline-danger"> Rechazar</a>
-                        {# Aprobar #}<a href="#" class="btn-outline-success">Aprobar</a>
+                        {# Aprobar #}<a href="#" class="btn btn-outline-success">Aprobar</a>
                     </div>
                 </td>
             </tr>
