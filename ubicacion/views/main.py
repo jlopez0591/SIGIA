@@ -43,8 +43,8 @@ class UnidadDetailView(DetailView):
     template_name = 'ubicacion/facultad.html'
 
 
-def detalle_seccion(request, cod_sede, cod_facultad, cod_escuela):
-    seccion = get_object_or_404(SeccionInstancia, cod_sede=cod_sede, cod_facultad=cod_facultad, cod_escuela=cod_escuela)
+def detalle_seccion(request, pk):
+    seccion = get_object_or_404(SeccionInstancia, pk=pk)
     if seccion.seccion.tipo == 'ES':
         plantilla = 'ubicacion/escuela.html'
     else:
