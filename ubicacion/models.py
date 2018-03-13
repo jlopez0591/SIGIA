@@ -8,6 +8,8 @@ from .managers import (CarreraInstanciaManager, CarreraManager,
                        SeccionInstanciaManager, SeccionManager, SedeManager,
                        UnidadInstanciaManager, UnidadManager)
 
+from auditlog.registry import auditlog
+
 
 class Sede(models.Model):
     CAMPUS = 'CU'
@@ -61,7 +63,7 @@ class Unidad(models.Model):
     activo = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name_plural = 'Informacion de Facultades y Organizaciones'
+        verbose_name_plural = 'Facultades'
 
     def __str__(self):
         return '{} - {}'.format(self.cod_facultad, self.nombre)
@@ -94,7 +96,7 @@ class Seccion(models.Model):
 
     class Meta:
         unique_together = ('cod_escuela', 'cod_facultad')
-        verbose_name_plural = 'Informacion de Escuelas, Direcciones, Departamentos y Organizaciones'
+        verbose_name_plural = 'Escuelas y Departamentos'
 
     def __str__(self):
         return '{} - {}'.format(self.cod_facultad, self.cod_escuela)
@@ -110,6 +112,9 @@ class Seccion(models.Model):
 class Departamento(models.Model):
     cod_facultad = models.CharField(max_length=2)
     cod_departamento = models.CharField(max_length=2)
+
+    class Meta:
+        verbose_name_plural = 'Departamentos'
 
     def __str__(self):
         return '{} - {}'.format(self.cod_facultad, self.cod_departamento)
@@ -145,7 +150,7 @@ class Carrera(models.Model):
 
     class Meta:
         unique_together = ('cod_facultad', 'cod_escuela', 'cod_carrera')
-        verbose_name_plural = 'informacion de Carreras'
+        verbose_name_plural = 'Carreras'
 
     def __str__(self):
         return '{}-{}-{}'.format(self.cod_facultad, self.cod_escuela, self.cod_carrera)
@@ -169,7 +174,7 @@ class UnidadInstancia(models.Model):
 
     class Meta:
         unique_together = ('cod_sede', 'cod_facultad')
-        verbose_name_plural = 'Instancia de Facultad u Organizacion'
+        verbose_name_plural = 'Instancias Facultades'
 
     def __str__(self):
         return '{}-{}'.format(self.cod_sede, self.cod_facultad)
@@ -209,7 +214,7 @@ class SeccionInstancia(models.Model):
 
     class Meta:
         unique_together = ('cod_sede', 'cod_facultad', 'cod_escuela')
-        verbose_name_plural = 'Instancia de Escuela, Direccion, Departamento u Organizacion'
+        verbose_name_plural = 'Instancias Secciones'
 
     def __str__(self):
         return '{}-{}-{}'.format(self.cod_sede, self.cod_facultad, self.cod_escuela)
@@ -252,6 +257,9 @@ class DepartamentoInstancia(models.Model):
     ubicacion = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True)
 
     activo = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = 'Instancias Departamento'
 
     def __str__(self):
         return '{}-{}-{}'.format(self.cod_sede, self.cod_facultad, self.cod_departamento)
@@ -301,7 +309,7 @@ class CarreraInstancia(models.Model):
 
     class Meta:
         unique_together = ('cod_sede', 'cod_facultad', 'cod_escuela', 'cod_carrera')
-        verbose_name_plural = 'Instancia de Carrera'
+        verbose_name_plural = 'Instancias Carreras'
 
     def __str__(self):
         return '{}-{}-{}-{}'.format(self.cod_sede, self.cod_facultad, self.cod_escuela, self.cod_carrera)
@@ -342,3 +350,15 @@ class CarreraInstancia(models.Model):
     def nombre_completo(self):
         return '{} - {} - {} - {}'.format(self.sede.nombre, self.facultad.nombre, self.seccion.nombre,
                                           self.carrera.nombre)
+
+
+auditlog.register(Sede)
+auditlog.register(Unidad)
+auditlog.register(Seccion)
+auditlog.register(Departamento)
+auditlog.register(Carrera)
+auditlog.register(UnidadInstancia)
+auditlog.register(SeccionInstancia)
+auditlog.register(DepartamentoInstancia)
+auditlog.register(CarreraInstancia)
+

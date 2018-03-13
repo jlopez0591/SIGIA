@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.urls import reverse
 
 from django_countries.fields import CountryField
+from auditlog.registry import auditlog
 
 from .managers import EstudianteManager, AnteproyectoManager, ProyectoManager
 
@@ -252,3 +253,7 @@ def regions_changed(sender, **kwargs):
 
 
 m2m_changed.connect(regions_changed, sender=Proyecto.jurados.through)
+
+auditlog.register(Estudiante)
+auditlog.register(Anteproyecto)
+auditlog.register(Proyecto)

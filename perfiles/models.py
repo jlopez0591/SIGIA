@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 # Third party imports
+from auditlog.registry import auditlog
 from django_countries.fields import CountryField
 
 # This app imports
@@ -143,3 +144,6 @@ class Perfil(models.Model):
             return int(tl.days / 365)
         else:
             return "No tiene registrado una fecha de inicio"
+
+
+auditlog.register(Perfil)

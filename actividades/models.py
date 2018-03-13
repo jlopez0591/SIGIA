@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.urls import reverse, reverse_lazy
 
 # Third party imports
+from auditlog.registry import auditlog
 from django_countries.fields import CountryField
 from polymorphic.models import PolymorphicModel
 
@@ -413,7 +414,7 @@ class Titulo(Actividad):
     centro_estudio = models.ForeignKey(CentroEstudio, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'Titulos'
+        verbose_name_plural = 'Titulos'
 
     def __str__(self):
         profesor = self.usuario.get_full_name()
@@ -425,3 +426,17 @@ class Titulo(Actividad):
         self.clase = self.TITULO
         self.nombre_actividad = " " + self.info_titulo.nombre
         return super(Titulo, self).save()
+
+auditlog.register(Actividad)
+auditlog.register(EstadiaPostdoctoral)
+auditlog.register(Publicacion)
+auditlog.register(Investigacion)
+auditlog.register(Libro)
+auditlog.register(Conferencia)
+auditlog.register(Ponencia)
+auditlog.register(Proyecto)
+auditlog.register(Premio)
+auditlog.register(Idioma)
+auditlog.register(InfoTitulo)
+auditlog.register(CentroEstudio)
+auditlog.register(Titulo)

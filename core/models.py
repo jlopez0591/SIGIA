@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from auditlog.registry import auditlog
+
 
 class Notificacion(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -10,3 +12,5 @@ class Notificacion(models.Model):
 
     def __str__(self):
         return '{}-{}'.format(self.usuario.username, self.titulo)
+
+auditlog.register(Notificacion)

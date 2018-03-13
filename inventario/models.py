@@ -3,6 +3,8 @@ from django.urls import reverse
 
 from ubicacion.models import UnidadInstancia as Ubicacion
 
+from auditlog.registry import auditlog
+
 
 # Create your models here.
 class Fabricante(models.Model):
@@ -112,3 +114,9 @@ class Equipo(models.Model):
         except:
             pass
         return super(Equipo, self).save()
+
+auditlog.register(Fabricante)
+auditlog.register(Categoria)
+auditlog.register(Modelo)
+auditlog.register(Aula)
+auditlog.register(Equipo)
