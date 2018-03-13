@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 # Third party imports
+from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 from django_countries.fields import CountryField
 
@@ -91,6 +92,8 @@ class Perfil(models.Model):
     escuela = models.ForeignKey(SeccionInstancia, blank=True, null=True,
                                 limit_choices_to=Q(seccion__tipo='ES'),
                                 related_name='administrativos')
+
+    history = AuditlogHistoryField()
     objects = PerfilManager()
 
     class Meta:

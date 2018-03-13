@@ -9,6 +9,7 @@ from django.urls import reverse, reverse_lazy
 
 # Third party imports
 from auditlog.registry import auditlog
+from auditlog.models import AuditlogHistoryField
 from django_countries.fields import CountryField
 from polymorphic.models import PolymorphicModel
 
@@ -71,6 +72,7 @@ class Actividad(PolymorphicModel):
         (RECHAZADO, 'Rechazado'),
         (APROBADO, 'Aprobado')
     )
+    history = AuditlogHistoryField()
     usuario = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
     clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
 

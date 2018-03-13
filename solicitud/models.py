@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 
 
@@ -13,6 +14,8 @@ class Solicitud(models.Model):
     fecha_modificacion = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500, blank=True)
     resuelto = models.BooleanField(default=False)
+
+    history = AuditlogHistoryField()
 
     class Meta:
         verbose_name_plural = 'Solicitudes'
@@ -36,6 +39,8 @@ class Comentario(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500)
+
+    history = AuditlogHistoryField()
 
     class Meta:
         verbose_name_plural = 'Comentarios'

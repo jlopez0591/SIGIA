@@ -4,10 +4,12 @@ from django.urls import reverse
 from ubicacion.models import UnidadInstancia as Ubicacion
 
 from auditlog.registry import auditlog
+from auditlog.models import AuditlogHistoryField
 
 
 # Create your models here.
 class Fabricante(models.Model):
+    history = AuditlogHistoryField()
     nombre = models.CharField(max_length=120, unique=True)
     url = models.URLField(blank=True)
 
@@ -21,6 +23,7 @@ class Fabricante(models.Model):
 
 
 class Categoria(models.Model):
+    history = AuditlogHistoryField()
     nombre = models.CharField(max_length=120, unique=True)
 
     def __str__(self):
@@ -33,6 +36,7 @@ class Categoria(models.Model):
 
 
 class Modelo(models.Model):
+    history = AuditlogHistoryField()
     nombre = models.CharField(max_length=120, unique=True)
     fabricante = models.ForeignKey(Fabricante, on_delete=models.CASCADE, related_name='modelos')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='modelos')
@@ -56,6 +60,7 @@ class Aula(models.Model):
         (LABORATORIO, 'Laboratorio'),
         (OFICINA, 'Oficina'),
     )
+    history = AuditlogHistoryField()
     numero = models.CharField(max_length=5)
     tipo = models.CharField(choices=TIPOS, max_length=1)
 
@@ -90,6 +95,7 @@ class Aula(models.Model):
 
 
 class Equipo(models.Model):
+    history = AuditlogHistoryField()
     etiqueta = models.CharField(max_length=120, unique=True)
     modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE, related_name='equipos')
     cod_sede = models.CharField(max_length=2, blank=True)

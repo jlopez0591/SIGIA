@@ -8,6 +8,7 @@ from .managers import (CarreraInstanciaManager, CarreraManager,
                        SeccionInstanciaManager, SeccionManager, SedeManager,
                        UnidadInstanciaManager, UnidadManager)
 
+from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 
 
@@ -29,6 +30,8 @@ class Sede(models.Model):
     nombre = models.CharField(max_length=120, unique=True)
     tipo = models.CharField(max_length=2, choices=TIPOS, default='PA')
     activo = models.BooleanField(default=True)
+
+    history = AuditlogHistoryField()
 
     class Meta:
         verbose_name_plural = 'Sedes'
@@ -62,6 +65,8 @@ class Unidad(models.Model):
     tipo = models.CharField(max_length=2, choices=TIPOS, default=FACULTAD)
     activo = models.BooleanField(default=True)
 
+    history = AuditlogHistoryField()
+
     class Meta:
         verbose_name_plural = 'Facultades'
 
@@ -94,6 +99,8 @@ class Seccion(models.Model):
     facultad = models.ForeignKey(Unidad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
                                  on_delete=models.SET_NULL)
 
+    history = AuditlogHistoryField()
+
     class Meta:
         unique_together = ('cod_escuela', 'cod_facultad')
         verbose_name_plural = 'Escuelas y Departamentos'
@@ -112,6 +119,8 @@ class Seccion(models.Model):
 class Departamento(models.Model):
     cod_facultad = models.CharField(max_length=2)
     cod_departamento = models.CharField(max_length=2)
+
+    history = AuditlogHistoryField()
 
     class Meta:
         verbose_name_plural = 'Departamentos'
@@ -134,6 +143,7 @@ class Carrera(models.Model):
         (DOCTORADO, 'Doctorado'),
         (CURSO_DIPLOMADO, 'Curso / Diplomado'),
     )
+    history = AuditlogHistoryField()
     objects = CarreraManager()
 
     facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, limit_choices_to=(Q(tipo='FA')),
@@ -170,6 +180,8 @@ class UnidadInstancia(models.Model):
     cod_facultad = models.CharField(max_length=2)
 
     decano = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    history = AuditlogHistoryField()
     objects = UnidadInstanciaManager()
 
     class Meta:
@@ -198,6 +210,7 @@ class UnidadInstancia(models.Model):
 
 
 class SeccionInstancia(models.Model):
+    history = AuditlogHistoryField()
     objects = SeccionInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
@@ -258,6 +271,8 @@ class DepartamentoInstancia(models.Model):
 
     activo = models.BooleanField(default=True)
 
+    history = AuditlogHistoryField()
+
     class Meta:
         verbose_name_plural = 'Instancias Departamento'
 
@@ -306,6 +321,8 @@ class CarreraInstancia(models.Model):
     cod_carrera = models.CharField(max_length=2)
 
     activo = models.BooleanField(default=True)
+
+    history = AuditlogHistoryField()
 
     class Meta:
         unique_together = ('cod_sede', 'cod_facultad', 'cod_escuela', 'cod_carrera')
@@ -361,4 +378,3 @@ auditlog.register(UnidadInstancia)
 auditlog.register(SeccionInstancia)
 auditlog.register(DepartamentoInstancia)
 auditlog.register(CarreraInstancia)
-

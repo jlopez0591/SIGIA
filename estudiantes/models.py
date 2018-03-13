@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from django_countries.fields import CountryField
 from auditlog.registry import auditlog
+from auditlog.models import AuditlogHistoryField
 
 from .managers import EstudianteManager, AnteproyectoManager, ProyectoManager
 
@@ -59,6 +60,7 @@ class Estudiante(models.Model):
         ('AB+', 'AB+'),
         ('AB-', 'AB-')
     )
+    history = AuditlogHistoryField()
     provincia = models.CharField(
         max_length=5, blank=True, choices=PROVINCIAS, default='00')
     clase = models.CharField(max_length=5, blank=True,
@@ -161,6 +163,7 @@ class Anteproyecto(models.Model):
     # endregion
     asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
+
     nombre_proyecto = models.CharField(max_length=120, blank=True)
     registrado_por = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
     fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
@@ -170,6 +173,7 @@ class Anteproyecto(models.Model):
     resumen = models.TextField(max_length=500, blank=True)
 
     objects = AnteproyectoManager()
+    history = AuditlogHistoryField()
 
     class Meta:
         permissions = (
@@ -233,6 +237,7 @@ class Proyecto(models.Model):
     archivo = models.FileField(blank=True)
 
     objects = ProyectoManager
+    history = AuditlogHistoryField()
 
     class Meta:
         permissions = (
