@@ -4,6 +4,12 @@ El sistema de gestion de informacion academica/administrativa (SIGIA) es una pla
 pretende proveer un conjunto de aplicaciones para agilizar y facilitar varias de las acciones que se
 realizan dentro de las unidades academicas de la universidad.
 
+Entre las utiliades que se proponen manejar son las siguientes:
+
+1. Inventario: Inventario de equipo y aulas de las facultades.
+2. Estudiantes: Perfiles de los estudiantes, anteproyectos y proyectos de graduacion.
+3. Profesores: Perfiles de los profesores y actividades de los mismos.
+
 # Requerimientos
 
 1. PostgreSQL 9.5.2
