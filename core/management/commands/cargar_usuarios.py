@@ -19,7 +19,6 @@ ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/usuarios.json')
 LOG_LOCATION = '{}/{}/{}'.format(base_settings.BASE_DIR,
                                  'logs/usuarios/', fecha.strftime("%Y-%m-%d"))
 LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha.strftime("%X"))
-USER_CSV = ''
 URL = ''
 
 GRUPOS = {
