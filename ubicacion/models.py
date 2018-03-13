@@ -177,6 +177,9 @@ class UnidadInstancia(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
@@ -214,8 +217,17 @@ class SeccionInstancia(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.seccion = Seccion.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.ubicacion = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
@@ -287,10 +299,22 @@ class CarreraInstancia(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.seccion = Seccion.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.carrera = Carrera.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela,
                                                cod_carrera=self.cod_carrera)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.ubicacion = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                           cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:

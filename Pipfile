@@ -18,6 +18,7 @@ pylatex = "*"
 django-import-export = "*"
 pillow = "*"
 xkcdpass = "*"
+django-widget-tweaks = "*"
 
 
 [dev-packages]

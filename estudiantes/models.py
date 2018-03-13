@@ -135,7 +135,7 @@ class Estudiante(models.Model):
     def get_absolute_url(self):
         return reverse('estudiante:detalle', kwargs={'pk': self.pk})
 
-
+# TODO: Combinar con Trabajo de Graduacion.
 class Anteproyecto(models.Model):
     ESTADO = (
         ('pendiente', 'Pendiente'),
