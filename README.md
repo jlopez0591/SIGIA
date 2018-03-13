@@ -15,20 +15,28 @@ realizan dentro de las unidades academicas de la universidad.
 
 # Configuracion inicial
 ## Configuracion de Postgresql
-1. sudo -u postgres psql
-1. CREATE DATABASE sigia;
-1. CREATE USER sigia_user WITH PASSWORD 'password';
-1. ALTER ROLE sigia_user SET client_encoding TO 'utf8';
-1. ALTER ROLE sigia_user SET timezone TO 'UTC';
-1. ALTER ROLE sigia_user SET default_transaction_isolation TO 'read committed';
-1. GRANT ALL PRIVILEGES ON DATABASE sigia TO sigia_user;
-1. \q
+```
+postgres=#  sudo -u postgres psql
+postgres=#  CREATE DATABASE sigia;
+postgres=#  CREATE USER sigia_user WITH PASSWORD 'password';
+postgres=#  ALTER ROLE sigia_user SET client_encoding TO 'utf8';
+postgres=#  ALTER ROLE sigia_user SET timezone TO 'UTC';
+postgres=#  ALTER ROLE sigia_user SET default_transaction_isolation TO 'read committed';
+postgres=#  GRANT ALL PRIVILEGES ON DATABASE sigia TO sigia_user;
+postgres=#  \q
+```
+
 
 ## Instalacion de paquetes
-1. pipenv install
 
+```
+$ pipenv install
+
+```
 ## Comandos manage.py
-1. makemigrations
-1. migrate
-1. crear_grupos
-1. createsuperuser (Seguir los pasos que aparecen en la consola)
+```
+$ ./manage.py makemigrations
+$ ./manage.py migrate
+$ ./manage.py crear_grupos
+$ ./manage.py (Seguir los pasos que aparecen en la consola)
+```
