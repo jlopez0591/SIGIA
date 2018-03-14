@@ -113,19 +113,10 @@ class Actividad(PolymorphicModel):
         return '{}: {}'.format(self.fecha, self.clase.capitalize())
 
     def save(self, *args, **kwargs):
-        try:
-            if self.usuario.perfil:
-                try:
-                    self.sede = self.usuario.perfil.sede
-                    self.facultad = self.usuario.perfil.facultad
-                    self.departamento = self.usuario.perfil.departamento
-                except:
-                    logger.error(
-                        'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,
-                                                                                            self.cod_facultad,
-                                                                                            self.cod_departamento))
-        except:
-            logger.error('Error! No se pudo encontrar un usuario durante la creacion de la actividad.')
+        if self.usuario.perfil:
+                self.sede = self.usuario.perfil.sede
+                self.facultad = self.usuario.perfil.facultad
+                self.departamento = self.usuario.perfil.departamento
         return super(Actividad, self).save()
 
     def aprobar(self):
