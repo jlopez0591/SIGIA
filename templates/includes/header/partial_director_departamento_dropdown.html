@@ -7,7 +7,8 @@
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {# Actividades de los profesores TODO: Agregar los permisos para la creacion de #}
         {% if perms.actividades.aprobar_actividad %}
-            <a class="dropdown-item" href="{% url 'actividad:pendientes' %}">Actividades</a>
+            <a class="dropdown-item"
+               href="{% url 'actividad:departamento-pendientes' request.user.perfil.departamento.pk %}">Actividades</a>
             <div class="dropdown-divider"></div>
         {% endif %}
         {#  Anteproyectos y Trabajos de Grado #}
