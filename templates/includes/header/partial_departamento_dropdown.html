@@ -21,7 +21,7 @@
 
             {% if perms.actividades.ver_departamento %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
+                <a class="dropdown-item" href="{% url 'actividad:departamento' request.user.perfil.departamento.pk %}">Actividades <span
                         class="badge badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
             {% endif %}
 

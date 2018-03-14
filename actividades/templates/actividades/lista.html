@@ -7,12 +7,39 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title"><h4>Actividades</h4></div>
-                    <div class="card-text">
-                        {% include 'actividades/include/tabla_actividad.html' %}
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><h4>Actividades</h4></div>
+                <div class="card-text">
+                    {#                        {% include 'actividades/include/tabla_actividad.html' %}#}
+                    <div class="table table-responsive">
+                        <table class="table" id="actividades">
+                            <thead>
+                            <tr>
+                                <th scope="col">Titulo</th>
+                                <th scope="col">Clase</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for actividad in actividades %}
+                                <tr>
+                                    <td>{{ actividad.nombre_actividad }}</td>
+                                    <td>{{ actividad.get_clase_display }}</td>
+                                    <td>{{ actividad.fecha_creacion }}</td>
+                                    <td>{{ actividad.get_estado_display }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-outline-primary" href="{{ actividad.get_absolute_url }}">Ver</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

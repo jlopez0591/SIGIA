@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, ActividadesPendientes, \
-    ActividadesPropias, ListaActividades
+    ActividadesPropias, ListaActividades, ActividadListView, ActividadFacultadListView, ActividadDepartamentoListview, \
+    ActividadDepartamentoPendienteListView
 from actividades.forms import *
 from actividades import views
 
@@ -124,7 +125,10 @@ urlpatterns = [
 
     # API v2
     # TODO: Revisar el API
-    # url(r'^usuario/(?P<pk>[0-9]+)/$', ActividadesUsuario.as_view(), name='propias'), # Atenuarse a estandar RESTful
-    # url(r'^departamento/(?P<pk>[0-9]+)/pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
-    # url(r'^departamento/(?P<pk>[0-9]+)/pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
+    url(r'lista/$', ActividadListView.as_view(), name='admin-lista'),
+    url(r'^usuario/(?P<pk>[0-9]+)/$', ActividadesPropias.as_view(), name='propias'),
+    url(r'^facultad/(?P<pk>[0-9]+)/$', ActividadFacultadListView.as_view(), name='facultad'),
+    url(r'^departamento/(?P<pk>[0-9]+)/$', ActividadDepartamentoListview.as_view(), name='departamento'),
+    url(r'^departamento/(?P<pk>[0-9]+)/pendientes/$', ActividadDepartamentoPendienteListView.as_view(),
+        name='departamento-pendientes'),
 ]

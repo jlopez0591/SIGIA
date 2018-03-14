@@ -47,7 +47,7 @@
 
             {% if perms.actividades.change_actividad %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'actividad:lista' %}">Actividades <span
+                <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades <span
                         class="badge badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
             {% endif %}
 

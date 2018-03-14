@@ -49,17 +49,6 @@ class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
         return self.object.get_absolute_url()
 
 
-class ActividadesPropias(ListView):
-    model = Actividad
-    context_object_name = 'actividades'
-    template_name = 'actividades/propias.html'
-
-    def get_queryset(self):
-        usuario = self.request.user
-        qs = Actividad.objects.filter(usuario=usuario)
-        return qs
-
-
 class ActividadesPendientes(PermissionRequiredMixin, ListView):
     model = Actividad
     context_object_name = 'actividades'
@@ -75,6 +64,55 @@ class ActividadesPendientes(PermissionRequiredMixin, ListView):
         return qs
 
 
+class ActividadListView(ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    template_name = 'actividades/lista.html'
+
+
+class ActividadesPropias(ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    template_name = 'actividades/propias.html'
+
+    def get_queryset(self):
+        usuario = self.request.user
+        qs = Actividad.objects.filter(usuario=usuario)
+        return qs
+
+
+class ActividadFacultadListView(ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    permission_required = 'actividades.aprobar_actividad'
+    template_name = 'actividades/lista.html'
+
+    def get_queryset(self):
+        qs = Actividad.objects.aprobado().filter(facultad_id=self.kwargs['pk'])
+        return qs
+
+
+class ActividadDepartamentoListview(ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    permission_required = 'actividades.aprobar_actividad'
+    template_name = 'actividades/lista.html'
+
+    def get_queryset(self):
+        qs = Actividad.objects.filter(departamento_id=self.kwargs['pk'])
+        return qs
+
+class ActividadDepartamentoPendienteListView(ListView):
+    model = Actividad
+    context_object_name = 'actividades'
+    permission_required = 'actividades.aprobar_actividad'
+    template_name = 'actividades/lista.html'
+
+    def get_queryset(self):
+        qs = Actividad.objects.en_espera().filter(departamento_id=self.kwargs['pk'])
+        return qs
+
+
 class ListaActividades(PermissionRequiredMixin, ListView):
     model = Actividad
     context_object_name = 'actividades'
@@ -85,7 +123,7 @@ class ListaActividades(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.user.is_superuser:
             qs = Actividad.objects.aprobado()
-        elif True:  # TODO: Verificar permiso de Decano
+        elif True:
             qs = Actividad.objects.aprobado().filter()  # TODO: Filter por facultad
         else:
             qs = None

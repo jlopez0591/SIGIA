@@ -1,5 +1,4 @@
 <div class="table table-responsive">
-    {% if actividades %}
         <table class="table" id="actividades">
             <thead>
             <tr>
@@ -17,7 +16,6 @@
                     <td>{{ actividad.get_clase_display }}</td>
                     <td>{{ actividad.fecha_creacion }}</td>
                     <td>{{ actividad.get_estado_display }}</td>
-                    </td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-outline-primary" href="{{ actividad.get_absolute_url }}">Ver</a>
@@ -27,7 +25,5 @@
             {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <div class="alert alert-info text-center">No hay actividades pendientes</div>
-    {% endif %}
 </div>
+
