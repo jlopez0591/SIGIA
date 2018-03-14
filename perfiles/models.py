@@ -91,7 +91,6 @@ class Perfil(models.Model):
     #                                  )
     departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='personal')
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
-                                limit_choices_to=Q(seccion__tipo='ES'),
                                 related_name='administrativos')
 
     history = AuditlogHistoryField()

@@ -10,7 +10,7 @@ from estudiantes.models import Estudiante
 from sigia.base_settings import DEBUG
 
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
-ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test-data/node-estudiante.json')
+ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/estudiantes.json')
 LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/estudiantes/creacion')
 LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha)
 
@@ -24,7 +24,7 @@ ESTATUS = {
     'A': True,
     'I': False
 }
-FECHA_ACTUAL = str(datetime.datetime.now().year)  # Anio actual para ser especificos.
+FECHA_ACTUAL = datetime.datetime.now().year  # Anio actual para ser especificos.
 
 
 class Command(BaseCommand):
@@ -33,7 +33,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         data = self.load_file()
         for row in data:
+            print('Test')
             if row['ultimo_anio'] == FECHA_ACTUAL:
+                print('test2')
+                row['provincia'] = str(row['provincia'])
+                row['tomo'] = str(row['tomo'])
+                row['folio'] = str(row['folio'])
                 try:
                     e, created = Estudiante.objects.update_or_create(
                         provincia=row['provincia'],

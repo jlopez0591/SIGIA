@@ -77,14 +77,14 @@ class Estudiante(models.Model):
     telefono = models.CharField(max_length=120, blank=True)
     tipo_sangre = models.CharField(max_length=120, blank=True, choices=SANGRE)
     fecha_nacimiento = models.DateField(blank=True, null=True)
-    discapacidad = models.TextField(max_length=500, blank=True)
+    discapacidad = models.TextField(max_length=500, blank=True, null=True)
 
     # Informacion de contacto
     pais = CountryField(blank=True)
     correo = models.EmailField(blank=True)
-    telefono_oficina = models.CharField(max_length=10, blank=True)
-    celular = models.CharField(max_length=12, blank=True)
-    celular_oficina = models.CharField(max_length=12, blank=True)  #
+    telefono_oficina = models.CharField(max_length=120, blank=True)
+    celular = models.CharField(max_length=120, blank=True)
+    celular_oficina = models.CharField(max_length=120, blank=True)  #
     cod_sede = models.CharField(max_length=2, blank=True, default='XX')
     cod_facultad = models.CharField(max_length=2, blank=True, default='XX')
     cod_escuela = models.CharField(max_length=2, blank=True, default='XX')
@@ -93,9 +93,9 @@ class Estudiante(models.Model):
                              choices=TURNOS)
     fecha_ingreso = models.DateField(blank=True, null=True)
     semestre_ingreso = models.CharField(
-        max_length=1, blank=True, choices=SEMESTRES)
+        max_length=5, blank=True, choices=SEMESTRES)
     ultimo_anio = models.CharField(max_length=4, blank=True)
-    ultimo_semestre = models.CharField(max_length=1, blank=True)  # I, II, V
+    ultimo_semestre = models.CharField(max_length=5, blank=True)  # I, II, V
     fecha_graduacion = models.DateField(blank=True, null=True)
 
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, related_name='estudiantes',
@@ -119,7 +119,7 @@ class Estudiante(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
-            self.unidad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+            self.facultad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
             self.escuela = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela)
             self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,

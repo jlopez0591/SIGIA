@@ -34,7 +34,7 @@
 
             {% if perms.perfiles.ver_perfil %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'perfil:lista' %}">Profesores <span
+                <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores <span
                         class="badge badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
             {% endif %}
 
@@ -42,7 +42,7 @@
             {% if perms.estudiantes.ver_estudiante %}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'estudiante:lista' %}">Estudiantes <span
-                        class="badge badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
+                        class="badge btn-outline-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
             {% endif %}
 
             {% if perms.actividades.change_actividad %}

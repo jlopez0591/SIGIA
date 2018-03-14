@@ -276,10 +276,11 @@ class DepartamentoInstancia(models.Model):
     cod_facultad = models.CharField(max_length=2)
     cod_departamento = models.CharField(max_length=2)
 
-    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True)
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, blank=True, null=True)
-    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True, related_name='departamentos')
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='departamentos')
+    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
+                                  related_name='departamentos')
 
     activo = models.BooleanField(default=True)
 
@@ -317,14 +318,14 @@ class CarreraInstancia(models.Model):
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True,
-                               related_name='carreras')
+                                 related_name='carreras')
     escuela = models.ForeignKey(Escuela, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carreras')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carreras')
 
     unidad = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
-                                 related_name='carreras')
+                               related_name='carreras')
     ubicacion = models.ForeignKey(EscuelaInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 
 from perfiles.models import Perfil
@@ -20,6 +20,26 @@ def consulta_profesor(request):
     return render(request, 'perfiles/consulta.html', {
         'perfiles': profesores
     })
+
+
+class ProfesoresFacultadListView(ListView):
+    model = Perfil
+    context_object_name = 'profesores'
+    template_name = 'perfiles/consulta.html'
+
+    def get_queryset(self):
+        qs = Perfil.objects.profesores().filter(facultad_id=self.kwargs['pk'])
+        return qs
+
+
+class ProfesoresDepartamentoListView(ListView):
+    model = Perfil
+    context_object_name = 'profesores'
+    template_name = 'perfiles/consulta.html'
+
+    def get_queryset(self):
+        qs = Perfil.objects.profesores().filter(departamento_id=self.kwargs['pk'])
+        return qs
 
 
 class PerfilDetailView(DetailView):

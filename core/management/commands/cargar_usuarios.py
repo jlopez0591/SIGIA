@@ -37,7 +37,6 @@ if not os.path.exists(LOG_LOCATION):
 if not os.path.exists(USER_CSV):
     os.makedirs(USER_CSV)
 
-
 logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -70,15 +69,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         lista_usuarios = list()
-        usuarios_creados = dict() # Listado de usuarios creados en la corrida
-        wordfile = xp.locate_wordfile() # Inicializacion de xkcdpass
-        words = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=5) # Iniciar el listado para xkcdpass
+        usuarios_creados = dict()  # Listado de usuarios creados en la corrida
+        wordfile = xp.locate_wordfile()  # Inicializacion de xkcdpass
+        words = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=5)  # Iniciar el listado para xkcdpass
 
         # Carga de Datos
         if base_settings.DEBUG is True:
-            datos = cargar_usuarios(ARCHIVO) # Utiliza el archivo local
+            datos = cargar_usuarios(ARCHIVO)  # Utiliza el archivo local
         else:
-            datos = cargar_webservice(URL) # Utiliza webservice provisto
+            datos = cargar_webservice(URL)  # Utiliza webservice provisto
 
         # Procedimientos
         for i, row in enumerate(datos):
@@ -102,15 +101,15 @@ class Command(BaseCommand):
                         try:
                             g = Group.objects.get(name=grupo)
                             u.groups.add(g)
-                            logging.info('Usuario agregado {} al grupo: {}'.format(u.user_name, g.name))
+                            logging.info('Usuario agregado {} al grupo: {}'.format(u.username, g.name))
                         except ObjectDoesNotExist as exc:
                             logging.error(exc)
                     # Crear perfil
                     ds['fecha_nacimiento'] = dt.strptime(ds['fecha_nacimiento'], '%Y-%m-%d').date()
                     Perfil.objects.update_or_create(usuario=u, defaults=ds)
             except:
-                logging.error('ERROR!')
-        
+                logging.error(sys.exc_info()[1])
+
         # Guardar la carga actual.
         ubicacion = input("Introduzca un nombre para el registro: ")
         file = '{}/{}.csv'.format(USER_CSV, ubicacion)

@@ -10,6 +10,10 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', PerfilPublicoView.as_view(), name='publico'),
     url(r'^lista/$', views.consulta_profesor, name='lista'),
 
+    # APIv2
+    url(r'^facultad/(?P<pk>[0-9]+)/profesores', ProfesoresFacultadListView.as_view(), name='profesores-facultad'),
+    url(r'^departamento/(?P<pk>[0-9]+)/profesores', ProfesoresDepartamentoListView.as_view(),
+        name='profesores-departamento'),
     # Autocompletado
     url(r'^autocomplete/$', ProfesoresAutocomplete.as_view(), name='autocomplete'),
 ]

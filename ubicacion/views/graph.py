@@ -15,7 +15,7 @@ def profesores_sede(request, sede_pk):
         cs = profesor.cod_sede
         cf = profesor.cod_facultad
         facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf)
-        ubicacion = facultad.unidad.nombre
+        ubicacion = facultad.facultad.nombre
         if ubicacion in conteo:
             conteo[ubicacion] += 1
         else:
@@ -35,7 +35,7 @@ def estudiantes_sede(request, sede_pk):
     for estudiante in estudiantes:
         cs = estudiante.cod_sede
         cf = estudiante.cod_facultad  # Codigo de Facultad
-        nombre_facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf).unidad.nombre.title()
+        nombre_facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf).facultad.nombre.title()
         if nombre_facultad in conteo:
             conteo[nombre_facultad] += 1
         else:
