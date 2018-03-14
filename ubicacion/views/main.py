@@ -5,7 +5,7 @@ from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadIns
 
 def consulta_sede(request):
     sedes = Sede.objects.activas().order_by('cod_sede')
-    return render(request, 'ubicacion/consulta/sede.html', {
+    return render(request, 'ubicacion/consulta/../templates/ubicacion/sede_list.html', {
         'sedes': sedes
     })
 

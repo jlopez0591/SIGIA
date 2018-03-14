@@ -1,20 +1,38 @@
 from django.conf.urls import url
 from . import views
+from ubicacion.views import SedeListView, FacultadListView, EscuelaInstanciaListView, CarreraInstanciaListView, \
+    DepartamentoInstanciaListView
+from ubicacion.views import SedeDetailView, FacultadInstanciaDetailView, EscuelaInstanciaDetailView, \
+    DepartamentoInstanciaDetailView, CarreraInstanciaDetailView
 from .views import CarreraInstanciaAutocomplete
 
 app_name = 'ubicacion'
 urlpatterns = [
-    # Consultas
-    url(r'^sedes/$', views.consulta_sede, name='sedes'),
-    url(r'^unidades/$', views.consulta_unidad, name='unidades'),
-    url(r'^secciones/$', views.consulta_seccion, name='secciones'),
-    url(r'^carreras/$', views.consulta_carrera, name='carreras'),
+    # Consultas v1
+    # url(r'^sedes/$', views.consulta_sede, name='sedes'),
+    # url(r'^unidades/$', views.consulta_unidad, name='unidades'),
+    # url(r'^secciones/$', views.consulta_seccion, name='secciones'),
+    # url(r'^carreras/$', views.consulta_carrera, name='carreras'),
+
+    # Detalle v1
+    # url(r'^sede/(?P<pk>[\w]+)/$', views.SedeDetailView.as_view(), name='sede'),
+    # url(r'^facultad/(?P<pk>[\w]+)$', views.UnidadDetailView.as_view(), name='unidad'),
+    # url(r'^seccion/(?P<pk>[\w]+)/$', views.detalle_seccion, name='seccion'),
+    # url(r'^carrera/(?P<pk>[\w]+)/$', views.CarreraDetailView.as_view(), name='carrera'),
+
+    # Consultas v2
+    url(r'^sedes/$', SedeListView.as_view(), name='sedes'),
+    url(r'^facultades/$', FacultadListView.as_view(), name='unidades'),
+    url(r'^escuelas/$', EscuelaInstanciaListView.as_view(), name='secciones'),
+    url(r'^departamentos/$', DepartamentoInstanciaListView.as_view(), name='secciones'),
+    url(r'^carreras/$', CarreraInstanciaListView.as_view(), name='carreras'),
 
     # Detalle v2
-    url(r'^sede/(?P<pk>[\w]+)/$', views.SedeDetailView.as_view(), name='sede'),
-    url(r'^facultad/(?P<pk>[\w]+)$', views.UnidadDetailView.as_view(), name='unidad'),
-    url(r'^seccion/(?P<pk>[\w]+)/$', views.detalle_seccion, name='seccion'),
-    url(r'^carrera/(?P<pk>[\w]+)/$', views.CarreraDetailView.as_view(), name='carrera'),
+    url(r'^sede/(?P<pk>[\w]+)/$', SedeDetailView.as_view(), name='sede'),
+    url(r'^facultad/(?P<pk>[\w]+)$', FacultadInstanciaDetailView.as_view(), name='unidad'),
+    url(r'^escuela/(?P<pk>[\w]+)/$', EscuelaInstanciaDetailView.as_view(), name='seccion'),
+    url(r'^departamento/(?P<pk>[\w]+)/$', DepartamentoInstanciaDetailView.as_view(), name='seccion'),
+    url(r'^carrera/(?P<pk>[\w]+)/$', CarreraInstanciaDetailView.as_view(), name='carrera'),
 
     # Autocomplete
     url(r'^carrera-autocomplete/$', CarreraInstanciaAutocomplete.as_view(), name='carrera-autocomplete'),
