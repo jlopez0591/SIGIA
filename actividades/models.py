@@ -18,7 +18,7 @@ from .managers import ActividadManager
 from .validators import validate_file_type
 
 # Other apps import
-from ubicacion.models import EscuelaInstancia, Sede, FacultadInstancia, DepartamentoInstancia
+from ubicacion.models import Sede, FacultadInstancia, DepartamentoInstancia
 
 logger = logging.getLogger(__name__)
 
@@ -72,25 +72,26 @@ class Actividad(PolymorphicModel):
         (RECHAZADO, 'Rechazado'),
         (APROBADO, 'Aprobado')
     )
-    history = AuditlogHistoryField()
+    # region Codigos
+    cod_sede = models.CharField(max_length=2, blank=True)
+    cod_facultad = models.CharField(max_length=2, blank=True)
+    cod_departamento = models.CharField(max_length=2, blank=True)
+    # endregion
+
+    # region Llaves
     usuario = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
-    clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
 
     sede = models.ForeignKey(Sede, blank=True, null=True, related_name='actividades',
                              on_delete=models.SET_NULL)
-    unidad = models.ForeignKey(FacultadInstancia, blank=True, null=True, related_name='actividades',
-                               on_delete=models.SET_NULL)
-    departamento = models.ForeignKey(EscuelaInstancia, blank=True, null=True, related_name='actividades',
+    facultad = models.ForeignKey(FacultadInstancia, blank=True, null=True, related_name='actividades',
+                                 on_delete=models.SET_NULL)
+    departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='actividades',
                                      on_delete=models.SET_NULL)
-    # departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='actividades',
-    #                                  on_delete=models.SET_NULL)
-    cod_sede = models.CharField(max_length=2, blank=True)
-    cod_facultad = models.CharField(max_length=2, blank=True)
-    cod_escuela = models.CharField(max_length=2, blank=True)
+    # endregion
 
+    clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
     fecha = models.DateField()
-
-    fecha_creacion = models.DateTimeField(blank=True)
+    fecha_creacion = models.DateTimeField(blank=True, auto_now_add=True)
     nombre_actividad = models.CharField(max_length=120)
     resumen = models.TextField(max_length=1000, blank=True)
     estado = models.CharField(max_length=25, choices=STATUS, default='espera')
@@ -98,6 +99,7 @@ class Actividad(PolymorphicModel):
 
     archivo = models.FileField(upload_to=user_directory_path, validators=[validate_file_type])
 
+    history = AuditlogHistoryField()
     objects = ActividadManager()
 
     class Meta:
@@ -115,16 +117,15 @@ class Actividad(PolymorphicModel):
             if self.usuario.perfil:
                 try:
                     self.sede = self.usuario.perfil.sede
-                    self.unidad = self.usuario.perfil.unidad
+                    self.facultad = self.usuario.perfil.facultad
                     self.departamento = self.usuario.perfil.departamento
                 except:
                     logger.error(
                         'Hubo un error al asignar ubicacion {}-{}-{} a la actividad'.format(self.cod_sede,
                                                                                             self.cod_facultad,
-                                                                                            self.cod_escuela))
+                                                                                            self.cod_departamento))
         except:
             logger.error('Error! No se pudo encontrar un usuario durante la creacion de la actividad.')
-        self.fecha_creacion = timezone.now()
         return super(Actividad, self).save()
 
     def aprobar(self):
@@ -428,6 +429,7 @@ class Titulo(Actividad):
         self.clase = self.TITULO
         self.nombre_actividad = " " + self.info_titulo.nombre
         return super(Titulo, self).save()
+
 
 auditlog.register(Actividad)
 auditlog.register(EstadiaPostdoctoral)
