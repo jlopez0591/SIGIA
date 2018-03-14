@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
-from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia
+from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia
 
 
 def consulta_sede(request):
@@ -11,14 +11,14 @@ def consulta_sede(request):
 
 
 def consulta_unidad(request):
-    facultades = UnidadInstancia.objects.activas().order_by('cod_sede', 'cod_facultad')
+    facultades = FacultadInstancia.objects.activas().order_by('cod_sede', 'cod_facultad')
     return render(request, 'ubicacion/consulta/facultad.html', {
         'facultades': facultades
     })
 
 
 def consulta_seccion(request):
-    secciones = SeccionInstancia.objects.activas().order_by('cod_sede', 'cod_facultad', 'cod_escuela')
+    secciones = EscuelaInstancia.objects.activas().order_by('cod_sede', 'cod_facultad', 'cod_escuela')
     return render(request, 'ubicacion/consulta/escuela.html', {
         'secciones': secciones
     })
@@ -38,13 +38,13 @@ class SedeDetailView(DetailView):
 
 
 class UnidadDetailView(DetailView):
-    model = UnidadInstancia
+    model = FacultadInstancia
     context_object_name = 'unidad'
     template_name = 'ubicacion/facultad.html'
 
 
 def detalle_seccion(request, pk):
-    seccion = get_object_or_404(SeccionInstancia, pk=pk)
+    seccion = get_object_or_404(EscuelaInstancia, pk=pk)
     if seccion.seccion.tipo == 'ES':
         plantilla = 'ubicacion/escuela.html'
     else:

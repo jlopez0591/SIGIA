@@ -6,7 +6,7 @@ import sys
 
 from sigia import base_settings
 from django.core.management.base import BaseCommand
-from ubicacion.models import Sede, Unidad, Seccion, Carrera, UnidadInstancia, SeccionInstancia, CarreraInstancia
+from ubicacion.models import Sede, Facultad, Escuela, Carrera, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
 ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/node.json')
@@ -51,20 +51,20 @@ class Command(BaseCommand):
         for unidad in unidades:
             try:
                 unidad = apply_activo(unidad)
-                u, created = Unidad.objects.update_or_create(cod_facultad=unidad['cod_facultad'], defaults=unidad)
+                u, created = Facultad.objects.update_or_create(cod_facultad=unidad['cod_facultad'], defaults=unidad)
                 if created:
-                    logging.info('Unidad: {} creada'.format(unidad['cod_facultad']))
+                    logging.info('Facultad: {} creada'.format(unidad['cod_facultad']))
             except:
-                logging.error('Unidad: {}'.format(unidad['cod_facultad']))
+                logging.error('Facultad: {}'.format(unidad['cod_facultad']))
         for seccion in secciones:
             try:
                 seccion = apply_activo(seccion)
-                s, created = Seccion.objects.update_or_create(cod_facultad=seccion['cod_facultad'],
+                s, created = Escuela.objects.update_or_create(cod_facultad=seccion['cod_facultad'],
                                                               cod_escuela=seccion['cod_escuela'], defaults=seccion)
                 if created:
-                    logging.info('Seccion {}-{} creada'.format(seccion['cod_facultad'], seccion['cod_escuela']))
+                    logging.info('Escuela {}-{} creada'.format(seccion['cod_facultad'], seccion['cod_escuela']))
             except:
-                logging.error('Seccion: {}-{}'.format(seccion['cod_facultad'], seccion['cod_escuela']))
+                logging.error('Escuela: {}-{}'.format(seccion['cod_facultad'], seccion['cod_escuela']))
         for carrera in carreras:
             try:
                 carrera = apply_activo(carrera)
@@ -81,28 +81,28 @@ class Command(BaseCommand):
             try:
                 try:
                     unidad = apply_activo(unidad)
-                    u, created = UnidadInstancia.objects.update_or_create(cod_sede=unidad['cod_sede'],
-                                                                          cod_facultad=unidad['cod_facultad'],
-                                                                          defaults=unidad)
+                    u, created = FacultadInstancia.objects.update_or_create(cod_sede=unidad['cod_sede'],
+                                                                            cod_facultad=unidad['cod_facultad'],
+                                                                            defaults=unidad)
                     if created:
-                        logging.info('Unidad: {}-{} creada'.format(unidad['cod_sede'], unidad['cod_facultad']))
+                        logging.info('Facultad: {}-{} creada'.format(unidad['cod_sede'], unidad['cod_facultad']))
                 except:
-                    logging.error('Unidad: {}'.format(unidad['cod_facultad']))
+                    logging.error('Facultad: {}'.format(unidad['cod_facultad']))
             except:
-                logging.error('Unidad: {}-{}'.format(unidad['cod_sede'], unidad['cod_facultad']))
+                logging.error('Facultad: {}-{}'.format(unidad['cod_sede'], unidad['cod_facultad']))
         for seccion in sec_ubc:
             try:
                 seccion = apply_activo(seccion)
-                s, created = SeccionInstancia.objects.update_or_create(cod_sede=seccion['cod_sede'],
+                s, created = EscuelaInstancia.objects.update_or_create(cod_sede=seccion['cod_sede'],
                                                                        cod_facultad=seccion['cod_facultad'],
                                                                        cod_escuela=seccion['cod_escuela'],
                                                                        defaults=seccion)
                 if created:
-                    logging.info('Seccion {}-{}-{} creada'.format(seccion['cod_sede'], seccion['cod_facultad'],
+                    logging.info('Escuela {}-{}-{} creada'.format(seccion['cod_sede'], seccion['cod_facultad'],
                                                                   seccion['cod_escuela']))
             except:
                 logging.error(
-                    'Seccion: {}-{}-{}'.format(seccion['cod_sede'], seccion['cod_facultad'], seccion['cod_escuela']))
+                    'Escuela: {}-{}-{}'.format(seccion['cod_sede'], seccion['cod_facultad'], seccion['cod_escuela']))
         for carrera in car_ubc:
             try:
                 carrera = apply_activo(carrera)

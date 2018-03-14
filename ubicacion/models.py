@@ -45,7 +45,7 @@ class Sede(models.Model):
         })
 
 
-class Unidad(models.Model):
+class Facultad(models.Model):
     '''
         Define la informacion de una facultad, estas pueden ser
         Facultades, vicerrectorias, institutos, asociaciones o coordinaciones.
@@ -77,7 +77,7 @@ class Unidad(models.Model):
         pass
 
 
-class Seccion(models.Model):
+class Escuela(models.Model):
     ESCUELA = 'ES'
     DEPARTAMENTO = 'DE'
     COMISION = 'CO'
@@ -96,7 +96,7 @@ class Seccion(models.Model):
     nombre = models.CharField(max_length=120)
     tipo = models.CharField(max_length=2, choices=TIPOS, default=ESCUELA)
     activo = models.BooleanField(default=True)
-    facultad = models.ForeignKey(Unidad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
+    facultad = models.ForeignKey(Facultad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
                                  on_delete=models.SET_NULL)
 
     history = AuditlogHistoryField()
@@ -110,10 +110,10 @@ class Seccion(models.Model):
 
     def save(self, *args, **kwargs):
         try:
-            self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
-        return super(Seccion, self).save()
+        return super(Escuela, self).save()
 
 
 class Departamento(models.Model):
@@ -146,9 +146,9 @@ class Carrera(models.Model):
     history = AuditlogHistoryField()
     objects = CarreraManager()
 
-    facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, limit_choices_to=(Q(tipo='FA')),
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, limit_choices_to=(Q(tipo='FA')),
                                  blank=True, null=True)
-    seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, limit_choices_to=(Q(tipo='ES')), blank=True,
+    seccion = models.ForeignKey(Escuela, on_delete=models.CASCADE, limit_choices_to=(Q(tipo='ES')), blank=True,
                                 null=True)
     cod_facultad = models.CharField(max_length=2)
     cod_escuela = models.CharField(max_length=2)
@@ -166,14 +166,14 @@ class Carrera(models.Model):
         return '{}-{}-{}'.format(self.cod_facultad, self.cod_escuela, self.cod_carrera)
 
     def save(self, *args, **kwargs):
-        self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
-        self.seccion = Seccion.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+        self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
+        self.seccion = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
         return super(Carrera, self).save()
 
 
-class UnidadInstancia(models.Model):
+class FacultadInstancia(models.Model):
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='facultades', blank=True, null=True)
-    facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, related_name='instancias', blank=True, null=True)
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, related_name='instancias', blank=True, null=True)
     activo = models.BooleanField(default=True)
 
     cod_sede = models.CharField(max_length=2)
@@ -197,10 +197,10 @@ class UnidadInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
-        return super(UnidadInstancia, self).save()
+        return super(FacultadInstancia, self).save()
 
     def get_absolute_url(self):
         return reverse('ubicacion:facultad', kwargs={
@@ -209,19 +209,19 @@ class UnidadInstancia(models.Model):
         })
 
 
-class SeccionInstancia(models.Model):
+class EscuelaInstancia(models.Model):
     history = AuditlogHistoryField()
     objects = SeccionInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
-    facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
-    seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
+    seccion = models.ForeignKey(Escuela, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
 
     cod_sede = models.CharField(max_length=2)
     cod_facultad = models.CharField(max_length=2)
     cod_escuela = models.CharField(max_length=2)
 
-    ubicacion = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, related_name='secciones', blank=True,
+    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, related_name='secciones', blank=True,
                                   null=True, limit_choices_to=(Q(facultad__tipo='FA')) | Q(facultad__tipo='6'))
     activo = models.BooleanField(default=True)
 
@@ -238,18 +238,18 @@ class SeccionInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
         try:
-            self.seccion = Seccion.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+            self.seccion = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
             pass
         try:
-            self.ubicacion = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+            self.ubicacion = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
-        return super(SeccionInstancia, self).save()
+        return super(EscuelaInstancia, self).save()
 
     def get_absolute_url(self):
         return reverse('ubicacion:seccion', kwargs={
@@ -265,9 +265,9 @@ class DepartamentoInstancia(models.Model):
     cod_departamento = models.CharField(max_length=2)
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True)
-    facultad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True)
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, blank=True, null=True)
-    ubicacion = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True)
+    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True)
 
     activo = models.BooleanField(default=True)
 
@@ -285,7 +285,7 @@ class DepartamentoInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
         try:
@@ -294,7 +294,7 @@ class DepartamentoInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.ubicacion = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+            self.ubicacion = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
 
@@ -303,16 +303,16 @@ class CarreraInstancia(models.Model):
     objects = CarreraInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
-    unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE, blank=True, null=True,
+    unidad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True,
                                related_name='carrera_instancia')
-    seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, blank=True, null=True,
+    seccion = models.ForeignKey(Escuela, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='carrera_instancia')
 
-    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.CASCADE, blank=True, null=True,
+    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                  related_name='carreras')
-    ubicacion = models.ForeignKey(SeccionInstancia, on_delete=models.CASCADE, blank=True, null=True,
+    ubicacion = models.ForeignKey(EscuelaInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')
 
     cod_sede = models.CharField(max_length=2)
@@ -337,11 +337,11 @@ class CarreraInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.facultad = Unidad.objects.get(cod_facultad=self.cod_facultad)
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
         try:
-            self.seccion = Seccion.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+            self.seccion = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
             pass
         try:
@@ -350,7 +350,7 @@ class CarreraInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.ubicacion = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+            self.ubicacion = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                           cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
             pass
@@ -370,11 +370,11 @@ class CarreraInstancia(models.Model):
 
 
 auditlog.register(Sede)
-auditlog.register(Unidad)
-auditlog.register(Seccion)
+auditlog.register(Facultad)
+auditlog.register(Escuela)
 auditlog.register(Departamento)
 auditlog.register(Carrera)
-auditlog.register(UnidadInstancia)
-auditlog.register(SeccionInstancia)
+auditlog.register(FacultadInstancia)
+auditlog.register(EscuelaInstancia)
 auditlog.register(DepartamentoInstancia)
 auditlog.register(CarreraInstancia)

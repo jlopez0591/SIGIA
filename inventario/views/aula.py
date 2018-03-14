@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 
 from inventario.forms import AulaForm
 from inventario.models import Aula
-from ubicacion.models import UnidadInstancia
+from ubicacion.models import FacultadInstancia
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
@@ -31,7 +31,7 @@ class AulaFacultadListView(ListView):
 
     def get_queryset(self):
         qs = None
-        unidad = UnidadInstancia.objects.get(pk=self.kwargs['pk'])
+        unidad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
         if usuario.is_authenticated:
             if usuario.perfil.facultad is not unidad:

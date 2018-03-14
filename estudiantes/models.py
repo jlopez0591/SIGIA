@@ -11,7 +11,7 @@ from auditlog.models import AuditlogHistoryField
 
 from .managers import EstudianteManager, AnteproyectoManager, ProyectoManager
 
-from ubicacion.models import Sede, UnidadInstancia, SeccionInstancia, CarreraInstancia
+from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
 
 class Estudiante(models.Model):
@@ -100,9 +100,9 @@ class Estudiante(models.Model):
 
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, related_name='estudiantes',
                              blank=True)
-    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
+    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, null=True,
                                  related_name='estudiantes', blank=True)
-    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
+    escuela = models.ForeignKey(EscuelaInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='estudiantes', blank=True)
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='estudiantes',
@@ -119,8 +119,8 @@ class Estudiante(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
-            self.unidad = UnidadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
-            self.escuela = SeccionInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+            self.unidad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+            self.escuela = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela)
             self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela,
@@ -149,9 +149,9 @@ class Anteproyecto(models.Model):
     # region Ubicacion
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, blank=True,
                              related_name='anteproyectos')
-    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
+    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='anteproyectos')
-    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True, blank=True,
+    escuela = models.ForeignKey(EscuelaInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='anteproyectos')
@@ -217,9 +217,9 @@ class Proyecto(models.Model):
     cod_facultad = models.CharField(max_length=120, blank=True)
     cod_escuela = models.CharField(max_length=120, blank=True)
     cod_carrera = models.CharField(max_length=120, blank=True)
-    facultad = models.ForeignKey(UnidadInstancia, on_delete=models.SET_NULL, null=True,
+    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, null=True,
                                  related_name='proyectos')
-    escuela = models.ForeignKey(SeccionInstancia, on_delete=models.SET_NULL, null=True,
+    escuela = models.ForeignKey(EscuelaInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')

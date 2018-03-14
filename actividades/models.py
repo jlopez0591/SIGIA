@@ -18,7 +18,7 @@ from .managers import ActividadManager
 from .validators import validate_file_type
 
 # Other apps import
-from ubicacion.models import SeccionInstancia, Sede, UnidadInstancia, DepartamentoInstancia
+from ubicacion.models import EscuelaInstancia, Sede, FacultadInstancia, DepartamentoInstancia
 
 logger = logging.getLogger(__name__)
 
@@ -78,9 +78,9 @@ class Actividad(PolymorphicModel):
 
     sede = models.ForeignKey(Sede, blank=True, null=True, related_name='actividades',
                              on_delete=models.SET_NULL)
-    unidad = models.ForeignKey(UnidadInstancia, blank=True, null=True, related_name='actividades',
+    unidad = models.ForeignKey(FacultadInstancia, blank=True, null=True, related_name='actividades',
                                on_delete=models.SET_NULL)
-    departamento = models.ForeignKey(SeccionInstancia, blank=True, null=True, related_name='actividades',
+    departamento = models.ForeignKey(EscuelaInstancia, blank=True, null=True, related_name='actividades',
                                      on_delete=models.SET_NULL)
     # departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='actividades',
     #                                  on_delete=models.SET_NULL)

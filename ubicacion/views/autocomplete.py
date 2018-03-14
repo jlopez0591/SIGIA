@@ -1,5 +1,5 @@
 from dal import autocomplete
-from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia, Unidad, Seccion, Carrera
+from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia, Facultad, Escuela, Carrera
 
 
 class CarreraInstanciaAutocomplete(autocomplete.Select2QuerySetView):

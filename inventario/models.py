@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from ubicacion.models import UnidadInstancia as Ubicacion
+from ubicacion.models import FacultadInstancia as Ubicacion
 
 from auditlog.registry import auditlog
 from auditlog.models import AuditlogHistoryField
@@ -64,7 +64,7 @@ class Aula(models.Model):
     numero = models.CharField(max_length=5)
     tipo = models.CharField(choices=TIPOS, max_length=1)
 
-    ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', null=True, blank=True, on_delete=models.CASCADE)
+    ubicacion = models.ForeignKey('actividades.FacultadInstancia', null=True, blank=True, on_delete=models.CASCADE)
     cod_sede = models.CharField(max_length=2, blank=True)
     cod_facultad = models.CharField(max_length=2, blank=True)
 
@@ -103,7 +103,7 @@ class Equipo(models.Model):
     observaciones = models.TextField(max_length=500, blank=True)
 
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
-    ubicacion = models.ForeignKey('ubicacion.UnidadInstancia', on_delete=models.CASCADE, blank=True, null=True,
+    ubicacion = models.ForeignKey('actividades.FacultadInstancia', on_delete=models.CASCADE, blank=True, null=True,
                                   related_name='equipos')
 
     def __str__(self):

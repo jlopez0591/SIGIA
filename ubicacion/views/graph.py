@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia
+from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia
 
 
 def profesores_sede(request, sede_pk):
@@ -14,7 +14,7 @@ def profesores_sede(request, sede_pk):
     for profesor in profesores:
         cs = profesor.cod_sede
         cf = profesor.cod_facultad
-        facultad = UnidadInstancia.objects.get(cod_sede=cs, cod_facultad=cf)
+        facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf)
         ubicacion = facultad.unidad.nombre
         if ubicacion in conteo:
             conteo[ubicacion] += 1
@@ -35,7 +35,7 @@ def estudiantes_sede(request, sede_pk):
     for estudiante in estudiantes:
         cs = estudiante.cod_sede
         cf = estudiante.cod_facultad  # Codigo de Facultad
-        nombre_facultad = UnidadInstancia.objects.get(cod_sede=cs, cod_facultad=cf).unidad.nombre.title()
+        nombre_facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf).unidad.nombre.title()
         if nombre_facultad in conteo:
             conteo[nombre_facultad] += 1
         else:
@@ -53,7 +53,7 @@ def estudiantes_semestre_escuela(request, escuela_pk):
     :param escuela_pk:
     :return: Objeto JSON con el conteo por semestre de estudiantes en la escuela.
     """
-    escuela = SeccionInstancia.objects.get(pk=escuela_pk)
+    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
     estudiantes = escuela.estudiantes.all()
     conteo = dict()
     for estudiante in estudiantes:
@@ -66,7 +66,7 @@ def estudiantes_semestre_escuela(request, escuela_pk):
 
 
 def proyectos_semestre_escuela(request, escuela_pk):
-    escuela = SeccionInstancia.objects.get(pk=escuela_pk)
+    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
     conteo = dict()
     proyectos = escuela.proyectos.all()
     for proyecto in proyectos:
@@ -79,7 +79,7 @@ def proyectos_semestre_escuela(request, escuela_pk):
 
 
 def anteproyectos_semestre_escuela(request, escuela_pk):
-    escuela = SeccionInstancia.objects.get(pk=escuela_pk)
+    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
     conteo = dict()
     conteo['aprobados'] = escuela.anteproyectos.aprobados().count()
     conteo['rechazados'] = escuela.anteproyectos.rechazados().count()
@@ -89,7 +89,7 @@ def anteproyectos_semestre_escuela(request, escuela_pk):
 
 # Departamentos
 def profesores_nivel(request, departamento_pk):
-    departamento = SeccionInstancia.objects.get(pk=departamento_pk)
+    departamento = EscuelaInstancia.objects.get(pk=departamento_pk)
     profesores = departamento.personal.profesores()
     conteo = dict()
     for profesor in profesores:
@@ -104,7 +104,7 @@ def actividades_tipo(request, departamento_pk):
     :param departamento_pk: Llave primaria del departamento
     :return: Conteo de las actividades
     """
-    departamento = SeccionInstancia.objects.get(pk=departamento_pk)
+    departamento = EscuelaInstancia.objects.get(pk=departamento_pk)
     actividades = departamento.actividades.aprobado().actuales()
     conteo = dict()
     for actividad in actividades:

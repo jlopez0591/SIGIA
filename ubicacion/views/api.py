@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from ubicacion.models import CarreraInstancia, SeccionInstancia, Sede, UnidadInstancia, Unidad, Seccion, Carrera
+from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia, Facultad, Escuela, Carrera
 
 
 def get_sedes(request):
@@ -9,19 +9,19 @@ def get_sedes(request):
 
 
 def get_facultades(request):
-    facultades = Unidad.objects.all().values()
+    facultades = Facultad.objects.all().values()
     lista = list(facultades)
     return JsonResponse(lista, safe=False)
 
 
 def get_escuelas(request):
-    escuelas = Seccion.objects.filter(tipo='ES').values()
+    escuelas = Escuela.objects.filter(tipo='ES').values()
     lista = list(escuelas)
     return JsonResponse(lista, safe=False)
 
 
 def get_departamentos(request):
-    escuelas = Seccion.objects.filter(tipo='DE').values()
+    escuelas = Escuela.objects.filter(tipo='DE').values()
     lista = list(escuelas)
     return JsonResponse(lista, safe=False)
 
@@ -32,6 +32,6 @@ def get_carreras(request):
     return JsonResponse(lista, safe=False)
 
 def get_fac_ubc(request):
-    fac_ubc = UnidadInstancia.objects.all().values()
+    fac_ubc = FacultadInstancia.objects.all().values()
     lista = list(fac_ubc)
     return JsonResponse(lista)

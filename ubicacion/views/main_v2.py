@@ -1,10 +1,10 @@
 from ubicacion.models import Sede
-from ubicacion.models import Unidad
-from ubicacion.models import Seccion
+from ubicacion.models import Facultad
+from ubicacion.models import Escuela
 from ubicacion.models import Departamento
 from ubicacion.models import Carrera
-from ubicacion.models import UnidadInstancia
-from ubicacion.models import SeccionInstancia
+from ubicacion.models import FacultadInstancia
+from ubicacion.models import EscuelaInstancia
 from ubicacion.models import DepartamentoInstancia
 from ubicacion.models import CarreraInstancia
 
@@ -22,22 +22,22 @@ class SedeDetailView(DetailView):
 
 
 class FacultadListView(ListView):
-    model = Unidad
+    model = Facultad
     context_object_name = 'facultades'
 
 
 class FacultadDetailView(DetailView):
-    model = Unidad
+    model = Facultad
     context_object_name = 'facultad'
 
 
 class SeccionListView(ListView):
-    model = Seccion
+    model = Escuela
     context_object_name = 'secciones'
 
 
 class SeccionDetailView(DetailView):
-    model = Seccion
+    model = Escuela
     context_object_name = 'seccion'
 
 
@@ -62,22 +62,22 @@ class CarreraDetailView(DetailView):
 
 
 class FacultadInstanciaListView(ListView):
-    model = UnidadInstancia
+    model = FacultadInstancia
     context_object_name = 'facultades'
 
 
 class FacultadInstanciaDetailView(DetailView):
-    model = UnidadInstancia
+    model = FacultadInstancia
     context_object_name = 'facultad'
 
 
 class EscuelaInstanciaListView(ListView):
-    model = SeccionInstancia
+    model = EscuelaInstancia
     context_object_name = 'escuelas'
 
 
 class EscuelaInstanciaDetailView(DetailView):
-    model = SeccionInstancia
+    model = EscuelaInstancia
     context_object_name = 'escuela'
 
 
