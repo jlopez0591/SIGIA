@@ -100,6 +100,22 @@
                 </div>
             </div>
         </div>
+        <div class="row top-buffer">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Estudiantes y Profesores por Facultad
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h3 class="text-right">
+                            <canvas id="personasChart"></canvas>
+                        </h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -129,6 +145,11 @@
             "datos": []
         };
 
+        var personasctx = document.getElementById('personasChart');
+
+        var estData = '';
+        var profData = '';
+
         window.onload = function () {
 
             // Grafica Estudiante
@@ -155,11 +176,7 @@
                         }]
                     };
 
-                    var estudianteChart = new Chart(estudiantectx, {
-                        type: 'bar',
-                        data: {},
-                        options: {}
-                    });
+                    estData = estudianteChartData['datasets'][0];
 
                     window.myBar = new Chart(estudiantectx, {
                         type: 'bar',
@@ -167,7 +184,7 @@
                         options: {
                             responsive: true,
                             legend: {
-                                position: 'top',
+                                position: 'top'
                             },
                             title: {
                                 display: true,
@@ -202,13 +219,16 @@
                         }]
                     };
 
+                    profData = profesorChartData["datasets"][0];
+
+
                     window.myBar = new Chart(profesorctx, {
-                        type: 'horizontalBar',
+                        type: 'bar',
                         data: profesorChartData,
                         options: {
                             responsive: true,
                             legend: {
-                                position: 'top',
+                                position: 'top'
                             },
                             title: {
                                 display: true,
@@ -216,10 +236,32 @@
                             }
                         }
                     });
+
+                    console.log(estData);
+                    console.log(profData);
+                    var personasChartData = {
+                        labels: estudiantes_info["etiquetas"],
+                        datasets: [estData, profData]
+                    };
+
+                    window.myBar = new Chart(personasctx, {
+                        type: 'bar',
+                        data: personasChartData,
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Relacion Estudiantes/Profesor por Facultad'
+                            }
+                        }
+                    });
                 }
             });
 
 
-        };
+        }; //End onload
     </script>
 {% endblock %}

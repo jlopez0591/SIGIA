@@ -105,9 +105,14 @@ class Perfil(models.Model):
     def save(self, *args, **kwargs):
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.facultad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
             self.escuela = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela)
+        try:
             self.departamento = DepartamentoInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                              cod_departamento=self.cod_departamento)
         except ObjectDoesNotExist:

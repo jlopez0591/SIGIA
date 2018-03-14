@@ -12,19 +12,20 @@ from dal import autocomplete
 
 def consulta_profesor(request):
     if request.user.is_superuser:
-        profesores = Perfil.objects.profesores()
+        # profesores = Perfil.objects.profesores()
+        profesores = None
     elif request.user.perfil.facultad:
         profesores = Perfil.objects.filter(facultad=request.user.perfil.facultad)
     else:
         profesores = None
     return render(request, 'perfiles/consulta.html', {
-        'perfiles': profesores
+        'perfiles': Perfil.objects.all()
     })
 
 
 class ProfesoresFacultadListView(ListView):
     model = Perfil
-    context_object_name = 'profesores'
+    context_object_name = 'perfiles'
     template_name = 'perfiles/consulta.html'
 
     def get_queryset(self):
