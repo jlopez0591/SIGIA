@@ -7,17 +7,33 @@
 
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Anteproyectos de Trabajo de Graduacion Pendientes</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
     <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="card-title"><h4>Anteproyectos</h4>
+                <div class="card-title"><h4>Anteproyectos de Trabajo de Graduacion</h4>
                     <hr/>
                     <div class="card-text">
                         {% if perms.estudiantes.add_anteproyecto %}
                             <p><a class="btn btn-outline-primary" href="{% url 'estudiante:crear-anteproyecto' %}">
                                 Registrar Anteproyecto</a></p>{% endif %}
-                        {% include 'estudiantes/anteproyecto/include/tabla.html' %}
+                        {% if anteproyectos %}
+                            {% include 'estudiantes/anteproyecto/include/tabla.html' %}
+                        {% else %}
+                            <div class="alert alert-info text-center">No hay anteproyectos pendientes</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

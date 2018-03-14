@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}
+    {{ departamento.cod_sede }}-{{ departamento.cod_facultad }}-{{ departamento.cod_departamento }}
 {% endblock %}
 
 {% block head %}
@@ -12,12 +12,26 @@
 {% block content %}
     <div class="container-fluid">
 
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'ubicacion:departamentos' %}">Departamentos</a></li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">{{ departamento.departamento.nombre.capitalize }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
         <div class="row top-buffer">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                           {{ seccion.seccion.get_tipo_display }} : {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</h4>
+                            {{ departamento.departamento.nombre }}
+                            : {{ departamento.cod_sede }}-{{ departamento.cod_facultad }}-{{ departamento.cod_departamento }}</h4>
                     </div>
                 </div>
             </div>
@@ -29,7 +43,7 @@
                     <div class="card-header">Cantidad de Profesores</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.personal.profesores.count }}</h3>
+                        <h3 class="text-right">{{ departamento.personal.profesores.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -39,7 +53,7 @@
                     <div class="card-header">Cantidad de Actividades</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.actividades.all.count }}</h3>
+                        <h3 class="text-right">{{ departamento.actividades.all.count }}</h3>
                     </div>
                 </div>
             </div>

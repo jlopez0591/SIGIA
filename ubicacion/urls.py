@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from . import views
-from ubicacion.views import SedeListView, FacultadListView, EscuelaInstanciaListView, CarreraInstanciaListView, \
+from ubicacion.views import SedeListView, FacultadInstanciaListView, EscuelaInstanciaListView, CarreraInstanciaListView, \
     DepartamentoInstanciaListView
 from ubicacion.views import SedeDetailView, FacultadInstanciaDetailView, EscuelaInstanciaDetailView, \
     DepartamentoInstanciaDetailView, CarreraInstanciaDetailView
@@ -22,16 +22,16 @@ urlpatterns = [
 
     # Consultas v2
     url(r'^sedes/$', SedeListView.as_view(), name='sedes'),
-    url(r'^facultades/$', FacultadListView.as_view(), name='unidades'),
-    url(r'^escuelas/$', EscuelaInstanciaListView.as_view(), name='secciones'),
-    url(r'^departamentos/$', DepartamentoInstanciaListView.as_view(), name='secciones'),
+    url(r'^facultades/$', FacultadInstanciaListView.as_view(), name='facultades'),
+    url(r'^escuelas/$', EscuelaInstanciaListView.as_view(), name='escuelas'),
+    url(r'^departamentos/$', DepartamentoInstanciaListView.as_view(), name='departamentos'),
     url(r'^carreras/$', CarreraInstanciaListView.as_view(), name='carreras'),
 
     # Detalle v2
     url(r'^sede/(?P<pk>[\w]+)/$', SedeDetailView.as_view(), name='sede'),
     url(r'^facultad/(?P<pk>[\w]+)$', FacultadInstanciaDetailView.as_view(), name='unidad'),
-    url(r'^escuela/(?P<pk>[\w]+)/$', EscuelaInstanciaDetailView.as_view(), name='seccion'),
-    url(r'^departamento/(?P<pk>[\w]+)/$', DepartamentoInstanciaDetailView.as_view(), name='seccion'),
+    url(r'^escuela/(?P<pk>[\w]+)/$', EscuelaInstanciaDetailView.as_view(), name='escuela'),
+    url(r'^departamento/(?P<pk>[\w]+)/$', DepartamentoInstanciaDetailView.as_view(), name='departamento'),
     url(r'^carrera/(?P<pk>[\w]+)/$', CarreraInstanciaDetailView.as_view(), name='carrera'),
 
     # Autocomplete

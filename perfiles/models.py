@@ -13,7 +13,7 @@ from django_countries.fields import CountryField
 from .managers import PerfilManager
 
 # Other apps
-from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, CarreraInstancia
+from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, DepartamentoInstancia, CarreraInstancia
 from actividades.models import Titulo
 
 
@@ -86,9 +86,10 @@ class Perfil(models.Model):
                              null=True)
     facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, related_name='personal',
                                  blank=True, null=True)
-    departamento = models.ForeignKey(EscuelaInstancia, blank=True, null=True, related_name='personal',
-                                     limit_choices_to=Q(seccion__tipo='DE'),
-                                     )
+    # departamento = models.ForeignKey(EscuelaInstancia, blank=True, null=True, related_name='personal',
+    #                                  limit_choices_to=Q(seccion__tipo='DE'),
+    #                                  )
+    departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='personal')
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
                                 limit_choices_to=Q(seccion__tipo='ES'),
                                 related_name='administrativos')
@@ -108,8 +109,8 @@ class Perfil(models.Model):
             self.facultad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
             self.escuela = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela)
-            self.departamento = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
-                                                             cod_escuela=self.cod_departamento)
+            self.departamento = DepartamentoInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+                                                             cod_departamento=self.cod_departamento)
         except ObjectDoesNotExist:
             pass
         return super(Perfil, self).save()

@@ -119,14 +119,26 @@ class Escuela(models.Model):
 class Departamento(models.Model):
     cod_facultad = models.CharField(max_length=2)
     cod_departamento = models.CharField(max_length=2)
+    nombre = models.CharField(max_length=120)
+    activo = models.BooleanField(default=True)
+    facultad = models.ForeignKey(Facultad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
+                                 on_delete=models.SET_NULL)
 
     history = AuditlogHistoryField()
 
     class Meta:
+        unique_together = ('cod_facultad', 'cod_departamento')
         verbose_name_plural = 'Departamentos'
 
     def __str__(self):
         return '{} - {}'.format(self.cod_facultad, self.cod_departamento)
+
+    def save(self, *args, **kwargs):
+        try:
+            self.facultad = Facultad.objects.get(cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
+            pass
+        return super(Departamento, self).save()
 
 
 class Carrera(models.Model):
@@ -213,15 +225,15 @@ class EscuelaInstancia(models.Model):
     history = AuditlogHistoryField()
     objects = SeccionInstanciaManager()
 
-    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
-    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
-    seccion = models.ForeignKey(Escuela, on_delete=models.CASCADE, related_name='secciones', blank=True, null=True)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='escuelas', blank=True, null=True)
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, related_name='escuelas', blank=True, null=True)
+    escuela = models.ForeignKey(Escuela, on_delete=models.CASCADE, related_name='escuelas', blank=True, null=True)
 
     cod_sede = models.CharField(max_length=2)
     cod_facultad = models.CharField(max_length=2)
     cod_escuela = models.CharField(max_length=2)
 
-    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, related_name='secciones', blank=True,
+    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, related_name='escuelas', blank=True,
                                   null=True, limit_choices_to=(Q(facultad__tipo='FA')) | Q(facultad__tipo='6'))
     activo = models.BooleanField(default=True)
 
@@ -267,7 +279,7 @@ class DepartamentoInstancia(models.Model):
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True)
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, blank=True, null=True)
-    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True)
+    ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True, related_name='departamentos')
 
     activo = models.BooleanField(default=True)
 
@@ -289,7 +301,7 @@ class DepartamentoInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.departamento = Departamento.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+            self.departamento = Departamento.objects.get(cod_facultad=self.cod_facultad,
                                                          cod_departamento=self.cod_departamento)
         except ObjectDoesNotExist:
             pass
@@ -297,20 +309,21 @@ class DepartamentoInstancia(models.Model):
             self.ubicacion = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
             pass
+        return super(DepartamentoInstancia, self).save()
 
 
 class CarreraInstancia(models.Model):
     objects = CarreraInstanciaManager()
 
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
-    unidad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True,
-                               related_name='carrera_instancia')
-    seccion = models.ForeignKey(Escuela, on_delete=models.CASCADE, blank=True, null=True,
-                                related_name='carrera_instancia')
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True,
+                               related_name='carreras')
+    escuela = models.ForeignKey(Escuela, on_delete=models.CASCADE, blank=True, null=True,
+                                related_name='carreras')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, blank=True, null=True,
-                                related_name='carrera_instancia')
+                                related_name='carreras')
 
-    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
+    unidad = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                  related_name='carreras')
     ubicacion = models.ForeignKey(EscuelaInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')

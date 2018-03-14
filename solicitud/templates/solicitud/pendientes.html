@@ -9,6 +9,18 @@
 
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Solicitudes Pendientes</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -17,33 +29,37 @@
                     </div>
                     <div class="card-body">
                         <hr>
-                        <table class="table table-bordered" id="solicitudes">
-                            <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Titulo</th>
-                                <th>Fecha Creacion</th>
-                                <th>Fecha de Ultimo Comentario</th>
-                                <th>Opciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for solicitud in solicitudes %}
+                        {% if solicitudes %}
+                            <table class="table table-bordered" id="solicitudes">
+                                <thead>
                                 <tr>
-                                    <td>{{ solicitud.usuario }}</td>
-                                    <td>{{ solicitud.titulo }}</td>
-                                    <td>{{ solicitud.fecha_creacion }}</td>
-                                    <td>{{ solicitud.fecha_modificacion }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-outline-info"
-                                               href="{{ solicitud.get_absolute_url }}">Ver</a>
-                                        </div>
-                                    </td>
+                                    <th>Usuario</th>
+                                    <th>Titulo</th>
+                                    <th>Fecha Creacion</th>
+                                    <th>Fecha de Ultimo Comentario</th>
+                                    <th>Opciones</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for solicitud in solicitudes %}
+                                    <tr>
+                                        <td>{{ solicitud.usuario }}</td>
+                                        <td>{{ solicitud.titulo }}</td>
+                                        <td>{{ solicitud.fecha_creacion }}</td>
+                                        <td>{{ solicitud.fecha_modificacion }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-info"
+                                                   href="{{ solicitud.get_absolute_url }}">Ver</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class="alert alert-info text-center">No hay solicitudes pendientes</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

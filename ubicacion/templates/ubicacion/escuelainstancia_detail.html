@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}
+    {{ escuela.cod_sede }}-{{ escuela.cod_facultad }}-{{ escuela.cod_escuela }}
 {% endblock %}
 
 {% block head %}
@@ -12,12 +12,26 @@
 {% block content %}
     <div class="container-fluid">
 
-        <div class="row top-buffer">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'ubicacion:escuelas' %}">Escuelas</a></li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">{{ escuela.escuela.nombre.capitalize }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                           {{ seccion.seccion.nombre.capitalize }} : {{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</h4>
+                            {{ escuela.escuela.nombre.capitalize }}
+                            : {{ escuela.cod_sede }}-{{ escuela.cod_facultad }}-{{ escuela.cod_escuela }}</h4>
                     </div>
                 </div>
             </div>
@@ -29,7 +43,7 @@
                     <div class="card-header">Cantidad de Estudiantes</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.estudiantes.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.estudiantes.all.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -38,7 +52,7 @@
                     <div class="card-header">Cantidad de Carreras</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.carreras.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.carreras.all.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -47,7 +61,7 @@
                     <div class="card-header">Cantidad de Proyectos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.proyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.proyectos.all.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -56,7 +70,7 @@
                     <div class="card-header">Cantidad de Anteproyectos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ seccion.anteproyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.anteproyectos.all.count }}</h3>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Consultar - Departamento{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Departamentos</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Consulta de Departamentos</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        {% if departamentos %}
+                            <table class="table table-bordered" id="departamentos">
+                                <thead>
+                                <tr>
+                                    <th>Codigo de Seccion</th>
+                                    <th>Nombre de Seccion</th>
+                                    <th>Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for departamento in departamentos %}
+                                    <tr>
+                                        <th>{{ departamento.cod_sede }}-{{ departamento.cod_facultad }}-{{ departamento.cod_departamento }}</th>
+                                        <th>{{ departamento.departamento.nombre.capitalize }}</th>
+                                        <th>
+                                            <a href="{% url 'ubicacion:departamento' departamento.pk %}"
+                                               class="btn btn-outline-info">Ver
+                                                Detalle</a></th>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#departamentos').DataTable();
+        });
+    </script>
+{% endblock %}

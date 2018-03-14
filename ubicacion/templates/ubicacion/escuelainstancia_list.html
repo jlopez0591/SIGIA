@@ -9,28 +9,37 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Escuelas</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Listado de Escuelas y Departamentos</h4>
+                    <h4 class="card-title">Consulta de Escuelas</h4>
                     <hr/>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="secciones">
+                        <table class="table table-bordered" id="escuelas">
                             <thead>
                             <tr>
-                                <th>Codigo de Seccion</th>
-                                <th>Nombre de Seccion</th>
-                                <th>Tipo</th>
+                                <th>Codigo de Escuela</th>
+                                <th>Nombre de Escuela</th>
                                 <th>Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for seccion in secciones %}
+                            {% for escuela in escuelas %}
                                 <tr>
-                                    <th>{{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</th>
-                                    <th>{{ seccion.seccion.nombre.capitalize }}</th>
-                                    <th>{{ seccion.seccion.get_tipo_display.capitalize }}</th>
+                                    <th>{{ escuela.cod_sede }}-{{ escuela.cod_facultad }}-{{ escuela.cod_escuela }}</th>
+                                    <th>{{ escuela.escuela.nombre.capitalize }}</th>
                                     <th>
-                                        <a href="{% url 'ubicacion:seccion' seccion.pk %}"
+                                        <a href="{% url 'ubicacion:escuela' escuela.pk %}"
                                            class="btn btn-outline-info">Ver
                                             Detalle</a></th>
                                 </tr>
@@ -49,7 +58,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#secciones').DataTable();
+            $('#escuelas').DataTable();
         });
     </script>
 {% endblock %}

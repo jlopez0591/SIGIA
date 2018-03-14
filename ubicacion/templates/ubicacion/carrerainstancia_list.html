@@ -1,35 +1,45 @@
 {% extends 'base.html' %}
 
-
 {% block head %}
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 {% endblock %}
 
-{% block title %}Consultar - Facultades{% endblock %}
+{% block title %}Consultar - Estudiante{% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Carreras</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Consulta de Facultades</h4>
+                    <h4 class="card-title">Consulta de Carreras</h4>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="facultades">
+                        <table class="table table-bordered" id="carreras">
                             <thead>
                             <tr>
-                                <th>Codigo de Facultad</th>
-                                <th>Nombre de la Facultad</th>
+                                <th>Codigo de Carrera</th>
+                                <th>Nombre de Carrera</th>
                                 <th>Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for facultad in facultades %}
+                            {% for carrera in carreras %}
                                 <tr>
-                                    <th>{{ facultad.cod_sede }}-{{ facultad.cod_facultad }}</th>
-                                    <th>{{ facultad.facultad.nombre.capitalize }}</th>
-                                    <th><a href="{% url 'ubicacion:unidad' facultad.pk %}"
+                                    <th>{{ carrera.cod_sede }}-{{ carrera.cod_facultad }}-{{ carrera.cod_escuela }}-{{ carrera.cod_carrera }}</th>
+                                    <th>{{ carrera.carrera.nombre.capitalize }}</th>
+                                    <th>
+                                        <a href="{% url 'ubicacion:carrera' carrera.pk %}"
                                            class="btn btn-outline-info">Ver
-                                        Detalle</a></th>
+                                            Detalle</a></th>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -41,12 +51,13 @@
     </div>
 {% endblock %}
 
+
 {% block javascript %}
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#facultades').DataTable();
+            $('#carreras').DataTable();
         });
     </script>
 {% endblock %}

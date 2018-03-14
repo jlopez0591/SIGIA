@@ -14,6 +14,19 @@
 {% block content %}
     <div class="container-fluid">
 
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'ubicacion:carreras' %}">Carreras</a></li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">{{ carrera.carrera.nombre.capitalize }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
         <div class="row top-buffer">
             <div class="col-md-12">
                 <div class="card">
