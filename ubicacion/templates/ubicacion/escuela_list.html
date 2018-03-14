@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Consultar - Escuela{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Listado de Escuelas y Departamentos</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="secciones">
+                            <thead>
+                            <tr>
+                                <th>Codigo de Seccion</th>
+                                <th>Nombre de Seccion</th>
+                                <th>Tipo</th>
+                                <th>Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for seccion in secciones %}
+                                <tr>
+                                    <th>{{ seccion.cod_sede }}-{{ seccion.cod_facultad }}-{{ seccion.cod_escuela }}</th>
+                                    <th>{{ seccion.seccion.nombre.capitalize }}</th>
+                                    <th>{{ seccion.seccion.get_tipo_display.capitalize }}</th>
+                                    <th>
+                                        <a href="{% url 'ubicacion:seccion' seccion.pk %}"
+                                           class="btn btn-outline-info">Ver
+                                            Detalle</a></th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#secciones').DataTable();
+        });
+    </script>
+{% endblock %}

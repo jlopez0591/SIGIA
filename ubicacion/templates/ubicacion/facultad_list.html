@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Consultar - Facultades{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Consulta de Facultades</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="facultades">
+                            <thead>
+                            <tr>
+                                <th>Codigo de Facultad</th>
+                                <th>Nombre de la Facultad</th>
+                                <th>Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for facultad in facultades %}
+                                <tr>
+                                    <th>{{ facultad.cod_sede }}-{{ facultad.cod_facultad }}</th>
+                                    <th>{{ facultad.facultad.nombre.capitalize }}</th>
+                                    <th><a href="{% url 'ubicacion:unidad' facultad.pk %}"
+                                           class="btn btn-outline-info">Ver
+                                        Detalle</a></th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#facultades').DataTable();
+        });
+    </script>
+{% endblock %}
