@@ -19,13 +19,13 @@ urlpatterns = [
     url(r'^modelo/(?P<pk>[\d+])/editar/$', modelo.ModeloUpdateView.as_view(), name='modelo-modificar'),
     # CRUD Equipo
     url(r'^equipos/$', equipo.EquipoListView.as_view(), name='lista-equipo'),
-    url(r'^equipos/(?P<pk>[\d+])/lista/$', equipo.EquipoFacultadListView.as_view(), name='facultad-equipo'),
+    url(r'^facultad/(?P<pk>[\d+])/equipos/$', equipo.EquipoFacultadListView.as_view(), name='facultad-equipo'),
     url(r'^equipo/crear/$', equipo.EquipoCreateView.as_view(), name='crear-equipo'),
     url(r'^equipo/(?P<pk>[\d+])/$', equipo.EquipoDetailView.as_view(), name='detalle-equipo'),
     url(r'^equipo/(?P<pk>[\d+])/editar$', equipo.EquipoUpdateView.as_view(), name='editar-equipo'),
     # CRUD Aula
     url(r'^aulas/$', aula.AulaListView.as_view(), name='lista-aulas'),
-    url(r'^aulas/(?P<pk>[\d+])/lista/$', aula.AulaFacultadListView.as_view(), name='facultad-aulas'),
+    url(r'^facultad/(?P<pk>[\d+])/aulas/$', aula.AulaFacultadListView.as_view(), name='facultad-aulas'),
     url(r'^aula/(?P<pk>[\d+])/$', aula.AulaDetailView.as_view(), name='detalle-aulas'),
     url(r'^aulas/crear$', aula.AulaCreateView.as_view(), name='crear-aulas'),
     url(r'^aula/(?P<pk>[\d+])/editar/$', aula.AulaUpdateView.as_view(), name='editar-aulas'),

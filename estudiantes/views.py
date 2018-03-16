@@ -10,6 +10,26 @@ from estudiantes.models import Estudiante, Anteproyecto, Proyecto
 from perfiles.models import Perfil
 
 
+class EstudianteFacultadListview(ListView):
+    context_object_name = 'estudiantes'
+    model = Estudiante
+    template_name = 'estudiantes/consultar.html'
+
+    def get_queryset(self):
+        qs = Estudiante.objects.filter(facultad_id=self.kwargs['pk'])
+        return qs
+
+
+class EstudianteEscuelaListView(ListView):
+    context_object_name = 'estudiantes'
+    model = Estudiante
+    template_name = 'estudiantes/consultar.html'
+
+    def get_queryset(self):
+        qs = Estudiante.objects.filter(escuela_id=self.kwargs['pk'])
+        return qs
+
+
 class EstudianteListView(PermissionRequiredMixin, ListView):
     permission_required = ('estudiante.view_estudiante')
     context_object_name = 'estudiantes'
@@ -60,6 +80,36 @@ class AnteproyectoCreateView(PermissionRequiredMixin, CreateView):
             return self.form_invalid(form)
 
 
+class AnteproyectoFacultadListView(ListView):
+    model = Anteproyecto
+    context_object_name = 'anteproyectos'
+    template_name = 'estudiantes/anteproyecto/lista.html'
+
+    def get_queryset(self):
+        qs = Anteproyecto.objects.filter(facultad_id=self.kwargs['pk']).aprobados()
+        return qs
+
+
+class AnteproyectoEscuelaListView(ListView):
+    model = Anteproyecto
+    context_object_name = 'anteproyectos'
+    template_name = 'estudiantes/anteproyecto/lista.html'
+
+    def get_queryset(self):
+        qs = Anteproyecto.objects.filter(escuela_id=self.kwargs['pk']).aprobados()
+        return qs
+
+
+class AnteproyectoPendienteEscuelaListView(ListView):
+    model = Anteproyecto
+    context_object_name = 'anteproyectos'
+    template_name = 'estudiantes/anteproyecto/lista.html'
+
+    def get_queryset(self):
+        qs = Anteproyecto.objects.puede_aprobar(self.request.user)
+        return qs
+
+
 class AnteproyectoDetailView(PermissionRequiredMixin, DetailView):
     model = Anteproyecto
     permission_required = 'estudiante.change_anteproyecto'
@@ -80,6 +130,26 @@ class ProyectoCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'form.html'
     form_class = ProyectoForm
     success_url = reverse_lazy('insight:index')
+
+
+class ProyectoFacultadListView(ListView):
+    model = Proyecto
+    template_name = 'estudiantes/proyecto/lista.html'
+    context_object_name = 'proyectos'
+
+    def get_queryset(self):
+        qs = Proyecto.objects.filter(facultad_id=self.kwargs['pk'])
+        return qs
+
+
+class ProyectoEscuelaListView(ListView):
+    model = Proyecto
+    template_name = 'estudiantes/proyecto/lista.html'
+    context_object_name = 'proyectos'
+
+    def get_queryset(self):
+        qs = Proyecto.objects.filter(escuela_id=self.kwargs['pk'])
+        return qs
 
 
 class ProyectoDetailView(PermissionRequiredMixin, DetailView):

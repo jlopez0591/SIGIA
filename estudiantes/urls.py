@@ -29,4 +29,18 @@ urlpatterns = [
 
     # Report views
     url(r'^(?P<pk>[\d]+)/reporte$', views.reporte_estudiante, name='reporte'),
+
+    # APIv2
+    url(r'^facultad/(?P<pk>[\d]+)/$', EstudianteFacultadListview.as_view(), name='estudiante-facultad'),
+    url(r'^escuela/(?P<pk>[\d]+)/$', EstudianteEscuelaListView.as_view(), name='estudiante-escuela'),
+
+    url(r'^facultad/(?P<pk>[\d]+)/anteproyectos/$', AnteproyectoFacultadListView.as_view(),
+        name='anteproyecto-facultad'),
+    url(r'^escuela/(?P<pk>[\d]+)/anteproyectos/$', AnteproyectoEscuelaListView.as_view(), name='anteproyecto-escuela'),
+    url(r'^escuela/(?P<pk>[\d]+)/anteproyectos/pendientes$', AnteproyectoPendienteEscuelaListView.as_view(),
+        name='anteproyecto-escuela-pendiente'),
+
+    url(r'^facultad/(?P<pk>[\d]+)/proyectos/$', EstudianteFacultadListview.as_view(), name='proyecto-facultad'),
+    url(r'^escuela/(?P<pk>[\d]+)/proyectos/$', EstudianteEscuelaListView.as_view(), name='proyecto-escuela'),
+
 ]
