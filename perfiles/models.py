@@ -110,11 +110,16 @@ class Perfil(models.Model):
         try:
             self.facultad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
         except ObjectDoesNotExist:
+            pass
+        try:
             self.escuela = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                         cod_escuela=self.cod_escuela)
+        except ObjectDoesNotExist:
+            pass
         try:
-            self.departamento = DepartamentoInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
-                                                             cod_departamento=self.cod_departamento)
+            self.departamento = DepartamentoInstancia.objects.get(cod_sede=self.cod_sede,
+                                                                  cod_facultad=self.cod_facultad,
+                                                                  cod_departamento=self.cod_departamento)
         except ObjectDoesNotExist:
             pass
         return super(Perfil, self).save()

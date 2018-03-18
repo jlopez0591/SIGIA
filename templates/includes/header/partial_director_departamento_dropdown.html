@@ -6,13 +6,13 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {# Actividades de los profesores TODO: Agregar los permisos para la creacion de #}
-        {% if perms.actividades.aprobar_actividad %}
+        {% if request.user.perfil.departamento and perms.actividades.aprobar_actividad %}
             <a class="dropdown-item"
                href="{% url 'actividad:departamento-pendientes' request.user.perfil.departamento.pk %}">Actividades</a>
             <div class="dropdown-divider"></div>
         {% endif %}
         {#  Anteproyectos y Trabajos de Grado #}
-        {% if perms.estudiantes.aprobar_anteproyecto %}
+        {% if request.user.perfil.escuela and perms.estudiantes.aprobar_anteproyecto %}
             <a class="dropdown-item"
                href="{% url 'estudiante:anteproyecto-escuela-pendiente' request.user.perfil.escuela.pk %}">Anteproyecto</a>
             <div class="dropdown-divider"></div>
