@@ -7,12 +7,12 @@
     {% if request.user.perfil.facultad %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item"
-               href="{% url 'ubicacion:unidad' request.user.perfil.facultad.pk %}">Dashboard</a>
+               href="{% url 'ubicacion:unidad' request.user.perfil.facultad.pk %}"><i class="fas fa-chart-pie"></i> Dashboard</a>
 
 
             {% if perms.unidad.ver_reporte %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Reportes</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Reportes</a>
             {% endif %}
 
             {% if perms.inventario.add_aula %}
@@ -34,33 +34,40 @@
 
             {% if perms.perfiles.ver_perfil %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores <span
-                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
+                <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores
+                    <span
+                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
             {% endif %}
 
 
             {% if perms.estudiantes.ver_estudiante %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'estudiante:estudiante-facultad' request.user.perfil.facultad.pk %}">Estudiantes <span
+                <a class="dropdown-item"
+                   href="{% url 'estudiante:estudiante-facultad' request.user.perfil.facultad.pk %}">Estudiantes <span
                         class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
             {% endif %}
 
             {% if perms.actividades.change_actividad %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades <span
-                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
+                <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades
+                    <span
+                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
             {% endif %}
 
             {% if perms.actividades.change_anteproyecto %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'estudiante:anteproyecto-facultad' request.user.perfil.facultad.pk  %}">Anteproyectos <span
-                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.anteproyectos.count }}</span></a>
+                <a class="dropdown-item"
+                   href="{% url 'estudiante:anteproyecto-facultad' request.user.perfil.facultad.pk %}">Anteproyectos
+                    <span
+                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.anteproyectos.count }}</span></a>
             {% endif %}
 
             {% if perms.actividades.change_proyecto %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'estudiante:proyecto-facultad' request.user.perfil.facultad.pk %}">Trabajos de Graduacion <span
-                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.proyectos.count }}</span></a>
+                <a class="dropdown-item"
+                   href="{% url 'estudiante:proyecto-facultad' request.user.perfil.facultad.pk %}">Trabajos de
+                    Graduacion <span
+                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.proyectos.count }}</span></a>
             {% endif %}
 
 

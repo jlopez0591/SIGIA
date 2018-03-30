@@ -117,6 +117,7 @@ class Estudiante(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        # TODO: Try/Except para todo esto.
         try:
             self.sede = Sede.objects.get(cod_sede=self.cod_sede)
             self.facultad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
@@ -129,7 +130,7 @@ class Estudiante(models.Model):
             print('Hubo un error al guardar los datos del estudiante{}{}{}{}. Error: {}'.format(self.provincia,
                                                                                                 self.clase, self.tomo,
                                                                                                 self.folio,
-                                                                                                1))  # TODO: sys.exc
+                                                                                                1))
         return super(Estudiante, self).save()
 
     def __str__(self):

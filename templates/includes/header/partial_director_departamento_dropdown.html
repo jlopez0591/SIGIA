@@ -5,7 +5,7 @@
         Pendientes <i class="fas fa-tasks"></i>
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        {# Actividades de los profesores TODO: Agregar los permisos para la creacion de #}
+        {# Actividades de los profesores #}
         {% if request.user.perfil.departamento and perms.actividades.aprobar_actividad %}
             <a class="dropdown-item"
                href="{% url 'actividad:departamento-pendientes' request.user.perfil.departamento.pk %}">Actividades</a>

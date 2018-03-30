@@ -5,7 +5,7 @@
         Registrar <i class="fas fa-pen-square"></i>
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        {# Actividades de los profesores TODO: arar los permisos para la creacion de#}
+        {# Actividades de los profesores #}
         {% if perms.actividades.add_actividad %}
             <a class="dropdown-item" href="#"><b>Actividad</b></a>
             <a class="dropdown-item" href="{% url 'actividad:crear-estadia' %}">Estadia

@@ -139,7 +139,6 @@ def apply_activo(data):
     return data
 
 
-# TODO: Necesario la creacion de webservice por parte de la DI
 def load_webservice(url):
     """
     Consulta webservice de la DI y regresa los datos de ubicacion.
