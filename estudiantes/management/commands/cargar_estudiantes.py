@@ -3,15 +3,13 @@ import logging
 import json
 import sys
 import os
-from sigia import base_settings
+from sigia.settings import main
 from django.core.management.base import BaseCommand
 from estudiantes.models import Estudiante
 
-from sigia.base_settings import DEBUG
-
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
-ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/estudiantes.json')
-LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/estudiantes/creacion')
+ARCHIVO = '{}{}'.format(main.BASE_DIR, '/test_data/estudiantes.json')
+LOG_LOCATION = '{}/{}'.format(main.BASE_DIR, 'logs/estudiantes/creacion')
 LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha)
 
 if not os.path.exists(LOG_LOCATION):

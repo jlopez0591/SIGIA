@@ -4,13 +4,13 @@ import logging
 import os
 import sys
 
-from sigia import base_settings
+from sigia.settings import main
 from django.core.management.base import BaseCommand
 from ubicacion.models import Sede, Facultad, Escuela, Carrera, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
 fecha = datetime.datetime.now().strftime("%Y-%m-%d")
-ARCHIVO = '{}{}'.format(base_settings.BASE_DIR, '/test_data/node.json')
-LOG_LOCATION = '{}/{}'.format(base_settings.BASE_DIR, 'logs/ubicacion/creacion')
+ARCHIVO = '{}{}'.format(main.BASE_DIR, '/test_data/node.json')
+LOG_LOCATION = '{}/{}'.format(main.BASE_DIR, 'logs/ubicacion/creacion')
 LOG_FILE = '{}/{}'.format(LOG_LOCATION, fecha)
 
 ESTATUS = {

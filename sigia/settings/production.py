@@ -1,4 +1,4 @@
-from sigia.base_settings import *
+from sigia.settings.main import *
 
 DATABASES = {
     'default': {

@@ -117,3 +117,4 @@ static/
 .idea/workspace.xml
 .idea/
 test_data/
+.idea/*

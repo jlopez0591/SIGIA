@@ -43,6 +43,7 @@ $ pipenv install
 ```
 $ ./manage.py makemigrations
 $ ./manage.py migrate
-$ ./manage.py crear_grupos
-$ ./manage.py (Seguir los pasos que aparecen en la consola)
-```
+$ ./manage.py cargar_grupos
+$ ./manage.py cargar_ubicaciones
+$ ./manage.py cargar_usuarios
+$ ./manage.py cargar_estudiantes

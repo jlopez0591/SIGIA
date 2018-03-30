@@ -1,4 +1,4 @@
-from sigia.base_settings import *
+from .main import *
 
 DATABASES = {
     'default': {
@@ -10,7 +10,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR, ]

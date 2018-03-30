@@ -1,11 +1,8 @@
-import json
 import logging
-import os
 import sys
 
 from django.core.management.base import BaseCommand
 from inventario.models import Fabricante
-from sigia import base_settings
 
 
 class Command(BaseCommand):
