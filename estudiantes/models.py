@@ -250,7 +250,7 @@ class Proyecto(models.Model):
         return 'Proyecto {}'.format(self.anteproyecto.nombre_proyecto)
 
     def get_absolute_url(self):
-        return reverse('estudiante:proyecto', kwargs={'pk': self.pk})
+        return reverse('estudiante:detalle-proyecto', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
         self.cod_sede = self.anteproyecto.cod_sede

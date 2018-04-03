@@ -3,15 +3,17 @@
         <thead>
         <tr>
             <th>Nombre del Proyecto</th>
-            <th>Fecha Registro</th>
+            <th>Fecha Entrega</th>
+            <th>Fecha Sustentacion</th>
             <th>Opciones</th>
         </tr>
         </thead>
         <tbody>
         {% for proyecto in proyectos %}
             <tr>
-                <td>{{ proyecto.nombre_proyecto }}</td>
-                <td>{{ proyecto.fecha_registro }}</td>
+                <td>{{ proyecto.anteproyecto.nombre_proyecto }}</td>
+                <td>{{ proyecto.fecha_entrega }}</td>
+                <td>{{ proyecto.fecha_sustentacion }}</td>
                 <td>
                     <div class="btn-group">
                         {# Ver #}<a class="btn btn-outline-primary" href="{{ proyecto.get_absolute_url }}"> Ver</a>
