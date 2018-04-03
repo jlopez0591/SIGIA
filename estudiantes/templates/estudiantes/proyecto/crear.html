@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Registrar Anteproyecto{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+{% endblock %}
+{% block title %}Registrar Proyecto de Graduacion{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Registrar Equipo</h4>
+                    <h4 class="card-title">Registrar Proyecto de Graduacion</h4>
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
@@ -20,14 +23,32 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     {{ form.media }}
     <script>
+        $(document).ready(function () {
+            tinymce.init({
+                selector: '#id_detalle'
+            });
 
-        tinymce.init({
-            selector: '#id_detalle'
+            $(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
+            });
+
+            $('#id_anteproyecto').select2({
+                width: '100%'
+            });
+
+            $('#id_jurados').select2({
+                width: '100%'
+            });
         });
 
-        $(".custom-file-input").wrapAll("<div class='custom-file' />")
+
     </script>
 {% endblock %}

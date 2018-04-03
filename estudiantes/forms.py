@@ -62,14 +62,14 @@ class ProyectoForm(forms.ModelForm):
             'programa', 'nota', 'detalle', 'archivo'
         )
         widgets = {
-            'anteproyecto': autocomplete.ModelSelect2(url='estudiante:anteproyecto-autocomplete', attrs={
-                "class": "form-control",
-                "data-placeholder": "Anteproyecto"
-            }),
-            'jurados': autocomplete.ModelSelect2Multiple(url='perfil:autocomplete', attrs={
-                "data-placeholder": "Jurados, Max. 3",
-                "data-maximum-selection-length": 3,  # TODO: Limitar en backend
-            }),
+            # 'anteproyecto': autocomplete.ModelSelect2(url='estudiante:anteproyecto-autocomplete', attrs={
+            #     "class": "form-control",
+            #     "data-placeholder": "Anteproyecto"
+            # }),
+            # 'jurados': autocomplete.ModelSelect2Multiple(url='perfil:autocomplete', attrs={
+            #     "data-placeholder": "Jurados, Max. 3",
+            #     "data-maximum-selection-length": 3,  # TODO: Limitar en backend
+            # }),
             'programa': forms.Select(attrs={
                 'class': 'form-control'
             }),
@@ -89,7 +89,7 @@ class ProyectoForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'archivo': forms.FileInput(attrs={
-                'class': 'custom-file-input'
+
             })
         }
 
