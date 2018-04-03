@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^escuela/(?P<pk>[\d]+)/anteproyectos/pendientes$', AnteproyectoPendienteEscuelaListView.as_view(),
         name='anteproyecto-escuela-pendiente'),
 
-    url(r'^facultad/(?P<pk>[\d]+)/proyectos/$', EstudianteFacultadListview.as_view(), name='proyecto-facultad'),
-    url(r'^escuela/(?P<pk>[\d]+)/proyectos/$', EstudianteEscuelaListView.as_view(), name='proyecto-escuela'),
+    url(r'^facultad/(?P<pk>[\d]+)/proyectos/$', ProyectoFacultadListView.as_view(), name='proyecto-facultad'),
+    url(r'^escuela/(?P<pk>[\d]+)/proyectos/$', ProyectoEscuelaListView.as_view(), name='proyecto-escuela'),
 
 ]

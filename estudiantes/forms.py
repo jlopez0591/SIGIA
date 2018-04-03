@@ -68,22 +68,26 @@ class ProyectoForm(forms.ModelForm):
         )
         widgets = {
             'anteproyecto': autocomplete.ModelSelect2(url='estudiante:anteproyecto-autocomplete', attrs={
+                "class": "form-control",
                 "data-placeholder": "Anteproyecto"
             }),
             'jurados': autocomplete.ModelSelect2Multiple(url='perfil:autocomplete', attrs={
                 "data-placeholder": "Jurados, Max. 3",
                 "data-maximum-selection-length": 3,  # TODO: Limitar en backend
             }),
-            'programa': '',
+            'programa': forms.Select(attrs={
+                'class': 'custom-select custom-select-lg'
+            }),
             'nota': forms.TextInput(attrs={
+                'class': 'form-control',
                 'placeholder': 'Nota Obtenida'
             }),
             'fecha_sustentacion': forms.TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 'placeholder': 'Fecha de Sustentacion'
             }),
             'fecha_entrega': forms.TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 'placeholder': 'Fecha de Entrega'
             })
         }

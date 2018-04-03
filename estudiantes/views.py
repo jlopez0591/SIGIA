@@ -127,7 +127,7 @@ class AnteproyectoUpdateView(PermissionRequiredMixin, UpdateView):
 class ProyectoCreateView(PermissionRequiredMixin, CreateView):
     model = Proyecto
     permission_required = 'estudiante.add_proyecto'
-    template_name = 'form.html'
+    template_name = 'estudiantes/proyecto/crear.html'
     form_class = ProyectoForm
     success_url = reverse_lazy('insight:index')
 
