@@ -16,4 +16,10 @@ class Notificacion(models.Model):
         return '{}-{}'.format(self.usuario.username, self.titulo)
 
 
+def get_name(self):
+    return '{} {}'.format(self.first_name, self.last_name)
+
+
+User.add_to_class("__str__", get_name)
+
 auditlog.register(Notificacion)

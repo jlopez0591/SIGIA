@@ -16,14 +16,18 @@
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
     {{ form.media }}
     <script>
+
         tinymce.init({
-            selector: '#id_resumen'
+            selector: '#id_detalle'
         });
+
+        $(".custom-file-input").wrapAll("<div class='custom-file' />")
     </script>
 {% endblock %}

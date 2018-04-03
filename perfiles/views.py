@@ -76,10 +76,17 @@ class ProfesoresAutocomplete(autocomplete.Select2QuerySetView):
         if self.request.user.is_superuser:
             qs = User.objects.all()
         elif self.request.user.is_authenticated():
-            perfil = Perfil.objects.get(usuario=self.request.user)
+            perfil = Perfil.objects.get(usuario=self.request.user)  # TODO: Arreglar busqueda
+            # qs =
         else:
             return User.objects.none()
 
         if self.q:
             qs = qs.filter(username__icontains=self.q)
         return qs
+
+    def get_result_label(self, item):
+        return item.get_full_name()
+
+    def get_selected_result_label(self, item):
+        return item.short_name

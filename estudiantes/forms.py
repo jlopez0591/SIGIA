@@ -1,11 +1,7 @@
 from django import forms
-from django.forms import ModelForm, TextInput
 
 from dal import autocomplete
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
-
-# from crispy_forms.helper import FormHelper
-# from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
 
 
 class StudentUpdateForm(forms.ModelForm):
@@ -36,27 +32,25 @@ class AnteproyectoForm(forms.ModelForm):
         model = Anteproyecto
         fields = ('estudiante', 'asesor', 'cod_carrera',
                   'nombre_proyecto', 'archivo', 'resumen')
+        labels = {
+            'cod_carrera': 'Codigo de la Carrera'
+        }
         widgets = {
-            'estudiante': autocomplete.ModelSelect2Multiple(url='estudiante:autocomplete', attrs={
-                "data-placeholder": "Estudiantes, Max. 3",
-                "data-maximum-selection-length": 3,  # TODO: Limitar en el backend
+            'cod_carrera': forms.TextInput(attrs={
+                'class': 'form-control',
             }),
-            'asesor': autocomplete.ModelSelect2(url='perfil:autocomplete', attrs={
-                "data-placeholder": "Profesor Asesor"
-            }),
-            'nombre_proyecto': TextInput(attrs={
+            'nombre_proyecto': forms.TextInput(attrs={
                 'placeholder': 'Nombre del Proyecto',
                 'class': 'form-control'
             }),
-            'carrera': autocomplete.ModelSelect2(url='ubicacion:carrera-autocomplete', attrs={
-                "data-placeholder": "Carrera"
+            'resumen': forms.Textarea(attrs={
+                'class': 'form-control'
             }),
             'archivo': '',
         }
 
     def __init__(self, *args, **kwargs):
         super(AnteproyectoForm, self).__init__(*args, **kwargs)
-
 
 
 class ProyectoForm(forms.ModelForm):
@@ -76,7 +70,7 @@ class ProyectoForm(forms.ModelForm):
                 "data-maximum-selection-length": 3,  # TODO: Limitar en backend
             }),
             'programa': forms.Select(attrs={
-                'class': 'custom-select custom-select-lg'
+                'class': 'form-control'
             }),
             'nota': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -89,6 +83,12 @@ class ProyectoForm(forms.ModelForm):
             'fecha_entrega': forms.TextInput(attrs={
                 'class': 'datepicker form-control',
                 'placeholder': 'Fecha de Entrega'
+            }),
+            'detalle': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+            'archivo': forms.FileInput(attrs={
+                'class': 'custom-file-input'
             })
         }
 
