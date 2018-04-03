@@ -252,6 +252,16 @@ class Proyecto(models.Model):
     def get_absolute_url(self):
         return reverse('estudiante:proyecto', kwargs={'pk': self.pk})
 
+    def save(self, *args, **kwargs):
+        self.cod_sede = self.anteproyecto.cod_sede
+        self.cod_facultad = self.anteproyecto.cod_facultad
+        self.cod_escuela = self.anteproyecto.cod_escuela
+        self.sede = self.anteproyecto.sede
+        self.facultad = self.anteproyecto.facultad
+        self.escuela = self.anteproyecto.escuela
+        self.carrera = self.anteproyecto.carrera
+        return super(Proyecto, self).save()
+
 
 def regions_changed(sender, **kwargs):
     if kwargs['instance'].jurados.count() > 3:
