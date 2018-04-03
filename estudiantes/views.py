@@ -103,7 +103,7 @@ class AnteproyectoEscuelaListView(ListView):
 class AnteproyectoPendienteEscuelaListView(ListView):
     model = Anteproyecto
     context_object_name = 'anteproyectos'
-    template_name = 'estudiantes/anteproyecto/lista.html'
+    template_name = 'estudiantes/anteproyecto/pendiente.html'
 
     def get_queryset(self):
         qs = Anteproyecto.objects.puede_aprobar(self.request.user)

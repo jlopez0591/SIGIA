@@ -1,28 +1,50 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 {% endblock %}
 
 
 {% block content %}
-    <div class="row">
+
+
+<div class="row">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Anteproyectos de Trabajo de Graduacion
+                    Pendientes
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row">
     <div class="col-md-8 offset-md-2 col-sm-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-title"><h4>Anteproyectos Pendientes</h4>
                     <hr/>
                     <div class="card-text">
+                        {% if anteproyectos %}
                         {% include 'estudiantes/anteproyecto/include/tabla.html' %}
+                        {% else %}
+                        <div class="alert alert-info" role="alert">
+                            No hay actividades pendientes
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
 
-{% block javascript %}
+    {% block javascript %}
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
@@ -30,4 +52,4 @@
             $('#anteproyectos').DataTable();
         });
     </script>
-{% endblock %}
+    {% endblock %}
