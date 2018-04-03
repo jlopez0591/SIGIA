@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import permission_required
 from dal import autocomplete
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
@@ -124,12 +125,14 @@ class AnteproyectoUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = AnteproyectoForm
 
 
-class ProyectoCreateView(PermissionRequiredMixin, CreateView):
+class ProyectoCreateView(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     model = Proyecto
     permission_required = 'estudiante.add_proyecto'
     template_name = 'estudiantes/proyecto/crear.html'
     form_class = ProyectoForm
-    success_url = reverse_lazy('insight:index')
+    success_url = reverse_lazy('core:index')
+    success_message = 'Proyecto Creado'
+
 
 
 class ProyectoFacultadListView(ListView):

@@ -7,6 +7,20 @@
 
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Proyectos de Trabajo de Graduacion
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+
     <div class="row">
     <div class="col-md-8 offset-md-2 col-sm-12">
         <div class="card">
@@ -15,8 +29,15 @@
 
                     <hr/>
                     <div class="card-text">
-                        <p><a class="btn btn-outline-primary" href="{% url 'estudiante:crear-proyecto' %}">Registrar Proyecto</a></p>
-                        {% include 'estudiantes/proyecto/include/tabla.html' %}
+                        <p><a class="btn btn-outline-primary" href="{% url 'estudiante:crear-proyecto' %}">Registrar
+                            Proyecto</a></p>
+                        {% if proyectos %}
+                            {% include 'estudiantes/proyecto/include/tabla.html' %}
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                No hay proyectos registrados
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
