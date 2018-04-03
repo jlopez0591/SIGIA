@@ -46,7 +46,8 @@ class AnteproyectoForm(forms.ModelForm):
             'resumen': forms.Textarea(attrs={
                 'class': 'form-control'
             }),
-            'archivo': '',
+            'archivo': forms.FileInput(attrs={
+            }),
         }
 
     def __init__(self, *args, **kwargs):
