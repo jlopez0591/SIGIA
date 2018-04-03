@@ -225,7 +225,7 @@ class Proyecto(models.Model):
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
                                 related_name='proyectos')
     estudiante = models.ManyToManyField(Estudiante, related_name='proyectos')
-    anteproyecto = models.ForeignKey(
+    anteproyecto = models.OneToOneField(
         Anteproyecto, on_delete=models.SET_NULL, null=True)
     jurados = models.ManyToManyField(User, related_name='jurado', limit_choices_to={
         'groups__name': 'Profesores'
