@@ -170,7 +170,7 @@ class Anteproyecto(models.Model):
     fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)
     estado = models.CharField(max_length=15, choices=ESTADO, default='pendiente')
-    archivo = models.FileField(blank=True)
+    archivo = models.FileField(blank=True, upload_to='anteproyectos')
     resumen = models.TextField(max_length=500, blank=True)
 
     objects = AnteproyectoManager()
@@ -239,7 +239,7 @@ class Proyecto(models.Model):
     programa = models.CharField(max_length=25, choices=PROGRAMAS, default=LICENCIATURA)
     nota = models.CharField(max_length=3, blank=True)
     detalle = models.TextField(max_length=500, blank=True)
-    archivo = models.FileField(blank=True)
+    archivo = models.FileField(blank=True, upload_to='proyectos')
 
     objects = ProyectoManager
     history = AuditlogHistoryField()

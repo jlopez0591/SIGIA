@@ -28,6 +28,7 @@ django-widget-tweaks = "*"
 gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
+openpyxl = "*"
 
 
 [dev-packages]

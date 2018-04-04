@@ -170,11 +170,14 @@ class ProyectoDetailView(PermissionRequiredMixin, DetailView):
     permission_required = 'estudiante.change_proyecto'
     template_name = 'estudiantes/proyecto/detalle.html'
     context_object_name = 'proyecto'
+    permission_required = 'proyecto:change_proyecto'
 
 
 class ProyectoUpdateView(PermissionRequiredMixin, UpdateView):
     model = Proyecto
     form_class = ProyectoForm
+    template_name = 'estudiantes/proyecto/crear.html'
+    permission_required = 'proyecto:change_proyecto'
 
 
 @permission_required('estudiante.change_anteproyecto')
