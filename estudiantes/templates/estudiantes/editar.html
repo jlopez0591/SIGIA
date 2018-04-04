@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Estudiante{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Editar Estudiante</h4>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var provincia = document.getElementsByClassName("provincia");
+            var clase = document.getElementsByClassName("clase");
+            var tomo = document.getElementsByClassName("tomo");
+            var folio = document.getElementsByClassName("folio");
+            $(".cedula").wrapAll("<div class='form-row'></div>");
+            $("#id_provincia").wrapAll("<div class='col'></div>");
+            $("#id_clase").wrapAll("<div class='col'></div>");
+            $("#id_tomo").wrapAll("<div class='col'></div>");
+            $("#id_folio").wrapAll("<div class='col'></div>");
+        });
+    </script>
+{% endblock %}

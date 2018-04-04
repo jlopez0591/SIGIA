@@ -23,7 +23,101 @@ class StudentUpdateForm(forms.ModelForm):
             'turno', 'fecha_ingreso', 'semestre_ingreso', 'ultimo_anio',
             'ultimo_semestre', 'fecha_graduacion'
         )
+        labels = {
+            'provincia': '',
+            'clase': '',
+            'tomo': '',
+            'folio': ''
+        }
         widgets = {
+            'primer_nombre': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'segundo_nombre': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'primer_apellido': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'segundo_apellido': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'provincia': forms.Select(attrs={
+                'class': 'form-control cedula',
+                'disabled': 'true'
+            }),
+            'clase': forms.Select(attrs={
+                'class': 'form-control cedula'
+            }),
+            'tomo': forms.TextInput(attrs={
+                'class': 'form-control cedula'
+            }),
+            'folio': forms.TextInput(attrs={
+                'class': 'form-control cedula'
+            }),
+            'sexo': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'direccion': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'telefono': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'fecha_nacimiento': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'discapacidad': forms.Textarea(attrs={
+                'class': 'form-control'
+            }),
+            'tipo_sangre': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'pais': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'correo': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'telefono_oficina': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'celular': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'celular_oficina': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'cod_sede': forms.TextInput(attrs={
+                'class': 'form-control carrera'
+            }),
+            'cod_facultad': forms.TextInput(attrs={
+                'class': 'form-control carrera'
+            }),
+            'cod_escuela': forms.TextInput(attrs={
+                'class': 'form-control carrera'
+            }),
+            'cod_carrera': forms.TextInput(attrs={
+                'class': 'form-control carrera'
+            }),
+            'turno': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'fecha_ingreso': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'semestre_ingreso': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'ultimo_anio': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'ultimo_semestre': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'fecha_graduacion': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
         }
 
 

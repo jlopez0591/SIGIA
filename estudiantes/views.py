@@ -60,7 +60,7 @@ class EstudianteUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateV
     model = Estudiante
     permission_required = 'estudiante.change_estudiante'
     form_class = StudentUpdateForm
-    template_name = 'form.html'
+    template_name = 'estudiantes/editar.html'
 
     def test_func(self):
         return True

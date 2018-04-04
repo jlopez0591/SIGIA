@@ -27,12 +27,16 @@
                     <div class="card-body">
                         <h4 class="card-title">Informacion Academica</h4>
 
-                        <ul class="list-group">
-                            <li class="list-group-item">Sede: {{ estudiante.cod_sede }}</li>
-                            <li class="list-group-item">Facultad: {{ estudiante.cod_facultad }}</li>
-                            <li class="list-group-item">Escuela: {{ estudiante.cod_escuela }}</li>
-                            <li class="list-group-item">Carrera: {{ estudiante.cod_carrera }}</li>
-                        </ul>
+                        <table class="table table-light">
+                            <tbody>
+                                <tr>
+                                    <td>Sede: {{ estudiante.cod_sede }}</td>
+                                    <td>Facultad: {{ estudiante.cod_facultad }}</td>
+                                    <td>Escuela: {{ estudiante.cod_escuela }}</td>
+                                    <td>Carrera: {{ estudiante.cod_carrera }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <hr/>
                         <ul class="list-group">
                             <li class="list-group-item">Turno: {{ estudiante.get_turno.display }}</li>
@@ -63,3 +67,4 @@
         </div>
     </div>
 {% endblock %}
+
