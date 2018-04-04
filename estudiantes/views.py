@@ -117,12 +117,22 @@ class AnteproyectoDetailView(PermissionRequiredMixin, DetailView):
     template_name = 'estudiantes/anteproyecto/detalle.html'
     context_object_name = 'anteproyecto'
 
+    # def get_object(self, queryset=None):
+    #     object = super(AnteproyectoDetailView, self).get_object()
+    #     if self.request.user.perfil.escuela is not object.escuela:
+    #         Http403()
+    #     return object
+
 
 class AnteproyectoUpdateView(PermissionRequiredMixin, UpdateView):
     model = Anteproyecto
     permission_required = 'estudiante.change_anteproyecto'
     template_name = 'estudiantes/anteproyecto/crear.html'
     form_class = AnteproyectoForm
+
+    def form_valid(self, form):
+        form.instance.estado = 'pendiente'
+        return super(AnteproyectoUpdateView, self).form_valid(form)
 
 
 class ProyectoCreateView(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
@@ -171,9 +181,8 @@ class ProyectoUpdateView(PermissionRequiredMixin, UpdateView):
 def aprobar_anteproyecto(request, pk):
     if request.method == 'POST':
         anteproyecto = Anteproyecto.objects.get(pk=pk)
-        anteproyecto.estado = 'aprobado'
-        anteproyecto.save()
-    return redirect('insight:detalle-anteproyecto', pk=pk)
+        anteproyecto.aprobar()
+    return redirect('estudiante:anteproyecto-detalle', pk=pk)
 
 
 @permission_required('estudiante.change_anteproyecto')
@@ -182,7 +191,7 @@ def rechazar_anteproyecto(request, pk):
         anteproyecto = Anteproyecto.objects.get(pk=pk)
         anteproyecto.estado = 'rechazado'
         anteproyecto.save()
-    return redirect('insight:detalle-anteproyecto', pk=pk)
+    return redirect('estudiante:anteproyecto-detalle', pk=pk)
 
 
 @permission_required('estudiante.change_anteproyecto')

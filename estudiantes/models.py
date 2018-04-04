@@ -202,6 +202,10 @@ class Anteproyecto(models.Model):
                                                     cod_escuela=self.cod_escuela, cod_carrera=self.cod_carrera)
         return super(Anteproyecto, self).save()
 
+    def aprobar(self):
+        self.estado = 'aprobado'
+        self.save()
+
 
 class Proyecto(models.Model):
     LICENCIATURA = 'licenciatura'

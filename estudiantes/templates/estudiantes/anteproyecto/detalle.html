@@ -21,7 +21,24 @@
                         <p class="card-text">{{ anteproyecto.resumen|safe }}</p>
                     {% endif %}
                     <hr>
-                    <p class="card-text"><a href="{{ anteproyecto.archivo }}" class="btn btn-outline-primary"><span
+                    <p class="card-text">
+                        {% if anteproyecto.estado == 'aprobado' %}
+                            <div class="alert alert-success" role="alert">
+                                Aprobado
+                            </div>
+                        {% elif anteproyecto.estado == 'pendiente' %}
+                            <div class="alert alert-primary" role="alert">
+                                Pendiente
+                            </div>
+                        {% elif anteproyecto.estado == 'rechazado' %}
+                            <div class="alert alert-warning" role="alert">
+                                Rechazado
+                            </div>
+                        {% endif %}
+                    </p>
+                    <hr/>
+                    <p class="card-text"><a href="/media/{{ anteproyecto.archivo }}"
+                                            class="btn btn-outline-primary"><span
                             class="fa fa-file"></span> Archivo</a></p>
                 </div>
                 <div class="card-footer text-right">
@@ -29,8 +46,11 @@
                         <a class="btn btn-outline-info"
                            href="{% url 'estudiante:editar-anteproyecto' anteproyecto.pk %}"><span
                                 class="fa fa-edit"></span> Editar</a>
-                        <a class="btn btn-outline-success"><span class="fa fa-check"></span> Aprobar</a>
-                        <a class="btn btn-outline-danger"><span class="fa fa-eraser"></span> Rechazar</a>
+                        <form method="post">{% csrf_token %}
+                            <a class="btn btn-outline-success"
+                               href="{% url 'estudiante:aprobar-anteproyecto' anteproyecto.pk %}"><span
+                                    class="fa fa-check"></span> Aprobar</a></form>
+                        {% if anteproyecto.estado != 'aprobado' %}<a class="btn btn-outline-danger" href="#"><span class="fa fa-eraser"></span> Rechazar</a>{% endif %}
                     </div>
                 </div>
             </div>
