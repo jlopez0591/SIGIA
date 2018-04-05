@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.exceptions import ObjectDoesNotExist
 from ubicacion.models import Sede, Facultad, FacultadInstancia
 
 
