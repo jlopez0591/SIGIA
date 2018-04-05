@@ -254,7 +254,7 @@ class EscuelaInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.seccion = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+            self.escuela = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
             pass
         try:
@@ -355,7 +355,7 @@ class CarreraInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
-            self.seccion = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
+            self.escuela = Escuela.objects.get(cod_facultad=self.cod_facultad, cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
             pass
         try:

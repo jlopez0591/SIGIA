@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 
-from sigia.settings import main
+from sigia import main
 from django.core.management.base import BaseCommand
 from ubicacion.models import Sede, Facultad, Escuela, Carrera, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
