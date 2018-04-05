@@ -1,0 +1,22 @@
+[
+    {
+        "model": "solicitud.comentario",
+        "pk": 1,
+        "fields": {
+            "solicitud": 1,
+            "usuario": 2,
+            "fecha": "2018-04-03T19:14:33.034Z",
+            "resumen": "Por favor cambiar el campo, urgente!"
+        }
+    },
+    {
+        "model": "solicitud.comentario",
+        "pk": 2,
+        "fields": {
+            "solicitud": 1,
+            "usuario": 2,
+            "fecha": "2018-04-03T19:14:43.871Z",
+            "resumen": "En serio?"
+        }
+    }
+]

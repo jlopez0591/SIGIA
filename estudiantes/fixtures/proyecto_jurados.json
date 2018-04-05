@@ -1,0 +1,26 @@
+[
+    {
+        "model": "estudiantes.proyecto_jurados",
+        "pk": 13,
+        "fields": {
+            "proyecto": 6,
+            "user": 3
+        }
+    },
+    {
+        "model": "estudiantes.proyecto_jurados",
+        "pk": 14,
+        "fields": {
+            "proyecto": 6,
+            "user": 5
+        }
+    },
+    {
+        "model": "estudiantes.proyecto_jurados",
+        "pk": 15,
+        "fields": {
+            "proyecto": 6,
+            "user": 7
+        }
+    }
+]

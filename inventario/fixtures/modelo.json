@@ -1,0 +1,12 @@
+[
+    {
+        "model": "inventario.modelo",
+        "pk": 1,
+        "fields": {
+            "nombre": "Latitude 5567",
+            "fabricante": 1,
+            "categoria": 1,
+            "url": ""
+        }
+    }
+]

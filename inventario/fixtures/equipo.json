@@ -1,0 +1,15 @@
+[
+    {
+        "model": "inventario.equipo",
+        "pk": 1,
+        "fields": {
+            "etiqueta": "12345",
+            "modelo": 1,
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "observaciones": "",
+            "aula": 1,
+            "ubicacion": 4
+        }
+    }
+]

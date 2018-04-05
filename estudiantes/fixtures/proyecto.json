@@ -1,0 +1,30 @@
+[
+    {
+        "model": "estudiantes.proyecto",
+        "pk": 6,
+        "fields": {
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "cod_escuela": "2",
+            "cod_carrera": "",
+            "facultad": 4,
+            "escuela": 8,
+            "carrera": 15,
+            "anteproyecto": null,
+            "fecha_entrega": "2018-04-07",
+            "fecha_sustentacion": "2018-04-14",
+            "programa": "licenciatura",
+            "nota": "100",
+            "detalle": "",
+            "archivo": "",
+            "estudiante": [
+                1
+            ],
+            "jurados": [
+                3,
+                5,
+                7
+            ]
+        }
+    }
+]

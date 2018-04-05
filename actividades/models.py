@@ -15,10 +15,10 @@ from polymorphic.models import PolymorphicModel
 
 # Utilities and helpers
 from .managers import ActividadManager
-from .validators import validate_file_type
 
 # Other apps import
 from ubicacion.models import Sede, FacultadInstancia, DepartamentoInstancia
+from utils.validators import validate_file_type
 
 logger = logging.getLogger(__name__)
 
@@ -114,9 +114,9 @@ class Actividad(PolymorphicModel):
 
     def save(self, *args, **kwargs):
         if self.usuario.perfil:
-                self.sede = self.usuario.perfil.sede
-                self.facultad = self.usuario.perfil.facultad
-                self.departamento = self.usuario.perfil.departamento
+            self.sede = self.usuario.perfil.sede
+            self.facultad = self.usuario.perfil.facultad
+            self.departamento = self.usuario.perfil.departamento
         return super(Actividad, self).save()
 
     def aprobar(self):

@@ -15,14 +15,14 @@
                             <li class="list-group-item">{{ estudiante }}</li>
                         {% endfor %}
                     </ul>
-                    <hr/>
                     {% if anteproyecto.resumen %}
+                        <hr/>
                         <h4 class="card-subtitle">Resumen</h4>
                         <p class="card-text">{{ anteproyecto.resumen|safe }}</p>
                     {% endif %}
-                    <hr>
                     <p class="card-text">
                         {% if anteproyecto.estado == 'aprobado' %}
+                            <hr>
                             <div class="alert alert-success" role="alert">
                                 Aprobado
                             </div>
@@ -50,7 +50,9 @@
                             <a class="btn btn-outline-success"
                                href="{% url 'estudiante:aprobar-anteproyecto' anteproyecto.pk %}"><span
                                     class="fa fa-check"></span> Aprobar</a></form>
-                        {% if anteproyecto.estado != 'aprobado' %}<a class="btn btn-outline-danger" href="#"><span class="fa fa-eraser"></span> Rechazar</a>{% endif %}
+                        {% if anteproyecto.estado != 'aprobado' %}
+                            <a class="btn btn-outline-danger" href="#"><span class="fa fa-eraser"></span>
+                                Rechazar</a>{% endif %}
                     </div>
                 </div>
             </div>

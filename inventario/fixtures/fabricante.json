@@ -1,0 +1,10 @@
+[
+    {
+        "model": "inventario.fabricante",
+        "pk": 1,
+        "fields": {
+            "nombre": "Dell",
+            "url": "http://www.dell.com"
+        }
+    }
+]

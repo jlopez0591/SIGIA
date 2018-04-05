@@ -1,0 +1,26 @@
+[
+    {
+        "model": "estudiantes.anteproyecto_estudiante",
+        "pk": 6,
+        "fields": {
+            "anteproyecto": 6,
+            "estudiante": 1
+        }
+    },
+    {
+        "model": "estudiantes.anteproyecto_estudiante",
+        "pk": 7,
+        "fields": {
+            "anteproyecto": 7,
+            "estudiante": 1
+        }
+    },
+    {
+        "model": "estudiantes.anteproyecto_estudiante",
+        "pk": 8,
+        "fields": {
+            "anteproyecto": 8,
+            "estudiante": 1
+        }
+    }
+]

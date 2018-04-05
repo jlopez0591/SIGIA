@@ -1,0 +1,14 @@
+[
+    {
+        "model": "solicitud.solicitud",
+        "pk": 1,
+        "fields": {
+            "usuario": 2,
+            "titulo": "Cambiar el campo de select2",
+            "fecha_creacion": "2018-04-03",
+            "fecha_modificacion": "2018-04-03T19:14:11.510Z",
+            "resumen": "",
+            "resuelto": false
+        }
+    }
+]

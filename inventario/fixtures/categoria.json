@@ -1,0 +1,9 @@
+[
+    {
+        "model": "inventario.categoria",
+        "pk": 1,
+        "fields": {
+            "nombre": "Laptop"
+        }
+    }
+]

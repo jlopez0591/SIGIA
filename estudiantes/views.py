@@ -66,12 +66,13 @@ class EstudianteUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateV
         return True
 
 
-class AnteproyectoCreateView(PermissionRequiredMixin, CreateView):
+class AnteproyectoCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateView):
     model = Anteproyecto
     permission_required = 'estudiante.add_anteproyecto'
     template_name = 'estudiantes/anteproyecto/crear.html'
     form_class = AnteproyectoForm
-    success_url = reverse_lazy('estudiante:anteproyectos-unidad')
+    success_url = reverse_lazy('core:index')
+    success_message = 'Actividad Creada Exitosamente'
 
     def form_valid(self, form):
         form.instance.registrado_por = self.request.user

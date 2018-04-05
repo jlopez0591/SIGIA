@@ -1,0 +1,41 @@
+[
+    {
+        "model": "estudiantes.estudiante",
+        "pk": 1,
+        "fields": {
+            "provincia": "8",
+            "clase": "00",
+            "tomo": "846",
+            "folio": "1852",
+            "primer_nombre": "Jose",
+            "segundo_nombre": "Alejandro",
+            "primer_apellido": "Lopez",
+            "segundo_apellido": "Fong",
+            "direccion": "Obarrio, Calle 57",
+            "sexo": "M",
+            "telefono": "64801055",
+            "tipo_sangre": "O+",
+            "fecha_nacimiento": "2018-04-03",
+            "discapacidad": "",
+            "pais": "PA",
+            "correo": "jose.lopez04@up.ac.pa",
+            "telefono_oficina": "N/A",
+            "celular": "64801055",
+            "celular_oficina": "NA",
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "cod_escuela": "2",
+            "cod_carrera": "1",
+            "turno": "N",
+            "fecha_ingreso": "2018-04-03",
+            "semestre_ingreso": "2",
+            "ultimo_anio": "2017",
+            "ultimo_semestre": "V",
+            "fecha_graduacion": "2018-04-03",
+            "sede": 1,
+            "facultad": 4,
+            "escuela": 8,
+            "carrera": 15
+        }
+    }
+]

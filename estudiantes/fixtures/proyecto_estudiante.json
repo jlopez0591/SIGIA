@@ -1,0 +1,10 @@
+[
+    {
+        "model": "estudiantes.proyecto_estudiante",
+        "pk": 1,
+        "fields": {
+            "proyecto": 6,
+            "estudiante": 1
+        }
+    }
+]

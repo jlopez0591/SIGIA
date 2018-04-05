@@ -13,6 +13,9 @@ from .managers import EstudianteManager, AnteproyectoManager, ProyectoManager
 
 from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
+from utils.uploads import  anteproyecto_upload_rename
+from utils.validators import validate_file_type
+
 
 class Estudiante(models.Model):
     SEXO = (
@@ -170,7 +173,7 @@ class Anteproyecto(models.Model):
     fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)
     estado = models.CharField(max_length=15, choices=ESTADO, default='pendiente')
-    archivo = models.FileField(blank=True, upload_to='anteproyectos')
+    archivo = models.FileField(blank=True, upload_to=anteproyecto_upload_rename, validators=[validate_file_type])
     resumen = models.TextField(max_length=500, blank=True)
 
     objects = AnteproyectoManager()
@@ -264,6 +267,8 @@ class Proyecto(models.Model):
         self.facultad = self.anteproyecto.facultad
         self.escuela = self.anteproyecto.escuela
         self.carrera = self.anteproyecto.carrera
+        for estudiante in self.anteproyecto.estudiante.all():
+            self.estudiante.add(estudiante)
         return super(Proyecto, self).save()
 
 

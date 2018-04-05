@@ -1,0 +1,13 @@
+[
+    {
+        "model": "inventario.aula",
+        "pk": 1,
+        "fields": {
+            "numero": "1",
+            "tipo": "1",
+            "ubicacion": 4,
+            "cod_sede": "1",
+            "cod_facultad": "24"
+        }
+    }
+]

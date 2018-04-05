@@ -1,0 +1,77 @@
+[
+    {
+        "model": "estudiantes.anteproyecto",
+        "pk": 6,
+        "fields": {
+            "sede": 1,
+            "facultad": 4,
+            "escuela": 8,
+            "carrera": 15,
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "cod_escuela": "2",
+            "cod_carrera": "1",
+            "asesor": 3,
+            "nombre_proyecto": "SIGIA",
+            "registrado_por": 2,
+            "fecha_registro": "2018-04-04",
+            "fecha_aprobacion": null,
+            "estado": "pendiente",
+            "archivo": "anteproyectos/anteproyectos/1/24/2/1/b494409c-8a0d-4a36-a165-346791ac8163.pdf",
+            "resumen": "<p>El estudiante presento un retraso al entregar el anteproyecto.</p>",
+            "estudiante": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "estudiantes.anteproyecto",
+        "pk": 7,
+        "fields": {
+            "sede": 1,
+            "facultad": 4,
+            "escuela": 8,
+            "carrera": 15,
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "cod_escuela": "2",
+            "cod_carrera": "1",
+            "asesor": 4,
+            "nombre_proyecto": "ffeetetqg",
+            "registrado_por": 2,
+            "fecha_registro": "2018-04-04",
+            "fecha_aprobacion": null,
+            "estado": "pendiente",
+            "archivo": "anteproyectos/anteproyectos/1/24/2/1/767d08e4-cfeb-42a9-a258-81e5a382bb8d.pdf",
+            "resumen": "",
+            "estudiante": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "estudiantes.anteproyecto",
+        "pk": 8,
+        "fields": {
+            "sede": 1,
+            "facultad": 4,
+            "escuela": 8,
+            "carrera": 15,
+            "cod_sede": "1",
+            "cod_facultad": "24",
+            "cod_escuela": "2",
+            "cod_carrera": "1",
+            "asesor": 6,
+            "nombre_proyecto": "dfgegwh",
+            "registrado_por": 2,
+            "fecha_registro": "2018-04-04",
+            "fecha_aprobacion": null,
+            "estado": "pendiente",
+            "archivo": "anteproyectos/anteproyectos/1/24/2/1/efe5f480-b455-4e91-81db-968a5171bcf2.pdf",
+            "resumen": "",
+            "estudiante": [
+                1
+            ]
+        }
+    }
+]
