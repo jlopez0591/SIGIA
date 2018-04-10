@@ -24,7 +24,7 @@ SECRET_KEY = 'mi#fmxkx_-464er7hifzafuor+b(f7xdz__jfp(_)-36s8xo_!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
 # Application definition
 
@@ -136,3 +136,8 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Helpers
 VALID_FILE_FIELDS = ['application/pdf', 'image/jpg', 'image/png']
 FIXTURE_DIRS = ['fixtures']
+
+# Heroku: Update database configuration from $DATABASE_URL
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
