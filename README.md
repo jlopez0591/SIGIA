@@ -4,11 +4,14 @@ El sistema de gestion de informacion academica/administrativa (SIGIA) es una pla
 pretende proveer un conjunto de aplicaciones para agilizar y facilitar varias de las acciones que se
 realizan dentro de las unidades academicas de la universidad.
 
-Entre las utiliades que se proponen manejar son las siguientes:
+Entre las utilidades que se proponen manejar son las siguientes:
 
 1. Inventario: Inventario de equipo y aulas de las facultades.
 2. Estudiantes: Perfiles de los estudiantes, anteproyectos y proyectos de graduacion.
 3. Profesores: Perfiles de los profesores y actividades de los mismos.
+
+Como beneficio para los usuarios del sistema, los administrativos de los distintos departamentos
+podran descargar reportes de sus respectivas unidades academicas en formato .xlsx (Excel)
 
 # Requerimientos
 
@@ -35,15 +38,21 @@ postgres=#  \q
 
 ## Instalacion de paquetes
 
-```
-$ pipenv install
+
 
 ```
-## Comandos manage.py
+$ pipenv install
 ```
-$ ./manage.py makemigrations
-$ ./manage.py migrate
-$ ./manage.py cargar_grupos
-$ ./manage.py cargar_ubicaciones
-$ ./manage.py cargar_usuarios
-$ ./manage.py cargar_estudiantes
+
+## Comandos manage.py
+
+Una vez realizadas las instalaciones anteriores se deben ejecutar los siguientes comandos en el orden indicado
+esto es para crear las migraciones y cargar datos de prueba, en caso de que estos sean necesarios.
+
+```
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py cargar_grupos
+$ python manage.py cargar_ubicaciones
+$ python manage.py cargar_usuarios
+$ python manage.py cargar_estudiantes
