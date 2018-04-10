@@ -12,17 +12,20 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
+def root(*dirs):
+    base_dir = os.path.join(os.path.dirname(__file__), '..', '..')
+    return os.path.abspath(os.path.join(base_dir, *dirs))
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = root()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mi#fmxkx_-464er7hifzafuor+b(f7xdz__jfp(_)-36s8xo_!'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG']
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
@@ -71,7 +74,7 @@ ROOT_URLCONF = 'sigia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [root('templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,7 +129,7 @@ LOGIN_REDIRECT_URL = 'core:index'
 STATIC_URL = '/static/'
 
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, '../sigia/../../media')
+MEDIA_ROOT = root('media')
 
 MEDIA_URL = '/media/'
 
@@ -136,8 +139,3 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Helpers
 VALID_FILE_FIELDS = ['application/pdf', 'image/jpg', 'image/png']
 FIXTURE_DIRS = ['fixtures']
-
-# Heroku: Update database configuration from $DATABASE_URL
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
