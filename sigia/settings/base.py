@@ -128,8 +128,9 @@ LOGIN_REDIRECT_URL = 'core:index'
 
 STATIC_URL = '/static/'
 
-# Media files
+# Media and Static files
 MEDIA_ROOT = root('media')
+STATIC_ROOT = root('static')
 
 MEDIA_URL = '/media/'
 
