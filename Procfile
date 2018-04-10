@@ -1,1 +1,2 @@
-web: gunicorn sigia.wsgi --log-file -
+web: gunicorn sigia.wsgi:application --log-file -
+
