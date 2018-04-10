@@ -19,6 +19,7 @@
                    href="{% url 'perfil:profesores-departamento' request.user.perfil.departamento.pk %}">Profesores
                     <span
                             class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
+
             {% endif %}
 
             {% if perms.actividades.ver_departamento %}

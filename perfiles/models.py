@@ -91,7 +91,7 @@ class Perfil(models.Model):
     #                                  )
     departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='personal')
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
-                                related_name='administrativos')
+                                related_name='personal')
 
     history = AuditlogHistoryField()
     objects = PerfilManager()
