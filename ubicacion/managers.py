@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class SedeQuerySet(models.QuerySet):
     def activas(self):
         return self.filter(activo=True)
@@ -333,6 +334,19 @@ class SeccionInstanciaManager(models.Manager):
     def organizaciones(self):
         return self.get_queryset().organizaciones()
 
+
+class DepartametnoInstanciaQuerySet(models.QuerySet):
+    def profesores(self):
+        return User.objects.get(perfil__cod_sede=self.cod_sede, perfil__cod_facultad=self.cod_facultad,
+                                perfil__cod_departamento=self.cod_departamento)
+
+
+class DepartamentoInstanciaManager(models.Manager):
+    def get_queryset(self):
+        return DepartametnoInstanciaQuerySet(self.model, using=self._db)
+
+    def profesores(self):
+        return self.get_queryset().profesores()
 
 class CarreraInstanciaQuerySet(models.QuerySet):
     def activas(self):

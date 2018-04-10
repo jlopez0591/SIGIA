@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from .managers import (CarreraInstanciaManager, CarreraManager,
                        SeccionInstanciaManager, SeccionManager, SedeManager,
-                       UnidadInstanciaManager, UnidadManager)
+                       UnidadInstanciaManager, UnidadManager, DepartamentoInstanciaManager)
 
 from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
@@ -283,6 +283,7 @@ class DepartamentoInstancia(models.Model):
                                   related_name='departamentos')
 
     activo = models.BooleanField(default=True)
+    objects = DepartamentoInstanciaManager()
 
     history = AuditlogHistoryField()
 
