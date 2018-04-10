@@ -1,12 +1,10 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fe1b16bff62b0f656dc9db20942e70d8673dcbae40bdfb0aca64bb4cd58cb7f8"
+            "sha256": "f9d784523a970724cfa8675201d2074dd9f8c876ace773d1d35116ada9e1f719"
         },
         "pipfile-spec": 6,
-        "requires": {
-            "python_full_version": "3.5.2"
-        },
+        "requires": {},
         "sources": [
             {
                 "name": "pypi",
@@ -126,10 +124,10 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:c875fbefae29c4ac9ceaa88470b682834495173cbe9cd37e7286285b7fbc2602"
+                "sha256:63165adcc806a5c281febb344f3594541f778f05b99a3a5e802941a3c0a85f71"
             ],
             "index": "pypi",
-            "version": "==2.5.1"
+            "version": "==2.5.2"
         },
         "ordered-set": {
             "hashes": [
@@ -337,10 +335,10 @@
         },
         "xkcdpass": {
             "hashes": [
-                "sha256:22fb62efea17288ef82c6fe8c2e23612a9535321beab96b2189f2f6d09ba1465"
+                "sha256:62961d24466964f4770bdbdbcca9ebdb148d0bdb48a8329c7bf41e9317dbb9d4"
             ],
             "index": "pypi",
-            "version": "==1.16.3"
+            "version": "==1.16.5"
         },
         "xlrd": {
             "hashes": [
@@ -367,10 +365,10 @@
         },
         "astroid": {
             "hashes": [
-                "sha256:a92c1197dd496ef2470e73e1c296fc02a719907ee07259744e26a13bda9d4862",
-                "sha256:b76e5109ff0f386dd229673ca1323d21b1e9bb9c38eaed2cf830882dd7628be2"
+                "sha256:35cfae47aac19c7b407b7095410e895e836f2285ccf1220336afba744cc4c5f2",
+                "sha256:38186e481b65877fd8b1f9acc33e922109e983eb7b6e487bd4c71002134ad331"
             ],
-            "version": "==1.6.2"
+            "version": "==1.6.3"
         },
         "autopep8": {
             "hashes": [
@@ -522,11 +520,11 @@
         },
         "pylint": {
             "hashes": [
-                "sha256:34ab1a62fbdd48059d082f5a52b7e719a39b757a53ecbf0b2b7169b9c6a2cc28",
-                "sha256:c77311859e0c2d7932095f30d2b1bfdc4b6fe111f534450ba727a52eae330ef2"
+                "sha256:0b7e6b5d9f1d4e0b554b5d948f14ed7969e8cdf9a0120853e6e5af60813b18ab",
+                "sha256:34738a82ab33cbd3bb6cd4cef823dbcabdd2b6b48a4e3a3054a2bbbf0c712be9"
             ],
             "index": "pypi",
-            "version": "==1.8.3"
+            "version": "==1.8.4"
         },
         "pyparsing": {
             "hashes": [
