@@ -16,7 +16,7 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{% url 'solicitud:propias' %}">Solicitudes</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{% url 'actividad:propias' %}">Mis Actividades</a>
+        <a class="dropdown-item" href="{% url 'actividad:propias' request.user.pk %}">Mis Actividades</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{% url 'core:cambiar-password' %}">Cambiar Password</a>
         <div class="dropdown-divider"></div>

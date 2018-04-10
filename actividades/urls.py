@@ -8,9 +8,11 @@ from actividades import views
 app_name = 'actividad'
 urlpatterns = [
     # General actividades
-    url(r'^$', ListaActividades.as_view(), name='lista'),
-    url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
-    url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
+    # url(r'^$', ListaActividades.as_view(), name='lista'),
+    # url(r'^pendientes/$', ActividadesPendientes.as_view(), name='pendientes'),
+    # url(r'^propias/$', ActividadesPropias.as_view(), name='propias'),
+
+
     # TODO: Revisar
     url(r'^(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='detalle'),
     url(r'^(?P<pk>[0-9]+)/aprobar/$', views.aprobar_actividad, name='aprobar'),
