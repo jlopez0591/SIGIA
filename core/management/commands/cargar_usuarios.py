@@ -11,7 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group
 
-from sigia.settings import main
+from sigia import main
 from perfiles.models import Perfil
 
 fecha = dt.now()
@@ -105,8 +105,8 @@ class Command(BaseCommand):
                         except ObjectDoesNotExist as exc:
                             logging.error(exc)
                     # Crear perfil
-                    ds['fecha_nacimiento'] = dt.strptime(ds['fecha_nacimiento'], '%Y-%m-%d').date()
-                    Perfil.objects.update_or_create(usuario=u, defaults=ds)
+                ds['fecha_nacimiento'] = dt.strptime(ds['fecha_nacimiento'], '%Y-%m-%d').date()
+                Perfil.objects.update_or_create(usuario=u, defaults=ds)
             except:
                 logging.error(sys.exc_info()[1])
 

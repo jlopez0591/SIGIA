@@ -3,7 +3,7 @@ import logging
 import json
 import sys
 import os
-from sigia.settings import main
+from sigia import main
 from django.core.management.base import BaseCommand
 from estudiantes.models import Estudiante
 

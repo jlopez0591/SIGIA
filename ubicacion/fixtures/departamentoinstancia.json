@@ -1,1 +1,16 @@
-[{"model": "ubicacion.departamentoinstancia", "pk": 1, "fields": {"cod_sede": "1", "cod_facultad": "24", "cod_departamento": "D1", "facultad": 1, "departamento": 1, "sede": 1, "ubicacion": 4, "activo": true}}]
+[
+  {
+    "model": "ubicacion.departamentoinstancia",
+    "pk": 1,
+    "fields": {
+      "cod_sede": "1",
+      "cod_facultad": "24",
+      "cod_departamento": "D1",
+      "facultad": null,
+      "departamento": null,
+      "sede": null,
+      "ubicacion": null,
+      "activo": true
+    }
+  }
+]

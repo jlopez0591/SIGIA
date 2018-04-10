@@ -1,1 +1,1 @@
-from .facultadinstancia import *
+from .ubicacion_tests import *

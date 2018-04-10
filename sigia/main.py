@@ -71,7 +71,7 @@ ROOT_URLCONF = 'sigia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '../templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,7 +126,7 @@ LOGIN_REDIRECT_URL = 'core:index'
 STATIC_URL = '/static/'
 
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../sigia/../../media')
 
 MEDIA_URL = '/media/'
 
@@ -135,3 +135,4 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Helpers
 VALID_FILE_FIELDS = ['application/pdf', 'image/jpg', 'image/png']
+FIXTURE_DIRS = ['fixtures']

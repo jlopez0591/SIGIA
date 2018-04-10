@@ -1,1 +1,12 @@
-[{"model": "ubicacion.sede", "pk": 1, "fields": {"cod_sede": "1", "nombre": "Panama", "tipo": "CU", "activo": true}}, {"model": "ubicacion.sede", "pk": 2, "fields": {"cod_sede": "2", "nombre": "Chiriqui", "tipo": "CR", "activo": true}}, {"model": "ubicacion.sede", "pk": 3, "fields": {"cod_sede": "14", "nombre": "Panama Este", "tipo": "EX", "activo": true}}, {"model": "ubicacion.sede", "pk": 4, "fields": {"cod_sede": "20", "nombre": "Arraijan", "tipo": "PA", "activo": true}}]
+[
+  {
+    "model": "ubicacion.sede",
+    "pk": 1,
+    "fields": {
+      "cod_sede": "1",
+      "nombre": "Panama",
+      "tipo": "CU",
+      "activo": true
+    }
+  }
+]
