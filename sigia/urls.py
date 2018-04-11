@@ -25,7 +25,7 @@ urlpatterns = [
                   url(r'^actividad/', include('actividades.urls')),
                   url(r'^estudiante/', include('estudiantes.urls')),
                   url(r'^inventario/', include('inventario.urls')),
-                  url(r'^perfil/', include('perfiles.urls')),
+                  # url(r'^perfil/', include('perfiles.urls')),
                   url(r'^solicitud/', include('solicitud.urls')),
                   url(r'^', include('ubicacion.urls')),
                   # Django apps

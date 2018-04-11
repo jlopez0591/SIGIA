@@ -16,7 +16,7 @@ from auditlog.registry import auditlog
 from django_countries.fields import CountryField
 
 # This app imports
-from .managers import PerfilManager
+# from .managers import PerfilManager
 
 # Other apps
 from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, DepartamentoInstancia, CarreraInstancia
@@ -89,13 +89,12 @@ class User(AbstractUser):
                                 related_name='personal')
 
     history = AuditlogHistoryField()
-    objects = PerfilManager()
+    # objects = PerfilManager()
 
     class Meta:
         permissions = (
             ('ver_perfil', 'Ver Perfil'),
         )
-        verbose_name_plural = 'Perfiles'
         unique_together = ('provincia', 'clase', 'tomo', 'folio')
 
     def __str__(self):

@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
@@ -191,7 +192,7 @@ class FacultadInstancia(models.Model):
     cod_sede = models.CharField(max_length=2)
     cod_facultad = models.CharField(max_length=2)
 
-    decano = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    decano = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
 
     history = AuditlogHistoryField()
     objects = UnidadInstanciaManager()
