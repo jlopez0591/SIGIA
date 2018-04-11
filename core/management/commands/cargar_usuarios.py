@@ -11,15 +11,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group
 
-from sigia import main
+from django.conf import settings
 from perfiles.models import Perfil
 
 fecha = dt.now()
-ARCHIVO = '{}{}'.format(main.BASE_DIR, '/test_data/usuarios.json')
-LOG_LOCATION = '{}/{}/{}'.format(main.BASE_DIR,
+ARCHIVO = '{}{}'.format(settings.BASE_DIR, '/test_data/usuarios.json')
+LOG_LOCATION = '{}/{}/{}'.format(settings.BASE_DIR,
                                  'logs/usuarios/creacion/', fecha.strftime("%Y-%m-%d"))
 LOG_FILE = '{}/{}.log'.format(LOG_LOCATION, fecha.strftime("%X"))
-USER_CSV = '{}/{}'.format(main.BASE_DIR, 'logs/usuarios/csv/')
+USER_CSV = '{}/{}'.format(settings.BASE_DIR, 'logs/usuarios/csv/')
 URL = ''
 
 GRUPOS = {
@@ -74,15 +74,19 @@ class Command(BaseCommand):
         words = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=5)  # Iniciar el listado para xkcdpass
 
         # Carga de Datos
-        if main.DEBUG is True:
+        if settings.DEBUG is True:
+            print("Es Debug")
             datos = cargar_usuarios(ARCHIVO)  # Utiliza el archivo local
         else:
+            print("Webservice?")
             datos = cargar_webservice(URL)  # Utiliza webservice provisto
 
+        
         # Procedimientos
         for i, row in enumerate(datos):
             try:
                 # Crear usuario
+                print(row['grupos'])
                 ds = row['info_perfil']
                 primer_nombre = ds['primer_nombre']
                 primer_apellido = ds['primer_apellido']
@@ -96,8 +100,7 @@ class Command(BaseCommand):
                     u.save()
                     lista_usuarios.append({'usuario': user_name, 'password': passcode})
                     # Agregar a grupos
-                    grupos = row['grupos'].split()
-                    for grupo in grupos:
+                    for grupo in row['grupos']:
                         try:
                             g = Group.objects.get(name=grupo)
                             u.groups.add(g)

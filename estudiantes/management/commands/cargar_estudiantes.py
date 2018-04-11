@@ -31,9 +31,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         data = self.load_file()
         for row in data:
-            print('Test')
             if row['ultimo_anio'] == FECHA_ACTUAL:
-                print('test2')
                 row['provincia'] = str(row['provincia'])
                 row['tomo'] = str(row['tomo'])
                 row['folio'] = str(row['folio'])
@@ -46,7 +44,6 @@ class Command(BaseCommand):
                         defaults=row
                     )
                     if created:
-                        print('created')
                         logging.info(
                             'Estudiante {}-{}-{}-{} creado exitosamente'.format(row['provincia'], row['clase'],
                                                                                 row['tomo'], row['folio']))
@@ -57,7 +54,8 @@ class Command(BaseCommand):
                         row['tomo'],
                         row['folio'], sys.exc_info()[1]))
             else:
-                pass
+                logging.info('Estudiante {}-{}-{}-{} no se matriculo esto periodo'.format(row['provincia'], row['clase'],
+                                                                                row['tomo'], row['folio']))
 
     def load_file(self):
         """

@@ -257,7 +257,14 @@
                             title: {
                                 display: true,
                                 text: 'Relacion Estudiantes/Profesor por Facultad'
-                            }
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                        }
+                                        }]
+                                        }
                         }
                     });
                 }

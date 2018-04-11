@@ -1,10 +1,24 @@
 import logging
+import os
 import sys
+from datetime import datetime as dt
+from django.conf import settings
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 
-logger = logging.getLogger(__name__)
+
+fecha = dt.now()
+LOG_LOCATION = '{}/{}/{}'.format(settings.BASE_DIR,
+                                 'logs/grupos/creacion/', fecha.strftime("%Y-%m-%d"))
+LOG_FILE = '{}/{}.log'.format(LOG_LOCATION, fecha.strftime("%X"))
+
+if not os.path.exists(LOG_LOCATION):
+    os.makedirs(LOG_LOCATION)       
+
+logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s')                          
 
 permisos_profesores = ['add_actividad', 'ver_departamento']
 
@@ -44,13 +58,13 @@ class Command(BaseCommand):
         for grupo, permisos in lista.items():
             g, created = Group.objects.get_or_create(name=grupo.title())
             if created:
-                logger.info('Grupo {} creado.'.format(grupo))
+                logging.info('Grupo {} creado.'.format(grupo))
             for permiso in permisos:
                 try:
                     p = Permission.objects.get(codename=permiso)
                     if p not in g.permissions.all():
                         g.permissions.add(p)
-                        logger.info('Se agrego el permiso {} al grupo {}.'.format(permiso, g))
+                        logging.info('Se agrego el permiso {} al grupo {}.'.format(permiso, g))
                 except ObjectDoesNotExist:
                     logger.error('Hubo un error al agregar el permiso {} al grupo {}: {}'.format(permiso, g,
                                                                                                     sys.exc_info()[1]))
