@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import permission_required
 from dal import autocomplete
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
-from estudiantes.models import Estudiante, Anteproyecto, Proyecto
+from estudiantes.models import Estudiante, Anteproyecto, TrabajoGraduacion
 from perfiles.models import Perfil
 
 
@@ -137,7 +137,7 @@ class AnteproyectoUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 class ProyectoCreateView(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Proyecto
+    model = TrabajoGraduacion
     permission_required = 'estudiante.add_proyecto'
     template_name = 'estudiantes/proyecto/crear.html'
     form_class = ProyectoForm
@@ -147,27 +147,27 @@ class ProyectoCreateView(PermissionRequiredMixin, SuccessMessageMixin, CreateVie
 
 
 class ProyectoFacultadListView(ListView):
-    model = Proyecto
+    model = TrabajoGraduacion
     template_name = 'estudiantes/proyecto/lista.html'
     context_object_name = 'proyectos'
 
     def get_queryset(self):
-        qs = Proyecto.objects.filter(facultad_id=self.kwargs['pk'])
+        qs = TrabajoGraduacion.objects.filter(facultad_id=self.kwargs['pk'])
         return qs
 
 
 class ProyectoEscuelaListView(ListView):
-    model = Proyecto
+    model = TrabajoGraduacion
     template_name = 'estudiantes/proyecto/lista.html'
     context_object_name = 'proyectos'
 
     def get_queryset(self):
-        qs = Proyecto.objects.filter(escuela_id=self.kwargs['pk'])
+        qs = TrabajoGraduacion.objects.filter(escuela_id=self.kwargs['pk'])
         return qs
 
 
 class ProyectoDetailView(PermissionRequiredMixin, DetailView):
-    model = Proyecto
+    model = TrabajoGraduacion
     permission_required = 'estudiante.change_proyecto'
     template_name = 'estudiantes/proyecto/detalle.html'
     context_object_name = 'proyecto'
@@ -175,7 +175,7 @@ class ProyectoDetailView(PermissionRequiredMixin, DetailView):
 
 
 class ProyectoUpdateView(PermissionRequiredMixin, UpdateView):
-    model = Proyecto
+    model = TrabajoGraduacion
     form_class = ProyectoForm
     template_name = 'estudiantes/proyecto/crear.html'
     permission_required = 'proyecto:change_proyecto'

@@ -210,7 +210,7 @@ class Anteproyecto(models.Model):
         self.save()
 
 
-class Proyecto(models.Model):
+class TrabajoGraduacion(models.Model):
     LICENCIATURA = 'licenciatura'
     ESPECIALIZACION = 'especializacion'
     MAESTRIA = 'maestria'
@@ -266,7 +266,7 @@ class Proyecto(models.Model):
         self.carrera = self.anteproyecto.carrera
         for estudiante in self.anteproyecto.estudiante.all():
             self.estudiante.add(estudiante)
-        return super(Proyecto, self).save()
+        return super(TrabajoGraduacion, self).save()
 
 
 def regions_changed(sender, **kwargs):
@@ -274,8 +274,8 @@ def regions_changed(sender, **kwargs):
         raise ValidationError("No puede asignar mas de 3 jurados.")
 
 
-m2m_changed.connect(regions_changed, sender=Proyecto.jurados.through)
+m2m_changed.connect(regions_changed, sender=TrabajoGraduacion.jurados.through)
 
 auditlog.register(Estudiante)
 auditlog.register(Anteproyecto)
-auditlog.register(Proyecto)
+auditlog.register(TrabajoGraduacion)

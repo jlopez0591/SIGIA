@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from estudiantes.forms import AnteproyectoForm
-from estudiantes.models import Estudiante, Anteproyecto, Proyecto
+from estudiantes.models import Estudiante, Anteproyecto, TrabajoGraduacion
 
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -23,4 +23,4 @@ class EstudianteImportExportModelAdmin(ImportExportModelAdmin):
 
 admin.site.register(Estudiante, EstudianteImportExportModelAdmin)
 admin.site.register(Anteproyecto)
-admin.site.register(Proyecto)
+admin.site.register(TrabajoGraduacion)

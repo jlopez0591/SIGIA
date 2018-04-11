@@ -1,7 +1,7 @@
 from django import forms
 
 from dal import autocomplete
-from estudiantes.models import Estudiante, Anteproyecto, Proyecto
+from estudiantes.models import Estudiante, Anteproyecto, TrabajoGraduacion
 
 
 class StudentUpdateForm(forms.ModelForm):
@@ -150,7 +150,7 @@ class AnteproyectoForm(forms.ModelForm):
 
 class ProyectoForm(forms.ModelForm):
     class Meta:
-        model = Proyecto
+        model = TrabajoGraduacion
         fields = (
             'anteproyecto', 'jurados', 'fecha_entrega', 'fecha_sustentacion',
             'programa', 'nota', 'detalle', 'archivo'
