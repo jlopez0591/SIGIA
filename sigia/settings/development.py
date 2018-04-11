@@ -1,4 +1,4 @@
-from sigia.main import *
+from .base import *
 
 DATABASES = {
     'default': {
@@ -11,5 +11,5 @@ DATABASES = {
     }
 }
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR, ]
+SECRET_KEY = os.environ['SECRET_KEY']
+STATICFILES_DIRS = [root('static'), ]

@@ -1,4 +1,4 @@
-from sigia.main import *
+from .base import *
 
 DATABASES = {
     'default': {
@@ -11,4 +11,6 @@ DATABASES = {
     }
 }
 
+
+STATIC_DIR = root('static')
 ALLOWED_HOSTS = ['10.0.1.151',] # Este debe ser el valor del URL o IP del servidor

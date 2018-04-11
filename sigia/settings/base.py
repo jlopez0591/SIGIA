@@ -130,7 +130,7 @@ STATIC_URL = '/static/'
 
 # Media and Static files
 MEDIA_ROOT = root('media')
-STATIC_ROOT = root('static')
+# STATIC_ROOT = root('static')
 
 MEDIA_URL = '/media/'
 
