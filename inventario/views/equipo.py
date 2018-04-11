@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from inventario.forms import EquipoForm
 from inventario.models import Equipo
 
-from perfiles.models import Perfil
+# from perfiles.models import Perfil
 from django.contrib.messages.views import SuccessMessageMixin
 
 

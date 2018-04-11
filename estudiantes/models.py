@@ -1,6 +1,7 @@
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import settings.AUTH_USER_MODEL
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -165,11 +166,11 @@ class Anteproyecto(models.Model):
     cod_escuela = models.CharField(max_length=120, blank=True)
     cod_carrera = models.CharField(max_length=120, blank=True)
     # endregion
-    asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+    asesor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                                related_name='anteproyecto', limit_choices_to=Q(groups__name='Profesores'))
 
     nombre_proyecto = models.CharField(max_length=120, blank=True)
-    registrado_por = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
+    registrado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
     fecha_registro = models.DateField(blank=True, null=True, auto_now_add=True)
     fecha_aprobacion = models.DateField(blank=True, null=True)
     estado = models.CharField(max_length=15, choices=ESTADO, default='pendiente')
@@ -234,7 +235,7 @@ class Proyecto(models.Model):
     estudiante = models.ManyToManyField(Estudiante, related_name='proyectos')
     anteproyecto = models.OneToOneField(
         Anteproyecto, on_delete=models.SET_NULL, null=True)
-    jurados = models.ManyToManyField(User, related_name='jurado', limit_choices_to={
+    jurados = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='jurado', limit_choices_to={
         'groups__name': 'Profesores'
     })
     fecha_entrega = models.DateField(blank=True, null=True)

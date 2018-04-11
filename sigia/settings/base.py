@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'core',
     'estudiantes',
     'inventario',
-    'perfiles',
+    # 'perfiles',
     'solicitud',
     'ubicacion',
 ]
@@ -146,3 +146,6 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Helpers
 VALID_FILE_FIELDS = ['application/pdf', 'image/jpg', 'image/png']
 FIXTURE_DIRS = ['fixtures']
+
+# Usuario
+AUTH_USER_MODEL = 'core.User'

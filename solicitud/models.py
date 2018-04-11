@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -7,7 +8,7 @@ from auditlog.registry import auditlog
 
 
 class Solicitud(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     titulo = models.CharField(max_length=120)
 
     fecha_creacion = models.DateField(blank=True, null=True, auto_now_add=True)
@@ -36,7 +37,7 @@ class Solicitud(models.Model):
 
 class Comentario(models.Model):
     solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE, related_name='comentarios')
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     fecha = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500)
 

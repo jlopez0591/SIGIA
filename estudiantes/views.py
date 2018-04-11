@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from dal import autocomplete
 from estudiantes.forms import StudentUpdateForm, AnteproyectoForm, ProyectoForm
 from estudiantes.models import Estudiante, Anteproyecto, Proyecto
-from perfiles.models import Perfil
+# from perfiles.models import Perfil
 
 
 class EstudianteFacultadListview(ListView):

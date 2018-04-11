@@ -4,6 +4,7 @@ import logging
 from django.conf.global_settings import LANGUAGES
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse, reverse_lazy
 
@@ -79,7 +80,7 @@ class Actividad(PolymorphicModel):
     # endregion
 
     # region Llaves
-    usuario = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.SET_NULL, related_name='actividades')
 
     sede = models.ForeignKey(Sede, blank=True, null=True, related_name='actividades',
                              on_delete=models.SET_NULL)

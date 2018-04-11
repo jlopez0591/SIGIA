@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 
 from actividades.forms import RechazarForm
 from actividades.models import Actividad
-from perfiles.models import Perfil
+# from perfiles.models import Perfil
 
 
 class ActivityCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateView):
