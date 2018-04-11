@@ -10,6 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+# Things imported by environment variables.
+# DJANGO_SETTINGS_MODULE
+# SECRET_KEY
+# DEBUG
+# DB: NAME, USER, PASSWORD, HOST, PORT
+
+
 import os
 
 
@@ -74,8 +81,7 @@ ROOT_URLCONF = 'sigia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [root('templates')]
-        ,
+        'DIRS': [root('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
