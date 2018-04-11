@@ -1,0 +1,116 @@
+[
+    {
+        "model": "ubicacion.sede",
+        "pk": 1,
+        "fields": {
+            "cod_sede": "00",
+            "nombre": "Prueba de Sede",
+            "tipo": "CU",
+            "activo": true
+        }
+    },
+    {
+        "model": "ubicacion.facultad",
+        "pk": 1,
+        "fields": {
+            "cod_facultad": "00",
+            "nombre": "Prueba de Facultad",
+            "tipo": "FA",
+            "activo": true
+        }
+    },
+    {
+        "model": "ubicacion.escuela",
+        "pk": 1,
+        "fields": {
+            "cod_facultad": "00",
+            "cod_escuela": "00",
+            "nombre": "Prueba de Escuela",
+            "tipo": "ES",
+            "activo": true,
+            "facultad": 1
+        }
+    },
+    {
+        "model": "ubicacion.departamento",
+        "pk": 1,
+        "fields": {
+            "cod_facultad": "00",
+            "cod_departamento": "00",
+            "nombre": "Prueba de Departamento",
+            "activo": true,
+            "facultad": 1
+        }
+    },
+    {
+        "model": "ubicacion.carrera",
+        "pk": 1,
+        "fields": {
+            "facultad": 1,
+            "seccion": 1,
+            "cod_facultad": "00",
+            "cod_escuela": "00",
+            "cod_carrera": "00",
+            "nombre": "Prueba de Carrera",
+            "activo": true,
+            "tipo": "R"
+        }
+    },
+    {
+        "model": "ubicacion.facultadinstancia",
+        "pk": 1,
+        "fields": {
+            "sede": 1,
+            "facultad": 1,
+            "activo": true,
+            "cod_sede": "00",
+            "cod_facultad": "00",
+            "decano": null
+        }
+    },
+    {
+        "model": "ubicacion.escuelainstancia",
+        "pk": 1,
+        "fields": {
+            "sede": 1,
+            "facultad": 1,
+            "escuela": 1,
+            "cod_sede": "00",
+            "cod_facultad": "00",
+            "cod_escuela": "00",
+            "ubicacion": 1,
+            "activo": true
+        }
+    },
+    {
+        "model": "ubicacion.departamentoinstancia",
+        "pk": 1,
+        "fields": {
+            "cod_sede": "00",
+            "cod_facultad": "00",
+            "cod_departamento": "00",
+            "facultad": 1,
+            "departamento": 1,
+            "sede": 1,
+            "ubicacion": 1,
+            "activo": true
+        }
+    },
+    {
+        "model": "ubicacion.carrerainstancia",
+        "pk": 1,
+        "fields": {
+            "sede": 1,
+            "facultad": 1,
+            "escuela": 1,
+            "carrera": 1,
+            "unidad": 1,
+            "ubicacion": 1,
+            "cod_sede": "00",
+            "cod_facultad": "00",
+            "cod_escuela": "00",
+            "cod_carrera": "00",
+            "activo": true
+        }
+    }
+]
