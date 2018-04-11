@@ -51,7 +51,7 @@
                     {% include 'includes/header/partial_departamento_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.escuela %}
+                {% if request.user.perfil.escuela and perms.escuela.ver_escuela %}
                     {% include 'includes/header/partial_escuela_dropdown.html' %}
                 {% endif %}
 

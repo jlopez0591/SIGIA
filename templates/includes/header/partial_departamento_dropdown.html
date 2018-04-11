@@ -4,11 +4,11 @@
        aria-expanded="false">
         Mi Departamento <i class="far fa-building"></i>
     </a>
-    {% if request.user.perfil.departamento %}
+    {% if request.user.perfil.departamento and perms.ubicacion.ver_departamento %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}">Dashboard</a>
 
-            {% if perms.ubicacion.ver_reporte_departamento %}
+            {% if perms.ubicacion.ver_departamento %}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Reportes</a>
             {% endif %}
