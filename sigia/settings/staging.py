@@ -2,5 +2,5 @@ from .base import *
 import django_heroku
 
 
-DEBUG = False
+DEBUG = os.environ['DEBUG']
 django_heroku.settings(locals())
