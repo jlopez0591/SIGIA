@@ -42,13 +42,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for grupo, permisos in lista.items():
-            print(grupo)
-            print(permisos)
             g, created = Group.objects.get_or_create(name=grupo.title())
             if created:
                 logger.info('Grupo {} creado.'.format(grupo))
             for permiso in permisos:
-                print(permiso)
                 try:
                     p = Permission.objects.get(codename=permiso)
                     if p not in g.permissions.all():
