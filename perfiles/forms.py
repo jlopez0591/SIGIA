@@ -11,7 +11,7 @@ class PerfilForm(forms.ModelForm):
             'sexo', 'provincia', 'clase', 'tomo', 'folio',
             'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento', 'cod_escuela', 'cod_profesor')
         labels = {
-            'fecha_nacimiento': 'Fecha de Nacimiento'
+            'fecha_nacimiento': 'Fecha de Nacimiento',
             'categoria': 'Dedicacion',
             'cod_sede': 'Codigo de Sede',
             'cod_facultad': 'Codigo de Facultad',
