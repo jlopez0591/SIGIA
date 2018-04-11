@@ -5,17 +5,17 @@ from django.contrib.auth.models import Group, Permission
 
 logger = logging.getLogger(__name__)
 
-permisos_profesores = []
+permisos_profesores = ['add_actividad', 'ver_departamento']
 
-permisos_directores_departamento = []
+permisos_directores_departamento = ['ver_departamento', 'change_actividad']
 
-permisos_directores_escuela = []
+permisos_directores_escuela = ['ver_escuela', 'ver_estudiante', 'ver_anteproyecto']
 
-permisos_administrativos = []
+permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'ver_estudiante', 'change_estudiante']
 
-permisos_comision = []
+permisos_comision = ['ver_escuela', 'aprobar_anteproyecto']
 
-permisos_decanos = []
+permisos_decanos = ['ver_facultad', 'ver_departamento', 'ver_escuela', 'ver_perfil']
 
 lista = {
     'Profesores': permisos_profesores,

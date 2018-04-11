@@ -26,6 +26,7 @@ whitenoise = "*"
 openpyxl = "*"
 factory-boy = "*"
 dj-database-url = "*"
+pylint-django = "*"
 
 
 [dev-packages]
