@@ -123,5 +123,4 @@ static/js/popper.min.js
 static/fonts/
 .idea/workspace.xml
 .idea/
-test_data/
 .idea/*
