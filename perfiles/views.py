@@ -35,7 +35,7 @@ class ProfesoresFacultadListView(ListView):
 
 class ProfesoresDepartamentoListView(ListView):
     model = Perfil
-    context_object_name = 'profesores'
+    context_object_name = 'perfiles'
     template_name = 'perfiles/consulta.html'
 
     def get_queryset(self):

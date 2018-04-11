@@ -31,11 +31,15 @@ permisos_directores_escuela = ['ver_escuela']
 
 # Ver escuela = Ver detalle de escuela, ver estudiantes, ver anteproyectos y ver proyectos
 
-permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'add_proyecto', 'change_estudiante', 'add_aula', 'add_equipo']
+permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'add_proyecto', 'change_estudiante']
+
+# TODO: Agregar secretario administrativo con permisos de - invetario
 
 # change_estudiante = editar estudiante, tarea de administrativos de la escuela
 
 permisos_comision = ['ver_escuela', 'aprobar_anteproyecto', 'add_proyecto']
+
+# TODO: Rearmar anteproyecto y proyecto como TrabajoDeGraduacion - Editar Permisos Acorde
 
 permisos_decanos = ['ver_facultad', 'ver_departamento', 'ver_escuela', 'ver_perfil']
 

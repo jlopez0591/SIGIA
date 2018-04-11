@@ -9,9 +9,15 @@ class PerfilForm(forms.ModelForm):
             'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 'fecha_nacimiento',
             'fecha_inicio',
             'sexo', 'provincia', 'clase', 'tomo', 'folio',
-            'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento', 'cod_escuela')
+            'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento', 'cod_escuela', 'cod_profesor')
         labels = {
             'fecha_nacimiento': 'Fecha de Nacimiento'
+            'categoria': 'Dedicacion',
+            'cod_sede': 'Codigo de Sede',
+            'cod_facultad': 'Codigo de Facultad',
+            'cod_departamento': 'Codigo de Departamento',
+            'cod_escuela': 'Codigo de Escuela',
+            'cod_profesor': 'Codigo de Profesor'
         }
         widgets = {
             'primer_nombre': forms.TextInput(attrs={
