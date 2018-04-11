@@ -24,6 +24,8 @@ gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
 openpyxl = "*"
+factory-boy = "*"
+dj-database-url = "*"
 
 
 [dev-packages]
