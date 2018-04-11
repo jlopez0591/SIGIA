@@ -38,23 +38,25 @@ class PerfilForm(forms.ModelForm):
             'segundo_apellido': forms.TextInput(attrs={
                 'class': 'form-control',
                 # 'disabled': True,
-                'placeholder': "Apellido Materno",
+                'placeholder': "Apellido Materno o de Casada",
             }),
             'provincia': forms.Select(attrs={
                 'class': 'form-control',
                 ## 'disabled': True,
-                'placeholder': "Apellido Materno",
+                'placeholder': "Provincia",
             }),
             'clase': forms.Select(attrs={
                 'class': 'form-control cedula',
                 ## 'disabled': True,
-                'placeholder': "Apellido Materno",
+                'placeholder': "Clase",
             }),
             'tomo': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': 'Tomo'
             }),
             'folio': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': 'Folio'
             }),
             'fecha_nacimiento': forms.TextInput(attrs={
                 'class': 'datepicker form-control',

@@ -20,7 +20,7 @@ if not os.path.exists(LOG_LOCATION):
 logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')                          
 
-permisos_profesores = ['add_actividad', 'ver_departamento']
+permisos_profesores = ['add_actividad', 'ver_departamento', 'change_perfil']
 
 permisos_directores_departamento = ['ver_departamento', 'change_actividad', 'ver_perfil', 'aprobar_actividad']
 
