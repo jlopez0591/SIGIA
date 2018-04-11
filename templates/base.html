@@ -43,15 +43,15 @@
                     {% include 'includes/header/partial_admin_utils_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.facultad and perms.facultadinstancia.ver_facultad %}
+                {% if request.user.perfil.facultad and perms.ubicacion.ver_facultad %}
                     {% include 'includes/header/partial_unidad_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.departamento and perms.departamentoinstancia.ver_departamento %}
+                {% if request.user.perfil.departamento and perms.ubicacion.ver_departamento %}
                     {% include 'includes/header/partial_departamento_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.escuela and perms.escuelainstancia.ver_escuela %}
+                {% if request.user.perfil.escuela and perms.ubicacion.ver_escuela %}
                     {% include 'includes/header/partial_escuela_dropdown.html' %}
                 {% endif %}
 
