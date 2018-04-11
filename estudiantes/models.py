@@ -248,10 +248,7 @@ class Proyecto(models.Model):
     history = AuditlogHistoryField()
 
     class Meta:
-        permissions = (
-            ('ver_proyecto_facultad', 'Ver proyectos en facultad'),
-            ('ver_proyecto_escuela', 'Ver proyectos en escuela')
-        )
+        pass
 
     def __str__(self):
         return 'Proyecto {}'.format(self.anteproyecto.nombre_proyecto)

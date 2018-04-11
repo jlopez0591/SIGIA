@@ -105,7 +105,6 @@ class Actividad(PolymorphicModel):
     class Meta:
         permissions = (
             ('aprobar_actividad', 'Aprobar Actividad'),
-            ('add_actividad', 'Crear Actividad')
         )
         verbose_name_plural = 'Actividades'
         unique_together = ('usuario', 'nombre_actividad')

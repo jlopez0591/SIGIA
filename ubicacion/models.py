@@ -197,6 +197,9 @@ class FacultadInstancia(models.Model):
     objects = UnidadInstanciaManager()
 
     class Meta:
+        permissions = (
+            ('ver_facultad', 'Ver Facultad'),
+        )
         unique_together = ('cod_sede', 'cod_facultad')
         verbose_name_plural = 'Instancias Facultades'
 
@@ -238,6 +241,9 @@ class EscuelaInstancia(models.Model):
     activo = models.BooleanField(default=True)
 
     class Meta:
+        permissions = (
+            ('ver_escuela', 'Ver Escuela'),
+        )
         unique_together = ('cod_sede', 'cod_facultad', 'cod_escuela')
         verbose_name_plural = 'Instancias Secciones'
 
@@ -288,6 +294,10 @@ class DepartamentoInstancia(models.Model):
     history = AuditlogHistoryField()
 
     class Meta:
+        permissions = (
+            ('ver_departamento', 'Ver Departamento'),
+        )
+        unique_together = ('cod_sede', 'cod_facultad', 'cod_departamento')
         verbose_name_plural = 'Instancias Departamento'
 
     def __str__(self):
@@ -328,7 +338,7 @@ class CarreraInstancia(models.Model):
     unidad = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                related_name='carreras')
     ubicacion = models.ForeignKey(EscuelaInstancia, on_delete=models.CASCADE, blank=True, null=True,
-                                  limit_choices_to=Q(seccion__tipo='ES'), related_name='carreras')
+                                  limit_choices_to=Q(escuela__tipo='ES'), related_name='carreras')
 
     cod_sede = models.CharField(max_length=2)
     cod_facultad = models.CharField(max_length=2)
@@ -365,6 +375,10 @@ class CarreraInstancia(models.Model):
         except ObjectDoesNotExist:
             pass
         try:
+            self.unidad = FacultadInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad)
+        except ObjectDoesNotExist:
+            pass
+        try:
             self.ubicacion = EscuelaInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                           cod_escuela=self.cod_escuela)
         except ObjectDoesNotExist:
@@ -380,7 +394,7 @@ class CarreraInstancia(models.Model):
         })
 
     def nombre_completo(self):
-        return '{} - {} - {} - {}'.format(self.sede.nombre, self.facultad.nombre, self.seccion.nombre,
+        return '{} - {} - {} - {}'.format(self.sede.nombre, self.facultad.nombre, self.escuela.nombre,
                                           self.carrera.nombre)
 
 

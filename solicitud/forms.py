@@ -26,3 +26,6 @@ class ComentarioForm(forms.ModelForm):
         model = Comentario
         fields = ('resumen',)
         widgets = {}
+        labels = {
+            'resumen': 'Comentario'
+        }

@@ -13,15 +13,15 @@ permisos_directores_departamento = ['ver_departamento', 'change_actividad', 'ver
 # ver departamento = ver actividades del departamento, ver profesores del departamento
 # ver perfil = Poder observar perfiles de otros profesores
 
-permisos_directores_escuela = ['ver_escuela', 'ver_estudiante']
+permisos_directores_escuela = ['ver_escuela']
 
 # Ver escuela = Ver detalle de escuela, ver estudiantes, ver anteproyectos y ver proyectos
 
-permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'add_trabajo', 'change_estudiante', 'add_aula', 'add_equipo']
+permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'add_proyecto', 'change_estudiante', 'add_aula', 'add_equipo']
 
 # change_estudiante = editar estudiante, tarea de administrativos de la escuela
 
-permisos_comision = ['ver_escuela', 'aprobar_anteproyecto', 'add_trabajo']
+permisos_comision = ['ver_escuela', 'aprobar_anteproyecto', 'add_proyecto']
 
 permisos_decanos = ['ver_facultad', 'ver_departamento', 'ver_escuela', 'ver_perfil']
 

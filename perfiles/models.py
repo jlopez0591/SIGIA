@@ -66,10 +66,10 @@ class Perfil(models.Model):
 
     sexo = models.CharField(max_length=1, choices=GENERO, blank=True, null=True)
 
-    provincia = models.CharField(max_length=5, choices=PROVINCIAS, default='00', blank=True, null=True)
-    clase = models.CharField(max_length=5, default='00', choices=CLASE, blank=True, null=True)
-    tomo = models.CharField(max_length=5, default='000', blank=True, null=True)
-    folio = models.CharField(max_length=5, default='0000', blank=True, null=True)
+    provincia = models.CharField(max_length=5, choices=PROVINCIAS,  blank=True, null=True)
+    clase = models.CharField(max_length=5,  choices=CLASE, blank=True, null=True)
+    tomo = models.CharField(max_length=5,  blank=True, null=True)
+    folio = models.CharField(max_length=5, blank=True, null=True)
 
     imagen = models.ImageField(upload_to='perfil/', blank=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
@@ -97,7 +97,11 @@ class Perfil(models.Model):
     objects = PerfilManager()
 
     class Meta:
+        permissions = (
+            ('ver_perfil', 'Ver Perfil'),
+        )
         verbose_name_plural = 'Perfiles'
+        unique_together = ('provincia', 'clase', 'tomo', 'folio')
 
     def __str__(self):
         return self.usuario.username

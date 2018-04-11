@@ -11,8 +11,13 @@
                         Ultima Modificacion: {{ solicitud.fecha_modificacion }}
                         <hr>
                         <p>Descripcion</p>
-                        {{ solicitud.resumen }}
-                        <hr>
+                        {{ solicitud.resumen|safe }}
+                        <hr />
+                        {% if request.user == solicitud.usuario %}
+                            <form method="post" action="{% url 'solicitud:resolver' solicitud.pk %}">
+                                <button type="submit" class="btn btn-outline-primary">Resolver Solicitud</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -24,8 +29,8 @@
                 <div class="card-body">
                     <div class="card-text">
                         {#                    TODO: Agregar boton para comentarios con permisos correspondientes#}
-                        <h4 class="card-title">Comentarios</h4>
-                        {% if request.user == solicitud.usuario %}
+                        <h4 class="card-title">Agregar Comentario</h4>
+                        {% if request.user == solicitud.usuario or request.user.is_staff %}
                             <form method="post" action="{% url 'solicitud:comentario' solicitud.pk %}">
                                 {% csrf_token %}
                                 {{ form.non_field_errors }}
@@ -40,7 +45,7 @@
                         <hr>
                         {% if solicitud.comentarios %}
                             <ul class="list-group">
-                                {% for comentario in solicitud.comentarios.all reversed %}
+                                {% for comentario in solicitud.comentarios.all %}
                                     <li class="list-group-item top-buffer">
                                         <div class="card">
                                             <div class="card-header">{{ comentario.fecha }}</div>
