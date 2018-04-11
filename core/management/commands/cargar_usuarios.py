@@ -74,7 +74,7 @@ class Command(BaseCommand):
         words = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=5)  # Iniciar el listado para xkcdpass
 
         # Carga de Datos
-        if settings.DEBUG is True:
+        if settings.DEBUG or settings.IMPLEMENT_HEROKU:
             print("Es Debug")
             datos = cargar_usuarios(ARCHIVO)  # Utiliza el archivo local
         else:
