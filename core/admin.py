@@ -17,4 +17,6 @@ from .models import User
 # # unregister and register again
 # admin.site.unregister(Group)
 # admin.site.register(Group, MyGroupAdmin)
+UserAdmin.list_display += ('provincia',)  # don't forget the commas
+
 admin.site.register(User, UserAdmin)
