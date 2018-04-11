@@ -8,26 +8,21 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}">Dashboard</a>
 
-            {% if perms.ubicacion.ver_departamento %}
+        
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Reportes</a>
-            {% endif %}
-
-            {% if perms.perfil.ver_departamento %}
+        
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"
                    href="{% url 'perfil:profesores-departamento' request.user.perfil.departamento.pk %}">Profesores
                     <span
                             class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
 
-            {% endif %}
-
-            {% if perms.actividades.ver_departamento %}
+        
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'actividad:departamento' request.user.perfil.departamento.pk %}">Actividades
                     <span
                             class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
-            {% endif %}
 
         </div>
     {% endif %}
