@@ -10,11 +10,129 @@
         <div class="col-sm-12 col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Registrar Trabajo de Graduacion</h4>
+                    <h4 class="card-title">Registrar Datos de Trabajo de Graduacion</h4>
                     <form method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        {{ form.non_field_errors }}
+
+                        {% for hidden_field in form.hidden_fields %}
+                            {{ hidden_field.errors }}
+                            {{ hidden_field }}
+                        {% endfor %}
+
+                        {#                        {{ form.as_p }}#}
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-anteproyecto-tab" data-toggle="pill"
+                                   href="#pills-anteproyecto"
+                                   role="tab" aria-controls="pills-anteproyecto" aria-selected="true">Anteproyecto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-trabajo-tab" data-toggle="pill" href="#pills-trabajo"
+                                   role="tab" aria-controls="pills-trabajo" aria-selected="false">Trabajo de
+                                    Graduacion</a>
+                            </li>
+                            <li class="nav-item">
+                        </ul>
+
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-anteproyecto" role="tabpanel"
+                                 aria-labelledby="pills-anteproyecto-tab">
+                                <div class="form-group">
+                                    {{ form.nombre_proyecto.label_tag }}
+                                    {{ form.nombre_proyecto }}
+                                    {% if form.nombre_proyecto.help_text %}
+                                        <small class="form-text text-muted">{{ form.nombre_proyecto.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.programa.label_tag }}
+                                    {{ form.programa }}
+                                    {% if form.programa.help_text %}
+                                        <small class="form-text text-muted">{{ form.programa.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.cod_carrera.label_tag }}
+                                    {{ form.cod_carrera }}
+                                    {% if form.cod_carrera.help_text %}
+                                        <small class="form-text text-muted">{{ form.cod_carrera.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.estudiantes.label_tag }}
+                                    {{ form.estudiantes }}
+                                    {% if form.estudiantes.help_text %}
+                                        <small class="form-text text-muted">{{ form.estudiantes.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.asesor.label_tag }}
+                                    {{ form.asesor }}
+                                    {% if form.asesor.help_text %}
+                                        <small class="form-text text-muted">{{ form.asesor.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.estado.label_tag }}
+                                    {{ form.estado }}
+                                    {% if form.estado.help_text %}
+                                        <small class="form-text text-muted">{{ form.estado.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.archivo_anteproyecto.label_tag }}
+                                    {{ form.archivo_anteproyecto }}
+                                    {% if form.archivo_anteproyecto.help_text %}
+                                        <small class="form-text text-muted">{{ form.archivo_anteproyecto.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="pills-trabajo" role="tabpanel"
+                                 aria-labelledby="pills-trabajo-tab">
+                                <div class="form-group">
+                                    {{ form.fecha_entrega.label_tag }}
+                                    {{ form.fecha_entrega }}
+                                    {% if form.fecha_entrega.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_entrega.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.fecha_sustentacion.label_tag }}
+                                    {{ form.fecha_sustentacion }}
+                                    {% if form.fecha_sustentacion.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_sustentacion.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.jurados.label_tag }}
+                                    {{ form.jurados }}
+                                    {% if form.jurados.help_text %}
+                                        <small class="form-text text-muted">{{ form.jurados.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.nota.label_tag }}
+                                    {{ form.nota }}
+                                    {% if form.nota.help_text %}
+                                        <small class="form-text text-muted">{{ form.nota.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.archivo_trabajo.label_tag }}
+                                    {{ form.archivo_trabajo }}
+                                    {% if form.archivo_trabajo.help_text %}
+                                        <small class="form-text text-muted">{{ form.archivo_trabajo.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
                 </div>
             </div>

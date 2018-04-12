@@ -123,7 +123,7 @@ class StudentUpdateForm(forms.ModelForm):
 class TrabajoForm(forms.ModelForm):
     class Meta:
         model = TrabajoGraduacion
-        fields = ('nombre_proyecto', 'estudiantes', 'asesor', 'estado','programa',
+        fields = ('nombre_proyecto', 'estudiantes', 'asesor', 'estado', 'programa',
                   'cod_carrera', 'fecha_entrega', 'fecha_sustentacion', 'jurados', 'nota',
                   'archivo_anteproyecto', 'archivo_trabajo')
         widgets = {
@@ -135,13 +135,13 @@ class TrabajoForm(forms.ModelForm):
             }),
             'estudiantes': forms.SelectMultiple(),
             'asesor': forms.Select(attrs={
-                    'class': 'form-control'
+                'class': 'custom-select form-control'
             }),
             'estado': forms.Select(attrs={
-                'class': 'form-control'
+                'class': 'custom-select form-control'
             }),
             'programa': forms.Select(attrs={
-                'class': 'form-control'
+                'class': 'custom-select form-control'
             }),
             'fecha_entrega': forms.TextInput(attrs={
                 'class': 'form-control datepicker'
@@ -151,19 +151,24 @@ class TrabajoForm(forms.ModelForm):
             }),
             'nota': forms.TextInput(attrs={
                 'class': 'form-control'
+            }),
+            'archivo_anteproyecto': forms.FileInput(attrs={
+                'class': 'form-control-file'
+            }),
+            'archivo_trabajo': forms.FileInput(attrs={
+                'class': 'form-control-file'
             })
         }
         labels = {
-            'cod_carrera': 'Codigo de Carrera',
-            'nombre_proyecto': 'Nombre del Proyecto',
-            'fecha_entrega': 'Fecha de Entrega',
-            'fecha_sustentacion': 'Fecha de Sustentacion',
-            'nota': 'Nota Obtenida',
-        },
+                     'cod_carrera': 'Codigo de Carrera',
+                     'nombre_proyecto': 'Nombre del Proyecto',
+                     'fecha_entrega': 'Fecha de Entrega',
+                     'fecha_sustentacion': 'Fecha de Sustentacion',
+                     'nota': 'Nota Obtenida',
+                 },
         placeholder = {
             'fecha_sustentacion': 'yyyy-mm-dd'
         }
-
 
 # class AnteproyectoForm(forms.ModelForm):
 #     class Meta:
