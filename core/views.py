@@ -20,6 +20,6 @@ def cambiar_password(request):
             messages.error(request, 'Por favor corriga el error.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'form.html', {
+    return render(request, 'core/password_update_form.html', {
         'form': form
     })
