@@ -10,19 +10,31 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Solicitudes Pendientes</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-12">
             <div class="card">
+                {% if perms.solicitud.add_solicitud %}
+                <div class="card-header"><p class="card-text"><a class="btn btn-outline-primary" href="{% url 'solicitud:crear' %}"><i
+                    class="fa fa-edit"></i> Crear Solicitud</a></p></div>
+                {% endif %}
                 <div class="card-body">
-                    <div class="card-title"><h4>Solicitudes</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="btn-group">
-                            <a class="btn btn-outline-info" href="{% url 'solicitud:crear' %}"> Crear Solicitud</a>
-                        </div>
-                        <hr>
+                    <div class="card-title"><h4>Mis Solicitudes</h4></div>
+                        <hr>                       
+                        {% if solicitudes %}
                         <table class="table table-bordered" id="solicitudes">
                             <thead>
                             <tr>
+                                <th>Usuario</th>
                                 <th>Titulo</th>
                                 <th>Fecha Creacion</th>
                                 <th>Fecha de Ultimo Comentario</th>
@@ -32,6 +44,7 @@
                             <tbody>
                             {% for solicitud in solicitudes %}
                                 <tr>
+                                    <td>{{ solicitud.usuario }}</td>
                                     <td>{{ solicitud.titulo }}</td>
                                     <td>{{ solicitud.fecha_creacion }}</td>
                                     <td>{{ solicitud.fecha_modificacion }}</td>
@@ -45,8 +58,9 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                    </div>
-                </div>
+                    {% else %}
+                        <div class="alert alert-info text-center">No tiene solicitudes pendientes</div>
+                    {% endif %}
             </div>
         </div>
     </div>

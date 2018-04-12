@@ -13,13 +13,15 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card">
+                {% if perms.inventario.add_aula %}
                 <div class="card-header"><p class="card-text"><a class="btn btn-primary"
                                                                  href="{% url 'inventario:crear-aulas' %}"><i
                         class="fa fa-edit"></i> Registrar</a></p></div>
+                {% endif %}
                 <div class="card-body">
                     <h4 class="card-title">Listado de Aulas - {% if request.user.is_superuser %}General{% else %}
                         {{ request.user.perfil.unidad }}{% endif %}</h4>
-
+                        <hr />
                     {% if aulas %}
                         <div class="table-responsive">
                             <table class="table table-bordered" id="enhance">

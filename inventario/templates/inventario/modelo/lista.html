@@ -9,12 +9,15 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="col-12">
             <div class="card">
+                    {% if perms.inventario.add_modelo %}
+                    <div class="card-header"><p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-modelo' %}"><i
+                        class="fa fa-edit"></i> Registrar</a></p></div>
+                    {% endif %}
                 <div class="card-body">
                     <h4 class="card-title">Listado de Modelos</h4>
-                    <p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-modelo' %}"><i
-                            class="fa fa-edit"></i> Registrar</a></p>
+                    {% if modelos %}
                     <table class="table" id="enhance">
                         <thead>
                         <tr>
@@ -22,7 +25,7 @@
                             <th>Opciones</th>
                         </tr>
                         </thead>
-                        {% if modelos %}
+                        
                             <tbody>
                             {% for modelo in modelos %}
                                 <tr>

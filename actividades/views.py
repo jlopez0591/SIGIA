@@ -106,7 +106,7 @@ class ActividadDepartamentoPendienteListView(ListView):
     model = Actividad
     context_object_name = 'actividades'
     permission_required = 'actividades.aprobar_actividad'
-    template_name = 'actividades/lista.html'
+    template_name = 'actividades/admin/pendientes.html'
 
     def get_queryset(self):
         qs = Actividad.objects.en_espera().filter(departamento_id=self.kwargs['pk'])

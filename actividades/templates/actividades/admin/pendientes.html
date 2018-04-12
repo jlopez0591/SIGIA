@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Actividades Pendientes{% endblock %}
 {% block head %}
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -25,6 +25,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Actividades Pendientes</h4>
+                    <hr />
                     {% include 'actividades/include/tabla_actividad_pendiente.html' %}
                 </div>
             </div>

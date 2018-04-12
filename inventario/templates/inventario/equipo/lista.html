@@ -10,10 +10,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                {% if perms.inventario.add_equipo %}
+                <div class="card-header"><p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-equipo' %}"><i
+                    class="fa fa-edit"></i> Registrar</a></p></div>
+                {% endif %}
                 <div class="card-body">
                     <h4 class="card-title">Listado de Equipos</h4>
-                    <p class="card-text"><a class="btn btn-primary" href="{% url 'inventario:crear-equipo' %}"><i
-                            class="fa fa-edit"></i> Registrar</a></p>
+                    <hr />
                     {% include 'inventario/equipo/include/partial_equipo_list.html' %}
                 </div>
             </div>

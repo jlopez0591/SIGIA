@@ -1,4 +1,5 @@
 <div class="table table-responsive">
+    {% if actividad %}
         <table class="table" id="actividades">
             <thead>
             <tr>
@@ -25,5 +26,8 @@
             {% endfor %}
             </tbody>
         </table>
+    {% else %}
+        <div class="alert alert-info text-center">No hay actividades pendientes</div>
+    {% endif %}
 </div>
 
