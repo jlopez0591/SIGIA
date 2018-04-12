@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMi
 from estudiantes.forms import StudentUpdateForm, TrabajoForm
 from estudiantes.models import Estudiante, TrabajoGraduacion
 
+
 #
 class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
     context_object_name = 'estudiantes'
@@ -14,6 +15,7 @@ class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         qs = Estudiante.objects.facultad(facultad=self.kwargs['pk'])
         return qs
+
 
 #
 class EstudianteEscuelaListView(ListView):
@@ -26,11 +28,13 @@ class EstudianteEscuelaListView(ListView):
         qs = Estudiante.objects.escuela(escuela=self.kwargs['pk'])
         return qs
 
+
 #
 class EstudianteListView(ListView):
     context_object_name = 'estudiantes'
     model = Estudiante
     template_name = 'estudiantes/consultar.html'
+
 
 #
 class EstudianteDetailView(DetailView):
@@ -38,12 +42,14 @@ class EstudianteDetailView(DetailView):
     model = Estudiante
     template_name = 'estudiantes/detalle.html'
 
+
 #
 class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
     model = Estudiante
     permission_required = 'estudiante.change_estudiante'
     form_class = StudentUpdateForm
     template_name = 'estudiantes/editar.html'
+
 
 #
 class TrabajoGraduacionCreateView(PermissionRequiredMixin, CreateView):
@@ -59,6 +65,11 @@ class TrabajoGraduacionCreateView(PermissionRequiredMixin, CreateView):
         except IntegrityError:
             return self.form_invalid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(TrabajoGraduacionCreateView, self).get_form_kwargs()
+        kwargs.update({'facultad': self.request.user.perfil.facultad})
+        return kwargs
+
 
 #
 class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
@@ -66,6 +77,12 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = TrabajoForm
     permission_required = 'estudiante.change_trabajo'
     template_name = 'estudiantes/trabajos/form.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(TrabajoGraduacionUpdateView, self).get_form_kwargs()
+        kwargs.update({'facultad': self.request.user.perfil.facultad})
+        return kwargs
+
 
 #
 class TrabajoGraduacionDetailView(DetailView):
@@ -79,6 +96,7 @@ class TrabajoGraduacionListView(PermissionRequiredMixin, ListView):
     context_object_name = 'trabajos'
     template_name = 'estudiantes/trabajos/lista.html'
 
+
 #
 class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
     model = TrabajoGraduacion
@@ -90,6 +108,7 @@ class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
         qs = TrabajoGraduacion.objects.facultad(facultad=self.kwargs['pk'])
         return qs
 
+
 #
 class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
     model = TrabajoGraduacion
@@ -100,6 +119,7 @@ class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         qs = TrabajoGraduacion.objects.escuela(escuela=self.kwargs['pk'])
         return qs
+
 
 #
 class TrabajoGraduacionPendienteListView(PermissionRequiredMixin, ListView):

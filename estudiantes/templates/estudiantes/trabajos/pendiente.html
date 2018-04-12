@@ -28,8 +28,8 @@
                 <div class="card-title"><h4>Proyectos de Graduacion</h4>
                     <hr/>
                     <div class="card-text">
-                        {% if proyectos %}
-                            {% include 'estudiantes/proyecto/include/tabla.html' %}
+                        {% if trabajos %}
+                            {% include 'estudiantes/trabajos/include/tabla.html' %}
                         {% else %}
                             <div class="alert alert-info" role="alert">
                                 No hay trabajos pendientes
@@ -47,7 +47,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#proyectos').DataTable();
+            $('#trabajos').DataTable();
         });
     </script>
 {% endblock %}
