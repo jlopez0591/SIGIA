@@ -41,15 +41,9 @@
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"
-                   href="{% url 'estudiante:anteproyecto-facultad' request.user.perfil.facultad.pk %}">Anteproyectos
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.anteproyectos.count }}</span></a>
-
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'estudiante:proyecto-facultad' request.user.perfil.facultad.pk %}">Trabajos de
+                   href="{% url 'estudiante:trabajo-facultad' request.user.perfil.facultad.pk %}">Trabajos de
                     Graduacion <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.proyectos.count }}</span></a>
+                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.trabajos_graduacion.count }}</span></a>
 
 
         </div>

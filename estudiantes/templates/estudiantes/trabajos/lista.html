@@ -9,7 +9,7 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
@@ -22,20 +22,21 @@
 
 
     <div class="row">
-    <div class="col-md-8 offset-md-2 col-sm-12">
+    <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" href="{% url 'estudiante:crear-trabajo' %}">Registrar
+                    Trabajo</a>
+            </div>
             <div class="card-body">
-                <div class="card-title"><h4>Proyectos de Graduacion</h4>
-
+                <div class="card-title"><h4>Trabajos de Graduacion</h4>
                     <hr/>
                     <div class="card-text">
-                        <p><a class="btn btn-outline-primary" href="{% url 'estudiante:crear-proyecto' %}">Registrar
-                            Proyecto</a></p>
-                        {% if proyectos %}
-                            {% include 'estudiantes/proyecto/../trabajos/include/tabla.html' %}
+                        {% if trabajos %}
+                            {% include 'estudiantes/trabajos/include/tabla.html' %}
                         {% else %}
                             <div class="alert alert-info" role="alert">
-                                No hay proyectos registrados
+                                No hay trabajos registrados
                             </div>
                         {% endif %}
                     </div>
@@ -50,7 +51,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#proyectos').DataTable();
+            $('#trabajos').DataTable();
         });
     </script>
 {% endblock %}

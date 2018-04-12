@@ -36,17 +36,17 @@ class EstudianteManager(models.Manager):
     def mujeres(self):
         return self.get_queryset().mujeres()
     
-    def facultad(self):
-        return self.get_queryset().facultad()
+    def facultad(self, facultad):
+        return self.get_queryset().facultad(facultad)
     
-    def escuela(self):
-        return self.get_queryset().escuela()
+    def escuela(self, escuela):
+        return self.get_queryset().escuela(escuela)
     
-    def carrera(self):
-        return self.get_queryset().carrera()
+    def carrera(self, carrera):
+        return self.get_queryset().carrera(carrera)
 
 
-class TrabajoQueryset(models.QuerySet):
+class TrabajoQuerySet(models.QuerySet):
     def aprobados(self):
         return self.filter(estado='aprobado')
 
@@ -104,13 +104,13 @@ class TrabajoManager(models.Manager):
         return self.get_queryset().doctorado()
     
     def facultad(self, facultad):
-        return self.get_queryset().facultad()
+        return self.get_queryset().facultad(facultad)
     
-    def escuela(self, facultad):
-        return self.get_queryset().escuela()
+    def escuela(self, escuela):
+        return self.get_queryset().escuela(escuela)
     
     def carrera(self, carrera):
-        return self.get_queryset().carrera()
+        return self.get_queryset().carrera(carrera)
 
 
 

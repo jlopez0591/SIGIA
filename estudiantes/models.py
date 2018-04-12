@@ -167,14 +167,14 @@ class TrabajoGraduacion(models.Model):
     cod_carrera = models.CharField(max_length=120, blank=True)
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='trabajos_graduacion')
-    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, null=True,
+    facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='trabajos_graduacion')
-    escuela = models.ForeignKey(EscuelaInstancia, on_delete=models.SET_NULL, null=True,
+    escuela = models.ForeignKey(EscuelaInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='trabajos_graduacion')
-    carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True,
+    carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='trabajos_graduacion')
     nombre_proyecto = models.CharField(max_length=120, blank=True)
-    estudiante = models.ManyToManyField(Estudiante, related_name='proyectos')
+    estudiantes = models.ManyToManyField(Estudiante, related_name='proyectos')
     asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='asesorias', 
                                 limit_choices_to={
                                    'groups__name': 'Profesores'
@@ -195,6 +195,8 @@ class TrabajoGraduacion(models.Model):
     archivo_anteproyecto = models.FileField(blank=True, upload_to=anteproyecto_upload_rename, validators=[validate_file_type])
     archivo_trabajo = models.FileField(blank=True, upload_to=anteproyecto_upload_rename, validators=[validate_file_type])
 
+    objects = TrabajoManager()
+
     def __str__(self):
         return self.nombre_proyecto
     
@@ -213,6 +215,11 @@ class TrabajoGraduacion(models.Model):
         self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                     cod_escuela=self.cod_escuela, cod_carrera=self.cod_carrera)
         return super(TrabajoGraduacion, self).save()
+
+    def get_absolute_url(self):
+        return reverse('estudiante:detalle-trabajo', kwargs={
+            'pk': self.pk
+        })
 
 
 

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+<p class="card-text"></p>
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Proyecto: {{ trabajo.nombre_proyecto }}</h4>
+                    <h5 class="card-title">Nivel: {{ trabajo.get_programa_display }}</h5>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Fecha de Entrega</th>
+                            <td>{{ trabajo.fecha_entrega }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Sustentacion</th>
+                            <td>{{ trabajo.fecha_sustentacion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Jurado</th>
+                            <td>
+                                <ul>{% for jurado in trabajo.jurados.all %}
+                                    <li>{{ jurado }}</li>{% endfor %}</ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Nota Adquirida</th>
+                            <td>{{ trabajo.nota }}</td>
+                        </tr>
+                        <tr>
+                            <th>Estudiantes Participantes</th>
+                            <td>
+                                <ul>{% for estudiante in trabajo.estudiantes.all %}
+                                    <li>{{ estudiante }}</li>{% endfor %}</ul>
+                            </td>
+                        </tr>
+                        {% if trabajo.detalle %}
+                            <tr>
+                                <th>Detalle</th>
+                                <td>{{ trabajo.detalle }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Carrera</th>
+                            <td>{{ trabajo.carrera }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer text-right">
+                    <a class="btn btn-outline-primary" href="#"><i class="fa fa-file"></i> Archivo</a>
+                    <a class="btn btn-outline-info" href="{% url 'estudiante:editar-trabajo' trabajo.pk %}"><i class="fa fa-edit"></i> Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
