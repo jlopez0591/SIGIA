@@ -14,12 +14,8 @@
         {#  Anteproyectos y Trabajos de Grado #}
         {% if request.user.perfil.escuela and perms.estudiantes.aprobar_anteproyecto %}
             <a class="dropdown-item"
-               href="{% url 'estudiante:trabajo-pendiente' request.user.perfil.escuela.pk %}">Anteproyecto</a>
-            <div class="dropdown-divider"></div>
+               href="{% url 'estudiante:trabajo-pendiente' request.user.perfil.escuela.pk %}">Trabajos de Graduacion</a>
         {% endif %}
         {# Solicitud #}
-        {% if request.user.is_staff %}
-            <a class="dropdown-item" href="{% url 'solicitud:lista' %}">Solicitud</a>
-        {% endif %}
     </div>
 </li>

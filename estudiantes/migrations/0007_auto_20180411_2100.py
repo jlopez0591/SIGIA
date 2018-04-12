@@ -65,12 +65,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='trabajograduacion',
             name='archivo_anteproyecto',
-            field=models.FileField(blank=True, upload_to=utils.uploads.anteproyecto_upload_rename, validators=[utils.validators.validate_file_type]),
+            field=models.FileField(blank=True, upload_to=utils.uploads.trabajo_upload_rename, validators=[utils.validators.validate_file_type]),
         ),
         migrations.AddField(
             model_name='trabajograduacion',
             name='archivo_trabajo',
-            field=models.FileField(blank=True, upload_to=utils.uploads.anteproyecto_upload_rename, validators=[utils.validators.validate_file_type]),
+            field=models.FileField(blank=True, upload_to=utils.uploads.trabajo_upload_rename, validators=[utils.validators.validate_file_type]),
         ),
         migrations.AddField(
             model_name='trabajograduacion',

@@ -8,7 +8,7 @@ from auditlog.models import AuditlogHistoryField
 from .managers import EstudianteManager, TrabajoManager
 from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, CarreraInstancia
 
-from utils.uploads import anteproyecto_upload_rename
+from utils.uploads import trabajo_upload_rename
 from utils.validators import validate_file_type
 
 
@@ -171,8 +171,8 @@ class TrabajoGraduacion(models.Model):
     carrera = models.ForeignKey(CarreraInstancia, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='trabajos_graduacion')
     nombre_proyecto = models.CharField(max_length=120, blank=True)
-    estudiantes = models.ManyToManyField(Estudiante, related_name='proyectos')
-    asesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='asesorias',
+    estudiantes = models.ManyToManyField(Estudiante, related_name='proyectos', blank=True)
+    asesor = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='asesorias',
                                limit_choices_to={
                                    'groups__name': 'Profesores'
                                })
@@ -181,16 +181,16 @@ class TrabajoGraduacion(models.Model):
 
     registrado_por = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='registros')
 
-    jurados = models.ManyToManyField(User, related_name='jurado', blank=True,  limit_choices_to={
+    jurados = models.ManyToManyField(User, related_name='jurado', blank=True, limit_choices_to={
         'groups__name': 'Profesores'
     })
 
     fecha_entrega = models.DateField(blank=True, null=True)
     fecha_sustentacion = models.DateField(blank=True, null=True)
     nota = models.CharField(max_length=3, blank=True)
-    archivo_anteproyecto = models.FileField(blank=True, upload_to=anteproyecto_upload_rename,
+    archivo_anteproyecto = models.FileField(blank=True, upload_to=trabajo_upload_rename,
                                             validators=[validate_file_type])
-    archivo_trabajo = models.FileField(blank=True, upload_to=anteproyecto_upload_rename,
+    archivo_trabajo = models.FileField(blank=True, upload_to=trabajo_upload_rename,
                                        validators=[validate_file_type])
 
     objects = TrabajoManager()
@@ -210,8 +210,11 @@ class TrabajoGraduacion(models.Model):
         self.sede = self.registrado_por.perfil.sede
         self.facultad = self.registrado_por.perfil.facultad
         self.escuela = self.registrado_por.perfil.escuela
-        self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
+        try:
+            self.carrera = CarreraInstancia.objects.get(cod_sede=self.cod_sede, cod_facultad=self.cod_facultad,
                                                     cod_escuela=self.cod_escuela, cod_carrera=self.cod_carrera)
+        except ObjectDoesNotExist:
+            pass
         return super(TrabajoGraduacion, self).save()
 
     def get_absolute_url(self):

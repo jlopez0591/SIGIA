@@ -44,7 +44,7 @@
                             <tbody>
                             {% for solicitud in solicitudes %}
                                 <tr>
-                                    <td>{{ solicitud.usuario }}</td>
+                                    <td>{{ solicitud.usuario.username }}</td>
                                     <td>{{ solicitud.titulo }}</td>
                                     <td>{{ solicitud.fecha_creacion }}</td>
                                     <td>{{ solicitud.fecha_modificacion }}</td>

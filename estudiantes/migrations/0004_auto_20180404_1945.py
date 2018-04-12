@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='anteproyecto',
             name='archivo',
-            field=models.FileField(blank=True, upload_to=utils.uploads.anteproyecto_upload_rename, validators=[utils.validators.validate_file_type]),
+            field=models.FileField(blank=True, upload_to=utils.uploads.trabajo_upload_rename, validators=[utils.validators.validate_file_type]),
         ),
     ]

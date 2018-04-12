@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Registrar Datos de Trabajo de Graduacion</h4>
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
 
@@ -179,8 +179,12 @@
                 });
             });
 
-            $('#id_anteproyecto').select2({
-                width: '100%'
+            $('#id_estudiantes').select2({
+                width: "100%"
+            });
+
+            $('#id_asesor').select2({
+                width: "100%"
             });
 
             $('#id_jurados').select2({

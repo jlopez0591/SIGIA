@@ -1,5 +1,6 @@
 from django import forms
 from dal import autocomplete
+from django.core.exceptions import ValidationError
 from estudiantes.models import Estudiante, TrabajoGraduacion
 from core.models import Usuario
 
@@ -176,3 +177,12 @@ class TrabajoForm(forms.ModelForm):
         super(TrabajoForm, self).__init__(*args, **kwargs)
         self.fields['asesor'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
         self.fields['jurados'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
+
+    # def clean(self):
+    #     estudiantes = self.cleaned_data.get('estudiantes')
+    #     jurados = self.cleaned_data.get('jurados')
+    #     if estudiantes.count() > 3:
+    #         raise ValidationError('Seleccione 3 estudiantes max.')
+    #     if jurados.count() > 3:
+    #         raise ValidationError('Seleccione 3 jurados max.')
+    #     return self.cleaned_data
