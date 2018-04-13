@@ -3,3 +3,4 @@ from .api import *
 from .main_v2 import *
 from .graph import *
 from .autocomplete import *
+from .reportes import *

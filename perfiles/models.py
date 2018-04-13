@@ -171,5 +171,8 @@ class Perfil(models.Model):
         else:
             return "No tiene registrado una fecha de inicio"
 
+    def actividades_realizadas(self):
+        return self.usuario.actividades.exclude(clase='idioma').aprobado()
+
 
 auditlog.register(Perfil)

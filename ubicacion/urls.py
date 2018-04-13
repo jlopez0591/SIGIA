@@ -65,4 +65,8 @@ urlpatterns = [
     url(r'^escuela/(?P<carrera_pk>[\w]+)/anteproyectos/json/$', views.anteproyectos_semestre_carrera,
         name='carrera-anteproyectos'),
     url(r'^escuela/(?P<carrera_pk>[\w]+)/proyectos/json/$', views.proyectos_semestre_carrera, name='carrera-proyectos'),
+
+
+    # Reportes
+    url(r'^prueba/reporte$', views.reporte_facultad, name='reporte-prueba')
 ]

@@ -23,3 +23,7 @@ def cambiar_password(request):
     return render(request, 'core/password_update_form.html', {
         'form': form
     })
+
+
+def info_demo(request):
+    return render(request, 'core/demo.html', {})
