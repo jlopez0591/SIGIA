@@ -7,43 +7,45 @@
     {% if request.user.perfil.facultad and perms.unidad.ver_facultad %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item"
-               href="{% url 'ubicacion:unidad' request.user.perfil.facultad.pk %}"><i class="fas fa-chart-pie"></i> Dashboard</a>
+               href="{% url 'ubicacion:unidad' request.user.perfil.facultad.pk %}"><i class="fas fa-chart-pie"></i>
+                Dashboard</a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'ubicacion:reporte-prueba' %}"><i class="fas fa-file-alt"></i> Reportes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'ubicacion:reporte-facultad' request.user.perfil.facultad.pk %}"><i
+                    class="fas fa-file-alt"></i> Reportes</a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'inventario:facultad-aulas' request.user.perfil.facultad.pk %}">Aulas
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.aula_set.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{% url 'inventario:facultad-aulas' request.user.perfil.facultad.pk %}">Aulas
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.aula_set.count }}</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'inventario:facultad-equipo' request.user.perfil.facultad.pk %}">Equipos
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.equipos.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{% url 'inventario:facultad-equipo' request.user.perfil.facultad.pk %}">Equipos
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.equipos.count }}</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'estudiante:estudiante-facultad' request.user.perfil.facultad.pk %}">Estudiantes <span
-                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{% url 'estudiante:estudiante-facultad' request.user.perfil.facultad.pk %}">Estudiantes <span
+                    class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'estudiante:trabajo-facultad' request.user.perfil.facultad.pk %}">Trabajos de
-                    Graduacion <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.trabajos_graduacion.count }}</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{% url 'estudiante:trabajo-facultad' request.user.perfil.facultad.pk %}">Trabajos de
+                Graduacion <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.trabajos_graduacion.count }}</span></a>
 
 
         </div>

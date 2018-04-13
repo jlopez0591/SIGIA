@@ -27,3 +27,7 @@ def cambiar_password(request):
 
 def info_demo(request):
     return render(request, 'core/demo.html', {})
+
+
+def info_sitio(request):
+    return render(request, 'core/info.html', {})

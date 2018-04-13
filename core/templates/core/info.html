@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Sistema SIGIA</h3>
+                    <h6 class="card-subtitle mb-2 text-muted" >Detalles del Sistema</h6>
+                    <p class="card-text">El sistema SIGIA es una plataforma desarrollada para la Universidad de Panama,
+                        con el fin de recolectar datos de origen academico y administrativo, para asi agilizar
+                        el proceso de recolección de los datos, la gestión de información de la unidad
+                        academica/administrativa y facilitar la consulta de estos datos</p>
+                    <p class="card-text">Para este fin el sistema cuenta con los siguientes modulos:</p>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Modulo de Ubicación: Este presenta a los usuarios con información
+                        general del sistema mediante cuadros de mando y a los directores de las facultades, escuelas y
+                        departamentos reportes detallados de los mismos
+                    </li>
+                    <li class="list-group-item">
+                        Modulo de Profesores y Actividades: Este le provee a los profesores con un usuario y perfil en
+                        el sistema
+                        el cual les permitirá mantener actualizada su información y registrar las actividades que
+                        realicen.
+                        Esto ayuda a la generación de información del modulo de ubicación.
+                    </li>
+                    <li class="list-group-item">
+                        Modulo de Estudiantes: Desde este modulo se podrá llevar la información de los estudiantes matriculados
+                        en el anio actual y agregar datos de importancia de estos. Además de esto el modulo presenta
+                        la funcionalidad de registro y seguimiento de los trabajos de graduación de los estudiantes.
+                    </li>
+                    <li class="list-group-item">
+                        Modulo de Inventario: Este modulo permitirá a los administrativos llevar un mejor control de los
+                        recursos físicos que se llevan dentro de las facultades
+                    </li>
+                    <li class="list-group-item">
+                        Como valor agregado también se implemento un modulo de asistencia o mesa de ayuda, para que los
+                        usuarios puedan solicitar ayuda con el uso del sistema y solicitar que se agreguen datos que carece el
+                        sistema y son necesarios para la función del mismo, como información de titulos y universidades existentes (necesario
+                        para registrar los titulos de los profesores) o distintas categorías y modelos de recursos físicos (necesarias para el inventario).
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

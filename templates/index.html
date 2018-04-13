@@ -3,5 +3,10 @@
 {% block title %}Indice{% endblock %}
 
 {% block jumbotron-title %}Bienvenido al sistema SIGIA{% endblock %}
-{% block jumbotron-subtitle %}Sistema para la gestion de informacion academica y administrativa {% endblock %}
+{% block jumbotron-subtitle %}Sistema para la gestion de informacion academica y administrativa
+    <div class="btn-group-vertical">
+        <a class="btn btn-outline-primary" href="{% url 'core:info' %}" role="button">Aprender Mas</a>
+        <a class="btn btn-outline-info " href="{% url 'core:demo' %}" role="button">Ver Usuarios de Prueba</a>
+    </div>
+{% endblock %}
 {% block jumbotron-content %}{% endblock %}

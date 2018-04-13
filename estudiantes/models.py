@@ -146,7 +146,8 @@ class TrabajoGraduacion(models.Model):
     ESTADO = (
         ('pendiente', 'Pendiente'),
         ('rechazado', 'Rechazado'),
-        ('aprobado', 'Aprobado')
+        ('aprobado', 'Aprobado'),
+        ('sustentado', 'Sustentado')
     )
     LICENCIATURA = 'licenciatura'
     ESPECIALIZACION = 'especializacion'

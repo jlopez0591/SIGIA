@@ -68,5 +68,6 @@ urlpatterns = [
 
 
     # Reportes
-    url(r'^prueba/reporte$', views.reporte_facultad, name='reporte-prueba')
+    url(r'^prueba/reporte$', views.reporte_facultad_demo, name='reporte-prueba'),
+    url(r'^facultad/(?P<facultad_pk>[\w]+)/reporte/$', views.reporte_facultad, name='reporte-facultad')
 ]
