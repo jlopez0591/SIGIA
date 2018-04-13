@@ -31,7 +31,7 @@ urlpatterns = [
 
     # Publicacion
     url(r'^publicacion/crear/$', ActivityCreateView.as_view(model=Publicacion, form_class=PublicacionForm,
-                                                            template_name='actividades/publicacion/crear.html'),
+                                                            template_name='actividades/estadia/crear.html'),
         name='crear-publicacion'),
     url(r'^publicacion/(?P<pk>[0-9]+)/editar/$',
         ActivityUpdateView.as_view(model=Publicacion, form_class=PublicacionForm,

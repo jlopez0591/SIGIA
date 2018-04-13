@@ -14,7 +14,6 @@ from perfiles.models import Perfil
 
 
 class ActivityCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateView):
-    success_url = reverse_lazy('actividad:propias')
     context_object_name = 'form'
     success_message = 'Actividad Registrada'
     permission_required = 'actividades.add_actividad'
@@ -25,6 +24,11 @@ class ActivityCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateVie
             return super(ActivityCreateView, self).form_valid(form)
         except IntegrityError:
             return self.form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('actividad:propias', kwargs={
+            'pk': self.request.user.pk
+        })
 
 
 class ActivityDetailView(DetailView):

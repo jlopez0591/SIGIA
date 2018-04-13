@@ -17,21 +17,29 @@ class EstadiaForm(ModelForm):
         fields = ('nombre_actividad', 'lugar', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la Actividad"
             }),
             "lugar": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Lugar donde se realizo la Estadia"
             }),  # TextInput(attrs={})
             "fecha": TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 "placeholder": "Fecha en que se realizo la Estadia (YYYY-MM-DD)"
             }),
-            "resumen": TextInput(attrs={
-                'cols': 80,
-                'rows': 20
+            "resumen": forms.Textarea(attrs={
+                'class': 'form-control',
             }),
             "archivo": "",
         }
+
+    def full_clean(self):
+        super(EstadiaForm, self).full_clean()
+        try:
+            self.instance.validate_unique()
+        except forms.ValidationError as e:
+            self._update_errors(e)
 
 
 class PublicacionForm(ModelForm):
@@ -40,18 +48,18 @@ class PublicacionForm(ModelForm):
         fields = ('nombre_actividad', 'lugar_publicacion', 'fecha', 'resumen', 'archivo')
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la publicacion"
             }),
             "lugar_publicacion": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Lugar donde se realizo la publicacion"
             }),
             "fecha": TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 "placeholder": "Fecha de Publicacion (YYYY-MM-DD)"
             }),
-            "resumen": TextInput(attrs={
-                "cols": 80,
-                "rows": 20
+            "resumen": forms.Textarea(attrs={
             }),
             "archivo": "",
         }
@@ -63,18 +71,18 @@ class InvestigacionForm(ModelForm):
         fields = ('nombre_actividad', 'codigo', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la Actividad"
             }),
             "codigo": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Codigo de la Actividad"
             }),
             "fecha": TextInput(attrs={
-                "class": "datepicker",
+                "class": "datepicker form-control",
                 "placeholder": "Fecha en que se inicio la Investigacion (YYYY-MM-DD)"
             }),
-            "resumen": TextInput(attrs={
-                "cols": 80,
-                "rows": 20
+            "resumen": forms.Textarea(attrs={
             }),
             "archivo": ""
         }
@@ -86,21 +94,22 @@ class LibroForm(ModelForm):
         fields = ("nombre_actividad", "editorial", "isbn", "fecha", "resumen", "archivo",)
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre del Libro",
             }),
             "editorial": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la Editorial"
             }),
             "isbn": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Codigo ISBN"
             }),
             "fecha": TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 "placeholder": "Fecha de Publicacion (YYYY-MM-DD)"
             }),
-            "resumen": TextInput(attrs={
-                "cols": 80,
-                "rows": 20
+            "resumen": forms.Textarea(attrs={
             }),
             "archivo": ""
         }
@@ -112,15 +121,14 @@ class ConferenciaForm(ModelForm):
         fields = ('nombre_actividad', 'fecha', 'resumen', 'archivo')
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la Conferencia",
             }),
             "fecha": TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 "placeholder": "Fecha en que se realizo la conferencia (YYYY-MM-DD)"
             }),
-            "resumen": TextInput(attrs={
-                "cols": 80,
-                "rows": 20
+            "resumen": forms.Textarea(attrs={
             }),
             "archivo": ""
         }
@@ -132,16 +140,18 @@ class PonenciaForm(ModelForm):
         fields = ('nombre_actividad', 'pais', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre de la Actividad"
             }),
             "pais": forms.Select(attrs={
+                'class': 'form-control',
                 "placeholder": "Pais donde se realizo la ponencia"
             }),
             "fecha": TextInput(attrs={
                 "placeholder": "Fecha en que se realizo la ponencia (YYYY-MM-DD)",
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
             }),
-            "resumen": "",
+            "resumen": forms.Textarea(),
             "archivo": ""
         }
 
@@ -152,13 +162,15 @@ class ProyectoForm(ModelForm):
         fields = ('nombre_actividad', 'tipo', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "nombre_actividad": TextInput(attrs={
+                'class': 'form-control',
                 "placeholder": "Nombre del proyecto"
             }),
             "tipo": forms.Select(attrs={
+                'class': 'form-control',
                 "placeholder": "Tipo del proyecto"
             }),
             "fecha": TextInput(attrs={
-                'class': 'datepicker',
+                'class': 'datepicker form-control',
                 "placeholder": "Fecha en que se realizo el proyecto (YYYY-MM-DD)",
             }),
         }
@@ -170,7 +182,8 @@ class PremioForm(ModelForm):
         fields = ('nombre_actividad', 'tipo', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "nombre_actividad": TextInput(attrs={
-                "placeholder": "Nombre del premio"
+                "placeholder": "Nombre del premio",
+                'class': 'form-control',
             }),
             "fecha": TextInput(attrs={
                 'class': 'datepicker',
@@ -185,7 +198,8 @@ class TituloForm(ModelForm):
         fields = ('info_titulo', 'centro_estudio', 'fecha', 'resumen', 'archivo',)
         widgets = {
             "info_titulo": forms.Select(attrs={
-                "placeholder": "Titulo Adquirido"
+                "placeholder": "Titulo Adquirido",
+                'class': 'form-control',
             }),
             "centro_estudio": forms.Select(attrs={
                 "placeholder": "Centro de Estudio donde Adquirio el titulo"

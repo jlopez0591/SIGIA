@@ -16,21 +16,7 @@
                     <h4 class="card-title">Registrar Estadia</h4>
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form.non_field_errors }}
-                        {% for hidden_field in form.hidden_fields %}
-                            {{ hidden_field.errors }}
-                            {{ hidden_field }}
-                        {% endfor %}
-                        <div class="container">
-                            {% for field in form.visible_fields %}
-                                <div>
-                                    {{ field.errors }}
-                                    {% render_field field class="form-control" %}
-                                    {{ field.help_text }}
-                                </div>
-                                <hr/>
-                            {% endfor %}
-                        </div>
+                        {{ form.as_p }}
                         <button type="submit" class="btn btn-block btn-primary">Registrar Estadia</button>
                     </form>
                 </div>

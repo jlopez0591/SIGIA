@@ -148,12 +148,21 @@ class Perfil(models.Model):
         else:
             return 'Licenciado'
 
+    def get_cedula(self):
+        return '{0}-{1}-{2}-{3}'.format(self.provincia, self.clase, self.tomo, self.folio)
+
     def edad(self):
         if self.fecha_nacimiento:
             bd = date.today() - self.fecha_nacimiento
             return int(bd.days / 365)
         else:
             return "No tiene registrado una fecha de nacimiento"
+
+    def get_nombre_departamento(self):
+        return self.departamento.departamento.nombre
+
+    def get_codigo_departamento(self):
+        return '{0}-{1}-{2}'.format(self.cod_sede, self.cod_facultad, self.cod_departamento)
 
     def tiempo_laborado(self):
         if self.fecha_inicio:

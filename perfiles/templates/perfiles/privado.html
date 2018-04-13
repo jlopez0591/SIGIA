@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ perfil.primer_apellido }}, {{ perfil.primer_nombre }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" style="width: 25rem;">
+                {% if perfil.imagen %}
+                    <img class="card-img-top" src="{{ perfil.imagen.url }}" alt="Card image cap">
+                {% else %}
+                    <img class="card-img-top" src="http://lorempixel.com/200/200/cats/" alt="Card image cap">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }}</h5>
+                    <h6 class="card-subtitle">{{ perfil.nivel_academico }}</h6>
+                    <p class="card-text"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cedula: {{ perfil.get_cedula }}</li>
+                    <li class="list-group-item">Edad: {{ perfil.edad }}</li>
+                    <li class="list-group-item">Tiempo Laborado: {{ perfil.tiempo_laborado }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8 ">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Perfil</h4>
+
+
+                    <div class="row">
+
+
+                        <div class="col-3">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                 aria-orientation="vertical">
+                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                                   role="tab" aria-controls="v-pills-home" aria-selected="true">Datos Personales</a>
+                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                                   role="tab" aria-controls="v-pills-profile" aria-selected="false">Datos
+                                    Profesionales</a>
+                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill"
+                                   href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
+                                   aria-selected="false">Actividades Realizadas</a>
+                            </div>
+                        </div>
+
+
+                        <div class="col-9">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                     aria-labelledby="v-pills-home-tab">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>
+                                        <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                                     aria-labelledby="v-pills-profile-tab">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Departamento: {{ perfil.get_nombre_departamento }}</li>
+                                        <li class="list-group-item">Codigo de
+                                            Departamento: {{ perfil.get_codigo_departamento }}</li>
+                                        <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>
+                                        <li class="list-group-item">Fecha de Inicio de
+                                            Labores: {{ perfil.fecha_inicio }}</li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                                     aria-labelledby="v-pills-messages-tab">
+                                    {% if perfil.usuario.actividades.all.aprobado %}
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Nombre de la Actividad</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for actividad in perfil.usuario.actividades.all.aprobado %}
+                                            <tr>
+                                                <td>{{ actividad.nombre_actividad }}</td>
+                                                <td>{{ actividad.usuario }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <div class="row">#}
+    {#        <div class="col-12">#}
+    {#            <!-- Introduccion a la persona y datos personales-->#}
+    {#            <div class="card">#}
+    {#                <div class="card-body">#}
+    {#                    {% if perfil.imagen %}#}
+    {#                        <img class="img-fluid " src="{{ perfil.imagen.url }}" alt="Card image cap">#}
+    {#                    {% else %}#}
+    {#                        <img class="img-fluid " src="http://lorempixel.com/400/400/cats/" alt="Card image cap">#}
+    {#                    {% endif %}#}
+    {#                    <hr/>#}
+    {#                    <h5 class="card-title">{{ perfil.primer_apellido }}, {{ perfil.primer_nombre }} |#}
+    {#                        {{ perfil.provincia }}-{{ perfil.clase }}-{{ perfil.tomo }}-{{ perfil.folio }}</h5>#}
+    {#                    <hr/>#}
+    {#                    <ul class="list-group">#}
+    {#                        <li class="list-group-item">Edad: {{ perfil.edad }}</li>#}
+    {#                        <li class="list-group-item">Pais: {{ perfil.get_pais_display }}</li>#}
+    {#                        <li class="list-group-item">Sexo: {{ perfil.get_sexo_display }}</li>#}
+    {#                        <li class="list-group-item">Codigo: {{ perfil.cod_profesor }}</li>#}
+    {#                    </ul>#}
+    {#                    <hr/>#}
+    {#                    <h5 class="card-title">Informacion Institucional</h5>#}
+    {#                    <ul class="list-group">#}
+    {#                        <li class="list-group-item">Fecha de Inicio de Labores: {{ perfil.tiempo_laborado }}</li>#}
+    {#                        <li class="list-group-item">Categoria: {{ perfil.get_categoria_display }}</li>#}
+    {#                        <li class="list-group-item">Sede: {{ perfil.cod_sede }}</li>#}
+    {#                        <li class="list-group-item">Facultad: {{ perfil.cod_facultad }}</li>#}
+    {#                        <li class="list-group-item">Departamento: {{ perfil.cod_escuela }}</li>#}
+    {#                    </ul>#}
+    {#                    </p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+{% endblock content %}
+
+
+{% block javascript %}
+
+{% endblock javascript %}

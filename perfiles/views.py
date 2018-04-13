@@ -46,7 +46,7 @@ class ProfesoresDepartamentoListView(ListView):
 class PerfilDetailView(DetailView):
     model = Perfil
     context_object_name = 'perfil'
-    template_name = 'perfiles/privado_redux.html'
+    template_name = 'perfiles/privado.html'
 
     def get_object(self, queryset=None):
         return Perfil.objects.get_or_create(usuario=self.request.user)[0]
@@ -55,7 +55,7 @@ class PerfilDetailView(DetailView):
 class PerfilPublicoView(DetailView):
     model = Perfil
     context_object_name = 'perfil'
-    template_name = 'perfiles/privado_redux.html'
+    template_name = 'perfiles/privado.html'
 
 
 class PerfilUpdateView(UpdateView):
