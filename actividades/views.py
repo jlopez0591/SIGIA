@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
+from django.http import Http404
 
 from actividades.forms import RechazarForm
 from actividades.models import Actividad
@@ -29,6 +30,11 @@ class ActivityCreateView(SuccessMessageMixin, PermissionRequiredMixin, CreateVie
         return reverse('actividad:propias', kwargs={
             'pk': self.request.user.pk
         })
+
+    def get_context_data(self, **kwargs):
+        context = super(ActivityCreateView, self).get_context_data(**kwargs)
+        context['titulo'] = self.kwargs['titulo']
+        return context
 
 
 class ActivityDetailView(DetailView):
@@ -138,6 +144,8 @@ class ListaActividades(PermissionRequiredMixin, ListView):
 def aprobar_actividad(request, pk):
     if request.method == 'POST':
         perfil = Perfil.objects.get(usuario=request.user)
+        if request.user.perfil.departamento is not actividad.departamento:
+            raise Http404("No tiene permiso de ver esta ubicacion.")
         actividad = Actividad.objects.get(pk=pk)
         if request.user.is_superuser or perfil.departamento == actividad.departamento:
             actividad.aprobar()
@@ -147,6 +155,8 @@ def aprobar_actividad(request, pk):
 @permission_required('actividad.aprobar_actividad')
 def rechazar_actividad(request, pk):
     actividad = Actividad.objects.get(pk=pk)
+    if request.user.perfil.departamento is not actividad.departamento:
+        raise Http404("No tiene permiso de ver esta ubicacion.")
     if request.method == 'POST':
         form = RechazarForm(request.POST, instance=actividad)
         if form.is_valid():

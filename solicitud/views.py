@@ -63,7 +63,7 @@ class SolicitudCreateView(CreateView):
 class SolicitudUpdateView(UpdateView):
     model = Solicitud
     form_class = SolicitudForm
-    template_name = 'form.html'
+    template_name = 'actividades/form.html'
 
     def form_valid(self, form):
         super(SolicitudUpdateView, self).form_valid(form)
@@ -98,7 +98,7 @@ def crear_comentario(request, solicitud_pk):
             return redirect(solicitud_url)
     else:
         form = ComentarioForm()
-    return render(request, 'form.html', {'form': form})
+    return render(request, 'actividades/form.html', {'form': form})
 
 
 class ResolverSolicitudView(View):
