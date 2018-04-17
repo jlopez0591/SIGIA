@@ -7,11 +7,11 @@
 
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item"
-           href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}">Dashboard</a>
+           href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}"><i class="fas fa-chart-pie"></i> Dashboard</a>
 
         {% if perms.ubicacion.ver_departamento %}
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Reportes</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Reportes</a>
         {% endif %}
 
 
@@ -25,6 +25,7 @@
 
 
         {% if perms.ubicacion.ver_actividades_departamento %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'actividad:departamento' request.user.perfil.departamento.pk %}">Actividades
                 <span
                         class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>

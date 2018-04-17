@@ -60,7 +60,3 @@ $ python manage.py cargar_usuarios
 $ python manage.py cargar_estudiantes
 ```
 
-# Demo del sistema
-
-[Demo del sistema](https://demo-sigia.herokuapp.com)
-
