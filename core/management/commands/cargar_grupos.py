@@ -28,7 +28,7 @@ permisos_directores_escuela = ['ver_escuela', 'ver_estudiantes_escuela', 'ver_tr
 
 permisos_administrativos = ['ver_estudiantes_escuela', 'change_estudiante', 'ver_equipos_facultad', 'ver_aulas_facultad']
 
-permisos_comision = ['ver_trabajos_escuela', 'change_trabajograduacion']
+permisos_comision = ['ver_trabajos_escuela', 'change_trabajograduacion', 'add_trabajograduacion']
 
 permisos_decanos = ['ver_facultad', 'ver_profesores_facultad', 'ver_estudiantes_facultad', 'ver_trabajos_facultad', 'ver_actividades_facultad', 'ver_equipos_facultad', 'ver_aulas_facultad']
 

@@ -25,8 +25,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
+
+
+                {% if perms.estudiante.add_trabajograduacion %}
                 <a class="btn btn-primary" href="{% url 'estudiante:crear-trabajo' %}">Registrar
                     Trabajo</a>
+                {% endif %}
+
+
             </div>
             <div class="card-body">
                 <div class="card-title"><h4>Trabajos de Graduacion</h4>
