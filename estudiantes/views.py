@@ -3,16 +3,23 @@ from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from estudiantes.forms import StudentUpdateForm, TrabajoForm
 from estudiantes.models import Estudiante, TrabajoGraduacion
+from ubicacion.models import FacultadInstancia
+from django.core.exceptions import PermissionDenied
+
 
 
 #
 class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
     context_object_name = 'estudiantes'
     model = Estudiante
-    permission_required = ('ubicacion.ver_facultad')
+    permission_required = ('ubicacion.ver_estudiantes_facultad')
     template_name = 'estudiantes/consultar.html'
 
     def get_queryset(self):
+        facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.perfil.facultad is not facultad:
+            raise PermissionDenied
         qs = Estudiante.objects.facultad(facultad=self.kwargs['pk'])
         return qs
 
@@ -21,7 +28,7 @@ class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
 class EstudianteEscuelaListView(ListView):
     context_object_name = 'estudiantes'
     model = Estudiante
-    permission_required = ('ubicacion.ver_facultad')
+    permission_required = ('ubicacion.ver_estudiantes_escuela')
     template_name = 'estudiantes/consultar.html'
 
     def get_queryset(self):
@@ -37,10 +44,18 @@ class EstudianteListView(ListView):
 
 
 #
-class EstudianteDetailView(DetailView):
+class EstudianteDetailView(PermissionRequiredMixin, DetailView):
     context_object_name = 'estudiante'
+    permission_required = 'ubicacion.ver_estudiante_escuela'
     model = Estudiante
     template_name = 'estudiantes/detalle.html'
+
+    def get_object(self):
+        object = super(EstudianteDetailView, self).get_object(self)
+        usuario = self.request.user
+        if usuario.perfil.escuela is not object.escuela:
+            raise PermissionDenied
+        return object
 
 
 #
@@ -49,6 +64,13 @@ class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'estudiante.change_estudiante'
     form_class = StudentUpdateForm
     template_name = 'estudiantes/editar.html'
+
+    def get_object(self):
+        object = super(EstudianteUpdateView, self).get_object(self)
+        usuario = self.request.user
+        if usuario.perfil.escuela is not object.escuela:
+            raise PermissionDenied
+        return object
 
 
 #
@@ -82,12 +104,20 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
         kwargs = super(TrabajoGraduacionUpdateView, self).get_form_kwargs()
         kwargs.update({'facultad': self.request.user.perfil.facultad})
         return kwargs
+    
+    def get_object(self):
+        object = super(TrabajoGraduacionUpdateView, self).get_object(self)
+        usuario = self.request.user
+        if usuario.perfil.escuela is not object.escuela:
+            raise PermissionDenied
+        return object
 
 
 #
-class TrabajoGraduacionDetailView(DetailView):
+class TrabajoGraduacionDetailView(PermissionRequiredMixin, DetailView):
     model = TrabajoGraduacion
     context_object_name = 'trabajo'
+    permission_required = ('ver_trabajo_escuela', 'ver_trabajo_facultad')
     template_name = 'estudiantes/trabajos/detalle.html'
 
 
@@ -100,11 +130,15 @@ class TrabajoGraduacionListView(PermissionRequiredMixin, ListView):
 #
 class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
     model = TrabajoGraduacion
-    permission_required = 'ubicacion.ver_facultad'
+    permission_required = 'ubicacion.ver_trabajos_facultad'
     context_object_name = 'trabajos'
     template_name = 'estudiantes/trabajos/lista.html'
 
     def get_queryset(self):
+        facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.perfil is not facultad:
+            raise PermissionDenied
         qs = TrabajoGraduacion.objects.facultad(facultad=self.kwargs['pk'])
         return qs
 
@@ -112,11 +146,15 @@ class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
 #
 class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
     model = TrabajoGraduacion
-    permission_required = 'ubicacion.ver_escuela'
+    permission_required = 'ubicacion.ver_trabajos_escuela'
     context_object_name = 'trabajos'
     template_name = 'estudiantes/trabajos/lista.html'
 
     def get_queryset(self):
+        escuela = EscuelaInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.perfil is not escuela:
+            raise PermissionDenied
         qs = TrabajoGraduacion.objects.escuela(escuela=self.kwargs['pk'])
         return qs
 
@@ -129,6 +167,10 @@ class TrabajoGraduacionPendienteListView(PermissionRequiredMixin, ListView):
     template_name = 'estudiantes/trabajos/pendiente.html'
 
     def get_queryset(self):
+        escuela = EscuelaInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.perfil.escuela is not escuela:
+            raise PermissionDenied
         qs = TrabajoGraduacion.objects.pendientes().escuela(escuela=self.kwargs['pk'])
         return qs
 

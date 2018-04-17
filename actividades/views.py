@@ -45,7 +45,7 @@ class ActivityDetailView(PermissionRequiredMixin, DetailView):
     def get_object(self, **kwargs):
         object = super(ActivityDetailView, self).get_object(**kwargs)
         usuario = self.request.user
-        if usuario is object.usuario
+        if usuario is object.usuario:
             return object
         elif usuario.perfil.departamento is object.departamento:
             return object
