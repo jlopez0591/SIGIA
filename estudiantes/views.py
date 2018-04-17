@@ -18,7 +18,7 @@ class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil.facultad is not facultad:
+        if usuario.perfil.facultad != facultad:
             raise PermissionDenied
         qs = Estudiante.objects.facultad(facultad=self.kwargs['pk'])
         return qs
@@ -53,7 +53,7 @@ class EstudianteDetailView(PermissionRequiredMixin, DetailView):
     def get_object(self):
         object = super(EstudianteDetailView, self).get_object(self)
         usuario = self.request.user
-        if usuario.perfil.escuela is not object.escuela:
+        if usuario.perfil.escuela != object.escuela:
             raise PermissionDenied
         return object
 
@@ -68,7 +68,7 @@ class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
     def get_object(self):
         object = super(EstudianteUpdateView, self).get_object(self)
         usuario = self.request.user
-        if usuario.perfil.escuela is not object.escuela:
+        if usuario.perfil.escuela != object.escuela:
             raise PermissionDenied
         return object
 
@@ -108,7 +108,7 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
     def get_object(self):
         object = super(TrabajoGraduacionUpdateView, self).get_object(self)
         usuario = self.request.user
-        if usuario.perfil.escuela is not object.escuela:
+        if usuario.perfil.escuela != object.escuela:
             raise PermissionDenied
         return object
 
@@ -137,7 +137,7 @@ class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil is not facultad:
+        if usuario.perfil != facultad:
             raise PermissionDenied
         qs = TrabajoGraduacion.objects.facultad(facultad=self.kwargs['pk'])
         return qs
@@ -153,7 +153,7 @@ class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         escuela = EscuelaInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil is not escuela:
+        if usuario.perfil != escuela:
             raise PermissionDenied
         qs = TrabajoGraduacion.objects.escuela(escuela=self.kwargs['pk'])
         return qs
@@ -169,7 +169,7 @@ class TrabajoGraduacionPendienteListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         escuela = EscuelaInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil.escuela is not escuela:
+        if usuario.perfil.escuela != escuela:
             raise PermissionDenied
         qs = TrabajoGraduacion.objects.pendientes().escuela(escuela=self.kwargs['pk'])
         return qs

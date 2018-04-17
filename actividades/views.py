@@ -45,11 +45,11 @@ class ActivityDetailView(PermissionRequiredMixin, DetailView):
     def get_object(self, **kwargs):
         object = super(ActivityDetailView, self).get_object(**kwargs)
         usuario = self.request.user
-        if usuario is object.usuario:
+        if usuario == object.usuario:
             return object
-        elif usuario.perfil.departamento is object.departamento:
+        elif usuario.perfil.departamento == object.departamento:
             return object
-        elif usuario.perfil.facultad is object.facultad:
+        elif usuario.perfil.facultad == object.facultad:
             return object
         elif usuario.is_superuser:
             return object
@@ -66,7 +66,7 @@ class ActivityUpdateView(PermissionRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         object = super(ActivityUpdateView, self).get_object()
         usuario = self.request.user
-        if usuario is object.usuario:
+        if usuario == object.usuario:
             if object.estado == 'rechazado':
                 object.espera()
             return object
@@ -102,7 +102,7 @@ class ActividadFacultadListView(ListView):
 
     def get_queryset(self):
         facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
-        if self.request.user.perfil.facultad is not facultad:
+        if self.request.user.perfil.facultad != facultad:
             raise PermissionDenied
         else:
             qs = Actividad.objects.en_espera().filter(facultad=facultad)
@@ -117,7 +117,7 @@ class ActividadDepartamentoListview(ListView):
 
     def get_queryset(self):
         departamento = DepartamentoInstancia.objects.get(pk=self.kwargs['pk'])
-        if self.request.user.perfil.departamento is not departamento:
+        if self.request.user.perfil.departamento != departamento:
             raise PermissionDenied
         else:
             qs = Actividad.objects.en_espera().filter(departamento=departamento)
@@ -132,7 +132,7 @@ class ActividadDepartamentoPendienteListView(ListView):
 
     def get_queryset(self):
         departamento = DepartamentoInstancia.objects.get(pk=self.kwargs['pk'])
-        if self.request.user.perfil.departamento is not departamento:
+        if self.request.user.perfil.departamento != departamento:
             raise PermissionDenied
         else:
             qs = Actividad.objects.en_espera().filter(departamento=departamento)
@@ -144,10 +144,10 @@ class ActividadDepartamentoPendienteListView(ListView):
 def aprobar_actividad(request, pk):
     if request.method == 'POST':
         perfil = Perfil.objects.get(usuario=request.user)
-        if request.user.perfil.departamento is not actividad.departamento:
+        if request.user.perfil.departamento != actividad.departamento:
             raise PermissionDenied
         actividad = Actividad.objects.get(pk=pk)
-        if request.user.is_superuser or perfil.departamento == actividad.departamento:
+        if request.user.is_superuser or perfil.departamento != actividad.departamento:
             actividad.aprobar()
         return redirect(reverse('actividad:pendientes'))
 
@@ -155,7 +155,7 @@ def aprobar_actividad(request, pk):
 @permission_required('actividad.aprobar_actividad')
 def rechazar_actividad(request, pk):
     actividad = Actividad.objects.get(pk=pk)
-    if request.user.perfil.departamento is not actividad.departamento:
+    if request.user.perfil.departamento != actividad.departamento:
         raise PermissionDenied
     if request.method == 'POST':
         form = RechazarForm(request.POST, instance=actividad)

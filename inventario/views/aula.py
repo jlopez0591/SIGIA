@@ -35,7 +35,7 @@ class AulaFacultadListView(ListView):
         unidad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
         if usuario.is_authenticated:
-            if usuario.perfil.facultad is not unidad:
+            if usuario.perfil.facultad != unidad:
                 if not usuario.is_superuser:
                     raise PermissionDenied
             qs = Aula.objects.filter(ubicacion=self.kwargs['pk'])
@@ -50,7 +50,7 @@ class AulaDetailView(DetailView):
     def get_object(self):
         object = super(AulaDetailView, self).get_object()
         usuario = self.request.user
-        if usuario.perfil.facultad is not object.facultad:
+        if usuario.perfil.facultad != object.facultad:
             raise PermissionDenied
         return object
 
@@ -77,6 +77,6 @@ class AulaUpdateView(UpdateView):
     def get_object(self):
         object = super(AulaUpdateView, self).get_object()
         usuario = self.request.user
-        if usuario.perfil.facultad is not object.facultad:
+        if usuario.perfil.facultad != object.facultad:
             raise PermissionDenied
         return object

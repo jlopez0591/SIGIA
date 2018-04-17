@@ -35,7 +35,7 @@ class EquipoFacultadListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil.facultad is not facultad:
+        if usuario.perfil.facultad != facultad:
             raise PermissionDenied
         qs = Equipo.objects.filter(ubicacion=self.kwargs['pk'])
         return qs
@@ -49,7 +49,7 @@ class EquipoDetailView(DetailView):
     def get_object(self):
         object = super(EquipoDetailView, self).get_object()
         usuario = self.request.user
-        if usuario.perfil.facultad is not object.facultad:
+        if usuario.perfil.facultad != object.facultad:
             raise PermissionDenied
         return object
 
@@ -62,7 +62,7 @@ class EquipoUpdateView(UpdateView):
     def get_object(self):
         object = super(EquipoUpdateView, self).get_object()
         usuario = self.request.user
-        if usuario.perfil.facultad is not object.facultad:
+        if usuario.perfil.facultad != object.facultad:
             raise PermissionDenied
         return object
 

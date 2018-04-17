@@ -11,21 +11,21 @@
         <a class="dropdown-item"
            href="{% url 'ubicacion:unidad' request.user.perfil.facultad.pk %}"><i class="fas fa-chart-pie"></i>
             Dashboard</a>
-        <div class="dropdown-divider"></div>
+        
 
         {% if perms.ubicacion.ver_facultad %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'ubicacion:reporte-facultad' request.user.perfil.facultad.pk %}"><i
                     class="fas fa-file-alt"></i> Reportes</a>
-            <div class="dropdown-divider"></div>
         {% endif %}
 
 
         {% if perms.inventario.add_aula %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item"
                href="{% url 'inventario:facultad-aulas' request.user.perfil.facultad.pk %}">Aulas
                 <span
                         class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.aula_set.count }}</span></a>
-            <div class="dropdown-divider"></div>
         {% endif %}
 
 
@@ -39,30 +39,31 @@
 
 
         {% if perms.ubicacion.ver_profesores_facultad %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'perfil:profesores-facultad' request.user.perfil.facultad.pk %}">Profesores
                 <span
                         class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.personal.profesores.count }}</span></a>
-            <div class="dropdown-divider"></div>
         {% endif %}
 
 
         {% if perms.ubicacion.ver_estudiantes_facultad %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item"
                href="{% url 'estudiante:estudiante-facultad' request.user.perfil.facultad.pk %}">Estudiantes <span
                     class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.estudiantes.count }}</span></a>
-            <div class="dropdown-divider"></div>
         {% endif %}
 
 
-        {% if perms.actividades.ver_actividades_facultad %}
+        {% if perms.ubicacion.ver_actividades_facultad %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'actividad:facultad' request.user.perfil.facultad.pk %}">Actividades
                 <span
                         class="badge badge-pill badge-primary">{{ request.user.perfil.facultad.actividades.count }}</span></a>
-            <div class="dropdown-divider"></div>
         {% endif %}
 
 
-        {% if perms.estudiantes.ver_trabajos_facultad %}
+        {% if perms.ubicacion.ver_trabajos_facultad %}
+        <div class="dropdown-divider"></div>
             <a class="dropdown-item"
                href="{% url 'estudiante:trabajo-facultad' request.user.perfil.facultad.pk %}">Trabajos de
                 Graduacion <span

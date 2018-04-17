@@ -56,5 +56,5 @@ class Command(BaseCommand):
                         g.permissions.add(p)
                         logging.info('Se agrego el permiso {} al grupo {}.'.format(permiso, g))
                 except ObjectDoesNotExist:
-                    logger.error('Hubo un error al agregar el permiso {} al grupo {}: {}'.format(permiso, g,
+                    logging.error('Hubo un error al agregar el permiso {} al grupo {}: {}'.format(permiso, g,
                                                                                                     sys.exc_info()[1]))
