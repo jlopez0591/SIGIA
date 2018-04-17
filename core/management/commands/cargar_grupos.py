@@ -20,30 +20,17 @@ if not os.path.exists(LOG_LOCATION):
 logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')                          
 
-permisos_profesores = ['add_actividad', 'ver_departamento', 'change_perfil']
+permisos_profesores = ['add_actividad', 'change_actividad']
 
-permisos_directores_departamento = ['ver_departamento', 'change_actividad', 'ver_perfil', 'aprobar_actividad']
+permisos_directores_departamento = ['ver_departamento', 'ver_actividades_departamento', 'ver_profesores_departamento
 
-# ver departamento = ver actividades del departamento, ver profesores del departamento
-# ver perfil = Poder observar perfiles de otros profesores
+permisos_directores_escuela = ['ver_escuela', 'ver_estudiantes_escuela', 'ver_trabajos_escuela']
 
-permisos_directores_escuela = ['ver_escuela']
+permisos_administrativos = ['ver_estudiantes_escuela', 'change_estudiante']
 
-# Ver escuela = Ver detalle de escuela, ver estudiantes, ver anteproyectos y ver proyectos
+permisos_comision = ['ver_trabajos_escuela', 'change_trabajograduacion']
 
-permisos_administrativos = ['ver_escuela', 'add_anteproyecto', 'add_proyecto', 'change_estudiante']
-
-# TODO: Agregar secretario administrativo con permisos de - invetario
-
-# change_estudiante = editar estudiante, tarea de administrativos de la escuela
-
-permisos_comision = ['ver_escuela', 'aprobar_anteproyecto', 'add_proyecto']
-
-# TODO: Rearmar anteproyecto y proyecto como TrabajoDeGraduacion - Editar Permisos Acorde
-
-permisos_decanos = ['ver_facultad', 'ver_departamento', 'ver_escuela', 'ver_perfil']
-
-# ver facultad = debe poder ver todos los detalles de la facultad.
+permisos_decanos = ['ver_facultad', 'ver_profesores_facultad', 'ver_estudiantes_facultad', 'ver_trabajos_facultad', 'ver_actividades_facultad']
 
 lista = {
     'Profesores': permisos_profesores,
@@ -53,7 +40,6 @@ lista = {
     'Comision de Anteproyecto': permisos_comision,
     'Decanos': permisos_decanos,
 }
-
 
 class Command(BaseCommand):
     help = 'Crea los grupos de usuarios para el sistema y asigna permisos correspondientes.'

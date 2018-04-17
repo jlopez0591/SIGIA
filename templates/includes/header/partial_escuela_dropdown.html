@@ -4,25 +4,36 @@
        aria-expanded="false">
         Mi Escuela <i class="far fa-building"></i>
     </a>
-    {% if request.user.perfil.escuela %}
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'ubicacion:escuela' request.user.perfil.escuela.pk %}"><i
-                    class="fas fa-chart-pie"></i> Dashboard</a>
-            <div class="dropdown-divider"></div>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+        <a class="dropdown-item" href="{% url 'ubicacion:escuela' request.user.perfil.escuela.pk %}"><i
+                class="fas fa-chart-pie"></i> Dashboard</a>
+        <div class="dropdown-divider"></div>
+
+
+        {% if perms.ubicacion.ver_escuela %}
             <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Reportes</a>
-            {% if perms.estudiantes.ver_estudiantes %}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'estudiante:estudiante-escuela' request.user.perfil.escuela.pk %}">Estudiantes
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>
-            {% endif %}
-            {% if perms.estudiantes.add_proyecto %}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'estudiante:trabajo-escuela' request.user.perfil.escuela.pk %}">Trabajos de Graduacion
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.escuela.trabajos_graduacion.count }}</span></a>
-            {% endif %}
-        </div>
-    {% endif %}
+        {% endif %}
+
+
+        {% if perms.ubicacion.ver_estudiantes_escuela %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{% url 'estudiante:estudiante-escuela' request.user.perfil.escuela.pk %}">Estudiantes
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.escuela.estudiantes.count }}</span></a>
+        {% endif %}
+
+
+        {% if perms.ubicacion.ver_trabajos_escuela %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'estudiante:trabajo-escuela' request.user.perfil.escuela.pk %}">Trabajos
+                de Graduacion
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.escuela.trabajos_graduacion.count }}</span></a>
+        {% endif %}
+
+
+    </div>
 </li>

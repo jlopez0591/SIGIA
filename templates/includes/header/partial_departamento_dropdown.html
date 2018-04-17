@@ -4,26 +4,31 @@
        aria-expanded="false">
         Mi Departamento <i class="far fa-building"></i>
     </a>
-    {% if request.user.perfil.departamento and perms.ubicacion.ver_departamento %}
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}">Dashboard</a>
 
-        
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Reportes</a>
-        
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"
-                   href="{% url 'perfil:profesores-departamento' request.user.perfil.departamento.pk %}">Profesores
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item"
+           href="{% url 'ubicacion:departamento' request.user.perfil.departamento.pk %}">Dashboard</a>
+        <div class="dropdown-divider"></div>
 
-        
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'actividad:departamento' request.user.perfil.departamento.pk %}">Actividades
-                    <span
-                            class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
+        {% if perms.ubicacion.ver_departamento %}
+            <a class="dropdown-item" href="#">Reportes</a>
+            <div class="dropdown-divider"></div>
+        {% endif %}
 
-        </div>
-    {% endif %}
+
+        {% if perms.ubicacion.ver_profesores_departamento %}
+            <a class="dropdown-item"
+               href="{% url 'perfil:profesores-departamento' request.user.perfil.departamento.pk %}">Profesores
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.personal.profesores.count }}</span></a>
+            <div class="dropdown-divider"></div>
+        {% endif %}
+
+
+        {% if perms.ubicacion.ver_actividades_departamento %}
+            <a class="dropdown-item" href="{% url 'actividad:departamento' request.user.perfil.departamento.pk %}">Actividades
+                <span
+                        class="badge badge-pill badge-primary">{{ request.user.perfil.departamento.actividades.count }}</span></a>
+        {% endif %}
+    </div>
 </li>

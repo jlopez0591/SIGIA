@@ -199,6 +199,10 @@ class FacultadInstancia(models.Model):
     class Meta:
         permissions = (
             ('ver_facultad', 'Ver Facultad'),
+            ('ver_profesores_facultad', 'Ver Profesores'),
+            ('ver_estudiantes_facultad', 'Ver Estudiantes'),
+            ('ver_actividades_facultad', 'Ver Actividades'),
+            ('ver_trabajos_facultad', 'Ver Trabajos'),
         )
         unique_together = ('cod_sede', 'cod_facultad')
         verbose_name_plural = 'Instancias Facultades'
@@ -243,6 +247,8 @@ class EscuelaInstancia(models.Model):
     class Meta:
         permissions = (
             ('ver_escuela', 'Ver Escuela'),
+            ('ver_estudiantes_escuela', 'Ver Estudiantes'),
+            ('ver_trabajos_escuela', 'Ver Trabajos'),
         )
         unique_together = ('cod_sede', 'cod_facultad', 'cod_escuela')
         verbose_name_plural = 'Instancias Secciones'
@@ -296,6 +302,8 @@ class DepartamentoInstancia(models.Model):
     class Meta:
         permissions = (
             ('ver_departamento', 'Ver Departamento'),
+            ('ver_profesores_departamento', 'Ver Profesores'),
+            ('ver_actividades_departamento', 'Ver Actividades'),
         )
         unique_together = ('cod_sede', 'cod_facultad', 'cod_departamento')
         verbose_name_plural = 'Instancias Departamento'

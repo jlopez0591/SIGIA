@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load group_extras %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,19 +40,19 @@
 
             {#  Navbar en la Derecha #}
             <ul class="navbar-nav mr-4">
-                {% if request.user.is_superuser %}
+                {% if request.user.is_staff %}
                     {% include 'includes/header/partial_admin_utils_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.facultad and perms.ubicacion.ver_facultad %}
+                {% if request.user.perfil.facultad %}
                     {% include 'includes/header/partial_unidad_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.departamento and perms.ubicacion.ver_departamento %}
+                {% if request.user.perfil.departamento %}
                     {% include 'includes/header/partial_departamento_dropdown.html' %}
                 {% endif %}
 
-                {% if request.user.perfil.escuela and perms.ubicacion.ver_escuela %}
+                {% if request.user.perfil.escuela %}
                     {% include 'includes/header/partial_escuela_dropdown.html' %}
                 {% endif %}
 
