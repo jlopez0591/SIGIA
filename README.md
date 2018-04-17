@@ -53,6 +53,8 @@ esto es para crear las migraciones y cargar datos de prueba, en caso de que esto
 $ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py cargar_grupos
+$ python manage.py loaddata ubicacion/fixtures/ubicacion.json # Opcional pruebas
 $ python manage.py cargar_ubicaciones
+$ python manage.py cargar_demo # Opcional
 $ python manage.py cargar_usuarios
 $ python manage.py cargar_estudiantes
