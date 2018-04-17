@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, ActividadesPendientes, \
-    ActividadesPropias, ListaActividades, ActividadListView, ActividadFacultadListView, ActividadDepartamentoListview, \
+from actividades.views import ActivityCreateView, ActivityDetailView, ActivityUpdateView, \
+    ActividadesPropias, ActividadListView, ActividadFacultadListView, ActividadDepartamentoListview, \
     ActividadDepartamentoPendienteListView
 from actividades.forms import *
 from actividades import views
@@ -115,8 +115,7 @@ urlpatterns = [
         ActivityUpdateView.as_view(model=Titulo, form_class=TituloForm, template_name='actividades/titulo/crear.html'),
         name='actualizar-titulo'),
 
-    # API v2
-    # TODO: Revisar el API
+
     url(r'lista/$', ActividadListView.as_view(), name='admin-lista'),
     url(r'^usuario/(?P<pk>[0-9]+)/$', ActividadesPropias.as_view(), name='propias'),
     url(r'^facultad/(?P<pk>[0-9]+)/$', ActividadFacultadListView.as_view(), name='facultad'),

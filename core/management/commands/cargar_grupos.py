@@ -22,7 +22,7 @@ logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG,
 
 permisos_profesores = ['add_actividad', 'change_actividad']
 
-permisos_directores_departamento = ['ver_departamento', 'ver_actividades_departamento', 'ver_profesores_departamento
+permisos_directores_departamento = ['ver_departamento', 'ver_actividades_departamento', 'ver_profesores_departamento', 'aprobar_actividad']
 
 permisos_directores_escuela = ['ver_escuela', 'ver_estudiantes_escuela', 'ver_trabajos_escuela']
 
