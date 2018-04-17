@@ -26,11 +26,11 @@ permisos_directores_departamento = ['ver_departamento', 'ver_actividades_departa
 
 permisos_directores_escuela = ['ver_escuela', 'ver_estudiantes_escuela', 'ver_trabajos_escuela']
 
-permisos_administrativos = ['ver_estudiantes_escuela', 'change_estudiante']
+permisos_administrativos = ['ver_estudiantes_escuela', 'change_estudiante', 'ver_equipos_facultad', 'ver_aulas_facultad']
 
 permisos_comision = ['ver_trabajos_escuela', 'change_trabajograduacion']
 
-permisos_decanos = ['ver_facultad', 'ver_profesores_facultad', 'ver_estudiantes_facultad', 'ver_trabajos_facultad', 'ver_actividades_facultad']
+permisos_decanos = ['ver_facultad', 'ver_profesores_facultad', 'ver_estudiantes_facultad', 'ver_trabajos_facultad', 'ver_actividades_facultad', 'ver_equipos_facultad', 'ver_aulas_facultad']
 
 lista = {
     'Profesores': permisos_profesores,

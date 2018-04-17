@@ -1,10 +1,14 @@
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 from inventario.forms import EquipoForm
 from inventario.models import Equipo
 
 from perfiles.models import Perfil
+from ubicacion.models import FacultadInstancia
+from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
 
 
@@ -21,17 +25,19 @@ class EquipoListView(ListView):
             return None
 
 
-class EquipoFacultadListView(ListView):
+class EquipoFacultadListView(PermissionRequiredMixin, ListView):
     context_object_name = 'equipos'
     model = Equipo
+    permission_required = 'ubicacion.ver_equipos_facultad'
     template_name = 'inventario/equipo/lista.html'
     paginate_by = 10
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            qs = Equipo.objects.filter(ubicacion=self.kwargs['pk'])
-        else:
-            qs = None
+        facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
+        usuario = self.request.user
+        if usuario.perfil.facultad is not facultad:
+            raise PermissionDenied
+        qs = Equipo.objects.filter(ubicacion=self.kwargs['pk'])
         return qs
 
 
@@ -40,11 +46,25 @@ class EquipoDetailView(DetailView):
     model = Equipo
     template_name = 'inventario/equipo/detalle.html'
 
+    def get_object(self):
+        object = super(EquipoDetailView, self).get_object()
+        usuario = self.request.user
+        if usuario.perfil.facultad is not object.facultad:
+            raise PermissionDenied
+        return object
+
 
 class EquipoUpdateView(UpdateView):
     form_class = EquipoForm
     model = Equipo
     template_name = 'inventario/equipo/crear.html'
+
+    def get_object(self):
+        object = super(EquipoUpdateView, self).get_object()
+        usuario = self.request.user
+        if usuario.perfil.facultad is not object.facultad:
+            raise PermissionDenied
+        return object
 
 
 class EquipoCreateView(SuccessMessageMixin, CreateView):

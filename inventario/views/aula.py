@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.shortcuts import get_list_or_404
+from django.core.exceptions import PermissionDenied
 
 
 class AulaListView(ListView):
@@ -36,7 +37,7 @@ class AulaFacultadListView(ListView):
         if usuario.is_authenticated:
             if usuario.perfil.facultad is not unidad:
                 if not usuario.is_superuser:
-                    Http404("Esta unidad no existe")
+                    raise PermissionDenied
             qs = Aula.objects.filter(ubicacion=self.kwargs['pk'])
         return qs
 
@@ -45,6 +46,13 @@ class AulaDetailView(DetailView):
     context_object_name = 'aula'
     model = Aula
     template_name = 'inventario/aula/detalle.html'
+
+    def get_object(self):
+        object = super(AulaDetailView, self).get_object()
+        usuario = self.request.user
+        if usuario.perfil.facultad is not object.facultad:
+            raise PermissionDenied
+        return object
 
 
 class AulaCreateView(SuccessMessageMixin, CreateView):
@@ -65,3 +73,10 @@ class AulaUpdateView(UpdateView):
     template_name = 'inventario/aula/crear.html'
     form_class = AulaForm
     success_url = reverse_lazy('inventario:lista-aulas')
+
+    def get_object(self):
+        object = super(AulaUpdateView, self).get_object()
+        usuario = self.request.user
+        if usuario.perfil.facultad is not object.facultad:
+            raise PermissionDenied
+        return object
