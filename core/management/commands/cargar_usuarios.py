@@ -75,10 +75,8 @@ class Command(BaseCommand):
 
         # Carga de Datos
         if settings.DEBUG or settings.IMPLEMENT_HEROKU:
-            print("Es Debug")
             datos = cargar_usuarios(ARCHIVO)  # Utiliza el archivo local
         else:
-            print("Webservice?")
             datos = cargar_webservice(URL)  # Utiliza webservice provisto
 
         
@@ -86,7 +84,6 @@ class Command(BaseCommand):
         for i, row in enumerate(datos):
             try:
                 # Crear usuario
-                print(row['grupos'])
                 ds = row['info_perfil']
                 primer_nombre = ds['primer_nombre']
                 primer_apellido = ds['primer_apellido']
