@@ -58,3 +58,8 @@ $ python manage.py cargar_ubicaciones
 $ python manage.py cargar_demo # Opcional
 $ python manage.py cargar_usuarios
 $ python manage.py cargar_estudiantes
+
+# Demo del sistema
+
+[Demo del sistema](https:demo-sigia.herokuapp.com)
+
