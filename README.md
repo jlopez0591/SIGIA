@@ -62,5 +62,5 @@ $ python manage.py cargar_estudiantes
 
 # Demo del sistema
 
-[Demo del sistema](https:demo-sigia.herokuapp.com)
+[Demo del sistema](https://demo-sigia.herokuapp.com)
 
