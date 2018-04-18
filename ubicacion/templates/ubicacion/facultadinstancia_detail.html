@@ -110,7 +110,7 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Recursos por Marca</h5>
+                            <h5 class="card-title">Aulas por Categoria</h5>
                             <p class="card-text">
                             </p>
                         </div>
@@ -122,54 +122,6 @@
 {% endblock %}
 
 {% block javascript %}
-    <script>
-        function randomRGB() {
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            return ['rgba(' + r + ',' + g + ',' + b + ',' + 0.2 + ')', 'rgba(' + r + ',' + g + ',' + b + ',' + 1.0 + ')']; //Recordar el 0.2 para el alpha.
-        }
-
-        var recursosTipo = {{ facultad.get_recursos_tipo_count|safe }};
-        var recursosModelo = {{ facultad.get_recursos_modelo_count|safe }};
-
-        recursosModeloSet = [];
-        recursosTipoSet = [];
-
-        pieOptions = {};
-
-        dataset = {
-            label: "",
-            data: "",
-            backgroundColor: "",
-            borderColor: "",
-            borderWidth: ""
-        };
-
-        for (var tipo in recursosTipo) {
-            [bgb, bgc] = [randomRGB()];
-            dataset = {
-                label: tipo,
-                data: recursosTipo[tipo],
-                backgroundColor: bgb,
-                borderColor: bgc,
-                borderWidth: 1
-            };
-            recursosTipoSet.push(dataset);
-        }
-
-        var modeloChart = new Chart(modeloctx, {
-            type: 'pie',
-            data: recursosModeloSet,
-            options: pieOptions
-        });
-
-        var tipoChart = new Chart(tipoctx, {
-            type: 'pie',
-            data: recursosTipoSet,
-            options: pieOptions
-        });
-
-
-    </script>
+    <script src=""></script>
+    <script src=""></script>
 {% endblock %}

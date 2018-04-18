@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia
 
-
+# Sedes
 def profesores_sede(request, sede_pk):
     """
     Devuelve el numero de profesores por facultad
@@ -15,7 +15,7 @@ def profesores_sede(request, sede_pk):
         cs = profesor.cod_sede
         cf = profesor.cod_facultad
         facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf)
-        ubicacion = facultad.facultad.nombre
+        ubicacion = facultad.facultad.nombre.title()
         if ubicacion in conteo:
             conteo[ubicacion] += 1
         else:
@@ -43,7 +43,31 @@ def estudiantes_sede(request, sede_pk):
     return JsonResponse(conteo)
 
 
-# Unidades
+# Facultades
+def facultad_recursos_categoria(request, facultad_pk):
+    facultad = FacultadInstancia.objects.get(pk=facultad_pk)
+    inventario = facultad.equipos.all()
+    conteo = dict()
+    for equipo in inventario:
+        categoria = equipo.modelo.categoria.nombre
+        if categoria in conteo:
+            conteo[categoria] += 1
+        else:
+            conteo[categoria] = 1
+    return JsonResponse(conteo)
+
+def facultad_aulas_tipo(request, facultad_pk):
+    facultad = FacultadInstancia.objects.get(pk=facultad_pk)
+    aulas = facultad.aula_set.all()
+    conteo = dict()
+    for aula in aulas:
+        tipo = aula.tipo
+        if tipo in conteo:
+            conteo[tipo] += 1
+        else:
+            conteo[tipo] = 1
+    return JsonResponse
+
 
 # Escuelas
 def estudiantes_semestre_escuela(request, escuela_pk):
