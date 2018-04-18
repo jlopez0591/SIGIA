@@ -43,11 +43,14 @@ urlpatterns = [
     url(r'^escuelas/json/$', views.get_escuelas, name='escuelas-json'),
     url(r'^departamentos/json/$', views.get_departamentos, name='escuelas-json'),
     url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
+    
+    
     # data-urls
     # Sedes
     url(r'^sede/(?P<sede_pk>[\w]+)/profesores/json/$', views.profesores_sede, name='profesores-sede'),
     url(r'^sede/(?P<sede_pk>[\w]+)/estudiantes/json/$', views.estudiantes_sede, name='estudiantes-sede'),
     # Facultades
+    url(r'^facultad/(?P<facultad_pk>[\w]+)/recursos/json/$', views.facultad_recursos_categoria, name='recursos-facultad'),
     # Escuelas
     url(r'^escuela/(?P<escuela_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_escuela,
         name='escuela-estudiantes'),
