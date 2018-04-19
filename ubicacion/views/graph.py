@@ -1,13 +1,8 @@
 from django.http import JsonResponse
 from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia
 
-# Sedes
+# Sede
 def profesores_sede(request, sede_pk):
-    """
-    Devuelve el numero de profesores por facultad
-    :param request:
-    :return:
-    """
     sede = Sede.objects.get(pk=sede_pk)
     profesores = sede.personal.profesores()
     conteo = {}
@@ -24,26 +19,21 @@ def profesores_sede(request, sede_pk):
 
 
 def estudiantes_sede(request, sede_pk):
-    """
-    Devuelve el numero de estudiantes por facultad
-    :param request:
-    :return:
-    """
     sede = Sede.objects.get(pk=sede_pk)
     estudiantes = sede.estudiantes.all()
     conteo = {}
     for estudiante in estudiantes:
         cs = estudiante.cod_sede
         cf = estudiante.cod_facultad  # Codigo de Facultad
-        nombre_facultad = FacultadInstancia.objects.get(cod_sede=cs, cod_facultad=cf).facultad.nombre.title()
+        nombre_facultad = FacultadInstancia.objects.get(
+            cod_sede=cs, cod_facultad=cf).facultad.nombre.title()
         if nombre_facultad in conteo:
             conteo[nombre_facultad] += 1
         else:
             conteo[nombre_facultad] = 1
     return JsonResponse(conteo)
 
-
-# Facultades
+# Facultad
 def facultad_recursos_categoria(request, facultad_pk):
     facultad = FacultadInstancia.objects.get(pk=facultad_pk)
     inventario = facultad.equipos.all()
@@ -56,20 +46,20 @@ def facultad_recursos_categoria(request, facultad_pk):
             conteo[categoria] = 1
     return JsonResponse(conteo)
 
+
 def facultad_aulas_tipo(request, facultad_pk):
     facultad = FacultadInstancia.objects.get(pk=facultad_pk)
     aulas = facultad.aula_set.all()
     conteo = dict()
     for aula in aulas:
-        tipo = aula.tipo
+        tipo = aula.get_tipo_display()
         if tipo in conteo:
             conteo[tipo] += 1
         else:
             conteo[tipo] = 1
-    return JsonResponse
+    return JsonResponse(conteo)
 
-
-# Escuelas
+# Escuela
 def estudiantes_semestre_escuela(request, escuela_pk):
     """
     Regresa el numero de estudiantes en la escuela separados por semestre
@@ -111,7 +101,6 @@ def anteproyectos_semestre_escuela(request, escuela_pk):
     return JsonResponse(conteo)
 
 
-# Departamentos
 def profesores_nivel(request, departamento_pk):
     departamento = EscuelaInstancia.objects.get(pk=departamento_pk)
     profesores = departamento.personal.profesores()
@@ -136,7 +125,6 @@ def actividades_tipo(request, departamento_pk):
     return JsonResponse(conteo)
 
 
-# Carrera
 def estudiantes_semestre_carrera(request, carrera_pk):
     carrera = CarreraInstancia.objects.get(pk=carrera_pk)
     estudiantes = carrera.estudiantes.all()

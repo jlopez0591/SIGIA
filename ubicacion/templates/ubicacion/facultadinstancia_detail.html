@@ -1,127 +1,132 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-
-
-{% block title %}
-    SIGIA - {{ facultad.facultad.nombre.capitalize }}
-{% endblock %}
+{% extends 'base.html' %} {% load staticfiles %} {% block title %} SIGIA - {{ facultad.facultad.nombre.capitalize }} 
+{% endblock %} 
 
 {% block head %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"
-            integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew=" crossorigin="anonymous"></script>
-{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" integrity="sha256-N4u5BjTLNwmGul6RgLoESPNqDFVUibVuOYhP4gJgrew="
+    crossorigin="anonymous"></script> 
+{% endblock %} 
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'ubicacion:facultades' %}">Facultades</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ facultad.facultad.nombre.capitalize }}</li>
-                    </ol>
-                </nav>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'core:index' %}">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'ubicacion:facultades' %}">Facultades</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ facultad.facultad.nombre.capitalize }}</li>
+                </ol>
+            </nav>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-3 top-buffer">
-                <div class="card">
-                    <div class="card-header">
-                        Cantidad de Recursos Fisicos
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                        <h3 class="text-right">{{ facultad.equipos.all.count }}</h3></p>
-                    </div>
+    <div class="row">
+        <div class="col-md-3 top-buffer">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de Recursos Fisicos
                 </div>
-                '
+                <div class="card-body">
+                    <p class="card-text">
+                        <h3 class="text-right">{{ facultad.equipos.all.count }}</h3>
+                    </p>
+                </div>
             </div>
-            <div class="col-md-3 top-buffer">
-                <div class="card">
-                    <div class="card-header">
-                        Cantidad de Escuelas
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
+            '
+        </div>
+        <div class="col-md-3 top-buffer">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de Escuelas
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
                         <h3 class="text-right">{{ facultad.escuelas.count }}</h3>
-                        </p>
-                    </div>
+                    </p>
                 </div>
             </div>
-            <div class="col-md-3 top-buffer">
-                <div class="card">
-                    <div class="card-header">
-                        Cantidad de Departamentos
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
+        </div>
+        <div class="col-md-3 top-buffer">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de Departamentos
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
                         <h3 class="text-right">{{ facultad.departamentos.count }}</h3>
-                        </p>
-                    </div>
+                    </p>
                 </div>
             </div>
-            <div class="col-md-3 top-buffer">
-                <div class="card">
-                    <div class="card-header">
-                        Cantidad de Carreras
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
+        </div>
+        <div class="col-md-3 top-buffer">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de Carreras
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
                         <h3 class="text-right">{{ facultad.carreras.count }}</h3>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cantidad de Profesores</h5>
+                        <p class="card-text">
+                            <div class="text-right">
+                                <h3>{{ facultad.personal.profesores.count }}</h3>
+                            </div>
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Cantidad de Profesores</h5>
-                            <p class="card-text">
-                            <div class="text-right"><h3>{{ facultad.personal.profesores.count }}</h3></div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Cantidad de Estudiantes</h5>
-                            <p class="card-text">
-                            <div class="text-right"><h3>{{ facultad.estudiantes.count }}</h3></div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Recursos y Aulas por tipo / Graficos-->
-        <div class="row top-buffer">
-            <div class="col-md-12">
-                <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <canvas id="recursosChart" data-url="{% url 'ubicacion:recursos-facultad' facultad.pk %}"></canvas>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Aulas por Categoria</h5>
-                            <p class="card-text">
-                            </p>
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cantidad de Estudiantes</h5>
+                        <p class="card-text">
+                            <div class="text-right">
+                                <h3>{{ facultad.estudiantes.count }}</h3>
+                            </div>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+
+    <!--Recursos y Aulas por tipo / Graficos-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <canvas id="recursosChart" data-url="{% url 'ubicacion:recursos-facultad' facultad.pk %}"></canvas>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Aulas por Categoria</h5>
+                        <p class="card-text">
+                            <canvas id="aulasChart" data-url="{% url 'ubicacion:aulas-facultad' facultad.pk %}"></canvas>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
 
 {% block javascript %}
-    <script src="{% static 'ubicacion/js/grafica_facultad_equipos.js' %}"></script>
+<script src="{% static 'ubicacion/js/grafica_facultad_equipos.js' %}"></script>
 {% endblock %}

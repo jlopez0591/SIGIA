@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^sede/(?P<sede_pk>[\w]+)/estudiantes/json/$', views.estudiantes_sede, name='estudiantes-sede'),
     # Facultades
     url(r'^facultad/(?P<facultad_pk>[\w]+)/recursos/json/$', views.facultad_recursos_categoria, name='recursos-facultad'),
+    url(r'^facultad/(?P<facultad_pk>[\w]+)/aulas/json/$', views.facultad_aulas_tipo, name='aulas-facultad'),
     # Escuelas
     url(r'^escuela/(?P<escuela_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_escuela,
         name='escuela-estudiantes'),

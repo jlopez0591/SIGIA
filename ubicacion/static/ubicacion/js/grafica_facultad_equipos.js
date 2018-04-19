@@ -1,4 +1,3 @@
-
 window.onload = function () {
 
     function randomRGB() {
@@ -10,12 +9,6 @@ window.onload = function () {
         colores.push('rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')'); // Borde
         return colores;
     };
-    
-    
-    // Para eliminar
-    var data_dict = {}; // Almacena resultado del AJAX request.
-    var chartDataSet = []; // Instancia de DataSet
-    var chart_data = {}; // El que va en el chart 
     
     // En Uso
     var etiquetas = []; // Etiquetas de la grafica.
@@ -117,5 +110,68 @@ window.onload = function () {
         }
     });
 
+    
+
+    var aulaEtiquetas = []; 
+    var aulaDatos = []; 
+    var aulaCtx = document.getElementById("aulasChart"); 
+    var aulaDataUrl = aulaCtx.getAttribute("data-url");
+    var aulaDatasets = [];
+    var aulaLabel = "Aulas por categoria";
+    var aulaChartData = {};
+
+    $.ajax({
+        url: aulaDataUrl,
+        type: "GET",
+        dataType: 'json',
+        success: function (info) {
+            for (var dato in info) {
+                aulaEtiquetas.push(dato);
+                aulaDatos.push(info[dato]);
+            }
+        }
+    });
+
+    aulaColores = randomRGB();
+    aulaChartData["labels"] = aulaEtiquetas;
+
+    
+    var aulaDataset = {
+        label: "Aulas por Categoria",
+        data: aulaDatos,
+        backgroundColor: aulaColores[0],
+        borderColor: aulaColores[1],
+        borderWidth: 1
+    };
+
+    aulaDatasets.push(aulaDataset);
+
+
+    aulaChartData["datasets"] = aulaDatasets;
+
+    console.log(aulaChartData);
+
+    window.aulaMyBar = new Chart(aulaCtx, {
+        type: "bar",
+        data: aulaChartData,
+        options: {
+            legend: {
+                position: 'top'
+            },
+            title: {
+                display: true,
+                text: "Aulas por Categoria"
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
     myBar.update();
+    aulaMyBar.update();
 };
