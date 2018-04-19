@@ -1,5 +1,7 @@
 window.onload = function () {
 
+    // No implementado aun
+
     function randomRGB() {
         var colores = [];
         var r = Math.floor(Math.random() * 256);
@@ -11,24 +13,24 @@ window.onload = function () {
     };
     
     // En Uso
-    var etiquetas = []; // Etiquetas de la grafica.
-    var datos = []; // Datos de la grafica
-    var ctx = document.getElementById("recursosChart"); // Id de la grafica.
-    var dataUrl = ctx.getAttribute("data-url"); // URL con datos en Json
-    var datasets = [];
-    var label = "Equipos por categoria";
-    var chartData = {};
+    var keyEtiquetas = []; // Etiquetas de la grafica.
+    var keyDatos = []; // Datos de la grafica
+    var keyCtx = document.getElementById("keyChart"); // Id de la grafica.
+    var keyDataUrl = ctx.getAttribute("data-url"); // URL con datos en Json
+    var keyDatasets = [];
+    var keyLabel = "Equipos por categoria";
+    var keyChartData = {};
     
     // Adquirir los datos.
     $.ajax({
-        url: dataUrl,
+        url: keyDataUrl,
         type: "GET",
         dataType: 'json',
         success: function (info) {
             for (var dato in info) {
-                data_dict = info;
-                etiquetas.push(dato);
-                datos.push(info[dato]);
+                keyData_dict = info;
+                keyEtiquetas.push(dato);
+                keyDatos.push(info[dato]);
             }
         }
     });
@@ -40,24 +42,24 @@ window.onload = function () {
     // datos = [50, 20]
 
     // Asignar las etiquetas. Ej. ["Computadoras", "Laptops", "Teclados"]
-    colores = randomRGB();
-    chartData["labels"] = etiquetas;
+    keyColores = randomRGB();
+    keyChartData["labels"] = keyEtiquetas;
 
     // chartData = {
     //     "labels": ["computadora", "laptop"]
     // }
 
     
-    var dataset = {
+    var keyDataset = {
         label: "Cantidad en Inventario",
-        data: datos,
-        backgroundColor: colores[0],
-        borderColor: colores[1],
+        data: keyDatos,
+        backgroundColor: keyColores[0],
+        borderColor: keyColores[1],
         borderWidth: 1
     };
 
     //chartDataSet.push(dataset);
-    datasets.push(dataset);
+    keyDatasets.push(keyDataset);
     // datasets = [
     //     {
     //         "label": "Cantidad en Inventario",
@@ -69,7 +71,7 @@ window.onload = function () {
     // ]
 
 
-    chartData["datasets"] = datasets;
+    keyChartData["datasets"] = keyDatasets;
 
     // chartData = {
     //     "labels": ["computadora", "laptop"],
@@ -85,12 +87,12 @@ window.onload = function () {
     //     }]
     // }
 
-    console.log(chartData);
+    console.log(keyChartData);
 
     // Crear la grafica
-    window.myBar = new Chart(ctx, {
+    window.myBar = new Chart(keyCtx, {
         type: "bar",
-        data: chartData,
+        data: keyChartData,
         options: {
             responsive: true,
             legend: {

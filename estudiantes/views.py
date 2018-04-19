@@ -3,7 +3,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from estudiantes.forms import StudentUpdateForm, TrabajoForm
 from estudiantes.models import Estudiante, TrabajoGraduacion
-from ubicacion.models import FacultadInstancia
+from ubicacion.models import FacultadInstancia, EscuelaInstancia
 from django.core.exceptions import PermissionDenied
 
 
@@ -137,7 +137,7 @@ class TrabajoGraduacionFacultadListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         facultad = FacultadInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil != facultad:
+        if usuario.perfil.facultad != facultad or not usuario.is_superuser:
             raise PermissionDenied
         qs = TrabajoGraduacion.objects.facultad(facultad=self.kwargs['pk'])
         return qs
@@ -153,7 +153,7 @@ class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         escuela = EscuelaInstancia.objects.get(pk=self.kwargs['pk'])
         usuario = self.request.user
-        if usuario.perfil != escuela:
+        if usuario.perfil.escuela != escuela:
             raise PermissionDenied
         qs = TrabajoGraduacion.objects.escuela(escuela=self.kwargs['pk'])
         return qs

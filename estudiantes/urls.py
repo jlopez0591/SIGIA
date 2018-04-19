@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^trabajo/(?P<pk>[\d]+)/$', TrabajoGraduacionDetailView.as_view(), name='detalle-trabajo'),
     url(r'^trabajo/(?P<pk>[\d]+)/editar/$', TrabajoGraduacionUpdateView.as_view(), name='editar-trabajo'),
     url(r'^facultad/(?P<pk>[\d]+)/trabajos/$', TrabajoGraduacionFacultadListView.as_view(), name='trabajo-facultad'),
-    url(r'^facultad/(?P<pk>[\d]+)/trabajos/$', TrabajoGraduacionEscuelaListView.as_view(), name='trabajo-escuela'),
+    url(r'^escuela/(?P<pk>[\d]+)/trabajos/$', TrabajoGraduacionEscuelaListView.as_view(), name='trabajo-escuela'),
     url(r'^facultad/(?P<pk>[\d]+)/estudiantes/$', EstudianteFacultadListview.as_view(), name='estudiante-facultad'),
     url(r'^escuela/(?P<pk>[\d]+)/estudiantes/$', EstudianteEscuelaListView.as_view(), name='estudiante-escuela'),
     url(r'^escuela/(?P<pk>[\d]+)/trabajos/pendientes', TrabajoGraduacionPendienteListView.as_view(),
