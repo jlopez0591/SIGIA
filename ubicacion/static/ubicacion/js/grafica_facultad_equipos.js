@@ -97,7 +97,7 @@ window.onload = function () {
                 position: 'top'
             },
             title: {
-                display: true,
+                display: false,
                 text: "Cantidad de recursos por categoria."
             },
             scales: {
@@ -159,7 +159,7 @@ window.onload = function () {
                 position: 'top'
             },
             title: {
-                display: true,
+                display: false,
                 text: "Aulas por Categoria"
             },
             scales: {
