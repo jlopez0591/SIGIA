@@ -9,7 +9,7 @@ window.onload = function () {
         colores.push('rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')'); // Borde
         return colores;
     };
-    
+
     // En Uso
     var etiquetas = []; // Etiquetas de la grafica.
     var datos = []; // Datos de la grafica
@@ -18,95 +18,93 @@ window.onload = function () {
     var datasets = [];
     var label = "Equipos por categoria";
     var chartData = {};
-    
+
     // Adquirir los datos.
     $.ajax({
         url: dataUrl,
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            for (var dato in info) {
-                data_dict = info;
-                etiquetas.push(dato);
-                datos.push(info[dato]);
-            }
-        }
-    });
-    // data_dict = {
-    //     'computadora': 50,
-    //     'laptop': 20
-    // } // Esto es lo que viene del JSON.
-    // etiquetas = ['computadora', 'laptop']
-    // datos = [50, 20]
+            etiquetas = Object.keys(dato);
+            datos = Object.values(dato);
+            // data_dict = {
+            //     'computadora': 50,
+            //     'laptop': 20
+            // } // Esto es lo que viene del JSON.
+            // etiquetas = ['computadora', 'laptop']
+            // datos = [50, 20]
 
-    // Asignar las etiquetas. Ej. ["Computadoras", "Laptops", "Teclados"]
-    colores = randomRGB();
-    chartData["labels"] = etiquetas;
+            // Asignar las etiquetas. Ej. ["Computadoras", "Laptops", "Teclados"]
+            colores = randomRGB();
+            chartData["labels"] = etiquetas;
 
-    // chartData = {
-    //     "labels": ["computadora", "laptop"]
-    // }
-
-    
-    var dataset = {
-        label: "Cantidad en Inventario",
-        data: datos,
-        backgroundColor: colores[0],
-        borderColor: colores[1],
-        borderWidth: 1
-    };
-
-    //chartDataSet.push(dataset);
-    datasets.push(dataset);
-    // datasets = [
-    //     {
-    //         "label": "Cantidad en Inventario",
-    //         "data": [50, 20],
-    //         "backgroundColor": "Red",
-    //         "borderColor": "Red",
-    //         "borderWidth": 1
-    //     }
-    // ]
+            // chartData = {
+            //     "labels": ["computadora", "laptop"]
+            // }
 
 
-    chartData["datasets"] = datasets;
+            var dataset = {
+                label: "Cantidad en Inventario",
+                data: datos,
+                backgroundColor: colores[0],
+                borderColor: colores[1],
+                borderWidth: 1
+            };
 
-    // chartData = {
-    //     "labels": ["computadora", "laptop"],
-    //     "datasets": [{
-    //         "label": "Cantidad en Inventario",
-    //         "data": [
-    //             50,
-    //             20
-    //         ],
-    //         backgroundColor: "Red",
-    //         borderColor: "Red",
-    //         borderWidth: 1
-    //     }]
-    // }
+            //chartDataSet.push(dataset);
+            datasets.push(dataset);
+            // datasets = [
+            //     {
+            //         "label": "Cantidad en Inventario",
+            //         "data": [50, 20],
+            //         "backgroundColor": "Red",
+            //         "borderColor": "Red",
+            //         "borderWidth": 1
+            //     }
+            // ]
 
-    console.log(chartData);
 
-    // Crear la grafica
-    window.myBar = new Chart(ctx, {
-        type: "bar",
-        data: chartData,
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top'
-            },
-            title: {
-                display: false,
-                text: "Cantidad de recursos por categoria."
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+            chartData["datasets"] = datasets;
+
+            // chartData = {
+            //     "labels": ["computadora", "laptop"],
+            //     "datasets": [{
+            //         "label": "Cantidad en Inventario",
+            //         "data": [
+            //             50,
+            //             20
+            //         ],
+            //         backgroundColor: "Red",
+            //         borderColor: "Red",
+            //         borderWidth: 1
+            //     }]
+            // }
+
+            console.log(chartData);
+
+            // Crear la grafica
+            window.myBar = new Chart(ctx, {
+                type: "bar",
+                data: chartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: false,
+                        text: "Cantidad de recursos por categoria."
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
-                }]
-            }
+                }
+            });
+
         }
     });
 
@@ -114,9 +112,9 @@ window.onload = function () {
      * Generar grafica de aulas.
      */
 
-    var aulaEtiquetas = []; 
-    var aulaDatos = []; 
-    var aulaCtx = document.getElementById("aulasChart"); 
+    var aulaEtiquetas = [];
+    var aulaDatos = [];
+    var aulaCtx = document.getElementById("aulasChart");
     var aulaDataUrl = aulaCtx.getAttribute("data-url");
     var aulaDatasets = [];
     var aulaLabel = "Aulas por categoria";
@@ -127,52 +125,51 @@ window.onload = function () {
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            for (var dato in info) {
-                aulaEtiquetas.push(dato);
-                aulaDatos.push(info[dato]);
-            }
-        }
-    });
-
-    aulaColores = randomRGB();
-    aulaChartData["labels"] = aulaEtiquetas;
-
-    
-    var aulaDataset = {
-        label: "Aulas por Categoria",
-        data: aulaDatos,
-        backgroundColor: aulaColores[0],
-        borderColor: aulaColores[1],
-        borderWidth: 1
-    };
-
-    aulaDatasets.push(aulaDataset);
+            aulaEtiquetas = Object.keys(info);
+            aulaDatos = Object.values(info);
+            aulaColores = randomRGB();
+            aulaChartData["labels"] = aulaEtiquetas;
 
 
-    aulaChartData["datasets"] = aulaDatasets;
+            var aulaDataset = {
+                label: "Aulas",
+                data: aulaDatos,
+                backgroundColor: aulaColores[0],
+                borderColor: aulaColores[1],
+                borderWidth: 1
+            };
 
-    console.log(aulaChartData);
+            aulaDatasets.push(aulaDataset);
 
-    window.aulaMyBar = new Chart(aulaCtx, {
-        type: "bar",
-        data: aulaChartData,
-        options: {
-            legend: {
-                position: 'top'
-            },
-            title: {
-                display: false,
-                text: "Aulas por Categoria"
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+
+            aulaChartData["datasets"] = aulaDatasets;
+
+            console.log(aulaChartData);
+
+            window.aulaMyBar = new Chart(aulaCtx, {
+                type: "bar",
+                data: aulaChartData,
+                options: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: false,
+                        text: "Aulas por Categoria"
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
-                }]
-            }
+                }
+            });
         }
     });
+
+
     myBar.update();
     aulaMyBar.update();
 };

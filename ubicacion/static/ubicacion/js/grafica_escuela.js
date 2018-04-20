@@ -17,6 +17,12 @@ window.onload = function () {
     var trabajosDatos = []; // Datos de la grafica
     var trabajosData_dict = {};
 
+    var proyectosCtx = document.getElementById("proyectosChart"); // Id de la grafica.
+    var proyectosDataUrl = proyectosCtx.getAttribute("data-url"); // URL con datos en Json
+    var proyectosEtiquetas = []; // Etiquetas de la grafica.
+    var proyectosDatos = []; // Datos de la grafica
+    var proyectosData_dict = {};
+
 
     $.ajax({
         url: trabajosDataUrl,
@@ -49,12 +55,12 @@ window.onload = function () {
     });
 
     $.ajax({
-        url: trabajosDataUrl,
+        url: proyectosDataUrl,
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            trabajosEtiquetas = Object.keys(info);
-            trabajosDatos = Object.values(info);
+            proyectosEtiquetas = Object.keys(info);
+            proyectosDatos = Object.values(info);
             var pieColors = [];
             for (var dato in info) {
                 color = randomRGB()[0];
@@ -64,51 +70,17 @@ window.onload = function () {
                 type: 'pie',
                 data: {
                     datasets: [{
-                        data: trabajosDatos,
+                        data: proyectosDatos,
                         backgroundColor: pieColors,
-                        label: 'Trabajos de Graduacion'
+                        label: 'Trabajos Sustentados'
                     }],
-                    labels: trabajosEtiquetas
+                    labels: proyectosEtiquetas
                 },
                 options: {
                     responsive: true
                 }
             };
-            window.myBar = new Chart(trabajosCtx, config);
+            window.myBar = new Chart(proyectosCtx, config);
         }
     });
-
-    $.ajax({
-        url: trabajosDataUrl,
-        type: "GET",
-        dataType: 'json',
-        success: function (info) {
-            trabajosEtiquetas = Object.keys(info);
-            trabajosDatos = Object.values(info);
-            var pieColors = [];
-            for (var dato in info) {
-                color = randomRGB()[0];
-                pieColors.push(randomRGB()[0]);
-            }
-            var config = {
-                type: 'pie',
-                data: {
-                    datasets: [{
-                        data: trabajosDatos,
-                        backgroundColor: pieColors,
-                        label: 'Trabajos de Graduacion'
-                    }],
-                    labels: trabajosEtiquetas
-                },
-                options: {
-                    responsive: true
-                }
-            };
-            window.myBar = new Chart(trabajosCtx, config);
-        }
-    });
-
-
-
-
 };

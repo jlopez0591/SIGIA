@@ -92,6 +92,15 @@ def proyectos_semestre_escuela(request, escuela_pk):
     return JsonResponse(conteo)
 
 
+def proyectos_finales_categoria_escuela(request, escuela_pk):
+    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
+    conteo = dict()
+    conteo['licenciatura'] = escuela.trabajos_graduacion.licenciatura().sustentados().count()
+    conteo['especializacion'] = escuela.trabajos_graduacion.especializacion().sustentados().count()
+    conteo['maestria'] = escuela.trabajos_graduacion.maestria().sustentados().count()
+    conteo['doctorado'] = escuela.trabajos_graduacion.doctorado().sustentados().count()
+    return JsonResponse(conteo)
+
 def anteproyectos_semestre_escuela(request, escuela_pk):
     escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
     conteo = dict()
