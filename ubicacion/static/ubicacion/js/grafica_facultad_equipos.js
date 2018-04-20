@@ -110,7 +110,9 @@ window.onload = function () {
         }
     });
 
-    
+    /**
+     * Generar grafica de aulas.
+     */
 
     var aulaEtiquetas = []; 
     var aulaDatos = []; 
@@ -172,6 +174,6 @@ window.onload = function () {
         }
     });
 
-    myBar.update();
-    aulaMyBar.update();
+    window.myBar.update();
+    window.aulaMyBar.update();
 };

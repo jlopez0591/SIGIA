@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     {{ escuela.cod_sede }}-{{ escuela.cod_facultad }}-{{ escuela.cod_escuela }}
@@ -40,7 +41,7 @@
         <div class="row top-buffer">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">Cantidad de Estudiantes</div>
+                    <div class="card-header">Estudiantes Activos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
                         <h3 class="text-right">{{ escuela.estudiantes.all.count }}</h3>
@@ -58,19 +59,19 @@
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">Cantidad de Proyectos</div>
+                    <div class="card-header">Trabajos de Graduacion Sustentados</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ escuela.proyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.trabajos_graduacion.sustentados.count }}</h3>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">Cantidad de Anteproyectos</div>
+                    <div class="card-header">Anteproyectos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ escuela.anteproyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ escuela.trabajos_graduacion.all.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -98,10 +99,12 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header" data-url="">Anteproyectos Aprobados, Pendientes y Rechazados</div>
+                    <div class="card-header" data-url="">Trabajos de Graduacion</div>
                     <div class="card-body">
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <canvas id="trabajosChart" data-url="{% url 'ubicacion:escuela-proyectos' escuela.pk %}"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,8 +115,5 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src=""></script>
-    <script src=""></script>
-    <script src=""></script>
-    <script src=""></script>
+    <script src="{% static 'ubicacion/js/grafica_escuela.js' %}"></script>
 {% endblock %}

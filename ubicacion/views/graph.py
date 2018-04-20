@@ -82,9 +82,9 @@ def estudiantes_semestre_escuela(request, escuela_pk):
 def proyectos_semestre_escuela(request, escuela_pk):
     escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
     conteo = dict()
-    proyectos = escuela.proyectos.all()
+    proyectos = escuela.trabajos_graduacion.all()
     for proyecto in proyectos:
-        programa = proyecto.programa
+        programa = proyecto.get_estado_display()
         if programa in conteo:
             conteo[programa] += 1
         else:

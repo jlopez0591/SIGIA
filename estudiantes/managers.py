@@ -56,6 +56,9 @@ class TrabajoQuerySet(models.QuerySet):
     def rechazados(self):
         return self.filter(estado='rechazado')
 
+    def sustentados(self):
+        return self.filter(nota__isnull=False)
+
     def licenciatura(self):
         return self.filter(programa='licenciatura')
 
@@ -111,6 +114,9 @@ class TrabajoManager(models.Manager):
     
     def carrera(self, carrera):
         return self.get_queryset().carrera(carrera)
+
+    def sustentados(self):
+        return self.get_queryset().sustentados()
 
 
 

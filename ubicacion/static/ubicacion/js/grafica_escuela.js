@@ -1,6 +1,4 @@
 window.onload = function () {
-    //
-
 
     function randomRGB() {
         var colores = [];
@@ -11,104 +9,55 @@ window.onload = function () {
         colores.push('rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')'); // Borde
         return colores;
     };
-    
+
     // En Uso
-    var keyEtiquetas = []; // Etiquetas de la grafica.
-    var keyDatos = []; // Datos de la grafica
-    var keyCtx = document.getElementById("keyChart"); // Id de la grafica.
-    var keyDataUrl = ctx.getAttribute("data-url"); // URL con datos en Json
-    var keyDatasets = [];
-    var keyLabel = "Equipos por categoria";
-    var keyChartData = {};
-    
+    var trabajosCtx = document.getElementById("trabajosChart"); // Id de la grafica.
+    var trabajosDataUrl = trabajosCtx.getAttribute("data-url"); // URL con datos en Json
+    var trabajosEtiquetas = []; // Etiquetas de la grafica.
+    var trabajosDatos = []; // Datos de la grafica
+    var trabajosData_dict = {};
     // Adquirir los datos.
     $.ajax({
-        url: keyDataUrl,
+        url: trabajosDataUrl,
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            for (var dato in info) {
-                keyData_dict = info;
-                keyEtiquetas.push(dato);
-                keyDatos.push(info[dato]);
-            }
+            trabajosData_dict = info;
+            trabajosEtiquetas= Object.keys(info);
+            trabajosDatos = Object.values(info);
         }
     });
-    // data_dict = {
-    //     'computadora': 50,
-    //     'laptop': 20
-    // } // Esto es lo que viene del JSON.
-    // etiquetas = ['computadora', 'laptop']
-    // datos = [50, 20]
 
-    // Asignar las etiquetas. Ej. ["Computadoras", "Laptops", "Teclados"]
-    keyColores = randomRGB();
-    keyChartData["labels"] = keyEtiquetas;
+    var pieColors = [];
 
-    // chartData = {
-    //     "labels": ["computadora", "laptop"]
-    // }
+    for (var dato in trabajosDatos) {
+        color = randomRGB()[0];
+        console.log(color);
+        pieColors.push(randomRGB()[0]);
+    }
 
-    
-    var keyDataset = {
-        label: "Cantidad en Inventario",
-        data: keyDatos,
-        backgroundColor: keyColores[0],
-        borderColor: keyColores[1],
-        borderWidth: 1
+    console.log("Antes del config");
+    console.log(trabajosDatos);
+    for (var test; test <= trabajosDatos.length; test++) {
+        console.log("Hola");
+    }
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: trabajosDatos,
+                backgroundColor: pieColors,
+                label: 'Trabajos de Graduacion'
+            }],
+            labels: trabajosEtiquetas
+        },
+        options: {
+            responsive: true
+        }
     };
 
-    //chartDataSet.push(dataset);
-    keyDatasets.push(keyDataset);
-    // datasets = [
-    //     {
-    //         "label": "Cantidad en Inventario",
-    //         "data": [50, 20],
-    //         "backgroundColor": "Red",
-    //         "borderColor": "Red",
-    //         "borderWidth": 1
-    //     }
-    // ]
+    console.log(config);
 
-
-    keyChartData["datasets"] = keyDatasets;
-
-    // chartData = {
-    //     "labels": ["computadora", "laptop"],
-    //     "datasets": [{
-    //         "label": "Cantidad en Inventario",
-    //         "data": [
-    //             50,
-    //             20
-    //         ],
-    //         backgroundColor: "Red",
-    //         borderColor: "Red",
-    //         borderWidth: 1
-    //     }]
-    // }
-
-    console.log(keyChartData);
-
-    // Crear la grafica
-    window.myBar = new Chart(keyCtx, {
-        type: "bar",
-        data: keyChartData,
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top'
-            },
-            title: {
-                display: true,
-                text: "Cantidad de recursos por categoria."
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
+    window.myBar = new Chart(trabajosCtx, config);
+    window.myBar.update()
 };
