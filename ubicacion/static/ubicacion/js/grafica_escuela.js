@@ -16,48 +16,99 @@ window.onload = function () {
     var trabajosEtiquetas = []; // Etiquetas de la grafica.
     var trabajosDatos = []; // Datos de la grafica
     var trabajosData_dict = {};
-    // Adquirir los datos.
+
+
     $.ajax({
         url: trabajosDataUrl,
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            trabajosData_dict = info;
-            trabajosEtiquetas= Object.keys(info);
+            trabajosEtiquetas = Object.keys(info);
             trabajosDatos = Object.values(info);
+            var pieColors = [];
+            for (var dato in info) {
+                color = randomRGB()[0];
+                pieColors.push(randomRGB()[0]);
+            }
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: trabajosDatos,
+                        backgroundColor: pieColors,
+                        label: 'Trabajos de Graduacion'
+                    }],
+                    labels: trabajosEtiquetas
+                },
+                options: {
+                    responsive: true
+                }
+            };
+            window.myBar = new Chart(trabajosCtx, config);
         }
     });
 
-    var pieColors = [];
-
-    for (var dato in trabajosDatos) {
-        color = randomRGB()[0];
-        console.log(color);
-        pieColors.push(randomRGB()[0]);
-    }
-
-    console.log("Antes del config");
-    console.log(trabajosDatos);
-    for (var test; test <= trabajosDatos.length; test++) {
-        console.log("Hola");
-    }
-    var config = {
-        type: 'pie',
-        data: {
-            datasets: [{
-                data: trabajosDatos,
-                backgroundColor: pieColors,
-                label: 'Trabajos de Graduacion'
-            }],
-            labels: trabajosEtiquetas
-        },
-        options: {
-            responsive: true
+    $.ajax({
+        url: trabajosDataUrl,
+        type: "GET",
+        dataType: 'json',
+        success: function (info) {
+            trabajosEtiquetas = Object.keys(info);
+            trabajosDatos = Object.values(info);
+            var pieColors = [];
+            for (var dato in info) {
+                color = randomRGB()[0];
+                pieColors.push(randomRGB()[0]);
+            }
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: trabajosDatos,
+                        backgroundColor: pieColors,
+                        label: 'Trabajos de Graduacion'
+                    }],
+                    labels: trabajosEtiquetas
+                },
+                options: {
+                    responsive: true
+                }
+            };
+            window.myBar = new Chart(trabajosCtx, config);
         }
-    };
+    });
 
-    console.log(config);
+    $.ajax({
+        url: trabajosDataUrl,
+        type: "GET",
+        dataType: 'json',
+        success: function (info) {
+            trabajosEtiquetas = Object.keys(info);
+            trabajosDatos = Object.values(info);
+            var pieColors = [];
+            for (var dato in info) {
+                color = randomRGB()[0];
+                pieColors.push(randomRGB()[0]);
+            }
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: trabajosDatos,
+                        backgroundColor: pieColors,
+                        label: 'Trabajos de Graduacion'
+                    }],
+                    labels: trabajosEtiquetas
+                },
+                options: {
+                    responsive: true
+                }
+            };
+            window.myBar = new Chart(trabajosCtx, config);
+        }
+    });
 
-    window.myBar = new Chart(trabajosCtx, config);
-    window.myBar.update()
+
+
+
 };

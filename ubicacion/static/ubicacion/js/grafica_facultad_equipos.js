@@ -173,7 +173,6 @@ window.onload = function () {
             }
         }
     });
-
-    window.myBar.update();
-    window.aulaMyBar.update();
+    myBar.update();
+    aulaMyBar.update();
 };
