@@ -25,10 +25,10 @@ class StudentUpdateForm(forms.ModelForm):
             'ultimo_semestre', 'fecha_graduacion'
         )
         labels = {
-            'provincia': '',
-            'clase': '',
-            'tomo': '',
-            'folio': ''
+            'provincia': 'Provincia',
+            'clase': 'Clase',
+            'tomo': 'Tomo',
+            'folio': 'Folio'
         }
         widgets = {
             'primer_nombre': forms.TextInput(attrs={
@@ -66,7 +66,7 @@ class StudentUpdateForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'fecha_nacimiento': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control datepicker'
             }),
             'discapacidad': forms.Textarea(attrs={
                 'class': 'form-control'
@@ -105,7 +105,7 @@ class StudentUpdateForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'fecha_ingreso': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control datepicker'
             }),
             'semestre_ingreso': forms.TextInput(attrs={
                 'class': 'form-control'
@@ -117,7 +117,7 @@ class StudentUpdateForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'fecha_graduacion': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control datepicker'
             }),
         }
 

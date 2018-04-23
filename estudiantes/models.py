@@ -74,8 +74,6 @@ class Estudiante(models.Model):
     tipo_sangre = models.CharField(max_length=120, blank=True, choices=SANGRE)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     discapacidad = models.TextField(max_length=500, blank=True, null=True)
-
-    # Informacion de contacto
     pais = CountryField(blank=True)
     correo = models.EmailField(blank=True)
     telefono_oficina = models.CharField(max_length=120, blank=True)
@@ -91,7 +89,7 @@ class Estudiante(models.Model):
     semestre_ingreso = models.CharField(
         max_length=5, blank=True, choices=SEMESTRES)
     ultimo_anio = models.CharField(max_length=4, blank=True)
-    ultimo_semestre = models.CharField(max_length=5, blank=True)  # I, II, V
+    ultimo_semestre = models.CharField(max_length=5, blank=True)
     fecha_graduacion = models.DateField(blank=True, null=True)
 
     sede = models.ForeignKey(Sede, on_delete=models.SET_NULL, null=True, related_name='estudiantes',

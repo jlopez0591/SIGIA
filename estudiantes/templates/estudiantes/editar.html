@@ -2,15 +2,227 @@
 
 {% block title %}Editar Estudiante{% endblock %}
 
+
+{% block head %}
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Editar Estudiante</h4>
+
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                               role="tab" aria-controls="pills-home" aria-selected="true">Info. Personal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                               role="tab" aria-controls="pills-profile" aria-selected="false">Info. Academica</a>
+                        </li>
+                    </ul>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                 aria-labelledby="pills-home-tab">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.primer_nombre.label_tag }} {{ form.primer_nombre }}
+                                        {% if form.primer_nombre.help_text %}
+                                            <small class="form-text text-muted">{{ form.primer_nombre.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.segundo_nombre.label_tag }} {{ form.segundo_nombre }}
+                                        {% if form.segundo_nombre.help_text %}
+                                            <small class="form-text text-muted">{{ form.segundo_nombre.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.primer_apellido.label_tag }} {{ form.primer_apellido }}
+                                        {% if form.primer_apellido.help_text %}
+                                            <small class="form-text text-muted">{{ form.primer_apellido.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.segundo_apellido.label_tag }} {{ form.segundo_apellido }}
+                                        {% if form.segundo_apellido.help_text %}
+                                            <small class="form-text text-muted">{{ form.segundo_apellido.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.provincia.label_tag }} {{ form.provincia }}
+                                        {% if form.provincia.help_text %}
+                                            <small class="form-text text-muted">{{ form.provincia.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.clase.label_tag }} {{ form.clase }}
+                                        {% if form.clase.help_text %}
+                                            <small class="form-text text-muted">{{ form.clase.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.tomo.label_tag }} {{ form.tomo }}
+                                        {% if form.tomo.help_text %}
+                                            <small class="form-text text-muted">{{ form.tomo.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.folio.label_tag }} {{ form.folio }}
+                                        {% if form.folio.help_text %}
+                                            <small class="form-text text-muted">{{ form.folio.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    {{ form.sexo.label_tag }} {{ form.sexo }}
+                                    {% if form.sexo.help_text %}
+                                        <small class="form-text text-muted">{{ form.sexo.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.direccion.label_tag }} {{ form.direccion }}
+                                    {% if form.direccion.help_text %}
+                                        <small class="form-text text-muted">{{ form.direccion.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.telefono.label_tag }} {{ form.telefono }}
+                                    {% if form.telefono.help_text %}
+                                        <small class="form-text text-muted">{{ form.telefono.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.fecha_nacimiento.label_tag }} {{ form.fecha_nacimiento }}
+                                    {% if form.fecha_nacimiento.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_nacimiento.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.discapacidad.label_tag }} {{ form.discapacidad }}
+                                    {% if form.discapacidad.help_text %}
+                                        <small class="form-text text-muted">{{ form.discapacidad.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.tipo_sangre.label_tag }} {{ form.tipo_sangre }}
+                                    {% if form.tipo_sangre.help_text %}
+                                        <small class="form-text text-muted">{{ form.tipo_sangre.help_text }}</small>
+                                    {% endif %}
+                                </div>
+
+
+                                <div class="form-group">
+                                    {{ form.pais.label_tag }} {{ form.pais }}
+                                    {% if form.pais.help_text %}
+                                        <small class="form-text text-muted">{{ form.pais.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.correo.label_tag }} {{ form.correo }}
+                                    {% if form.correo.help_text %}
+                                        <small class="form-text text-muted">{{ form.correo.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.telefono_oficina.label_tag }} {{ form.telefono_oficina }}
+                                    {% if form.telefono_oficina.help_text %}
+                                        <small class="form-text text-muted">{{ form.telefono_oficina.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.celular.label_tag }} {{ form.celular }}
+                                    {% if form.celular.help_text %}
+                                        <small class="form-text text-muted">{{ form.celular.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.celular_oficina.label_tag }} {{ form.celular_oficina }}
+                                    {% if form.celular_oficina.help_text %}
+                                        <small class="form-text text-muted">{{ form.celular_oficina.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                 aria-labelledby="pills-profile-tab">
+
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.cod_sede.label_tag }} {{ form.cod_sede }}
+                                        {% if form.cod_sede.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_sede.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.cod_facultad.label_tag }} {{ form.cod_facultad }}
+                                        {% if form.cod_facultad.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_facultad.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.cod_escuela.label_tag }} {{ form.cod_escuela }}
+                                        {% if form.cod_escuela.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_escuela.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.cod_carrera.label_tag }} {{ form.cod_carrera }}
+                                        {% if form.cod_carrera.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_carrera.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.turno.label_tag }} {{ form.turno }}
+                                    {% if form.turno.help_text %}
+                                        <small class="form-text text-muted">{{ form.turno.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.fecha_ingreso.label_tag }} {{ form.fecha_ingreso }}
+                                    {% if form.fecha_ingreso.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_ingreso.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.semestre_ingreso.label_tag }} {{ form.semestre_ingreso }}
+                                    {% if form.semestre_ingreso.help_text %}
+                                        <small class="form-text text-muted">{{ form.semestre_ingreso.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.ultimo_anio.label_tag }} {{ form.ultimo_anio }}
+                                    {% if form.ultimo_anio.help_text %}
+                                        <small class="form-text text-muted">{{ form.ultimo_anio.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.ultimo_semestre.label_tag }} {{ form.ultimo_semestre }}
+                                    {% if form.ultimo_semestre.help_text %}
+                                        <small class="form-text text-muted">{{ form.ultimo_semestre.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.fecha_graduacion.label_tag }} {{ form.fecha_graduacion }}
+                                    {% if form.fecha_graduacion.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_graduacion.help_text }}</small>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
                     </form>
                 </div>
@@ -23,17 +235,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4/tinymce.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
-        $(document).ready(function () {
-            var provincia = document.getElementsByClassName("provincia");
-            var clase = document.getElementsByClassName("clase");
-            var tomo = document.getElementsByClassName("tomo");
-            var folio = document.getElementsByClassName("folio");
-            $(".cedula").wrapAll("<div class='form-row'></div>");
-            $("#id_provincia").wrapAll("<div class='col'></div>");
-            $("#id_clase").wrapAll("<div class='col'></div>");
-            $("#id_tomo").wrapAll("<div class='col'></div>");
-            $("#id_folio").wrapAll("<div class='col'></div>");
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
         });
     </script>
 {% endblock %}

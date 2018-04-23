@@ -51,12 +51,12 @@ class EstudianteDetailView(PermissionRequiredMixin, DetailView):
     model = Estudiante
     template_name = 'estudiantes/detalle.html'
 
-    def get_object(self):
-        object = super(EstudianteDetailView, self).get_object(self)
-        usuario = self.request.user
-        if usuario.perfil.escuela != object.escuela:
-            raise PermissionDenied
-        return object
+    # def get_object(self):
+    #     object = super(EstudianteDetailView, self).get_object(self)
+    #     usuario = self.request.user
+    #     if usuario.perfil.escuela != object.escuela:
+    #         raise PermissionDenied
+    #     return object
 
 
 #
@@ -66,12 +66,12 @@ class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = StudentUpdateForm
     template_name = 'estudiantes/editar.html'
 
-    def get_object(self):
-        object = super(EstudianteUpdateView, self).get_object(self)
-        usuario = self.request.user
-        if usuario.perfil.escuela != object.escuela:
-            raise PermissionDenied
-        return object
+    # def get_object(self):
+    #     object = super(EstudianteUpdateView, self).get_object(self)
+    #     usuario = self.request.user
+    #     if usuario.perfil.escuela != object.escuela:
+    #         raise PermissionDenied
+    #     return object
 
 
 #

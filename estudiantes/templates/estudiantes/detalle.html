@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <!-- Informacion del estudiante -->
     <div class="row">
@@ -17,7 +22,7 @@
                             <li class="list-group-item">Sexo: {{ estudiante.get_sexo_display }}</li>
                             <li class="list-group-item">Telefono: {{ estudiante.telefono }}</li>
                             <li class="list-group-item">Tipo de Sangre: {{ estudiante.get_tipo_sangre_display }}</li>
-                            <li class="list-group-item">Discapacidades: {{ estudiante.discapacidad }}</li>
+                            <li class="list-group-item">Discapacidades: {{ estudiante.discapacidad|safe }}</li>
                         </ul>
                     </div>
                 </div>
@@ -26,19 +31,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Informacion Academica</h4>
-
-                        <table class="table table-light">
-                            <tbody>
-                                <tr>
-                                    <td>Sede: {{ estudiante.cod_sede }}</td>
-                                    <td>Facultad: {{ estudiante.cod_facultad }}</td>
-                                    <td>Escuela: {{ estudiante.cod_escuela }}</td>
-                                    <td>Carrera: {{ estudiante.cod_carrera }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
                         <hr/>
                         <ul class="list-group">
+                            <li class="list-group-item">Codigo de Carrera: {{ estudiante.cod_sede }}-{{ estudiante.cod_facultad }}-{{ estudiante.cod_escuela }}-{{ estudiante.cod_carrera }}</li>
                             <li class="list-group-item">Turno: {{ estudiante.get_turno.display }}</li>
                             <li class="list-group-item">Fecha de Ingreso: {{ estudiante.fecha_ingreso }}</li>
                             <li class="list-group-item">Semestre Actual: {{ estudiante.get_semestre_display }}</li>
@@ -54,17 +49,72 @@
 
 
     <!-- Anteproyectos y Trabajos de Graduacion -->
-    <div class="row">
+    <div class="row top-buffer">
         <div class="container-fluid">
-            <div class="card-deck">
-
-                <!--Anteproyecto-->
-                <div class="card"></div>
-
-                <!-- Trabajos de Graduacion -->
-                <div class="card"></div>
+            <!--Anteproyecto-->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Trabajos de Graduacion</h4>
+                    {% if estudiante.proyectos %}
+                        <table class="table table-bordered" id="trabajos">
+                            <thead>
+                            <tr>
+                                <th>Nombre del Proyecto</th>
+                                <th>Fecha Entrega</th>
+                                <th>Fecha Sustentacion</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for trabajo in estudiante.proyectos.all %}
+                                <tr>
+                                    <td>{{ trabajo.nombre_proyecto }}</td>
+                                    <td>{{ trabajo.fecha_entrega }}</td>
+                                    <td>{{ trabajo.fecha_sustentacion }}</td>
+                                    <td>
+                                        {% if trabajo.estado == "aprobado" %}
+                                            <a class="btn btn-outline-success"
+                                               href="#"> {{ trabajo.get_estado_display }}</a>
+                                        {% endif %}
+                                        {% if trabajo.estado == "rechazado" %}
+                                            <a class="btn btn-outline-danger"
+                                               href="#"> {{ trabajo.get_estado_display }}</a>
+                                        {% endif %}
+                                        {% if trabajo.estado == "pendiente" %}
+                                            <a class="btn btn-outline-primary"
+                                               href="#"> {{ trabajo.get_estado_display }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            {# Ver #}<a class="btn btn-outline-primary"
+                                                        href="{{ trabajo.get_absolute_url }}"> Ver</a>
+                                            {# Editar #}<a class="btn btn-outline-info"
+                                                           href="{% url 'estudiante:editar-trabajo' trabajo.pk %}">
+                                            Editar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info">No tiene trabajos registrados</div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#trabajos').DataTable();
+        });
+    </script>
 {% endblock %}
 
