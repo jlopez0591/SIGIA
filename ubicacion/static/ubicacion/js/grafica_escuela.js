@@ -53,6 +53,7 @@ window.onload = function () {
             window.myBar = new Chart(trabajosCtx, config);
         }
     });
+    
 
     $.ajax({
         url: proyectosDataUrl,

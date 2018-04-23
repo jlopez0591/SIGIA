@@ -41,6 +41,7 @@ lista = {
     'Decanos': permisos_decanos,
 }
 
+
 class Command(BaseCommand):
     help = 'Crea los grupos de usuarios para el sistema y asigna permisos correspondientes.'
 

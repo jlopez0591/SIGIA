@@ -25,8 +25,8 @@ window.onload = function () {
         type: "GET",
         dataType: 'json',
         success: function (info) {
-            etiquetas = Object.keys(dato);
-            datos = Object.values(dato);
+            etiquetas = Object.keys(info);
+            datos = Object.values(info);
             // data_dict = {
             //     'computadora': 50,
             //     'laptop': 20
@@ -170,6 +170,4 @@ window.onload = function () {
     });
 
 
-    myBar.update();
-    aulaMyBar.update();
 };

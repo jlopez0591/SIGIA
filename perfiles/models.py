@@ -25,7 +25,7 @@ class Perfil(models.Model):
     CATEGORIAS = (
         ('1', 'Tiempo Completo'),
         ('2', 'Tiempo Parcial'),
-    )
+    ) # Dedicacion - agregar asistente / 2 y 2 
     GENERO = (
         ('h', 'Hombre'),
         ('m', 'Mujer')
