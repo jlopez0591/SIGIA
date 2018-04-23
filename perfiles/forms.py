@@ -6,11 +6,15 @@ class PerfilForm(forms.ModelForm):
     class Meta:
         model = Perfil
         fields = (
-            'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 'fecha_nacimiento',
-            'fecha_inicio',
-            'sexo', 'provincia', 'clase', 'tomo', 'folio',
-            'imagen', 'categoria', 'pais', 'cod_sede', 'cod_facultad', 'cod_departamento', 'cod_escuela', 'cod_profesor')
+            'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 
+            'fecha_nacimiento', 'sexo',
+            'provincia', 'clase', 'tomo', 'folio',
+            'imagen', 'pais', 
+            'categoria', 
+            'cod_sede', 'cod_facultad', 'cod_departamento', 
+            'cod_escuela', 'cod_profesor', 'fecha_inicio')
         labels = {
+            'primer_nombre': 'Primer Nombre',
             'fecha_nacimiento': 'Fecha de Nacimiento',
             'categoria': 'Dedicacion',
             'cod_sede': 'Codigo de Sede',
@@ -96,6 +100,11 @@ class PerfilForm(forms.ModelForm):
                 # 'disabled': True,
                 'placeholder': "Apellido Materno",
             }),
+            "cod_profesor": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Codigo de Profesor',
+                'label': 'Codigo de Profesor'
+            })
         }
 
 class PerfilTestForm(forms.ModelForm):

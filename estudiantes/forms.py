@@ -175,14 +175,14 @@ class TrabajoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         facultad = kwargs.pop('facultad')
         super(TrabajoForm, self).__init__(*args, **kwargs)
-        # self.fields['asesor'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
-        # self.fields['jurados'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
+        self.fields['estudiantes'].queryset = Estudiante.objects.activos().filter(facultad=facultad)
 
-    # def clean(self):
-    #     estudiantes = self.cleaned_data.get('estudiantes')
-    #     jurados = self.cleaned_data.get('jurados')
-    #     if estudiantes.count() > 3:
-    #         raise ValidationError('Seleccione 3 estudiantes max.')
-    #     if jurados.count() > 3:
-    #         raise ValidationError('Seleccione 3 jurados max.')
-    #     return self.cleaned_data
+
+    def clean(self):
+        estudiantes = self.cleaned_data.get('estudiantes')
+        jurados = self.cleaned_data.get('jurados')
+        if estudiantes.count() > 3:
+            raise ValidationError('Seleccione 3 estudiantes max.')
+        if jurados.count() > 3:
+            raise ValidationError('Seleccione 3 jurados max.')
+        return self.cleaned_data

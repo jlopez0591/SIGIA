@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
-
 {% block title %}Editar Perfil{% endblock %}
 
 {% block head %}
@@ -10,122 +9,180 @@
 
 {% block content %}
     <div class="row">
-        <form method="post" enctype="multipart/form-data">
-            <div class="row">
-                {{ form.non_field_errors }}
-                {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field.errors }}
-                    {{ hidden_field }}
-                {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {% csrf_token %}
-                    <!--Inicio Deck-->
-                    <div class="card-deck">
-                        <!--Datos Personales-->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title"><h4>Informacion Personal</h4></div>
-                                <div class="card-body">
-                                    <h5>Nombre</h5>
-                                    {{ form.primer_nombre.label_tag }}
-                                    {{ form.primer_nombre.errors }}
-                                    {{ form.primer_nombre }}
-                                    <hr/>
-                                    {{ form.segundo_nombre.label_tag }}
-                                    {{ form.segundo_nombre.errors }}
-                                    {{ form.segundo_nombre }}
-                                    <hr/>
-                                    {{ form.primer_apellido.label_tag }}
-                                    {{ form.primer_apellido.errors }}
-                                    {{ form.primer_apellido }}
-                                    <hr/>
-                                    {{ form.segundo_apellido.label_tag }}
-                                    {{ form.segundo_apellido.errors }}
-                                    {{ form.segundo_apellido }}
-                                    <hr/>
-                                    {{ form.sexo.label_tag }}
-                                    {{ form.sexo.errors }}
-                                    {{ form.sexo }}
-                                    <hr />
-                                    {{ form.pais.label_tag }}
-                                    {{ form.pais.errors }}
-                                    {{ form.pais }}
-                                    <hr/>
-                                    <h5>Cedula</h5>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            {{ form.provincia.label_tag }}
-                                            {{ form.provincia.errors }}{{ form.provincia }}</div>
-                                        <div class="form-group col-md-3">
-                                            {{ form.clase.label_tag }}
-                                            {{ form.clase.errors }} {{ form.clase }}</div>
-                                        <div class="form-group col-md-3">
-                                            {{ form.tomo.label_tag }}
-                                            {{ form.tomo.errors }}{{ form.tomo }}</div>
-                                        <div class="form-group col-md-3">{{ form.folio.label_tag }}
-                                            {{ form.folio.errors }}{{ form.folio }}</div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-personal-tab" data-toggle="pill"
+                                   href="#pills-personal" role="tab" aria-controls="pills-personal"
+                                   aria-selected="true">Info. Personal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-profesional-tab" data-toggle="pill"
+                                   href="#pills-profesional" role="tab" aria-controls="pills-profesional"
+                                   aria-selected="false">Info. Profesional</a>
+                            </li>
+
+                        </ul>
+
+                        {% csrf_token %} {{ form.non_field_errors }}
+                        {% for hidden_field in form.hidden_fields %}
+                            {{ hidden_field.errors }} {{ hidden_field }}
+                        {% endfor %}
+
+
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-personal" role="tabpanel"
+                                 aria-labelledby="pills-personal-tab">
+
+
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.primer_nombre.label_tag }} {{ form.primer_nombre }}
+                                        {% if form.primer_nombre.help_text %}
+                                            <small class="form-text text-muted">{{ form.primer_nombre.help_text }}</small>
+                                        {% endif %}
                                     </div>
-                                    <hr/>
-                                    <h5>Otros Datos</h5>
-                                    {{ form.imagen.label_tag }}
-                                    {{ form.imagen.errors }}
-                                    {{ form.imagen }}
-                                    <hr/>
-                                    {{ form.fecha_nacimiento.label_tag }}
-                                    {{ form.fecha_nacimiento.errors }}
-                                    {{ form.fecha_nacimiento }}
-                                    <hr/>
-                                    {{ form.fecha_inicio.label_tag }}
-                                    {{ form.fecha_inicio.errors }}
-                                    {{ form.fecha_inicio }}
+                                    <div class="form-group col">
+                                        {{ form.segundo_nombre.label_tag }} {{ form.segundo_nombre }}
+                                        {% if form.segundo_nombre.help_text %}
+                                            <small class="form-text text-muted">{{ form.segundo_nombre.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.primer_apellido.label_tag }} {{ form.primer_apellido }}
+                                        {% if form.primer_apellido.help_text %}
+                                            <small class="form-text text-muted">{{ form.primer_apellido.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.segundo_apellido.label_tag }} {{ form.segundo_apellido }}
+                                        {% if form.segundo_apellido.help_text %}
+                                            <small class="form-text text-muted">{{ form.segundo_apellido.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    {{ form.fecha_nacimiento.label_tag }} {{ form.fecha_nacimiento }}
+                                    {% if form.fecha_nacimiento.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_nacimiento.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.sexo.label_tag }} {{ form.sexo }} {% if form.sexo.help_text %}
+                                    <small class="form-text text-muted">{{ form.sexo.help_text }}</small>
+                                {% endif %}
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.provincia.label_tag }} {{ form.provincia }}
+                                        {% if form.provincia.help_text %}
+                                            <small class="form-text text-muted">{{ form.provincia.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.clase.label_tag }} {{ form.clase }} {% if form.clase.help_text %}
+                                        <small class="form-text text-muted">{{ form.clase.help_text }}</small>
+                                    {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.tomo.label_tag }} {{ form.tomo }} {% if form.tomo.help_text %}
+                                        <small class="form-text text-muted">{{ form.tomo.help_text }}</small>
+                                    {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.folio.label_tag }} {{ form.folio }} {% if form.folio.help_text %}
+                                        <small class="form-text text-muted">{{ form.folio.help_text }}</small>
+                                    {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    {{ form.imagen.label_tag }} {{ form.imagen }} {% if form.imagen.help_text %}
+                                    <small class="form-text text-muted">{{ form.imagen.help_text }}</small>
+                                {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.pais.label_tag }} {{ form.pais }} {% if form.pais.help_text %}
+                                    <small class="form-text text-muted">{{ form.pais.help_text }}</small>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profesional" role="tabpanel"
+                                 aria-labelledby="pills-profesional-tab">
+                                <div class="form-group">
+                                    {{ form.categoria.label_tag }} {{ form.categoria }}
+                                    {% if form.categoria.help_text %}
+                                        <small class="form-text text-muted">{{ form.categoria.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        {{ form.cod_sede.label_tag }} {{ form.cod_sede }}
+                                        {% if form.cod_sede.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_sede.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.cod_facultad.label_tag }} {{ form.cod_facultad }}
+                                        {% if form.cod_facultad.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_facultad.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col">
+                                        {{ form.cod_departamento.label_tag }} {{ form.cod_departamento }}
+                                        {% if form.cod_departamento.help_text %}
+                                            <small class="form-text text-muted">{{ form.cod_departamento.help_text }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ form.cod_escuela.label_tag }} {{ form.cod_escuela }}
+                                    {% if form.cod_escuela.help_text %}
+                                        <small class="form-text text-muted">{{ form.cod_escuela.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.cod_profesor.label_tag }} {{ form.cod_profesor }}
+                                    {% if form.cod_profesor.help_text %}
+                                        <small class="form-text text-muted">{{ form.cod_profesor.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.fecha_inicio.label_tag }} {{ form.fecha_inicio }}
+                                    {% if form.fecha_inicio.help_text %}
+                                        <small class="form-text text-muted">{{ form.fecha_inicio.help_text }}</small>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
 
 
-                        <!--Datos Academicos-->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title">Informacion Profesional</div>
-                                <div class="card-body">
-                                    {{ form.categoria.label_tag }}
-                                    {{ form.categoria.errors }}
-                                    {{ form.categoria }}
-                                    <hr/>
-                                    <h5 class="card-title">Codigo de Departamento</h5>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-4">{{ form.cod_sede.label_tag }}
-                                            {{ form.cod_sede.errors }}{{ form.cod_sede }}</div>
-                                        <div class="form-group col-md-4">{{ form.cod_facultad.label_tag }}
-                                            {{ form.cod_facultad.errors }}{{ form.cod_facultad }}</div>
-                                        <div class="form-group col-md-4">{{ form.cod_escuela.label_tag }}
-                                            {{ form.cod_escuela.errors }}{{ form.cod_escuela }}</div>
-                                        <div class="form-group col-md-4">{{ form.cod_departamento.label_tag }}
-                                            {{ form.cod_departamento.errors }}{{ form.cod_departamento }}</div>
-                                    </div>
-                                    <hr/>
-                                    <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!--Fin Deck-->
+                        <button class="btn btn-primary" type="submit">Guardar Perfil</button>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
+    </div>
     </div>
 
 
 {% endblock %}
-
 {% block javascript %}
     {% include 'includes/partial_datepicker.html' %}
-        <script>
-            $( "#id_imagen" ).addClass( "custom-file-input" );
-        </script>
+    <!-- <script>
+        $("#id_imagen").addClass("custom-file-input");
+    </script>  -->
 {% endblock %}
