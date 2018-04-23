@@ -27,7 +27,7 @@
             <div class="card-header">
 
 
-                {% if perms.estudiante.add_trabajograduacion %}
+                {% if perms.estudiantes.add_trabajograduacion %}
                 <a class="btn btn-primary" href="{% url 'estudiante:crear-trabajo' %}">Registrar
                     Trabajo</a>
                 {% endif %}

@@ -5,6 +5,7 @@ from estudiantes.forms import StudentUpdateForm, TrabajoForm
 from estudiantes.models import Estudiante, TrabajoGraduacion
 from ubicacion.models import FacultadInstancia, EscuelaInstancia
 from django.core.exceptions import PermissionDenied
+from django.urls import reverse_lazy
 
 
 
@@ -61,7 +62,7 @@ class EstudianteDetailView(PermissionRequiredMixin, DetailView):
 #
 class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
     model = Estudiante
-    permission_required = 'estudiante.change_estudiante'
+    permission_required = 'estudiantes.change_estudiante'
     form_class = StudentUpdateForm
     template_name = 'estudiantes/editar.html'
 
@@ -77,8 +78,9 @@ class EstudianteUpdateView(PermissionRequiredMixin, UpdateView):
 class TrabajoGraduacionCreateView(PermissionRequiredMixin, CreateView):
     model = TrabajoGraduacion
     form_class = TrabajoForm
-    permission_required = 'estudiante.add_trabajograduaction'
+    permission_required = 'estudiantes.add_trabajograduacion'
     template_name = 'estudiantes/trabajos/form.html'
+    success_url = reverse_lazy('core:index')
 
     def form_valid(self, form):
         form.instance.registrado_por = self.request.user
@@ -97,7 +99,7 @@ class TrabajoGraduacionCreateView(PermissionRequiredMixin, CreateView):
 class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
     model = TrabajoGraduacion
     form_class = TrabajoForm
-    permission_required = 'estudiante.change_trabajo'
+    permission_required = 'estudiantes.change_trabajo'
     template_name = 'estudiantes/trabajos/form.html'
 
     def get_form_kwargs(self):
@@ -117,7 +119,7 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
 class TrabajoGraduacionDetailView(PermissionRequiredMixin, DetailView):
     model = TrabajoGraduacion
     context_object_name = 'trabajo'
-    permission_required = ('ver_trabajo_escuela', 'ver_trabajo_facultad')
+    permission_required = ('ubicacion.ver_trabajo_escuela', 'ubicacion.ver_trabajo_facultad')
     template_name = 'estudiantes/trabajos/detalle.html'
 
 
@@ -162,7 +164,7 @@ class TrabajoGraduacionEscuelaListView(PermissionRequiredMixin, ListView):
 #
 class TrabajoGraduacionPendienteListView(PermissionRequiredMixin, ListView):
     model = TrabajoGraduacion
-    permission_required = 'estudiante.change_trabajograduaction'
+    permission_required = 'estudiantes.change_trabajograduaction'
     context_object_name = 'trabajos'
     template_name = 'estudiantes/trabajos/pendiente.html'
 

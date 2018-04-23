@@ -175,8 +175,8 @@ class TrabajoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         facultad = kwargs.pop('facultad')
         super(TrabajoForm, self).__init__(*args, **kwargs)
-        self.fields['asesor'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
-        self.fields['jurados'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
+        # self.fields['asesor'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
+        # self.fields['jurados'].queryset = Usuario.objects.filter(perfil__facultad=facultad)
 
     # def clean(self):
     #     estudiantes = self.cleaned_data.get('estudiantes')
