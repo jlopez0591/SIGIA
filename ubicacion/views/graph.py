@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia
+from ubicacion.models import CarreraInstancia, EscuelaInstancia, Sede, FacultadInstancia, DepartamentoInstancia
 
 # Sede
 def profesores_sede(request, sede_pk):
@@ -20,7 +20,7 @@ def profesores_sede(request, sede_pk):
 
 def estudiantes_sede(request, sede_pk):
     sede = Sede.objects.get(pk=sede_pk)
-    estudiantes = sede.estudiantes.all()
+    estudiantes = sede.estudiantes.activos()
     conteo = {}
     for estudiante in estudiantes:
         cs = estudiante.cod_sede
@@ -59,6 +59,7 @@ def facultad_aulas_tipo(request, facultad_pk):
             conteo[tipo] = 1
     return JsonResponse(conteo)
 
+
 # Escuela
 def estudiantes_semestre_escuela(request, escuela_pk):
     """
@@ -68,10 +69,10 @@ def estudiantes_semestre_escuela(request, escuela_pk):
     :return: Objeto JSON con el conteo por semestre de estudiantes en la escuela.
     """
     escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
-    estudiantes = escuela.estudiantes.all()
+    estudiantes = escuela.estudiantes.activos()
     conteo = dict()
     for estudiante in estudiantes:
-        semestre = estudiante.ultimo_semestre
+        semestre = estudiante.get_semestre_display()
         if semestre in conteo:
             conteo[semestre] += 1
         else:
@@ -101,17 +102,11 @@ def proyectos_finales_categoria_escuela(request, escuela_pk):
     conteo['doctorado'] = escuela.trabajos_graduacion.doctorado().sustentados().count()
     return JsonResponse(conteo)
 
-def anteproyectos_semestre_escuela(request, escuela_pk):
-    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
-    conteo = dict()
-    conteo['aprobados'] = escuela.anteproyectos.aprobados().count()
-    conteo['rechazados'] = escuela.anteproyectos.rechazados().count()
-    conteo['pendientes'] = escuela.anteproyectos.pendientes().count()
-    return JsonResponse(conteo)
 
 
+# Departamento
 def profesores_nivel(request, departamento_pk):
-    departamento = EscuelaInstancia.objects.get(pk=departamento_pk)
+    departamento = DepartamentoInstancia.objects.get(pk=departamento_pk)
     profesores = departamento.personal.profesores()
     conteo = dict()
     for profesor in profesores:
@@ -126,33 +121,49 @@ def actividades_tipo(request, departamento_pk):
     :param departamento_pk: Llave primaria del departamento
     :return: Conteo de las actividades
     """
-    departamento = EscuelaInstancia.objects.get(pk=departamento_pk)
+    departamento = DepartamentoInstancia.objects.get(pk=departamento_pk)
     actividades = departamento.actividades.aprobado().actuales()
     conteo = dict()
     for actividad in actividades:
-        conteo = registrar_conteo(conteo, actividad.clase)
+        conteo = registrar_conteo(conteo, actividad.get_clase_display())
     return JsonResponse(conteo)
 
 
+def actividades_estado(request, departamento_pk):
+    """
+    Regresa el conteo de las actividades de un departamento por categoria
+    :param request:
+    :param departamento_pk: Llave primaria del departamento
+    :return: Conteo de las actividades
+    """
+    departamento = DepartamentoInstancia.objects.get(pk=departamento_pk)
+    actividades = departamento.actividades.actuales()
+    conteo = dict()
+    for actividad in actividades:
+        conteo = registrar_conteo(conteo, actividad.get_estado_display())
+    return JsonResponse(conteo)
+
+
+# Carrera
 def estudiantes_semestre_carrera(request, carrera_pk):
     carrera = CarreraInstancia.objects.get(pk=carrera_pk)
-    estudiantes = carrera.estudiantes.all()
+    estudiantes = carrera.estudiantes.activos()
     conteo = dict()
     for estudiante in estudiantes:
-        conteo = registrar_conteo(conteo, estudiante.ultimo_semestre)
+        conteo = registrar_conteo(conteo, estudiante.get_semestre_display())
     return JsonResponse(conteo)
 
 
-def proyectos_semestre_carrera(request, carrera_pk):
+def proyectos_carrera_categoria(request, carrera_pk):
     carrera = CarreraInstancia.objects.get(pk=carrera_pk)
-    proyectos = carrera.proyectos.all()
+    proyectos = carrera.trabajos_graduacion.all()
     conteo = dict()
     for proyecto in proyectos:
-        conteo = registrar_conteo(diccionario=conteo, clave=proyecto.programa)
+        conteo = registrar_conteo(diccionario=conteo, clave=proyecto.get_programa_display())
     return JsonResponse(conteo)
 
 
-def anteproyectos_semestre_carrera(request, carrera_pk):
+def proyecto_carrera_estado(request, carrera_pk):
     """
     Regresa un objeto JSON con el conteo por estado de los anteproyectos de una carrera
     :param request:
@@ -160,10 +171,10 @@ def anteproyectos_semestre_carrera(request, carrera_pk):
     :return: Objeto JSON con conteo por estado de anteproyecto.
     """
     carrera = CarreraInstancia.objects.get(pk=carrera_pk)
-    anteproyectos = carrera.anteproyectos.all()
+    anteproyectos = carrera.trabajos_graduacion.all()
     conteo = dict()
     for anteproyecto in anteproyectos:
-        conteo = registrar_conteo(conteo, anteproyecto.estado)
+        conteo = registrar_conteo(conteo, anteproyecto.get_estado_display())
     return JsonResponse(conteo)
 
 

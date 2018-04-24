@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     {{ departamento.cod_sede }}-{{ departamento.cod_facultad }}-{{ departamento.cod_departamento }}
@@ -64,28 +65,35 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header" data-url="">Profesores por Nivel Academico</div>
-                    <div class="card-body">
+                    
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
-                    </div>
+                        <div class="card-body">
+                            <canvas id="profesoresChart" data-url="{% url 'ubicacion:departamento-profesores' departamento.pk %}"></canvas>
+                        </div>
+                    
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header" data-url="">Actividades por Tipo</div>
-                    <div class="card-body">
+                    <div class="card-header" data-url="">Actividades Aprobadas por Tipo</div>
+                    
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
-                    </div>
+                        <div class="card-body">
+                            <canvas id="tipoChart" data-url="{% url 'ubicacion:departamento-actividades' departamento.pk %}"></canvas>
+                        </div>
+                    
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header" data-url="">Actividades Realizadas</div>
-                    <div class="card-body">
+                    <div class="card-header" data-url="">Actividades por Estado</div>
+                    
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
-                    </div>
+                        <div class="card-body">
+                            <canvas id="estadoChart" data-url="{% url 'ubicacion:departamento-actividades-estado' departamento.pk %}"></canvas>
+                        </div>
+                    
                 </div>
             </div>
         </div>
@@ -95,4 +103,5 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="{% static 'ubicacion/js/grafica_departamento.js' %}"></script>
 {% endblock %}

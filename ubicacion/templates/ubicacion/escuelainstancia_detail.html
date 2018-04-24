@@ -84,7 +84,9 @@
                     <div class="card-header" data-url="">Estudiantes por Semestre</div>
                     <div class="card-body">
                         <h4 class="card-title"></h4>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <canvas id="estudiantesChart" data-url="{% url 'ubicacion:escuela-estudiantes' escuela.pk %}"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

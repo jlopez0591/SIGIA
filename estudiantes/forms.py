@@ -21,7 +21,7 @@ class StudentUpdateForm(forms.ModelForm):
             'celular_oficina',
             # Info academica
             'cod_sede', 'cod_facultad', 'cod_escuela', 'cod_carrera',
-            'turno', 'fecha_ingreso', 'semestre_ingreso', 'ultimo_anio',
+            'turno', 'fecha_ingreso', 'semestre', 'ultimo_anio',
             'ultimo_semestre', 'fecha_graduacion'
         )
         labels = {
@@ -107,7 +107,7 @@ class StudentUpdateForm(forms.ModelForm):
             'fecha_ingreso': forms.TextInput(attrs={
                 'class': 'form-control datepicker'
             }),
-            'semestre_ingreso': forms.TextInput(attrs={
+            'semestre': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
             'ultimo_anio': forms.TextInput(attrs={

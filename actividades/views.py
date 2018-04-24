@@ -142,6 +142,7 @@ class ActividadDepartamentoPendienteListView(ListView):
 # IN USE
 @permission_required('actividad.aprobar_actividad')
 def aprobar_actividad(request, pk):
+    actividad = Actividad.objects.get(pk=pk)
     if request.method == 'POST':
         perfil = Perfil.objects.get(usuario=request.user)
         if request.user.perfil.departamento != actividad.departamento:
@@ -149,13 +150,17 @@ def aprobar_actividad(request, pk):
         actividad = Actividad.objects.get(pk=pk)
         if request.user.is_superuser or perfil.departamento != actividad.departamento:
             actividad.aprobar()
-        return redirect(reverse('actividad:pendientes'))
+        return redirect(reverse('actividad:departamento-pendientes', kwargs={
+            'pk': request.user.perfil.departamento.pk
+            }
+        ))
 
 # IN USE
 @permission_required('actividad.aprobar_actividad')
 def rechazar_actividad(request, pk):
     actividad = Actividad.objects.get(pk=pk)
-    if request.user.perfil.departamento != actividad.departamento:
+    usuario = request.user.perfil
+    if usuario.departamento != actividad.departamento:
         raise PermissionDenied
     if request.method == 'POST':
         form = RechazarForm(request.POST, instance=actividad)

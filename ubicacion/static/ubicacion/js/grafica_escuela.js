@@ -24,6 +24,13 @@ window.onload = function () {
     var proyectosData_dict = {};
 
 
+    var estudiantesCtx = document.getElementById("estudiantesChart"); // Id de la grafica.
+    var estudiantesDataUrl = estudiantesCtx.getAttribute("data-url"); // URL con datos en Json
+    var estudiantesEtiquetas = []; // Etiquetas de la grafica.
+    var estudiantesDatos = []; // Datos de la grafica
+    var estudiantesData_dict = {};
+
+
     $.ajax({
         url: trabajosDataUrl,
         type: "GET",
@@ -53,7 +60,38 @@ window.onload = function () {
             window.myBar = new Chart(trabajosCtx, config);
         }
     });
-    
+
+
+    $.ajax({
+        url: estudiantesDataUrl,
+        type: "GET",
+        dataType: 'json',
+        success: function (info) {
+            estudiantesEtiquetas = Object.keys(info);
+            estudiantesDatos = Object.values(info);
+            var pieColors = [];
+            for (var dato in info) {
+                color = randomRGB()[0];
+                pieColors.push(randomRGB()[0]);
+            }
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: estudiantesDatos,
+                        backgroundColor: pieColors,
+                        label: 'Trabajos Sustentados'
+                    }],
+                    labels: estudiantesEtiquetas
+                },
+                options: {
+                    responsive: true
+                }
+            };
+            window.myBar = new Chart(estudiantesCtx, config);
+        }
+    });
+
 
     $.ajax({
         url: proyectosDataUrl,
@@ -84,4 +122,7 @@ window.onload = function () {
             window.myBar = new Chart(proyectosCtx, config);
         }
     });
+
+
+
 };

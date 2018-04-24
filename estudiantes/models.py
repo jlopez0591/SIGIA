@@ -86,7 +86,7 @@ class Estudiante(models.Model):
     turno = models.CharField(max_length=1, blank=True,
                              choices=TURNOS)
     fecha_ingreso = models.DateField(blank=True, null=True)
-    semestre_ingreso = models.CharField(
+    semestre = models.CharField(
         max_length=5, blank=True, choices=SEMESTRES)
     ultimo_anio = models.CharField(max_length=4, blank=True)
     ultimo_semestre = models.CharField(max_length=5, blank=True)

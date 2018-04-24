@@ -45,7 +45,7 @@
                     <div class="card-header">Cantidad de Estudiantes</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ carrera.estudiantes.all.count }}</h3>
+                        <h3 class="text-right">{{ carrera.estudiantes.activos.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <div class="card-header">Cantidad de Anteproyectos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ carrera.anteproyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ carrera.trabajos_graduacion.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <div class="card-header">Cantidad de Proyectos</div>
                     <div class="card-body">
                         <p class="card-text"></p>
-                        <h3 class="text-right">{{ carrera.proyectos.all.count }}</h3>
+                        <h3 class="text-right">{{ carrera.trabajos_graduacion.sustentados.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -73,32 +73,38 @@
         {#    Graficas    #}
 
         <div class="row top-buffer">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header" id="carrera-anteproyecto">
-                        Anteproyectos por Estado
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title"></h4>
-                        <div class="card-body">
-                            <canvas id="anteproyectosChart"
-                                    data-url="{% url 'ubicacion:carrera-anteproyectos' carrera.pk %}"></canvas>
+                <div class="col-md-4">
+                        <div class="card">
+                                
+                                <div class="card-body">
+                                        <h4 class="card-title">Estudiantes por Semestre</h4>
+                                    <canvas id="estudiantesChart"
+                                            data-url="{% url 'ubicacion:carrera-estudiantes' carrera.pk %}"></canvas>
+                                </div>
+                            
                         </div>
                     </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                        
+                        <div class="card-body">
+                                <h4 class="card-title">Trabajos por Estado</h4>
+                            <canvas id="estadosChart"
+                                    data-url="{% url 'ubicacion:carrera-proyectos-estado' carrera.pk %}"></canvas>
+                        </div>
+                    
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header" id="carrera-proyectos">Proyectos por
-                        Categoria
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title"></h4>
+                        
                         <div class="card-body">
-                            <canvas id="proyectosChart"
-                                    data-url="{% url 'ubicacion:carrera-proyectos' carrera.pk %}"></canvas>
+                                <h4 class="card-title">Trabajos por Categoria</h4>
+                            <canvas id="categoriasChart"
+                                    data-url="{% url 'ubicacion:carrera-proyectos-categoria' carrera.pk %}"></canvas>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -108,4 +114,5 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="{% static 'ubicacion/js/grafica_carrera.js' %}"></script>
 {% endblock %}

@@ -107,12 +107,12 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
         kwargs.update({'facultad': self.request.user.perfil.facultad})
         return kwargs
     
-    def get_object(self):
-        object = super(TrabajoGraduacionUpdateView, self).get_object(self)
-        usuario = self.request.user
-        if usuario.perfil.escuela != object.escuela:
-            raise PermissionDenied
-        return object
+    # def get_object(self):
+    #     o = super(TrabajoGraduacionUpdateView, self).get_object(self)
+    #     usuario = self.request.user
+    #     if usuario.perfil.escuela != o.escuela:
+    #         raise PermissionDenied
+    #     return o
 
 
 #
