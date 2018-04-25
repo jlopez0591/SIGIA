@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, colors, Font
-from ubicacion.models import FacultadInstancia
+from ubicacion.models import FacultadInstancia, EscuelaInstancia, DepartamentoInstancia
+import datetime
 
 
 def reporte_facultad(request, facultad_pk):
@@ -40,10 +41,11 @@ def reporte_facultad(request, facultad_pk):
     # Reporte General
 
     # Titulos
-    ws.merge_cells('A1:B1')
-    ws.merge_cells('A2:B2')
-    ws.merge_cells('A5:B5')
+    # ws.merge_cells('A1:B1')
+    # ws.merge_cells('A2:B2')
+    # ws.merge_cells('A5:B5')
     ws['A1'] = 'Universidad de Panama'
+    ws.column_dimensions['A'].width = 50.0
     ws['A2'] = '{0}'.format(facultad.facultad.nombre)
     ws['A5'] = 'Informe General - 2018'
     ws['A7'] = 'Cantidad de Profesores Activos'
@@ -63,6 +65,7 @@ def reporte_facultad(request, facultad_pk):
 
     ## Encabezado
     ws1['A1'] = 'Universidad de Panama'
+    ws1.column_dimensions['A'].width = 50.0
     ws1['A2'] = 'Facultad de Prueba'
     ws1['A5'] = 'Informe de Inventario - 2018'
 
@@ -83,6 +86,7 @@ def reporte_facultad(request, facultad_pk):
 
     # Profesores
     ws2['A1'] = 'Universidad de Panama'
+    ws2.column_dimensions['A'].width = 50.0
     ws2['A2'] = 'Facultad de Prueba'
     ws2['A5'] = 'Informe de Profesores - 2018'
     ws2['A1'].font = title_font
@@ -121,6 +125,7 @@ def reporte_facultad(request, facultad_pk):
 
     # Estudiantes
     ws3['A1'] = 'Universidad de Panama'
+    ws3.column_dimensions['A'].width = 50.0
     ws3['A2'] = 'Facultad de Prueba'
     ws3['A5'] = 'Informe de Escuelas - 2018'
 
@@ -154,14 +159,64 @@ def reporte_facultad(request, facultad_pk):
     # Ciclo Anteproyectos por Escuela
     # Ciclo Trabajos de Graduacion por Escuela
 
-    filename = 'reporte-prueba'
+    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
+    nombre_facultad = facultad.facultad.nombre
+    filename = '{0}-{1}'.format(fecha_actual, nombre_facultad)
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename={0}.xlsx'.format(filename)
+    response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
 
     wb.save(response)
 
     return response
 
+
+def reporte_escuela(request, escuela_pk):
+    escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Informe de Escuela'
+
+
+    # Vistazo General - Cantidad de Estudiantes, Anteproyectos Entregados, Trabajos Sustentados.
+    carreras = escuela.carreras.all()
+    estudiantes_carrera = dict()
+    # for carrera in carreras:
+    #     estudiantes_carrera[carrera] = carrera.estudiantes.active().count()
+    
+    
+
+
+    
+    
+    
+    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
+    nombre_escuela = escuela.escuela.nombre
+    filename = '{0}-{1}'.format(fecha_actual, nombre_escuela)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=reporte_{0}_{1}.xlsx'.format(nombre_escuela, fecha_actual)
+    wb.save(response)
+    return response
+
+
+def reporte_departamento(request, departamento_pk):
+    departamento = DepartamentoInstancia.objects.get(pk=departamento_pk)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Informe de Departamento'
+
+
+    # Vistazo General - Cantidad de Profesores por Dedicacion, Categoria, Nivel Academico, Actividades por Tipo y aprobadas.
+
+    
+    
+    
+    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
+    nombre_departamento = departamento.departamento.nombre
+    filename = '{0}-{1}'.format(fecha_actual, nombre_escuela)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
+    wb.save(response)
+    return response
 
 def reporte_facultad_demo(request):
     # Generacion de Workbook
