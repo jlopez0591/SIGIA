@@ -40,6 +40,9 @@ def reporte_facultad(request, facultad_pk):
     # Reporte General
 
     # Titulos
+    ws.merge_cells('A1:B1')
+    ws.merge_cells('A2:B2')
+    ws.merge_cells('A5:B5')
     ws['A1'] = 'Universidad de Panama'
     ws['A2'] = '{0}'.format(facultad.facultad.nombre)
     ws['A5'] = 'Informe General - 2018'

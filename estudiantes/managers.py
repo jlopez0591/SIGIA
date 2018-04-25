@@ -57,7 +57,7 @@ class TrabajoQuerySet(models.QuerySet):
         return self.filter(estado='rechazado')
 
     def sustentados(self):
-        return self.filter(nota__isnull=True)
+        return self.exclude(nota='')
     
     def activos(self):
         return self.filter(fecha_entrega__year=datetime.now().year)
