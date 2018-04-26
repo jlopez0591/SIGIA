@@ -17,15 +17,11 @@ from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, Departam
 from actividades.models import Titulo
 
 
-def imagen_pergil_location(instance, filename):
-    pass
-
-
 class Perfil(models.Model):
     CATEGORIAS = (
         ('1', 'Tiempo Completo'),
         ('2', 'Tiempo Parcial'),
-    ) # Dedicacion - agregar asistente / 2 y 2 
+    )
     GENERO = (
         ('h', 'Hombre'),
         ('m', 'Mujer')
@@ -66,12 +62,13 @@ class Perfil(models.Model):
 
     sexo = models.CharField(max_length=1, choices=GENERO, blank=True, null=True)
 
-    provincia = models.CharField(max_length=5, choices=PROVINCIAS,  blank=True, null=True)
-    clase = models.CharField(max_length=5,  choices=CLASE, blank=True, null=True)
-    tomo = models.CharField(max_length=5,  blank=True, null=True)
+    provincia = models.CharField(max_length=5, choices=PROVINCIAS, blank=True, null=True)
+    clase = models.CharField(max_length=5, choices=CLASE, blank=True, null=True)
+    tomo = models.CharField(max_length=5, blank=True, null=True)
     folio = models.CharField(max_length=5, blank=True, null=True)
 
     imagen = models.ImageField(upload_to='perfil/', blank=True)
+    # dedicatoria = models.CharField(max_length=1, choices=DEDICATORIAS, blank=True, null=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
     pais = CountryField(blank=True, null=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
@@ -86,9 +83,6 @@ class Perfil(models.Model):
                              null=True)
     facultad = models.ForeignKey(FacultadInstancia, on_delete=models.SET_NULL, related_name='personal',
                                  blank=True, null=True)
-    # departamento = models.ForeignKey(EscuelaInstancia, blank=True, null=True, related_name='personal',
-    #                                  limit_choices_to=Q(seccion__tipo='DE'),
-    #                                  )
     departamento = models.ForeignKey(DepartamentoInstancia, blank=True, null=True, related_name='personal')
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
                                 related_name='personal')

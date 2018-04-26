@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^escuela/(?P<pk>[\d]+)/trabajos/$', TrabajoGraduacionEscuelaListView.as_view(), name='trabajo-escuela'),
     url(r'^facultad/(?P<pk>[\d]+)/estudiantes/$', EstudianteFacultadListview.as_view(), name='estudiante-facultad'),
     url(r'^escuela/(?P<pk>[\d]+)/estudiantes/$', EstudianteEscuelaListView.as_view(), name='estudiante-escuela'),
-    url(r'^escuela/(?P<pk>[\d]+)/trabajos/pendientes', TrabajoGraduacionPendienteListView.as_view(),
+    url(r'^escuela/(?P<pk>[\d]+)/trabajos/pendientes/$', TrabajoGraduacionPendienteListView.as_view(),
         name='trabajo-pendiente'),
 
     # Para el admin

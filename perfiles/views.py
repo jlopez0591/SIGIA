@@ -5,7 +5,7 @@ from django.views.generic import DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 
 from perfiles.models import Perfil
-from perfiles.forms import PerfilForm, PerfilTestForm
+from perfiles.forms import PerfilAdminForm, PerfilForm
 
 from dal import autocomplete
 
@@ -60,7 +60,7 @@ class PerfilPublicoView(DetailView):
 
 class PerfilUpdateView(UpdateView):
     model = Perfil
-    form_class = PerfilForm
+    form_class = PerfilAdminForm
     success_url = reverse_lazy('perfil:ver')
     template_name = 'perfiles/editar.html'
     context_object_name = 'form'
