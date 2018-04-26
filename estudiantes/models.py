@@ -102,6 +102,8 @@ class Estudiante(models.Model):
                                 related_name='estudiantes',
                                 blank=True)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
     objects = EstudianteManager()
 
@@ -184,7 +186,7 @@ class TrabajoGraduacion(models.Model):
         'groups__name': 'Profesores'
     })
 
-    fecha_registro = models.DateField(auto_now_add=True)
+    fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
     fecha_entrega = models.DateField(blank=True, null=True)
     fecha_sustentacion = models.DateField(blank=True, null=True)

@@ -11,9 +11,10 @@ class Solicitud(models.Model):
     titulo = models.CharField(max_length=120)
 
     fecha_creacion = models.DateField(blank=True, null=True, auto_now_add=True)
-    fecha_modificacion = models.DateTimeField(blank=True, null=True, auto_now=True)
+    fecha_actualizacion = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500, blank=True)
     resuelto = models.BooleanField(default=False)
+
 
     history = AuditlogHistoryField()
 
@@ -40,6 +41,8 @@ class Comentario(models.Model):
     fecha = models.DateTimeField(blank=True, null=True, auto_now=True)
     resumen = models.TextField(max_length=500)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
 
     class Meta:

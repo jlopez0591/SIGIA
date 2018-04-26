@@ -31,6 +31,8 @@ class Sede(models.Model):
     tipo = models.CharField(max_length=2, choices=TIPOS, default='PA')
     activo = models.BooleanField(default=True)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
 
     class Meta:
@@ -65,6 +67,8 @@ class Facultad(models.Model):
     tipo = models.CharField(max_length=2, choices=TIPOS, default=FACULTAD)
     activo = models.BooleanField(default=True)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
 
     class Meta:
@@ -99,6 +103,8 @@ class Escuela(models.Model):
     facultad = models.ForeignKey(Facultad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
                                  on_delete=models.SET_NULL)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
 
     class Meta:
@@ -124,6 +130,8 @@ class Departamento(models.Model):
     facultad = models.ForeignKey(Facultad, limit_choices_to=Q(tipo='FA'), blank=True, null=True,
                                  on_delete=models.SET_NULL)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
 
     class Meta:
@@ -170,6 +178,9 @@ class Carrera(models.Model):
     activo = models.BooleanField(default=True)
     tipo = models.CharField(max_length=1, choices=TIPOS, default=REGULAR)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
     class Meta:
         unique_together = ('cod_facultad', 'cod_escuela', 'cod_carrera')
         verbose_name_plural = 'Carreras'
@@ -193,6 +204,8 @@ class FacultadInstancia(models.Model):
 
     decano = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
     objects = UnidadInstanciaManager()
 
@@ -242,6 +255,9 @@ class EscuelaInstancia(models.Model):
 
     ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, related_name='escuelas', blank=True,
                                   null=True, limit_choices_to=(Q(facultad__tipo='FA')) | Q(facultad__tipo='6'))
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     activo = models.BooleanField(default=True)
 
     class Meta:
@@ -294,6 +310,8 @@ class DepartamentoInstancia(models.Model):
     ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   related_name='departamentos')
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     activo = models.BooleanField(default=True)
     objects = DepartamentoInstanciaManager()
 
@@ -352,6 +370,9 @@ class CarreraInstancia(models.Model):
     cod_carrera = models.CharField(max_length=2)
 
     activo = models.BooleanField(default=True)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
 
     objects = CarreraInstanciaManager()
     history = AuditlogHistoryField()

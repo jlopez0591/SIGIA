@@ -13,6 +13,9 @@ class Fabricante(models.Model):
     nombre = models.CharField(max_length=120, unique=True)
     url = models.URLField(blank=True)
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
     def __str__(self):
         return self.nombre
 
@@ -25,6 +28,9 @@ class Fabricante(models.Model):
 class Categoria(models.Model):
     history = AuditlogHistoryField()
     nombre = models.CharField(max_length=120, unique=True)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.nombre
@@ -41,6 +47,9 @@ class Modelo(models.Model):
     fabricante = models.ForeignKey(Fabricante, on_delete=models.CASCADE, related_name='modelos')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='modelos')
     url = models.URLField(blank=True)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
         return '{} - {} {}'.format(self.categoria.nombre, self.fabricante.nombre, self.nombre)
@@ -67,6 +76,9 @@ class Aula(models.Model):
     ubicacion = models.ForeignKey(FacultadInstancia, null=True, blank=True, on_delete=models.CASCADE)
     cod_sede = models.CharField(max_length=2, blank=True)
     cod_facultad = models.CharField(max_length=2, blank=True)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.numero
@@ -105,6 +117,9 @@ class Equipo(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True, blank=True)
     ubicacion = models.ForeignKey(FacultadInstancia, on_delete=models.CASCADE, blank=True, null=True,
                                   related_name='equipos')
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
         return 'Facultad:{}, Equipo:{} Etiqueta:{}'.format(self.ubicacion, self.modelo, self.etiqueta)

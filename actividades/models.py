@@ -91,7 +91,6 @@ class Actividad(PolymorphicModel):
 
     clase = models.CharField(choices=CLASES, max_length=30, blank=True, null=True)
     fecha = models.DateField()
-    fecha_creacion = models.DateTimeField(blank=True, auto_now_add=True)
     nombre_actividad = models.CharField(max_length=120)
     resumen = models.TextField(max_length=1000, blank=True)
     estado = models.CharField(max_length=25, choices=STATUS, default='espera')
@@ -99,6 +98,8 @@ class Actividad(PolymorphicModel):
 
     archivo = models.FileField(upload_to=user_directory_path, validators=[validate_file_type])
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
     objects = ActividadManager()
 

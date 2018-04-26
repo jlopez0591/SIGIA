@@ -2,17 +2,11 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Q
 from django.urls import reverse
-# Third party imports
 from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 from django_countries.fields import CountryField
-
-# This app imports
 from .managers import PerfilManager
-
-# Other apps
 from ubicacion.models import Sede, FacultadInstancia, EscuelaInstancia, DepartamentoInstancia, CarreraInstancia
 from actividades.models import Titulo
 
@@ -68,7 +62,6 @@ class Perfil(models.Model):
     folio = models.CharField(max_length=5, blank=True, null=True)
 
     imagen = models.ImageField(upload_to='perfil/', blank=True)
-    # dedicatoria = models.CharField(max_length=1, choices=DEDICATORIAS, blank=True, null=True)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
     pais = CountryField(blank=True, null=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
@@ -87,6 +80,8 @@ class Perfil(models.Model):
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
                                 related_name='personal')
 
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
     objects = PerfilManager()
 
