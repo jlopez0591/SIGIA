@@ -43,20 +43,21 @@ urlpatterns = [
     url(r'^escuelas/json/$', views.get_escuelas, name='escuelas-json'),
     url(r'^departamentos/json/$', views.get_departamentos, name='escuelas-json'),
     url(r'^carreras/json/$', views.get_carreras, name='carreras-json'),
-    
-    
+
     # data-urls
     # Sedes
     url(r'^sede/(?P<sede_pk>[\w]+)/profesores/json/$', views.profesores_sede, name='profesores-sede'),
     url(r'^sede/(?P<sede_pk>[\w]+)/estudiantes/json/$', views.estudiantes_sede, name='estudiantes-sede'),
     # Facultades
-    url(r'^facultad/(?P<facultad_pk>[\w]+)/recursos/json/$', views.facultad_recursos_categoria, name='recursos-facultad'),
+    url(r'^facultad/(?P<facultad_pk>[\w]+)/recursos/json/$', views.facultad_recursos_categoria,
+        name='recursos-facultad'),
     url(r'^facultad/(?P<facultad_pk>[\w]+)/aulas/json/$', views.facultad_aulas_tipo, name='aulas-facultad'),
     # Escuelas
     url(r'^escuela/(?P<escuela_pk>[\w+])/estudiantes/json/$', views.estudiantes_semestre_escuela,
         name='escuela-estudiantes'),
     url(r'^escuela/(?P<escuela_pk>[\w+])/trabajos/json/$', views.proyectos_semestre_escuela, name='escuela-proyectos'),
-    url(r'^escuela/(?P<escuela_pk>[\w+])/trabajos/aprobados/json/$', views.proyectos_finales_categoria_escuela, name='escuela-trabajos'),
+    url(r'^escuela/(?P<escuela_pk>[\w+])/trabajos/aprobados/json/$', views.proyectos_finales_categoria_escuela,
+        name='escuela-trabajos'),
     # Departamento
     url(r'^departamento/(?P<departamento_pk>[\w+])/profesores/json/$', views.profesores_nivel,
         name='departamento-profesores'),
@@ -69,10 +70,12 @@ urlpatterns = [
         name='carrera-estudiantes'),
     url(r'^carrera/(?P<carrera_pk>[\w]+)/anteproyectos/json/$', views.proyectos_carrera_categoria,
         name='carrera-proyectos-categoria'),
-    url(r'^carrera/(?P<carrera_pk>[\w]+)/proyectos/json/$', views.proyecto_carrera_estado, name='carrera-proyectos-estado'),
-
+    url(r'^carrera/(?P<carrera_pk>[\w]+)/proyectos/json/$', views.proyecto_carrera_estado,
+        name='carrera-proyectos-estado'),
 
     # Reportes
     url(r'^prueba/reporte$', views.reporte_facultad_demo, name='reporte-prueba'),
-    url(r'^facultad/(?P<facultad_pk>[\w]+)/reporte/$', views.reporte_facultad, name='reporte-facultad')
+    url(r'^facultad/(?P<facultad_pk>[\w]+)/reporte/$', views.reporte_facultad, name='reporte-facultad'),
+    url(r'^escuela/(?P<escuela_pk>[\w]+)/reporte/$', views.reporte_escuela, name='reporte-escuela'),
+    url(r'^departamento/(?P<departamento_pk>[\w]+)/reporte/$', views.reporte_departamento, name='reporte-departamento')
 ]

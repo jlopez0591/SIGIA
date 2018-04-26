@@ -348,6 +348,7 @@ class DepartamentoInstanciaManager(models.Manager):
     def profesores(self):
         return self.get_queryset().profesores()
 
+
 class CarreraInstanciaQuerySet(models.QuerySet):
     def activas(self):
         return self.filter(activo=True)
@@ -372,9 +373,6 @@ class CarreraInstanciaQuerySet(models.QuerySet):
 
 
 class CarreraInstanciaManager(models.Manager):
-    def get_by_natural_key(self, cod_sede, cod_facultad, cod_escuela, cod_carrera):
-        return self.get(cod_sede=cod_sede, cod_facultad=cod_facultad, cod_escuela=cod_escuela, cod_carrera=cod_carrera)
-
     def get_queryset(self):
         return CarreraInstanciaQuerySet(self.model, using=self._db)
 

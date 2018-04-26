@@ -143,7 +143,7 @@ def reporte_facultad(request, facultad_pk):
         info_escuelas[escuela.escuela.nombre]['estudiantes'] = escuela.estudiantes.all().count()
         info_escuelas[escuela.escuela.nombre]['anteproyectos'] = escuela.estudiantes.all().count()
         info_escuelas[escuela.escuela.nombre]['trabajos'] = escuela.estudiantes.all().count()
-    
+
     ca = 7
     for key, value in info_escuelas.items():
         ws3['A' + str(ca)] = 'Cantidad de Estudiantes en {0}'.format(key)
@@ -172,28 +172,85 @@ def reporte_facultad(request, facultad_pk):
 
 def reporte_escuela(request, escuela_pk):
     escuela = EscuelaInstancia.objects.get(pk=escuela_pk)
+    # Vistazo General - Cantidad de Estudiantes, Anteproyectos Entregados, Trabajos Sustentados.
+    # Numero de Estudiantes por carrera
+    carreras = escuela.carreras.all()
+    estudiantes_carrera = dict()
+    for carrera in carreras:
+        estudiantes_carrera[carrera] = carrera.estudiantes.all().count()
+
+    # Anteproyectos entregados por Nivel
+    anteproyectos = escuela.trabajos_graduacion.aprobados()
+    dict_anteproyectos = dict()
+    for anteproyecto in anteproyectos:
+        programa = anteproyecto.get_programa_display()
+        if programa in dict_anteproyectos:
+            dict_anteproyectos[programa] += 1
+        else:
+            dict_anteproyectos[programa] = 0
+
+    # Trabajos Sustentados por Nivel
+    trabajos = escuela.trabajos_graduacion.sustentados()
+    dict_trabajos = dict()
+    for trabajo in trabajos:
+        programa = trabajo.get_programa_display()
+        if programa in dict_trabajos:
+            dict_trabajos[programa] += 1
+        else:
+            dict_trabajos[programa] = 0
+
+    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
+    nombre_escuela = escuela.escuela.nombre
+
     wb = Workbook()
     ws = wb.active
     ws.title = 'Informe de Escuela'
 
+    title_font = Font(size=15, bold=True, color=colors.WHITE)
+    subtitle_font = Font(size=13, bold=True, color=colors.WHITE)
+    datacell_font = Font(italic=True, size=11)
 
-    # Vistazo General - Cantidad de Estudiantes, Anteproyectos Entregados, Trabajos Sustentados.
-    carreras = escuela.carreras.all()
-    estudiantes_carrera = dict()
-    # for carrera in carreras:
-    #     estudiantes_carrera[carrera] = carrera.estudiantes.active().count()
-    
-    
+    title_fill = PatternFill(start_color='FF4295f4', end_color='FF4295f4', fill_type='solid')
 
+    ws['A1'].font = title_font
+    ws['A2'].font = subtitle_font
+    ws['A5'].font = datacell_font
+    ws['A7'].font = datacell_font
+    ws['A8'].font = datacell_font
+    ws['A9'].font = datacell_font
+    ws['A10'].font = datacell_font
+    ws['A11'].font = datacell_font
 
-    
-    
-    
-    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
-    nombre_escuela = escuela.escuela.nombre
+    ws['A1'].fill = title_fill
+    ws['A2'].fill = title_fill
+
+    ws['A1'] = 'Universidad de Panama'
+    ws.column_dimensions['A'].width = 50.0
+    ws['A2'] = escuela.escuela.nombre
+    ws['A5'] = 'Informe General'
+
+    ws['A7'] = 'Estudiantes Activos'
+    ws['B7'] = escuela.estudiantes.activos().count()
+    ws['A8'] = 'Anteproyectos Registrados'
+    ws['B8'] = escuela.trabajos_graduacion.all().count()
+    ws['A9'] = 'Trabajos de Graduacion Sustentados'
+    ws['B9'] = escuela.trabajos_graduacion.sustentados().count()
+
+    i = 12  # Indice de la celda
+    for carrera in escuela.carreras.all():
+        ws['A' + str(i)] = 'Estudiantes en {0}'.format(carrera)
+        ws['B' + str(i)] = carrera.estudiantes.activos().count()
+        i += 1
+        ws['A' + str(i)] = 'Anteproyectos Entregados en {0}'.format(carrera)
+        ws['B' + str(i)] = carrera.trabajos_graduacion.aprobados().count()
+        i += 1
+        ws['A' + str(i)] = 'Trabajos Sustentados en {0}'.format(carrera)
+        ws['B' + str(i)] = carrera.trabajos_graduacion.sustentados().count()
+        i += 1
+
     filename = '{0}-{1}'.format(fecha_actual, nombre_escuela)
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=reporte_{0}_{1}.xlsx'.format(nombre_escuela, fecha_actual)
+    response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
     wb.save(response)
     return response
 
@@ -204,19 +261,16 @@ def reporte_departamento(request, departamento_pk):
     ws = wb.active
     ws.title = 'Informe de Departamento'
 
-
     # Vistazo General - Cantidad de Profesores por Dedicacion, Categoria, Nivel Academico, Actividades por Tipo y aprobadas.
 
-    
-    
-    
     fecha_actual = datetime.datetime.now().strftime("%Y-%m")
     nombre_departamento = departamento.departamento.nombre
-    filename = '{0}-{1}'.format(fecha_actual, nombre_escuela)
+    filename = '{0}-{1}'.format(fecha_actual, nombre_departamento)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
     wb.save(response)
     return response
+
 
 def reporte_facultad_demo(request):
     # Generacion de Workbook

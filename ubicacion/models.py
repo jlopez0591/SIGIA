@@ -333,8 +333,6 @@ class DepartamentoInstancia(models.Model):
 
 
 class CarreraInstancia(models.Model):
-    objects = CarreraInstanciaManager()
-
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, blank=True, null=True, related_name='carreras')
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE, blank=True, null=True,
                                  related_name='carreras')
@@ -355,6 +353,7 @@ class CarreraInstancia(models.Model):
 
     activo = models.BooleanField(default=True)
 
+    objects = CarreraInstanciaManager()
     history = AuditlogHistoryField()
 
     class Meta:
