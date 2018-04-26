@@ -20,19 +20,18 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-                  # Mis apps
-                  url(r'^', include('core.urls')),
-                  url(r'^actividad/', include('actividades.urls')),
-                  url(r'^estudiante/', include('estudiantes.urls')),
-                  url(r'^inventario/', include('inventario.urls')),
-                  url(r'^perfil/', include('perfiles.urls')),
-                  url(r'^solicitud/', include('solicitud.urls')),
-                  url(r'^', include('ubicacion.urls')),
-                  # Django apps
-                  url(r'^login/$', auth_views.login, name='login'),
-                  url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-                  url(r'^admin/', admin.site.urls),
-              ]
+    # Mis apps
+    url(r'^', include('core.urls')),
+    url(r'^actividad/', include('actividades.urls')),
+    url(r'^estudiante/', include('estudiantes.urls')),
+    url(r'^inventario/', include('inventario.urls')),
+    url(r'^perfil/', include('perfiles.urls')),
+    url(r'^solicitud/', include('solicitud.urls')),
+    url(r'^', include('ubicacion.urls')),
+    # Django apps
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^admin/', admin.site.urls),
+]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

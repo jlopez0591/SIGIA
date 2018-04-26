@@ -8,8 +8,6 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 
 
-
-#
 class EstudianteFacultadListview(PermissionRequiredMixin, ListView):
     context_object_name = 'estudiantes'
     model = Estudiante
@@ -106,7 +104,7 @@ class TrabajoGraduacionUpdateView(PermissionRequiredMixin, UpdateView):
         kwargs = super(TrabajoGraduacionUpdateView, self).get_form_kwargs()
         kwargs.update({'facultad': self.request.user.perfil.facultad})
         return kwargs
-    
+
     # def get_object(self):
     #     o = super(TrabajoGraduacionUpdateView, self).get_object(self)
     #     usuario = self.request.user
