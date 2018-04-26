@@ -74,7 +74,7 @@ urlpatterns = [
         name='carrera-proyectos-estado'),
 
     # Reportes
-    url(r'^prueba/reporte$', views.reporte_facultad_demo, name='reporte-prueba'),
+    # url(r'^prueba/reporte$', views.reporte_facultad_demo, name='reporte-prueba'),
     url(r'^facultad/(?P<facultad_pk>[\w]+)/reporte/$', views.reporte_facultad, name='reporte-facultad'),
     url(r'^escuela/(?P<escuela_pk>[\w]+)/reporte/$', views.reporte_escuela, name='reporte-escuela'),
     url(r'^departamento/(?P<departamento_pk>[\w]+)/reporte/$', views.reporte_departamento, name='reporte-departamento')

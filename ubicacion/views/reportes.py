@@ -187,7 +187,7 @@ def reporte_escuela(request, escuela_pk):
         if programa in dict_anteproyectos:
             dict_anteproyectos[programa] += 1
         else:
-            dict_anteproyectos[programa] = 0
+            dict_anteproyectos[programa] = 1
 
     # Trabajos Sustentados por Nivel
     trabajos = escuela.trabajos_graduacion.sustentados()
@@ -197,7 +197,7 @@ def reporte_escuela(request, escuela_pk):
         if programa in dict_trabajos:
             dict_trabajos[programa] += 1
         else:
-            dict_trabajos[programa] = 0
+            dict_trabajos[programa] = 1
 
     fecha_actual = datetime.datetime.now().strftime("%Y-%m")
     nombre_escuela = escuela.escuela.nombre
@@ -208,6 +208,7 @@ def reporte_escuela(request, escuela_pk):
 
     title_font = Font(size=15, bold=True, color=colors.WHITE)
     subtitle_font = Font(size=13, bold=True, color=colors.WHITE)
+    header_font = Font(size=13, bold=True)
     datacell_font = Font(italic=True, size=11)
 
     title_fill = PatternFill(start_color='FF4295f4', end_color='FF4295f4', fill_type='solid')
@@ -226,8 +227,14 @@ def reporte_escuela(request, escuela_pk):
 
     ws['A1'] = 'Universidad de Panama'
     ws.column_dimensions['A'].width = 50.0
+    ws.column_dimensions['B'].width = 20.0
     ws['A2'] = escuela.escuela.nombre
-    ws['A5'] = 'Informe General'
+    ws['A4'] = 'Informe General'
+
+    ws['A6'] = 'Descripcion'
+    ws['A6'].font = header_font
+    ws['B6'] = 'Cantidad'
+    ws['B6'].font = header_font
 
     ws['A7'] = 'Estudiantes Activos'
     ws['B7'] = escuela.estudiantes.activos().count()
@@ -248,6 +255,18 @@ def reporte_escuela(request, escuela_pk):
         ws['B' + str(i)] = carrera.trabajos_graduacion.sustentados().count()
         i += 1
 
+    i += 1
+    for nivel, cantidad in dict_anteproyectos.items():
+        ws['A' + str(i)] = 'Anteproyectos de {0}'.format(nivel)
+        ws['B' + str(i)] = cantidad
+        i += 1
+
+    i += 1
+    for nivel, cantidad in dict_trabajos.items():
+        ws['A' + str(i)] = 'Trabajos de {0}'.format(nivel)
+        ws['B' + str(i)] = cantidad
+        i += 1
+
     filename = '{0}-{1}'.format(fecha_actual, nombre_escuela)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
@@ -261,36 +280,45 @@ def reporte_departamento(request, departamento_pk):
     ws = wb.active
     ws.title = 'Informe de Departamento'
 
-    # Vistazo General - Cantidad de Profesores por Dedicacion, Categoria, Nivel Academico, Actividades por Tipo y aprobadas.
+    profesores = departamento.personal.profesores()
+    cantidad_profesores = profesores.count()
+    nivel = dict()
+    dedicacion = dict()
+    categoria = dict()
+    actividades = departamento.actividades.actuales()
+    actividad_dict = dict()
 
-    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
-    nombre_departamento = departamento.departamento.nombre
-    filename = '{0}-{1}'.format(fecha_actual, nombre_departamento)
-    response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
-    wb.save(response)
-    return response
+    for profesor in profesores:
+        na = profesor.nivel_academico()
+        # d = profesor.dedicacion
+        c = profesor.categoria
+        if na in nivel:
+            nivel[na] += 1
+        else:
+            nivel[na] = 1
+        # if d in dedicacion:
+        #     dedicacion[d] += 1
+        # else:
+        #     dedicacion[d] = 1
+        if c in categoria:
+            categoria[c] += 1
+        else:
+            categoria[c] = 1
 
+    for actividad in actividades:
+        tipo = actividad.get_clase_display()
+        if tipo in actividad_dict:
+            actividad_dict[tipo] += 1
+        else:
+            actividad_dict[tipo] = 1
 
-def reporte_facultad_demo(request):
-    # Generacion de Workbook
-    wb = Workbook()
-    ws = wb.active
-    ws.title = 'Registro de Unidad'
-
-    # Declaracion de Paginas Adicionales
-    ws1 = wb.create_sheet('Inventario')
-    ws2 = wb.create_sheet('Profesores')
-    ws3 = wb.create_sheet('Escuelas')
-
-    # # # Declaracion de Formatos
     title_font = Font(size=15, bold=True, color=colors.WHITE)
     subtitle_font = Font(size=13, bold=True, color=colors.WHITE)
+    header_font = Font(size=13, bold=True)
     datacell_font = Font(italic=True, size=11)
 
     title_fill = PatternFill(start_color='FF4295f4', end_color='FF4295f4', fill_type='solid')
 
-    # Asignacion de Formatos
     ws['A1'].font = title_font
     ws['A2'].font = subtitle_font
     ws['A5'].font = datacell_font
@@ -303,81 +331,48 @@ def reporte_facultad_demo(request):
     ws['A1'].fill = title_fill
     ws['A2'].fill = title_fill
 
-    # Datos de las Celda
-    # Reporte General
-
-    # Titulos
     ws['A1'] = 'Universidad de Panama'
-    ws['A2'] = 'Facultad de Prueba'
-    ws['A5'] = 'Informe General - 2018'
-    ws['A7'] = 'Cantidad de Profesores Activos'
-    ws['A8'] = 'Cantidad de Estudiantes Registrados'
-    ws['A9'] = 'Cantidad de Recursos Fisicos'
-    ws['A10'] = 'Cantidad de Anteproyectos Entregados'
-    ws['A11'] = 'Cantidad de Trabajos de Graduacion Sustentados'
+    ws.column_dimensions['A'].width = 50.0
+    ws.column_dimensions['B'].width = 20.0
+    ws['A2'] = departamento.departamento.nombre
+    ws['A4'] = 'Informe General'
 
-    # Datos
-    ws['B7'] = 0
+    ws['A6'] = 'Descripcion'
+    ws['A6'].font = header_font
+    ws['B6'] = 'Cantidad'
+    ws['B6'].font = header_font
+
+    ws['A7'] = 'Cantidad de Profesores'
+    ws['B7'] = cantidad_profesores
+    ws['A8'] = 'Cantidad de Actividades Realizadas'
     ws['B8'] = 0
-    ws['B9'] = 0
-    ws['B10'] = 0
-    ws['B11'] = 0
 
-    # Inventario
+    i = 10
+    for n, c in nivel.items():
+        ws['A' + str(i)] = 'Profesores - {0}'.format(n)
+        ws['B' + str(i)] = c
+        i += 1
 
-    ## Encabezado
-    ws1['A1'] = 'Universidad de Panama'
-    ws1['A2'] = 'Facultad de Prueba'
-    ws1['A5'] = 'Informe de Inventario - 2018'
+    i += 1
+    for n, c in categoria.items():
+        ws['A' + str(i)] = 'Profesores - {0}'.format(n)
+        ws['B' + str(i)] = c
+        i += 1
 
-    ws1['A1'].font = title_font
-    ws1['A2'].font = subtitle_font
-    ws1['A5'].font = datacell_font
+    i += 1
+    # for n, c in dedicacion.items():
+    #     ws['A' + str(i)] = 'Profesores - {0}'.format(n)
+    #     ws['B' + str(i)] = c
+    #     i += 1
+    for clase, cantidad in actividad_dict.items():
+        ws['A' + str(i)] = 'Actividad - {0}'.format(clase)
+        ws['B' + str(i)] = cantidad
+        i += 1
 
-    ## Titulos
-    ws1['A7'] = 'Cantidad Total de Recursos Fisicos'
-    ws1['A8'] = 'Costo Total de Recuros Fisicos'
-
-    ### TODO: Iterar y generar celdas por tipo.
-
-    # Datos
-    ws1['B7'] = 0
-    ws1['B8'] = 0
-
-    # Profesores
-    ws2['A1'] = 'Universidad de Panama'
-    ws2['A2'] = 'Facultad de Prueba'
-    ws2['A5'] = 'Informe de Profesores - 2018'
-    ws2['A7'] = 'Cantidad de Profesores con Doctorado'
-    ws2['A8'] = 'Cantidad de Profesores con Maestria'
-    ws2['A9'] = 'Cantidad de Profesores con Postgrado'
-    ws2['A10'] = 'Cantidad de Profesores con Licenciatura'
-
-    ws2['A1'].font = title_font
-    ws2['A2'].font = subtitle_font
-    ws2['A5'].font = datacell_font
-
-    # Ciclo para cantidad por departamento
-    # Ciclo por categoria
-    # Ciclo por dedicacion
-
-    # Estudiantes
-    ws3['A1'] = 'Universidad de Panama'
-    ws3['A2'] = 'Facultad de Prueba'
-    ws3['A5'] = 'Informe de Escuelas - 2018'
-
-    ws3['A1'].font = title_font
-    ws3['A2'].font = subtitle_font
-    ws3['A5'].font = datacell_font
-    # Ciclo de Estudiantes por Escuela
-    celda_actual = 6
-    # Ciclo Anteproyectos por Escuela
-    # Ciclo Trabajos de Graduacion por Escuela
-
-    filename = 'reporte-prueba'
+    fecha_actual = datetime.datetime.now().strftime("%Y-%m")
+    nombre_departamento = departamento.departamento.nombre
+    filename = '{0}-{1}'.format(fecha_actual, nombre_departamento)
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename={0}.xlsx'.format(filename)
-
+    response['Content-Disposition'] = 'attachment; filename=reporte_{0}.xlsx'.format(filename)
     wb.save(response)
-
     return response
