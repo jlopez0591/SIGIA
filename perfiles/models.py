@@ -62,7 +62,7 @@ class Perfil(models.Model):
     folio = models.CharField(max_length=5, blank=True, null=True)
 
     imagen = models.ImageField(upload_to='perfil/', blank=True)
-    categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
+
     pais = CountryField(blank=True, null=True)
     cod_profesor = models.CharField(max_length=120, blank=True, null=True)
 
@@ -80,6 +80,9 @@ class Perfil(models.Model):
     escuela = models.ForeignKey(EscuelaInstancia, blank=True, null=True,
                                 related_name='personal')
 
+    categoria = models.CharField(max_length=1, choices=CATEGORIAS, blank=True, null=True)
+    # categoria = models.ForeignKey('perfiles.Categoria', blank=True, null=True)
+    # dedicacion = models.ForeignKey('perfiles.Dedicacion', blank=True, null=True)
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
     history = AuditlogHistoryField()
@@ -164,4 +167,26 @@ class Perfil(models.Model):
         return self.usuario.actividades.exclude(clase='idioma').aprobado()
 
 
+class Dedicacion(models.Model):
+    nombre = models.CharField(max_length=200)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre.title()
+
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=200)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre.title()
+
+
+auditlog.register(Perfil)
+auditlog.register(Perfil)
 auditlog.register(Perfil)

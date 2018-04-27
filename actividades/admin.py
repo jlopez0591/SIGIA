@@ -8,7 +8,7 @@ from import_export.admin import ImportExportMixin
 from actividades.models import EstadiaPostdoctoral, Publicacion, Investigacion, Libro, Conferencia, Ponencia, \
     Proyecto, Premio, Actividad, InfoTitulo, Titulo, CentroEstudio, Idioma
 from actividades.resources import PublicacionResources, EstadiaPostdoctoralResource, InvestigacionResource, \
-    LibroResource, ConferenciaResource, PonenciaResource, ProyectoResource, PremioResource
+    LibroResource, ConferenciaResource, PonenciaResource, ProyectoResource, PremioResource, CentroEstudioResource
 
 
 class PublicacionAdmin(ImportExportMixin, admin.ModelAdmin):
@@ -43,6 +43,10 @@ class PremioAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = PremioResource
 
 
+class CentroEstudioAdmin(ImportExportMixin, admin.ModelAdmin):
+    resource_class = CentroEstudioResource
+
+
 # Register your models here.
 admin.site.register(EstadiaPostdoctoral, EstadiaAdmin)
 admin.site.register(Publicacion, PublicacionAdmin)
@@ -56,4 +60,4 @@ admin.site.register(Actividad)
 admin.site.register(InfoTitulo)
 admin.site.register(Idioma)
 admin.site.register(Titulo)
-admin.site.register(CentroEstudio)
+admin.site.register(CentroEstudio, CentroEstudioAdmin)

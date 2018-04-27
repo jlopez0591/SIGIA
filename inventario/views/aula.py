@@ -50,7 +50,7 @@ class AulaDetailView(DetailView):
     def get_object(self):
         object = super(AulaDetailView, self).get_object()
         usuario = self.request.user
-        if usuario.perfil.facultad != object.facultad:
+        if usuario.perfil.facultad != object.ubicacion:
             raise PermissionDenied
         return object
 

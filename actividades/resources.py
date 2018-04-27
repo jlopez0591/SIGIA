@@ -1,5 +1,6 @@
 from import_export import resources
-from .models import EstadiaPostdoctoral, Publicacion, Investigacion, Libro, Conferencia, Ponencia, Proyecto, Premio
+from .models import EstadiaPostdoctoral, Publicacion, Investigacion, Libro, Conferencia, Ponencia, Proyecto, Premio, \
+    CentroEstudio
 
 
 class EstadiaPostdoctoralResource(resources.ModelResource):
@@ -40,3 +41,8 @@ class ProyectoResource(resources.ModelResource):
 class PremioResource(resources.ModelResource):
     class Meta:
         model = Premio
+
+
+class CentroEstudioResource(resources.ModelResource):
+    class Meta:
+        model = CentroEstudio
