@@ -31,7 +31,7 @@ urlpatterns = [
     # Django apps
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^admin/', admin.site.urls),
+    url(r'^redux/', admin.site.urls),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
