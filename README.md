@@ -25,7 +25,7 @@ podran descargar reportes de sus respectivas unidades academicas en formato .xls
 # Configuracion inicial
 ## Configuracion de Postgresql
 ```
-postgres=#  sudo -u postgres psql
+postgres=#  susudo -u postgres psql
 postgres=#  CREATE DATABASE sigia;
 postgres=#  CREATE USER sigia_user WITH PASSWORD 'password';
 postgres=#  ALTER ROLE sigia_user SET client_encoding TO 'utf8';
